@@ -16,6 +16,8 @@ const backArrow = 'arrow-down.png';
 const likeIconFill = 'heart-fill.png';
 const likeIconOutline = 'heart-outline';
 const shopCart = 'shopping-cart.png';
+const moreIcon = 'Union.png';
+const visaIcon = 'VISA_PICT.png';
 
 const image1 = 'image 43.png';
 const image2 = 'image431.png';

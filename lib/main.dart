@@ -1,3 +1,5 @@
+import 'package:ecom/screens/checkout_screen.dart';
+import 'package:ecom/screens/home_screen.dart';
 import 'package:ecom/screens/nagation_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const NavigationMenu(),
+      home: const CheckoutScreen(),
     );
   }
 }

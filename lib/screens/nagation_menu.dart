@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +10,10 @@ class NavigationMenu extends StatefulWidget {
 }
 
 class _NavigationMenuState extends State<NavigationMenu> {
-  // List<Widget> pages = [
-  //   const HomeScreen(),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomeScreen(),
+      body: const HomeScreen(),
       bottomNavigationBar: Container(
         height: 70,
         margin: const EdgeInsets.only(

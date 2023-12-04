@@ -1,4 +1,4 @@
-import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/constants/products.dart';
 import 'package:ecom/screens/details_screen.dart';
 import 'package:ecom/widgets/my_grid_tile.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +9,6 @@ class MyGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> imageList = [
-      image1,
-      image2,
-      image3,
-      image4,
-    ];
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: MasonryGridView.count(
@@ -30,7 +23,7 @@ class MyGridView extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => DetailsScreen(
                     image: imageList[index],
-                    title: "Modern Light Clothes",
+                    title: productTittle,
                   ),
                 ),
               );

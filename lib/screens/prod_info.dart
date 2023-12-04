@@ -136,17 +136,7 @@ clothes ''',
           ),
         ),
 
-        Container(
-          height: 1,
-          margin: const EdgeInsets.symmetric(
-            vertical: 20,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey.shade300,
-            ),
-          ),
-        )
+       
       ],
     );
   }
