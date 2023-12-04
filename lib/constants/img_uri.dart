@@ -10,13 +10,18 @@ const watchIcon = 'watch.png';
 const starIcon = 'star.png';
 const homeIcon = 'home.png';
 const shopBagIcon = 'shopping-bag.png';
-const heartIcon = 'heart.png';
+const heartIcon = 'heart-nav-icon.png';
 const profileIcon = 'profile.png';
+const backArrow = 'arrow-down.png';
+const likeIconFill = 'heart-fill.png';
+const likeIconOutline = 'heart-outline';
+const shopCart = 'shopping-cart.png';
 
 const image1 = 'image 43.png';
 const image2 = 'image431.png';
 const image3 = 'image432.png';
 const image4 = 'image433.png';
+const image2Big = 'image431-big.png';
 
 String getImageUri(String path) {
   return "assets/images/$path";

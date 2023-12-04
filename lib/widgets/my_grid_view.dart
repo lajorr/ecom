@@ -1,4 +1,5 @@
 import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/screens/details_screen.dart';
 import 'package:ecom/widgets/my_grid_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -24,6 +25,16 @@ class MyGridView extends StatelessWidget {
         itemCount: 4,
         itemBuilder: (context, index) {
           return MyGridTile(
+            onCardTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => DetailsScreen(
+                    image: imageList[index],
+                    title: "Modern Light Clothes",
+                  ),
+                ),
+              );
+            },
             imageUri: imageList[index],
           );
         },
