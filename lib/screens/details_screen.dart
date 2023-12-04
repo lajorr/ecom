@@ -2,6 +2,7 @@
 import 'package:ecom/screens/prod_info.dart';
 import 'package:ecom/widgets/product_size.dart';
 import 'package:ecom/widgets/rounded_button.dart';
+import 'package:ecom/widgets/show_cart_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
@@ -84,9 +85,24 @@ class DetailsScreen extends StatelessWidget {
 
               // add to cart button
 
-              const RoundedButton(
-                text: "Add To Cart",
-                iconUri: shopCart,
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    bottom: 15,
+                  ),
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: RoundedButton(
+                          text: "Add To Cart",
+                          iconUri: shopCart,
+                        ),
+                      ),
+                      ShowCartButton(),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

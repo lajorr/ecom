@@ -1,9 +1,16 @@
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/constants/products.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/constants/products.dart';
+
 class ProdCard extends StatelessWidget {
-  const ProdCard({super.key});
+  const ProdCard({
+    Key? key,
+    required this.imageUri,
+  }) : super(key: key);
+
+  final String imageUri;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,7 @@ class ProdCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.asset(
-                  getImageUri(image1),
+                  getImageUri(imageUri),
                   fit: BoxFit.fill,
                   width: 80,
                 ),
@@ -94,7 +101,6 @@ class ProdCard extends StatelessWidget {
             ],
           ),
         ),
-        
       ],
     );
   }

@@ -44,12 +44,14 @@ class CheckoutScreen extends StatelessWidget {
               SizedBox(
                 height: 350,
                 child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: 3,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
-                        const ProdCard(),
+                        ProdCard(
+                          imageUri: imageList[index],
+                        ),
                         if (index < 2) const Divider(),
                       ],
                     );
@@ -86,21 +88,20 @@ class CheckoutScreen extends StatelessWidget {
                       height: 10,
                     ),
                     Divider(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Sub Total "),
-                        Text('\$131.0'),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Sub Total "),
+                          Text('\$131.0'),
+                        ],
+                      ),
                     ),
                     RoundedButton(text: "Pay"),
                   ],
                 ),
               ),
-            ], 
+            ],
           ),
         ),
       ),

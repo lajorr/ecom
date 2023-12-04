@@ -18,24 +18,23 @@ class RoundedButton extends StatelessWidget {
     return Container(
       height: 60,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(
-        vertical: 15,
-      ),
+      // margin: const EdgeIFnsets.symmetric(
+      //   vertical: 15,
+      // ),
       decoration: BoxDecoration(
         color: const Color(0xff292526),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(12),
       ),
       // alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           if (iconUri != null)
-          Image.asset(
-            getImageUri(
-              iconUri!,
+            Image.asset(
+              getImageUri(
+                iconUri!,
+              ),
             ),
-          ),
           const SizedBox(
             width: 10,
           ),
