@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationMenu extends StatefulWidget {
@@ -8,33 +12,54 @@ class NavigationMenu extends StatefulWidget {
 }
 
 class _NavigationMenuState extends State<NavigationMenu> {
+  // List<Widget> pages = [
+  //   const HomeScreen(),
+  // ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
+      body: HomeScreen(),
+      bottomNavigationBar: Container(
+        height: 70,
+        margin: const EdgeInsets.only(
+          bottom: 15,
+          left: 20,
+          right: 20,
+        ),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(35),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Positioned(
-              bottom: 10,
-              left: 0,
-              child: Container(
-                height: 50,
-                // width: double.infinity,
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(),
-                    CircleAvatar(),
-                    CircleAvatar(),
-                    CircleAvatar(),
-                  ],
-                ),
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Color.fromARGB(255, 65, 60, 61),
+              child: Image.asset(
+                getImageUri(homeIcon),
+              ),
+            ),
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Color.fromARGB(255, 65, 60, 61),
+              child: Image.asset(
+                getImageUri(shopBagIcon),
+              ),
+            ),
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Color.fromARGB(255, 65, 60, 61),
+              child: Image.asset(
+                getImageUri(heartIcon),
+              ),
+            ),
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Color.fromARGB(255, 65, 60, 61),
+              child: Image.asset(
+                getImageUri(profileIcon),
               ),
             ),
           ],
