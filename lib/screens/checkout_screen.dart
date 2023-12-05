@@ -1,10 +1,12 @@
 import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/constants/products.dart';
+import 'package:ecom/services/product_provider.dart';
+import 'package:ecom/widgets/custom_appbar.dart';
 import 'package:ecom/widgets/my_button.dart';
 import 'package:ecom/widgets/prod_card.dart';
 import 'package:ecom/widgets/rounded_button.dart';
 import 'package:ecom/widgets/shipping_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
@@ -19,46 +21,30 @@ class CheckoutScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // app bar
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyButton(
-                    size: 40,
-                    dropShadow: false,
-                  ),
-                  Text(
-                    'Checkout',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  MyButton(
-                    size: 40,
-                    dropShadow: false,
-                    iconUri: moreIcon,
-                  ),
-                ],
-              ),
+              const CustomAppbar(title: 'Checkout'),
 
               // prod list
               SizedBox(
                 height: 350,
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    final product = productList[index];
+                child: Consumer<ProductProvider>(builder: (context, prodP, _) {
+                  final productList = prodP.productList;
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      final product = productList[index];
 
-                    return Column(
-                      children: [
-                        ProdCard(
-                          product: product,
-                        ),
-                        if (index < 2) const Divider(),
-                      ],
-                    );
-                  },
-                ),
+                      return Column(
+                        children: [
+                          ProdCard(
+                            product: product,
+                          ),
+                          if (index < 2) const Divider(),
+                        ],
+                      );
+                    },
+                  );
+                }),
               ),
               //shipping info
               const ShippingCard(),

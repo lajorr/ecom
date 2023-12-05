@@ -1,5 +1,7 @@
 import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/screens/fav_screen.dart';
 import 'package:ecom/screens/home_screen.dart';
+import 'package:ecom/widgets/nav_item.dart';
 import 'package:flutter/material.dart';
 
 class NavigationMenu extends StatefulWidget {
@@ -10,10 +12,19 @@ class NavigationMenu extends StatefulWidget {
 }
 
 class _NavigationMenuState extends State<NavigationMenu> {
+  int selectedIndex = 0;
+
+  List<Widget> pages = [
+    const HomeScreen(),
+    const FavScreen(),
+  ];
+
+  List<String> navIcons = [homeIcon, shopBagIcon, heartIcon, profileIcon];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const HomeScreen(),
+      body: pages[selectedIndex],
       bottomNavigationBar: Container(
         height: 70,
         margin: const EdgeInsets.only(
@@ -28,34 +39,22 @@ class _NavigationMenuState extends State<NavigationMenu> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            CircleAvatar(
-              radius: 25,
-              backgroundColor: Color.fromARGB(255, 65, 60, 61),
-              child: Image.asset(
-                getImageUri(homeIcon),
+            for (int i = 0; i < navIcons.length; i++) ...[
+              // select vako dekhauna lai if i == selectedIndex ? bgColor : ... : .... garda hunxa hola
+              NavItem(
+                iconUri: navIcons[i],
+                onTap: () {
+                  setState(() {
+                    if (i == 0) {
+                      selectedIndex = i;
+                    }
+                    if (i == 2) {
+                      selectedIndex = i - 1;
+                    }
+                  });
+                },
               ),
-            ),
-            CircleAvatar(
-              radius: 25,
-              backgroundColor: Color.fromARGB(255, 65, 60, 61),
-              child: Image.asset(
-                getImageUri(shopBagIcon),
-              ),
-            ),
-            CircleAvatar(
-              radius: 25,
-              backgroundColor: Color.fromARGB(255, 65, 60, 61),
-              child: Image.asset(
-                getImageUri(heartIcon),
-              ),
-            ),
-            CircleAvatar(
-              radius: 25,
-              backgroundColor: Color.fromARGB(255, 65, 60, 61),
-              child: Image.asset(
-                getImageUri(profileIcon),
-              ),
-            ),
+            ]
           ],
         ),
       ),

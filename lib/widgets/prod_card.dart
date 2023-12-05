@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/constants/products.dart';
 import 'package:ecom/models/product.dart';
 
 class ProdCard extends StatelessWidget {

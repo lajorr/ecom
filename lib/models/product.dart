@@ -15,4 +15,9 @@ class Product {
     required this.rating,
     this.isFav = false,
   });
+
+  @override
+  String toString() {
+    return 'Product(title: $title, category: $category, image: $image, price: $price, rating: $rating, isFav: $isFav)';
+  }
 }

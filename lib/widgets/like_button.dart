@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/constants/products.dart';
+import 'package:ecom/services/product_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/models/product.dart';
+import 'package:provider/provider.dart';
 
-class LikeButton extends StatefulWidget {
+class LikeButton extends StatelessWidget {
   const LikeButton({
     Key? key,
     required this.product,
@@ -14,27 +15,25 @@ class LikeButton extends StatefulWidget {
   final Product product;
 
   @override
-  State<LikeButton> createState() => _LikeButtonState();
-}
-
-class _LikeButtonState extends State<LikeButton> {
-  @override
   Widget build(BuildContext context) {
+    final prodP = Provider.of<ProductProvider>(context, listen: false);
+
     return GestureDetector(
       onTap: () {
-        setState(() {
-          changeFav(widget.product);
-        });
+        prodP.changeFav(product);
+        prodP.getFavProd();
       },
-      child: CircleAvatar(
-        radius: 18,
-        backgroundColor: Theme.of(context).primaryColor,
-        child: Image.asset(
-          getImageUri(
-            widget.product.isFav ? favIcon : heartIcon,
+      child: Consumer<ProductProvider>(builder: (context, prodP, _) {
+        return CircleAvatar(
+          radius: 25,
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Image.asset(
+            getImageUri(
+              product.isFav ? favIcon : heartIcon,
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
