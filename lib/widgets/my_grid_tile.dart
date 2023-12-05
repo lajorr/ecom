@@ -1,16 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ecom/widgets/like_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/models/product.dart';
 
 class MyGridTile extends StatelessWidget {
   const MyGridTile({
     Key? key,
-    required this.imageUri,
+    required this.product,
     required this.onCardTap,
   }) : super(key: key);
 
-  final String imageUri;
+  final Product product;
   final VoidCallback onCardTap;
 
   @override
@@ -26,18 +28,14 @@ class MyGridTile extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
-                  getImageUri(imageUri),
+                  getImageUri(product.image),
                 ),
               ),
               Positioned(
                 right: 10,
                 top: 10,
-                child: CircleAvatar(
-                  radius: 18,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: Image.asset(
-                    getImageUri(heartIcon),
-                  ),
+                child: LikeButton(
+                  product: product,
                 ),
               ),
             ],
@@ -50,15 +48,15 @@ class MyGridTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Title
-              const Text(
-                'Modern light clothes',
-                style: TextStyle(
+              Text(
+                product.title,
+                style: const TextStyle(
                   fontSize: 18,
                 ),
               ),
               //vcategory
               Text(
-                'Dress modern',
+                product.category,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -69,17 +67,17 @@ class MyGridTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //price
-                  Text("\$233"),
+                  Text("\$${product.price.toString()}"),
                   Row(
                     children: [
                       Image.asset(
                         getImageUri(starIcon),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Text('5.0'),
-                      SizedBox(
+                      Text('${product.rating}'),
+                      const SizedBox(
                         width: 15,
                       ),
                     ],

@@ -45,7 +45,7 @@ class MyButton extends StatelessWidget {
           ],
         ),
         child: Image.asset(
-          getImageUri(iconUri!),
+          getImageUri(iconUri),
         ),
       ),
     );

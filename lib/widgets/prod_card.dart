@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/constants/products.dart';
+import 'package:ecom/models/product.dart';
 
 class ProdCard extends StatelessWidget {
   const ProdCard({
     Key? key,
-    required this.imageUri,
+    required this.product,
   }) : super(key: key);
 
-  final String imageUri;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class ProdCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.asset(
-                  getImageUri(imageUri),
+                  getImageUri(product.image),
                   fit: BoxFit.fill,
                   width: 80,
                 ),
@@ -34,7 +35,7 @@ class ProdCard extends StatelessWidget {
                 width: 10,
               ),
               //info
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,18 +45,18 @@ class ProdCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          productTittle,
+                          product.title,
                         ),
                         Text(
-                          productCat,
-                          style: TextStyle(
+                          product.category,
+                          style: const TextStyle(
                               color: Colors.grey, fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
                     Text(
-                      '\$212',
-                      style: TextStyle(
+                      '\$${product.price.toString()}',
+                      style: const TextStyle(
                         fontSize: 18,
                       ),
                     )
@@ -70,9 +71,9 @@ class ProdCard extends StatelessWidget {
                     Icons.more_horiz,
                   ),
                   Container(
-                    padding: EdgeInsets.all(3),
+                    padding: const EdgeInsets.all(3),
                     decoration: BoxDecoration(
-                        color: Color(0xff1B2028),
+                        color: const Color(0xff1B2028),
                         borderRadius: BorderRadius.circular(5)),
                     child: const Row(
                       children: [

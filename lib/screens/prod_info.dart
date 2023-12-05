@@ -2,14 +2,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/models/product.dart';
 
 class ProdInfo extends StatelessWidget {
   const ProdInfo({
     Key? key,
-    required this.title,
+    required this.product,
   }) : super(key: key);
 
-  final String title;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class ProdInfo extends StatelessWidget {
             SizedBox(
               width: 200,
               child: Text(
-                title,
+                product.title,
                 style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -78,7 +79,7 @@ class ProdInfo extends StatelessWidget {
               width: 160,
               height: 30,
               child: ListView.builder(
-                itemCount: 5,
+                itemCount: product.rating.round(),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return SizedBox(
@@ -92,13 +93,13 @@ class ProdInfo extends StatelessWidget {
               ),
             ),
             RichText(
-              text: const TextSpan(
-                text: '5 ',
-                style: TextStyle(
+              text: TextSpan(
+                text: '${product.rating} ',
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
                 ),
-                children: <TextSpan>[
+                children: const <TextSpan>[
                   TextSpan(
                     text: '(123123)',
                     style: TextStyle(
@@ -135,8 +136,6 @@ clothes ''',
             ],
           ),
         ),
-
-       
       ],
     );
   }

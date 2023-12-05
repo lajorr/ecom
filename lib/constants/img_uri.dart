@@ -13,8 +13,11 @@ const shopBagIcon = 'shopping-bag.png';
 const heartIcon = 'heart-nav-icon.png';
 const profileIcon = 'profile.png';
 const backArrow = 'arrow-down.png';
+
 const likeIconFill = 'heart-fill.png';
-const likeIconOutline = 'heart-outline';
+const likeIconOutline = 'heart-outline.png';
+const favIcon = 'heart_white_filled.png';
+
 const shopCart = 'shopping-cart.png';
 const moreIcon = 'Union.png';
 const visaIcon = 'VISA_PICT.png';

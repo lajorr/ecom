@@ -1,23 +1,28 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/screens/prod_info.dart';
-import 'package:ecom/widgets/product_size.dart';
-import 'package:ecom/widgets/rounded_button.dart';
-import 'package:ecom/widgets/show_cart_button.dart';
+import 'package:ecom/constants/products.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/models/product.dart';
+import 'package:ecom/screens/prod_info.dart';
 import 'package:ecom/widgets/my_button.dart';
+import 'package:ecom/widgets/product_size.dart';
+import 'package:ecom/widgets/rounded_button.dart';
+import 'package:ecom/widgets/show_cart_button.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   const DetailsScreen({
     Key? key,
-    required this.image,
-    required this.title,
+    required this.product,
   }) : super(key: key);
 
-  final String image;
-  final String title;
+  final Product product;
 
+  @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +39,9 @@ class DetailsScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(25),
                       child: Image.asset(
-                        getImageUri(image2Big),
-                        fit: BoxFit.fill,
-                        alignment: Alignment.center,
+                        getImageUri(widget.product.image),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
                         width: double.infinity,
                       ),
                     ),
@@ -50,11 +55,24 @@ class DetailsScreen extends StatelessWidget {
                           size: 50,
                           dropShadow: true,
                         ),
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Colors.white,
-                          child: Image.asset(
-                            getImageUri(likeIconFill),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              changeFav(widget.product);
+                            });
+                          },
+                          child: CircleAvatar(
+                            radius: 25,
+                            backgroundColor: widget.product.isFav
+                                ? Colors.white
+                                : const Color(0xff292526),
+                            child: Image.asset(
+                              getImageUri(
+                                widget.product.isFav
+                                    ? likeIconFill
+                                    : likeIconOutline,
+                              ),
+                            ),
                           ),
                         )
                       ],
@@ -67,7 +85,7 @@ class DetailsScreen extends StatelessWidget {
                 height: 20,
               ),
               //title row
-              ProdInfo(title: title),
+              ProdInfo(product: widget.product),
               Container(
                 height: 1,
                 margin: const EdgeInsets.symmetric(

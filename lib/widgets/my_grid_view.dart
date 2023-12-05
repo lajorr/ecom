@@ -17,18 +17,19 @@ class MyGridView extends StatelessWidget {
         crossAxisSpacing: 4,
         itemCount: 4,
         itemBuilder: (context, index) {
+          final product = productList[index];
+
           return MyGridTile(
             onCardTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => DetailsScreen(
-                    image: imageList[index],
-                    title: productTittle,
+                    product: product,
                   ),
                 ),
               );
             },
-            imageUri: imageList[index],
+            product: product,
           );
         },
       ),

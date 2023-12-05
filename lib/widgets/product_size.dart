@@ -47,7 +47,6 @@ class ProductSize extends StatelessWidget {
                         // height: 40,
                         width: 30,
                         decoration: BoxDecoration(
-                          // color: Colors.red,
                           border: Border.all(
                             color: Colors.grey.shade300,
                           ),

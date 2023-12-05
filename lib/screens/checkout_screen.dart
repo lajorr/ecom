@@ -47,10 +47,12 @@ class CheckoutScreen extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 3,
                   itemBuilder: (context, index) {
+                    final product = productList[index];
+
                     return Column(
                       children: [
                         ProdCard(
-                          imageUri: imageList[index],
+                          product: product,
                         ),
                         if (index < 2) const Divider(),
                       ],
