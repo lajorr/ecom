@@ -13,17 +13,27 @@ class _LoginCardState extends State<LoginCard> {
 
   bool onSignUp = false;
 
-  void onFormSave() {
+  String email = '';
+  String password = '';
+
+  Future<void> onFormSave() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
+
+     
     }
   }
+
+  // void signUp()
+  // {
+
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(22),
       margin: const EdgeInsets.symmetric(
         horizontal: 25,
       ),
@@ -41,23 +51,29 @@ class _LoginCardState extends State<LoginCard> {
                 fontSize: 18,
               ),
             ),
-            const MyTextField(
+            MyTextField(
               label: "Email",
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.mail_outline_rounded,
               ),
               inputType: TextInputType.emailAddress,
+              onFieldSave: (value) {
+                email = value!;
+              },
             ),
             const SizedBox(
               height: 10,
             ),
-            const MyTextField(
+            MyTextField(
               label: "Password",
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.vpn_key,
               ),
               inputType: TextInputType.visiblePassword,
               obscure: true,
+              onFieldSave: (value) {
+                password = value!;
+              },
             ),
             const SizedBox(
               height: 20,
@@ -98,6 +114,18 @@ class _LoginCardState extends State<LoginCard> {
               ],
             ),
 
+            // login from google
+            Container(
+              height: 50,
+              margin: const EdgeInsets.symmetric(
+                vertical: 20,
+              ),
+              color: Colors.grey[300],
+              child: const Center(
+                child: Text('Login from google'),
+              ),
+            ),
+
             TextButton(
               onPressed: () {
                 setState(() {
@@ -106,7 +134,7 @@ class _LoginCardState extends State<LoginCard> {
               },
               child: Text(
                 onSignUp
-                    ? 'Alread have an account? login now!'
+                    ? 'Already have an account? login now!'
                     : 'No Account? Sign Up!!',
                 style: const TextStyle(
                   fontSize: 16,

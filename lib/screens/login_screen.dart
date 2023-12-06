@@ -9,21 +9,23 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       body: const SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Welcome To\n E-com',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 42,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Welcome To\n E-com',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 42,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            LoginCard(),
-          ],
+              SizedBox(
+                height: 50,
+              ),
+              LoginCard(),
+            ],
+          ),
         ),
       ),
     );

@@ -9,12 +9,14 @@ class MyTextField extends StatefulWidget {
     required this.prefixIcon,
     this.inputType = TextInputType.text,
     this.obscure = false,
+    required this.onFieldSave,
   }) : super(key: key);
 
   final String label;
   final Icon prefixIcon;
   final TextInputType inputType;
   final bool obscure;
+  final Function(String?) onFieldSave;
 
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -48,9 +50,7 @@ class _MyTextFieldState extends State<MyTextField> {
         TextFormField(
           keyboardType: widget.inputType,
           obscureText: isPasswordField ? isVisible : false,
-          onSaved: (newValue) {
-            print(newValue);
-          },
+          onSaved: (newValue) => widget.onFieldSave(newValue),
           validator: (value) {
             if (isPasswordField) {
               return null;
