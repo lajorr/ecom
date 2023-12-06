@@ -1,4 +1,3 @@
-import 'package:ecom/models/product.dart';
 import 'package:ecom/services/product_provider.dart';
 import 'package:ecom/widgets/custom_appbar.dart';
 import 'package:ecom/widgets/my_grid_tile.dart';

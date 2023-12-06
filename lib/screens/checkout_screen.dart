@@ -1,7 +1,5 @@
-import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/services/product_provider.dart';
 import 'package:ecom/widgets/custom_appbar.dart';
-import 'package:ecom/widgets/my_button.dart';
 import 'package:ecom/widgets/prod_card.dart';
 import 'package:ecom/widgets/rounded_button.dart';
 import 'package:ecom/widgets/shipping_card.dart';

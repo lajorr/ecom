@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/services/product_provider.dart';
 import 'package:ecom/widgets/like_button.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +9,6 @@ import 'package:ecom/widgets/my_button.dart';
 import 'package:ecom/widgets/product_size.dart';
 import 'package:ecom/widgets/rounded_button.dart';
 import 'package:ecom/widgets/show_cart_button.dart';
-import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({

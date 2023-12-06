@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
 
     String email = currentUser.email!;
 
-    Future<void> logOut() async{
+    Future<void> logOut() async {
       await Auth().signOut();
     }
 
@@ -24,6 +24,8 @@ class ProfileScreen extends StatelessWidget {
             children: [
               const CustomAppbar(
                 title: 'Profile',
+                actions: false,
+                backButton: false,
               ),
               const SizedBox(
                 height: 50,

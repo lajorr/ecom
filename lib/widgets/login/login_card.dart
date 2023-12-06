@@ -25,11 +25,20 @@ class _LoginCardState extends State<LoginCard> {
         if (onSignUp) {
           await Auth().createUser(email: email, password: password);
         } else {
-          // debugPrint('in login');
           await Auth().signIn(email: email, password: password);
         }
       } on FirebaseAuthException catch (e) {
         debugPrint('error: $e');
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              content: Text(
+                e.toString(),
+              ),
+            ),
+          );
+        }
       }
     }
   }
