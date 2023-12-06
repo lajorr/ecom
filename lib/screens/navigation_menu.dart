@@ -1,6 +1,7 @@
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/screens/fav_screen.dart';
 import 'package:ecom/screens/home_screen.dart';
+import 'package:ecom/screens/profile_screen.dart';
 import 'package:ecom/widgets/nav_item.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   List<Widget> pages = [
     const HomeScreen(),
     const FavScreen(),
+    const ProfileScreen(),
   ];
 
   List<String> navIcons = [homeIcon, shopBagIcon, heartIcon, profileIcon];
@@ -48,7 +50,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
                     if (i == 0) {
                       selectedIndex = i;
                     }
-                    if (i == 2) {
+                    if (i >= 2) {
                       selectedIndex = i - 1;
                     }
                   });

@@ -1,10 +1,10 @@
 import 'package:ecom/firebase_options.dart';
+import 'package:ecom/widget_tree.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:ecom/screens/login_screen.dart';
-import 'package:ecom/screens/navigation_menu.dart';
+
 import 'package:ecom/services/product_provider.dart';
 
 Future main() async {
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const LoginScreen(),
+        home: const WidgetTree(),
       ),
     );
   }

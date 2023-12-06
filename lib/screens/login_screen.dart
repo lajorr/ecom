@@ -8,23 +8,26 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
+      extendBody: true,
       body: const SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Welcome To\n E-com',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 42,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Welcome To\n E-com',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 42,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              LoginCard(),
-            ],
+                SizedBox(
+                  height: 50,
+                ),
+                LoginCard(),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,6 @@
+import 'package:ecom/services/auth.dart';
 import 'package:ecom/widgets/login/my_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginCard extends StatefulWidget {
@@ -19,15 +21,18 @@ class _LoginCardState extends State<LoginCard> {
   Future<void> onFormSave() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-
-     
+      try {
+        if (onSignUp) {
+          await Auth().createUser(email: email, password: password);
+        } else {
+          // debugPrint('in login');
+          await Auth().signIn(email: email, password: password);
+        }
+      } on FirebaseAuthException catch (e) {
+        debugPrint('error: $e');
+      }
     }
   }
-
-  // void signUp()
-  // {
-
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -115,16 +120,16 @@ class _LoginCardState extends State<LoginCard> {
             ),
 
             // login from google
-            Container(
-              height: 50,
-              margin: const EdgeInsets.symmetric(
-                vertical: 20,
-              ),
-              color: Colors.grey[300],
-              child: const Center(
-                child: Text('Login from google'),
-              ),
-            ),
+            // Container(
+            //   height: 50,
+            //   margin: const EdgeInsets.symmetric(
+            //     vertical: 20,
+            //   ),
+            //   color: Colors.grey[300],
+            //   child: const Center(
+            //     child: Text('Login from google'),
+            //   ),
+            // ),
 
             TextButton(
               onPressed: () {
