@@ -41,12 +41,6 @@ class ProductProvider extends ChangeNotifier {
   List<Product> getFavProd() {
     var list = _productList.where((prod) => prod.isFav).toList();
     return list;
-
-    // for (var element in list) {
-    //   print(
-    //     element.toString(),
-    //   );
-    // }
   }
 
   void changeFav(Product product) {

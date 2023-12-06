@@ -46,7 +46,6 @@ class FavScreen extends StatelessWidget {
                       final prod = favProds[index];
 
                       return MyGridTile(
-                        onCardTap: () {},
                         product: prod,
                       );
                     },

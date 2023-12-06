@@ -25,15 +25,6 @@ class MyGridView extends StatelessWidget {
           final product = productList[index];
 
           return MyGridTile(
-            onCardTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => DetailsScreen(
-                    product: product,
-                  ),
-                ),
-              );
-            },
             product: product,
           );
         },

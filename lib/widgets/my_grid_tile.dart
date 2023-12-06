@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ecom/screens/details_screen.dart';
 import 'package:ecom/widgets/like_button.dart';
 import 'package:flutter/material.dart';
 
@@ -9,14 +10,22 @@ class MyGridTile extends StatelessWidget {
   const MyGridTile({
     Key? key,
     required this.product,
-    required this.onCardTap,
   }) : super(key: key);
 
   final Product product;
-  final VoidCallback onCardTap;
 
   @override
   Widget build(BuildContext context) {
+    void onCardTap() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => DetailsScreen(
+            product: product,
+          ),
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: onCardTap,
       child: Column(

@@ -1,3 +1,4 @@
+import 'package:ecom/screens/login_screen.dart';
 import 'package:ecom/screens/navigation_menu.dart';
 import 'package:ecom/services/product_provider.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const NavigationMenu(),
+        home: const LoginScreen(),
       ),
     );
   }
