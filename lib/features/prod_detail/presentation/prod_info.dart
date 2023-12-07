@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/shared/product/model/product_global_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/shared/product/product.dart';
 
 class ProdInfo extends StatelessWidget {
   const ProdInfo({
@@ -24,7 +24,7 @@ class ProdInfo extends StatelessWidget {
             SizedBox(
               width: 200,
               child: Text(
-                product.title,
+                product.prodTitle,
                 style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,

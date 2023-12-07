@@ -3,10 +3,10 @@ import 'package:ecom/common/widgets/like_button.dart';
 import 'package:ecom/common/widgets/my_button.dart';
 import 'package:ecom/common/widgets/rounded_button.dart';
 import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/shared/product/model/product_global_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/shared/product/product.dart';
 import 'package:ecom/features/prod_detail/presentation/prod_info.dart';
 import 'package:ecom/features/prod_detail/presentation/product_size.dart';
 
@@ -24,7 +24,6 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final product = ModalRoute.of(context)!.settings.arguments as Product;
 
     return Scaffold(
@@ -39,14 +38,13 @@ class DetailsScreen extends StatelessWidget {
                   SizedBox(
                     height: 400,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: Image.asset(
-                        ImageConstants.getImageUri(product.image),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                        width: double.infinity,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(25),
+                        child: Image.network(
+                          product.prodImage[0].imageUrl,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                          width: double.infinity,
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),

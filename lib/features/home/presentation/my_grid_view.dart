@@ -1,5 +1,6 @@
 import 'package:ecom/features/home/data/product_provider.dart';
 import 'package:ecom/features/home/presentation/my_grid_tile.dart';
+import 'package:ecom/features/home/repository/product_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
@@ -9,9 +10,11 @@ class MyGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final prodP = Provider.of<ProductProvider>(context);
+    // final prodP = Provider.of<ProductProvider>(context);
 
-    final productList = prodP.productList;
+    // final productList = prodP.productList;
+
+    final productList = ProductRepositoryImpl().getProductList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),

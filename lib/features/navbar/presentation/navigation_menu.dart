@@ -17,7 +17,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
   List<Widget> pages = [
     const HomeScreen(),
-    const FavScreen(),
+    // const FavScreen(),
     const ProfileScreen(),
   ];
 
@@ -55,8 +55,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
                     if (i == 0) {
                       selectedIndex = i;
                     }
-                    if (i >= 2) {
-                      selectedIndex = i - 1;
+                    if (i == 3) {
+                      selectedIndex = 1;
                     }
                   });
                 },
