@@ -1,6 +1,9 @@
+import 'package:ecom/common/route_manager/route_manager.dart';
+import 'package:ecom/common/theme_manager/theme_manager.dart';
+
 import 'package:ecom/firebase_options.dart';
-import 'package:ecom/services/product_provider.dart';
-import 'package:ecom/widget_tree.dart';
+import 'package:ecom/features/home/data/product_provider.dart';
+import 'package:ecom/features/auth/presentation/widget_tree.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,21 +26,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => MaterialApp(
         title: 'E-com app',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: const Color(0xff292526),
-          useMaterial3: true,
-          hintColor: const Color(0xff878787),
-          textTheme: const TextTheme(
-            bodyMedium: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            bodySmall: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ),
+        theme: ThemeManager.getThemeData(),
         home: const WidgetTree(),
+        routes: RouteManager.getRoutes(),
       ),
     );
   }
