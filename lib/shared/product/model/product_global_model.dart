@@ -15,7 +15,7 @@ class Product {
   String prodTitle;
   String prodDescription;
   String category;
-  List<SizeColor>? sizeColor;
+  List<SizeColor>? listSizeColor;
   List<ProdImage> prodImage;
   double rating;
   double price;
@@ -26,7 +26,7 @@ class Product {
     required this.prodTitle,
     required this.prodDescription,
     required this.category,
-    this.sizeColor,
+    this.listSizeColor,
     required this.prodImage,
     required this.rating,
     required this.price,
@@ -38,7 +38,7 @@ class Product {
         prodTitle: json["prod_title"],
         prodDescription: json["prod_description"],
         category: json["category"],
-        sizeColor: json["size_color"] == null
+        listSizeColor: json["size_color"] == null
             ? []
             : List<SizeColor>.from(
                 json["size_color"]!.map((x) => SizeColor.fromJson(x))),
@@ -54,9 +54,9 @@ class Product {
         "prod_title": prodTitle,
         "prod_description": prodDescription,
         "category": category,
-        "size_color": sizeColor == null
+        "size_color": listSizeColor == null
             ? []
-            : List<dynamic>.from(sizeColor!.map((x) => x.toJson())),
+            : List<dynamic>.from(listSizeColor!.map((x) => x.toJson())),
         "prod_image": List<dynamic>.from(prodImage.map((x) => x.toJson())),
         "rating": rating,
         "price": price,

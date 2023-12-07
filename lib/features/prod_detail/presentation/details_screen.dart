@@ -83,7 +83,7 @@ class DetailsScreen extends StatelessWidget {
               ),
 
               // size
-              const ProductSize(),
+              ProductSize(product: product),
 
               // add to cart button
 

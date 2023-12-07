@@ -1,8 +1,16 @@
-import 'package:ecom/constants/string_constants.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
+import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/shared/product/model/product_global_model.dart' as p;
+
 class ProductSize extends StatelessWidget {
-  const ProductSize({super.key});
+  const ProductSize({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final p.Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +21,13 @@ class ProductSize extends StatelessWidget {
       'XL',
     ];
 
-    List<Color> colorList = const [
-      Color.fromRGBO(27, 32, 40, 0.3),
-      Color(0xff1B2028),
-      Color(0xff292526),
-    ];
+    // List<Color> colorList = const [
+    //   Color.fromRGBO(27, 32, 40, 0.3),
+    //   Color(0xff1B2028),
+    //   Color(0xff292526),
+    // ];
+
+   
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,8 +90,10 @@ class ProductSize extends StatelessWidget {
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  itemCount: 3,
+                  itemCount: product.listSizeColor?.length ?? 0 ,
                   itemBuilder: (context, index) {
+                    print(product.listSizeColor?.first.color.colorCode);
+                    final color = product.listSizeColor![index].color.colorCode;
                     return Padding(
                       padding: const EdgeInsets.only(
                         right: 8.0,
@@ -91,11 +103,13 @@ class ProductSize extends StatelessWidget {
                         width: 30,
                         decoration: BoxDecoration(
                           // color: Colors.red,
-                          border: Border.all(
-                            color: Colors.grey.shade300,
-                          ),
+                          // border: Border.all(
+                          //   color: Colors.grey.shade300,
+                          // ),
                           borderRadius: BorderRadius.circular(20),
-                          color: colorList[index],
+                          color: Color(
+                            int.parse(color),
+                          ),
                         ),
                         alignment: Alignment.center,
                       ),
