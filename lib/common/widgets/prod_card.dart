@@ -2,8 +2,6 @@
 import 'package:ecom/shared/product/model/product_global_model.dart' as p;
 import 'package:flutter/material.dart';
 
-import 'package:ecom/constants/img_uri.dart';
-
 class ProdCard extends StatelessWidget {
   const ProdCard({
     Key? key,
@@ -14,6 +12,7 @@ class ProdCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return Column(
       children: [
         Container(
@@ -26,10 +25,13 @@ class ProdCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
                   product.prodImage[0].imageUrl,
+                  fit: BoxFit.cover,
+                  width: media.width * 0.2,
+                  height: media.height * 0.1,
                 ),
               ),
-              const SizedBox(
-                width: 10,
+              SizedBox(
+                width: media.width * 0.02,
               ),
               //info
               Expanded(

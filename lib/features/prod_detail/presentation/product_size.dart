@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
-
 import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/shared/product/model/product_global_model.dart' as p;
+import 'package:flutter/material.dart';
 
 class ProductSize extends StatelessWidget {
   const ProductSize({
@@ -14,20 +13,13 @@ class ProductSize extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> sizeList = [
-      'S',
-      'M',
-      'L',
-      'XL',
-    ];
-
     // List<Color> colorList = const [
     //   Color.fromRGBO(27, 32, 40, 0.3),
     //   Color(0xff1B2028),
     //   Color(0xff292526),
     // ];
 
-   
+    final colorList = product.listSizeColor;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,8 +40,9 @@ class ProductSize extends StatelessWidget {
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  itemCount: 4,
+                  itemCount: colorList?.length ?? 0,
                   itemBuilder: (context, index) {
+                    final size = colorList![index].size;
                     return Padding(
                       padding: const EdgeInsets.only(
                         right: 8.0,
@@ -65,7 +58,7 @@ class ProductSize extends StatelessWidget {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          sizeList[index],
+                          size,
                         ),
                       ),
                     );
@@ -90,10 +83,10 @@ class ProductSize extends StatelessWidget {
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  itemCount: product.listSizeColor?.length ?? 0 ,
+                  itemCount: colorList?.length ?? 0,
                   itemBuilder: (context, index) {
-                    print(product.listSizeColor?.first.color.colorCode);
-                    final color = product.listSizeColor![index].color.colorCode;
+                    debugPrint(colorList?.first.color.colorCode);
+                    final color = colorList![index].color.colorCode;
                     return Padding(
                       padding: const EdgeInsets.only(
                         right: 8.0,
@@ -102,10 +95,6 @@ class ProductSize extends StatelessWidget {
                         // height: 30,
                         width: 30,
                         decoration: BoxDecoration(
-                          // color: Colors.red,
-                          // border: Border.all(
-                          //   color: Colors.grey.shade300,
-                          // ),
                           borderRadius: BorderRadius.circular(20),
                           color: Color(
                             int.parse(color),

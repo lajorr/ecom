@@ -1,11 +1,9 @@
 import 'package:ecom/common/widgets/custom_appbar.dart';
-import 'package:ecom/common/widgets/rounded_button.dart';
-import 'package:ecom/features/home/data/product_provider.dart';
 import 'package:ecom/common/widgets/prod_card.dart';
+import 'package:ecom/common/widgets/rounded_button.dart';
 import 'package:ecom/features/home/repository/product_repository.dart';
 import 'package:ecom/features/prod_detail/presentation/shipping_card.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
@@ -15,6 +13,7 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productList = ProductRepositoryImpl().getProductList();
+    final media = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -27,7 +26,7 @@ class CheckoutScreen extends StatelessWidget {
 
               // prod list
               SizedBox(
-                height: 350,
+                height: media.height * 0.4,
                 child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 3,

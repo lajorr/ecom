@@ -1,12 +1,9 @@
 import 'package:ecom/common/route_manager/route_manager.dart';
 import 'package:ecom/common/theme_manager/theme_manager.dart';
-
-import 'package:ecom/firebase_options.dart';
-import 'package:ecom/features/home/data/product_provider.dart';
 import 'package:ecom/features/auth/presentation/widget_tree.dart';
+import 'package:ecom/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,10 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/features/home/data/product_provider.dart';
+import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/shared/product/model/product_global_model.dart';
 import 'package:flutter/material.dart';
-
-import 'package:ecom/constants/img_uri.dart';
-import 'package:provider/provider.dart';
 
 class LikeButton extends StatelessWidget {
   const LikeButton({

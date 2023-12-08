@@ -2,13 +2,12 @@
 import 'package:ecom/common/widgets/like_button.dart';
 import 'package:ecom/common/widgets/my_button.dart';
 import 'package:ecom/common/widgets/rounded_button.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/shared/product/model/product_global_model.dart';
-import 'package:flutter/material.dart';
-
 import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/prod_detail/presentation/prod_info.dart';
 import 'package:ecom/features/prod_detail/presentation/product_size.dart';
+import 'package:ecom/shared/product/model/product_global_model.dart';
+import 'package:flutter/material.dart';
 
 import 'show_cart_button.dart';
 
@@ -26,6 +25,8 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = ModalRoute.of(context)!.settings.arguments as Product;
 
+    final media = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -36,15 +37,27 @@ class DetailsScreen extends StatelessWidget {
               Stack(
                 children: [
                   SizedBox(
-                    height: 400,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: Image.network(
-                          product.prodImage[0].imageUrl,
-                          fit: BoxFit.cover,
-                          alignment: Alignment.topCenter,
-                          width: double.infinity,
-                        )),
+                    height: media.height * 0.5,
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: product.prodImage.length,
+                      itemBuilder: (context, index) {
+                        final image = product.prodImage[index];
+
+                        return SizedBox(
+                          width: media.width - 40,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: Image.network(
+                              image.imageUrl,
+                              fit: BoxFit.cover,
+                              alignment: Alignment.topCenter,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -70,16 +83,8 @@ class DetailsScreen extends StatelessWidget {
               //title row
               ProdInfo(product: product),
 
-              Container(
-                height: 1,
-                margin: const EdgeInsets.symmetric(
-                  vertical: 15,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey.shade300,
-                  ),
-                ),
+              Divider(
+                height: media.height * 0.07,
               ),
 
               // size

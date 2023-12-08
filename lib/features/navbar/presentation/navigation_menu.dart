@@ -1,8 +1,7 @@
 import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/features/favorites/presentation/fav_screen.dart';
 import 'package:ecom/features/home/presentation/home_screen.dart';
-import 'package:ecom/features/profile/presentation/profile_screen.dart';
 import 'package:ecom/features/navbar/presentation/nav_item.dart';
+import 'package:ecom/features/profile/presentation/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationMenu extends StatefulWidget {

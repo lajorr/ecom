@@ -82,7 +82,7 @@ const productData = [
         "color": {"color_name": "red", "color_code": "0xff0000FF"}
       }
     ],
-    "rating": 38,
+    "rating": 3.8,
     "price": 70.78,
     "views_no": "7580"
   },
