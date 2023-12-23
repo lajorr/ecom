@@ -7,6 +7,7 @@ class MyTextField extends StatefulWidget {
   const MyTextField({
     Key? key,
     required this.label,
+    required this.errorMsg,
     required this.prefixIcon,
     this.inputType = TextInputType.text,
     this.obscure = false,
@@ -14,6 +15,7 @@ class MyTextField extends StatefulWidget {
   }) : super(key: key);
 
   final String label;
+  final String? errorMsg;
   final Icon prefixIcon;
   final TextInputType inputType;
   final bool obscure;
@@ -67,6 +69,7 @@ class _MyTextFieldState extends State<MyTextField> {
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(12),
             prefixIcon: widget.prefixIcon,
+            errorText: widget.errorMsg, //
             suffixIcon: isPasswordField
                 ? IconButton(
                     icon: Icon(

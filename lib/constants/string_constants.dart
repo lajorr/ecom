@@ -37,4 +37,7 @@ class StringConstants {
   static const profileText = "Profile";
   static const logOutText = "Log Out";
 
+  //errors
+  static const invalidCredsText = 'INVALID CREDENTIALS';
+  static const invalidInputText = 'INVALID INPUT';
 }

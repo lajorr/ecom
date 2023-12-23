@@ -1,6 +1,6 @@
-import 'package:ecom/features/auth/presentation/login_screen.dart';
+import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
+import 'package:ecom/features/auth/presentation/screens/login_screen.dart';
 import 'package:ecom/features/navbar/presentation/navigation_menu.dart';
-import 'package:ecom/features/auth/data/auth.dart';
 import 'package:flutter/material.dart';
 
 class WidgetTree extends StatefulWidget {
@@ -16,7 +16,7 @@ class _WidgetTreeState extends State<WidgetTree> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Auth().authStateChanges,
+      stream: FireAuth().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return const NavigationMenu();

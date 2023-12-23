@@ -1,6 +1,6 @@
 import 'package:ecom/common/widgets/custom_appbar.dart';
 import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/auth/data/auth.dart';
+import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,12 +11,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User currentUser = Auth().currentUser!;
+    User currentUser = FireAuth().currentUser!;
 
     String email = currentUser.email!;
 
     Future<void> logOut() async {
-      await Auth().signOut();
+      await FireAuth().signOut();
     }
 
     return Scaffold(
