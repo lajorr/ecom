@@ -1,14 +1,19 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../repository/auth_repository.dart';
+import 'login_with_email_usecase.dart';
 
-// class SignupWithEmailUsecase extends Usecase<User, Params> {
-//   final AuthRepository repository;
-//   SignupWithEmailUsecase({
-//     required this.repository,
-//   });
+class SignupWithEmailUsecase extends Usecase<User, Params> {
+  SignupWithEmailUsecase({
+    required this.repository,
+  });
 
-//   @override
-//   Future<Either<Failure, User>> call(params)  {
-//     return repository.signUpWithEmail();
-//   }
-// }
+  final AuthRepository repository;
+  @override
+  Future<Either<Failure, User>> call(params) {
+    return repository.signUpWithEmail(params.email, params.password);
+  }
+}

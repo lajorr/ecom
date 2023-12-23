@@ -4,9 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 abstract interface class AuthDataSource {
   Future<User?> signInWithEmailAndPassword(String email, String password);
-  Future<User?> loginWithhGoogle();
+  // Future<User?> loginWithhGoogle();
 
-  // Future<User?> signUpWithEmailAndPassword();
+  Future<User?> signUpWithEmailAndPassword(String email, String password);
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
@@ -25,9 +25,16 @@ class AuthDataSourceImpl implements AuthDataSource {
     return user;
   }
 
+  // @override
+  // Future<User?> loginWithhGoogle() {
+  //   throw UnimplementedError();
+  // }
+
   @override
-  Future<User?> loginWithhGoogle() {
-    // TODO: implement loginWithhGoogle
-    throw UnimplementedError();
+  Future<User?> signUpWithEmailAndPassword(
+      String email, String password) async {
+    final user =
+        await fireAuth.signUpWithEmail(email: email, password: password);
+    return user;
   }
 }

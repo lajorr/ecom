@@ -21,7 +21,7 @@ class FireAuth {
     throw UnimplementedError();
   }
 
-  Future<User?> createUser(
+  Future<User?> signUpWithEmail(
       {required String email, required String password}) async {
     final userCred = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,

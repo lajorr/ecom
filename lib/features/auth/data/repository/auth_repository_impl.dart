@@ -20,12 +20,14 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // @override
-  // Future<Either<Failure, User>> signUpWithEmail() async{
-  //   try {
-  //     final user = await dataSource.si
-  //   } catch (e) {
-      
-  //   }
-  // }
+  @override
+  Future<Either<Failure, User>> signUpWithEmail(
+      String email, String password) async {
+    try {
+      final user = await dataSource.signUpWithEmailAndPassword(email, password);
+      return Right(user!);
+    } on FirebaseAuthException {
+      return Left(FirebaseFailure());
+    }
+  }
 }

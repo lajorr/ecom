@@ -26,6 +26,7 @@ class RouteManager {
             create: (context) => AuthBloc(
               textValidator: sl(),
               loginUsecase: sl(),
+              signupUsecase: sl()
             ),
             child: const WidgetTree(),
           ),

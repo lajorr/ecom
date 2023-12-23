@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:ecom/core/utils/text_validator.dart';
 import 'package:ecom/features/auth/domain/usecases/login_with_email_usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -13,52 +14,63 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final TextValidator textValidator;
-
-  final LoginWithEmailUsecase loginUsecase;
   AuthBloc({
     required this.textValidator,
     required this.loginUsecase,
+    required this.signupUsecase,
   }) : super(AuthInitial()) {
     on<InputValidationEvent>(_onInputValidate);
     on<LoginEvent>(_onLogin);
+    on<SignUpEvent>(_onSignUp);
   }
+
+  final TextValidator textValidator;
+  final LoginWithEmailUsecase loginUsecase;
+  final SignupWithEmailUsecase signupUsecase;
 
   FutureOr<void> _onInputValidate(
       InputValidationEvent event, Emitter<AuthState> emit) {
     final eitherValid = textValidator.inputChecker(event.email, event.password);
-    if (eitherValid.isLeft()) {
-      emit(
-        const InvalidCreds(message: StringConstants.invalidInputText),
-      );
-    } else {
-      emit(CredsValidated());
-    }
+
+    eitherValid.fold(
+        (failure) => emit(
+              const InvalidCreds(message: StringConstants.invalidInputText),
+            ),
+        (valid) => emit(CredsValidated()));
   }
 
   FutureOr<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
-    final eitherValid = textValidator.inputChecker(event.email, event.password);
-    if (eitherValid.isLeft()) {
-      emit(
-        const InvalidCreds(message: StringConstants.invalidInputText),
-      );
+    emit(AuthLoading());
+
+    final loginOrFail = await loginUsecase.call(
+      Params(
+        email: event.email,
+        password: event.password,
+      ),
+    );
+
+    if (loginOrFail.isLeft()) {
+      loginOrFail.leftMap((failure) {
+        emit(const AuthFailure(message: StringConstants.invalidCredsText));
+      });
     } else {
-      emit(AuthLoading());
+      loginOrFail.map((user) => emit(AuthSuccess(user: user)));
+    }
+  }
 
-      final loginOrFail = await loginUsecase.call(
-        Params(
-          email: event.email,
-          password: event.password,
-        ),
-      );
-
-      if (loginOrFail.isLeft()) {
-        loginOrFail.leftMap((failure) {
-          emit(const AuthFailure(message: StringConstants.invalidCredsText));
-        });
-      } else {
-        loginOrFail.map((user) => emit(AuthSuccess(user: user)));
-      }
+  FutureOr<void> _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
+    final signUpOrFail = await signupUsecase.call(
+      Params(
+        email: event.email,
+        password: event.password,
+      ),
+    );
+    if (signUpOrFail.isLeft()) {
+      signUpOrFail.leftMap((failure) {
+        emit(const AuthFailure(message: StringConstants.invalidCredsText));
+      });
+    } else {
+      signUpOrFail.map((user) => emit(AuthSuccess(user: user)));
     }
   }
 }

@@ -19,7 +19,7 @@ class LoginWithEmailEvent extends AuthEvent {
   final String password;
 }
 
-class SignUpWithEmailEvent extends AuthEvent {}
+
 
 class InputValidationEvent extends AuthEvent {
   final String email;

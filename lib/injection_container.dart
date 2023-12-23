@@ -4,6 +4,7 @@ import 'package:ecom/features/auth/data/dataSource/auth_data_source.dart';
 import 'package:ecom/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:ecom/features/auth/domain/repository/auth_repository.dart';
 import 'package:ecom/features/auth/domain/usecases/login_with_email_usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -15,11 +16,13 @@ void init() {
     () => AuthBloc(
       textValidator: sl(),
       loginUsecase: sl(),
+      signupUsecase: sl(),
     ),
   );
 
   //usecase
   sl.registerLazySingleton(() => LoginWithEmailUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SignupWithEmailUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(

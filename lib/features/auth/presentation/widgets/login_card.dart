@@ -43,12 +43,21 @@ class _LoginCardState extends State<LoginCard> {
             ),
           );
         } else if (state is CredsValidated) {
-          BlocProvider.of<AuthBloc>(context).add(
-            LoginEvent(
-              email: email,
-              password: password,
-            ),
-          );
+          if (!onSignUp) {
+            BlocProvider.of<AuthBloc>(context).add(
+              LoginEvent(
+                email: email,
+                password: password,
+              ),
+            );
+          } else {
+            BlocProvider.of<AuthBloc>(context).add(
+              SignUpEvent(
+                email: email,
+                password: password,
+              ),
+            );
+          }
         }
       },
       builder: (context, state) {
