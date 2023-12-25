@@ -1,11 +1,11 @@
-import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:ecom/features/auth/presentation/screens/login_screen.dart';
-import 'package:ecom/features/checkout/presentation/checkout_screen.dart';
-import 'package:ecom/features/prod_detail/presentation/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/widgets/widget_tree.dart';
+import '../../features/checkout/presentation/checkout_screen.dart';
+import '../../features/prod_detail/presentation/details_screen.dart';
 import '../../injection_container.dart';
 
 class RouteManager {
@@ -26,7 +26,8 @@ class RouteManager {
             create: (context) => AuthBloc(
               textValidator: sl(),
               loginUsecase: sl(),
-              signupUsecase: sl()
+              signupUsecase: sl(),
+              googleSigninUsecase: sl(),
             ),
             child: const WidgetTree(),
           ),

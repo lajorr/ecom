@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/auth/data/dataSource/auth_data_source.dart';
-import 'package:ecom/features/auth/domain/repository/auth_repository.dart';
+import '../../../../core/error/failures.dart';
+import '../dataSource/auth_data_source.dart';
+import '../../domain/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -28,6 +28,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(user!);
     } on FirebaseAuthException {
       return Left(FirebaseFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> signInWithGoogle() async {
+    try {
+      final user = await dataSource.signInWithGoogle();
+      return Right(user!);
+    } catch (e) {
+      throw UnimplementedError();
     }
   }
 }

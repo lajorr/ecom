@@ -1,5 +1,5 @@
-import 'package:ecom/product_json_data/product_json.dart';
-import 'package:ecom/shared/product/model/product_global_model.dart';
+import '../../../../product_json_data/product_json.dart';
+import '../../../../shared/product/model/product_global_model.dart';
 import 'package:flutter/material.dart';
 
 abstract class ProductDataSource {

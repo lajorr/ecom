@@ -1,5 +1,5 @@
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/constants/string_constants.dart';
+import '../../../constants/img_uri.dart';
+import '../../../constants/string_constants.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {

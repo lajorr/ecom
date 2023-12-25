@@ -5,6 +5,9 @@ class StringConstants {
   static const haveAnAccountText = "Already have an account? login now!!";
   static const noAccountText = "No Account? Sign Up!!";
   static const forgotPasswordText = "Forgot Password";
+  static const googleLoginText = 'Login from google';
+
+
 
   static const emailLabel = "Email";
   static const passwordLabel = "Password";

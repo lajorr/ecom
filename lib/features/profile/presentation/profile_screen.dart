@@ -1,6 +1,6 @@
-import 'package:ecom/common/widgets/custom_appbar.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
+import '../../../common/widgets/custom_appbar.dart';
+import '../../../constants/string_constants.dart';
+import '../../../core/firebaseFunctions/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

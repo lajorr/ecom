@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/extensions/string_validator.dart';
+import '../extensions/string_validator.dart';
 
 import '../error/failures.dart';
 

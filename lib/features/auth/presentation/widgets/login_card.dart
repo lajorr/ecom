@@ -65,7 +65,7 @@ class _LoginCardState extends State<LoginCard> {
           isLoading: state is AuthLoading,
           child: Container(
             width: double.infinity,
-            height: MediaQuery.of(context).size.height / 2,
+            height: MediaQuery.of(context).size.height / 1.8,
             padding: const EdgeInsets.all(22),
             margin: const EdgeInsets.symmetric(
               horizontal: 25,
@@ -155,16 +155,24 @@ class _LoginCardState extends State<LoginCard> {
                     ),
 
                     // login from google
-                    // Container(
-                    //   height: 50,
-                    //   margin: const EdgeInsets.symmetric(
-                    //     vertical: 20,
-                    //   ),
-                    //   color: Colors.grey[300],
-                    //   child: const Center(
-                    //     child: Text('Login from google'),
-                    //   ),
-                    // ),
+                    Container(
+                      height: 50,
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 20,
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // BlocProvider.of<AuthBloc>(context).si
+                        },
+                        child: const Text(
+                          StringConstants.googleLoginText,
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ),
 
                     TextButton(
                       onPressed: () {

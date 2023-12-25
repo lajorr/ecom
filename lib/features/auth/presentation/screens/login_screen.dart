@@ -1,4 +1,4 @@
-import 'package:ecom/constants/string_constants.dart';
+import '../../../../constants/string_constants.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/login_card.dart';

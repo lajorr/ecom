@@ -1,5 +1,5 @@
-import 'package:ecom/features/home/presentation/my_grid_tile.dart';
-import 'package:ecom/features/home/repository/product_repository.dart';
+import 'my_grid_tile.dart';
+import '../repository/product_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 

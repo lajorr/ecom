@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class FireAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -18,6 +19,8 @@ class FireAuth {
   }
 
   Future<User?> signInWithGoogle() async {
+    // final googleAuthProvider = GoogleAuthProvider();
+    debugPrint('googgle Sign in firebase auth');
     throw UnimplementedError();
   }
 

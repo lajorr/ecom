@@ -1,8 +1,8 @@
-import 'package:ecom/common/widgets/custom_appbar.dart';
-import 'package:ecom/common/widgets/prod_card.dart';
-import 'package:ecom/common/widgets/rounded_button.dart';
-import 'package:ecom/features/home/repository/product_repository.dart';
-import 'package:ecom/features/prod_detail/presentation/shipping_card.dart';
+import '../../../common/widgets/custom_appbar.dart';
+import '../../../common/widgets/prod_card.dart';
+import '../../../common/widgets/rounded_button.dart';
+import '../../home/repository/product_repository.dart';
+import '../../prod_detail/presentation/shipping_card.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutScreen extends StatelessWidget {

@@ -1,6 +1,6 @@
-import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
-import 'package:ecom/features/auth/presentation/screens/login_screen.dart';
-import 'package:ecom/features/navbar/presentation/navigation_menu.dart';
+import '../../../../core/firebaseFunctions/firebase_auth.dart';
+import '../screens/login_screen.dart';
+import '../../../navbar/presentation/navigation_menu.dart';
 import 'package:flutter/material.dart';
 
 class WidgetTree extends StatefulWidget {

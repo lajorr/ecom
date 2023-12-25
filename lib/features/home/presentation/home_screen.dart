@@ -1,8 +1,8 @@
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/home/presentation/category_tile.dart';
-import 'package:ecom/features/home/presentation/home_header.dart';
-import 'package:ecom/features/home/presentation/my_grid_view.dart';
+import '../../../constants/img_uri.dart';
+import '../../../constants/string_constants.dart';
+import 'category_tile.dart';
+import 'home_header.dart';
+import 'my_grid_view.dart';
 
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
-import 'package:ecom/features/home/data/data_source/product_data_source.dart';
-import 'package:ecom/shared/product/model/product_global_model.dart';
+import '../data/data_source/product_data_source.dart';
+import '../../../shared/product/model/product_global_model.dart';
 
 // abstract class ProductRepository {
 //   List<Product> getProductList();

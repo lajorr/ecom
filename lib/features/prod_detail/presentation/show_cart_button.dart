@@ -1,5 +1,5 @@
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/features/checkout/presentation/checkout_screen.dart';
+import '../../../constants/img_uri.dart';
+import '../../checkout/presentation/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 class ShowCartButton extends StatelessWidget {
