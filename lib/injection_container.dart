@@ -1,4 +1,5 @@
 import 'package:ecom/features/auth/domain/usecases/signin_with_google_usecase.dart';
+import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/firebaseFunctions/firebase_auth.dart';
@@ -16,10 +17,16 @@ void init() {
   // bloc
   sl.registerFactory(
     () => AuthBloc(
-      textValidator: sl(),
+      // textValidator: sl(),
       loginUsecase: sl(),
       signupUsecase: sl(),
       googleSigninUsecase: sl(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => ValidationBloc(
+      textValidator: sl(),
     ),
   );
 

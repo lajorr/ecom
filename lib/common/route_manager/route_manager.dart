@@ -24,7 +24,7 @@ class RouteManager {
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => AuthBloc(
-              textValidator: sl(),
+              // textValidator: sl(),
               loginUsecase: sl(),
               signupUsecase: sl(),
               googleSigninUsecase: sl(),
