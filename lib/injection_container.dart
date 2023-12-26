@@ -1,3 +1,4 @@
+import 'package:ecom/features/auth/domain/usecases/check_user_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -17,7 +18,7 @@ void init() {
   // bloc
   sl.registerFactory(
     () => AuthBloc(
-      // textValidator: sl(),
+      checkUserUsercase: sl(),
       loginUsecase: sl(),
       signupUsecase: sl(),
       googleSigninUsecase: sl(),
@@ -34,6 +35,7 @@ void init() {
   sl.registerLazySingleton(() => LoginWithEmailUsecase(repository: sl()));
   sl.registerLazySingleton(() => SignupWithEmailUsecase(repository: sl()));
   sl.registerLazySingleton(() => SigninWithGoogleUsecase(repository: sl()));
+  sl.registerLazySingleton(() => CheckUserUsercase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(

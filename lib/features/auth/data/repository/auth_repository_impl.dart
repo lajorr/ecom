@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/error/failures.dart';
-import '../dataSource/auth_data_source.dart';
-import '../../domain/repository/auth_repository.dart';
+import 'package:ecom/core/error/exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../domain/repository/auth_repository.dart';
+import '../dataSource/auth_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource dataSource;
@@ -38,6 +40,21 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(user!);
     } catch (e) {
       throw UnimplementedError();
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> checkUser() async {
+    try {
+      final user = await dataSource.checkUser();
+
+      if (user == null) {
+        throw NoUserException();
+      } else {
+        return Right(user);
+      }
+    } on NoUserException {
+      return Left(NoUserFailure());
     }
   }
 }

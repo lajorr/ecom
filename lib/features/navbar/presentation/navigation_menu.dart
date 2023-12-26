@@ -1,11 +1,14 @@
+import 'package:flutter/material.dart';
+
 import '../../../constants/img_uri.dart';
 import '../../home/presentation/home_screen.dart';
-import 'nav_item.dart';
 import '../../profile/presentation/profile_screen.dart';
-import 'package:flutter/material.dart';
+import 'nav_item.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
+
+  static const routeName = '/navigation-menu';
 
   @override
   State<NavigationMenu> createState() => _NavigationMenuState();

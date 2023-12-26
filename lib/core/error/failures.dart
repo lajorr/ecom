@@ -10,3 +10,5 @@ class FirebaseFailure extends Failure {}
 class InvalidInputFailure extends Failure {}
 
 class EmptyFieldFailure extends Failure{}
+
+class NoUserFailure extends Failure{}

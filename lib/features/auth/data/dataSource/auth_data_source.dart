@@ -7,6 +7,7 @@ abstract interface class AuthDataSource {
   Future<User?> signInWithGoogle();
 
   Future<User?> signUpWithEmailAndPassword(String email, String password);
+  Future<User?> checkUser();
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
@@ -36,6 +37,12 @@ class AuthDataSourceImpl implements AuthDataSource {
   @override
   Future<User?> signInWithGoogle() async {
     final user = await fireAuth.signInWithGoogle();
+    return user;
+  }
+
+  @override
+  Future<User?> checkUser() async {
+    final user = fireAuth.currentUser;
     return user;
   }
 }

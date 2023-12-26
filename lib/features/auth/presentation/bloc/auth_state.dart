@@ -28,4 +28,8 @@ final class InvalidCreds extends AuthState {
 
   const InvalidCreds({required this.message});
 }
-final class CredsValidated extends AuthState{}
+// final class CredsValidated extends AuthState{}
+
+final class UserAvailable extends AuthState {}
+
+final class UserUnavailable extends AuthState {}

@@ -35,4 +35,6 @@ class SignUpEvent extends AuthEvent {
   const SignUpEvent({required this.email, required this.password});
 }
 
+class CheckUserExistsEvent extends AuthEvent{}
+
 class GoogleSignInEvent extends AuthEvent {}

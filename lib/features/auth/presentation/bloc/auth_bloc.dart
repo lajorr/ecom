@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:ecom/core/usecase/usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/check_user_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/login_with_email_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signup_with_email_usecase.dart';
@@ -17,32 +18,21 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
-    // required this.textValidator,
     required this.loginUsecase,
     required this.signupUsecase,
     required this.googleSigninUsecase,
+    required this.checkUserUsercase,
   }) : super(AuthInitial()) {
-    // on<InputValidationEvent>(_onInputValidate);
     on<LoginEvent>(_onLogin);
     on<SignUpEvent>(_onSignUp);
     on<GoogleSignInEvent>(_onGoogleSignIn);
+    on<CheckUserExistsEvent>(_onCheckUserExists);
   }
 
-  // final TextValidator textValidator;
   final LoginWithEmailUsecase loginUsecase;
   final SignupWithEmailUsecase signupUsecase;
   final SigninWithGoogleUsecase googleSigninUsecase;
-
-  // FutureOr<void> _onInputValidate(
-  //     InputValidationEvent event, Emitter<AuthState> emit) {
-  //   final eitherValid = textValidator.inputChecker(event.email, event.password);
-
-  //   eitherValid.fold(
-  //       (failure) => emit(
-  //             const InvalidCreds(message: StringConstants.invalidInputText),
-  //           ),
-  //       (valid) => emit(CredsValidated()));
-  // }
+  final CheckUserUsercase checkUserUsercase;
 
   FutureOr<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
@@ -60,6 +50,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       });
     } else {
       loginOrFail.map((user) => emit(AuthSuccess(user: user)));
+    }
+  }
+
+  FutureOr<void> _onCheckUserExists(
+      CheckUserExistsEvent event, Emitter<AuthState> emit) async {
+    final userOrFail = await checkUserUsercase.call(NoParams());
+
+    if (userOrFail.isLeft()) {
+      emit(UserUnavailable());
+    } else {
+      debugPrint('availabe');
+      emit(UserAvailable());
     }
   }
 
