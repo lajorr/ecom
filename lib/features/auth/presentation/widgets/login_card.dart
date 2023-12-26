@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:ecom/features/navbar/presentation/navigation_menu.dart';
 import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,14 +32,12 @@ class _LoginCardState extends State<LoginCard> {
 
   @override
   Widget build(BuildContext context) {
-    // final validationBloc = BlocProvider.of<ValidationBloc>(context);
-
     return Builder(builder: (context) {
-      return BlocListener<ValidationBloc, ValidationState>(
+      return BlocConsumer<ValidationBloc, ValidationState>(
         listener: (context, validationState) {
           if (validationState is ValidationSuccess) {
             if (!onSignUp) {
-              print("signin??");
+              // print("signin??");
               BlocProvider.of<AuthBloc>(context).add(
                 LoginEvent(
                   email: email,
@@ -46,7 +45,6 @@ class _LoginCardState extends State<LoginCard> {
                 ),
               );
             } else {
-              
               BlocProvider.of<AuthBloc>(context).add(
                 SignUpEvent(
                   email: email,
@@ -63,7 +61,8 @@ class _LoginCardState extends State<LoginCard> {
             );
           }
         },
-        child: BlocConsumer<AuthBloc, AuthState>(
+        builder: (context, validationState) =>
+            BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -72,8 +71,10 @@ class _LoginCardState extends State<LoginCard> {
                   content: Text(state.message),
                 ),
               );
+            } else if (state is UserAvailable) {
+              Navigator.of(context)
+                  .pushReplacementNamed(NavigationMenu.routeName);
             }
-            
           },
           builder: (context, state) {
             return LoadingWidet(
@@ -104,8 +105,9 @@ class _LoginCardState extends State<LoginCard> {
                         ),
                         MyTextField(
                           label: StringConstants.emailLabel,
-                          errorMsg:
-                              (state is InvalidCreds) ? state.message : null,
+                          errorMsg: (validationState is ValidationFailure)
+                              ? validationState.message
+                              : null,
                           prefixIcon: const Icon(
                             Icons.mail_outline_rounded,
                           ),
@@ -118,8 +120,9 @@ class _LoginCardState extends State<LoginCard> {
                           height: 10,
                         ),
                         MyTextField(
-                          errorMsg:
-                              (state is InvalidCreds) ? state.message : null,
+                          errorMsg: (validationState is ValidationFailure)
+                              ? validationState.message
+                              : null,
                           label: StringConstants.passwordLabel,
                           prefixIcon: const Icon(
                             Icons.vpn_key,

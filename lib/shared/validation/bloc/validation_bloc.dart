@@ -21,18 +21,18 @@ class ValidationBloc extends Bloc<ValidationEvent, ValidationState> {
   FutureOr<void> _onValidateEvent(
       ValidateInputEvent event, Emitter<ValidationState> emit) {
     debugPrint("validate input event");
+    emit(ValidationInitial());
 
     final eitherValid = textValidator.inputChecker(event.email, event.password);
-    eitherValid.fold(
-      (failure) {
-        emit(
-          const ValidationFailure(message: 'Validation failed'),
-        );
-        // emit(InvalidCreds(message: 'asd'))
-      },
-      (isValid) => emit(
+    eitherValid.fold((failure) {
+      emit(
+        const ValidationFailure(message: 'Validation failed'),
+      );
+      // emit(InvalidCreds(message: 'asd'))
+    }, (isValid) {
+      emit(
         ValidationSuccess(),
-      ),
-    );
+      );
+    });
   }
 }

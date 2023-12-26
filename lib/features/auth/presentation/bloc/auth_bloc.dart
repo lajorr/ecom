@@ -47,14 +47,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (loginOrFail.isLeft()) {
       loginOrFail.leftMap((failure) {
         emit(const AuthFailure(message: StringConstants.invalidCredsText));
+        emit(UserUnavailable());
       });
     } else {
-      loginOrFail.map((user) => emit(AuthSuccess(user: user)));
+      loginOrFail.map((user) {
+        emit(AuthSuccess(user: user));
+        emit(UserAvailable());
+      });
     }
   }
 
   FutureOr<void> _onCheckUserExists(
       CheckUserExistsEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
     final userOrFail = await checkUserUsercase.call(NoParams());
 
     if (userOrFail.isLeft()) {
@@ -66,6 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
     final signUpOrFail = await signupUsecase.call(
       Params(
         email: event.email,
@@ -75,9 +81,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (signUpOrFail.isLeft()) {
       signUpOrFail.leftMap((failure) {
         emit(const AuthFailure(message: StringConstants.invalidCredsText));
+        emit(UserUnavailable());
       });
     } else {
-      signUpOrFail.map((user) => emit(AuthSuccess(user: user)));
+      signUpOrFail.map((user) {
+        emit(AuthSuccess(user: user));
+        emit(UserAvailable());
+      });
     }
   }
 
