@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:ecom/core/usecase/usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/check_user_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/login_with_email_usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -22,17 +23,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.signupUsecase,
     required this.googleSigninUsecase,
     required this.checkUserUsercase,
+    required this.signOutUsecase,
   }) : super(AuthInitial()) {
     on<LoginEvent>(_onLogin);
     on<SignUpEvent>(_onSignUp);
     on<GoogleSignInEvent>(_onGoogleSignIn);
     on<CheckUserExistsEvent>(_onCheckUserExists);
+    on<SignOutEvent>(_onSignOut);
   }
 
   final LoginWithEmailUsecase loginUsecase;
   final SignupWithEmailUsecase signupUsecase;
   final SigninWithGoogleUsecase googleSigninUsecase;
   final CheckUserUsercase checkUserUsercase;
+  final SignOutUsecase signOutUsecase;
 
   FutureOr<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
@@ -52,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       loginOrFail.map((user) {
         emit(AuthSuccess(user: user));
-        emit(UserAvailable());
+        emit(const UserAvailable());
       });
     }
   }
@@ -66,7 +70,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(UserUnavailable());
     } else {
       debugPrint('availabe');
-      emit(UserAvailable());
+      emit(const UserAvailable());
     }
   }
 
@@ -86,7 +90,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       signUpOrFail.map((user) {
         emit(AuthSuccess(user: user));
-        emit(UserAvailable());
+        emit(UserAvailable(email: user.email!));
       });
     }
   }
@@ -100,6 +104,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (user) {
       emit(AuthLoading());
       emit(AuthSuccess(user: user));
+    });
+  }
+
+  FutureOr<void> _onSignOut(SignOutEvent event, Emitter<AuthState> emit) async {
+    final signOurOrFail = await signOutUsecase.call(NoParams());
+
+    signOurOrFail.fold(
+        (failure) => emit(
+              SignoutFailed(),
+            ), (response) {
+      emit(AuthLoading());
+      emit(SignoutSuccess());
     });
   }
 }

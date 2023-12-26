@@ -8,6 +8,8 @@ abstract interface class AuthDataSource {
 
   Future<User?> signUpWithEmailAndPassword(String email, String password);
   Future<User?> checkUser();
+
+  Future<void> signOut();
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
@@ -44,5 +46,10 @@ class AuthDataSourceImpl implements AuthDataSource {
   Future<User?> checkUser() async {
     final user = fireAuth.currentUser;
     return user;
+  }
+
+  @override
+  Future<void> signOut() async {
+    fireAuth.signOut();
   }
 }

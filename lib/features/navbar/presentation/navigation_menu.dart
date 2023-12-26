@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../constants/img_uri.dart';
 import '../../catalog/presentation/screens/catalog_screen.dart';
-import '../../profile/presentation/profile_screen.dart';
+import '../../profile/presentation/screens/profile_screen.dart';
 import 'nav_item.dart';
 
 class NavigationMenu extends StatefulWidget {

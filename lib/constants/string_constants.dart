@@ -7,8 +7,6 @@ class StringConstants {
   static const forgotPasswordText = "Forgot Password";
   static const googleLoginText = 'Login from google';
 
-
-
   static const emailLabel = "Email";
   static const passwordLabel = "Password";
   static const emailErrorMsg1 = "Enter an email";
@@ -39,6 +37,8 @@ class StringConstants {
 
   static const profileText = "Profile";
   static const logOutText = "Log Out";
+
+  static const signoutSuccessText = "Sign out Successfull";
 
   //errors
   static const invalidCredsText = 'INVALID CREDENTIALS';

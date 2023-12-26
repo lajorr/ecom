@@ -1,9 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/common/widgets/like_button.dart';
 import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/features/prod_detail/presentation/details_screen.dart';
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
+
+import '../../../prod_detail/presentation/details_screen.dart';
 
 class MyGridTile extends StatelessWidget {
   const MyGridTile({
@@ -15,17 +16,12 @@ class MyGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void onCardTap() {
-      Navigator.of(context).pushNamed(
-        DetailsScreen.routeNmae,
-        arguments: product,
-      );
-    }
-
     return GestureDetector(
-      onTap: onCardTap,
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(DetailsScreen.routeName, arguments: product);
+      },
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment,
         children: [
           //image
           Stack(

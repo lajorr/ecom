@@ -29,6 +29,14 @@ final class InvalidCreds extends AuthState {
   const InvalidCreds({required this.message});
 }
 
-final class UserAvailable extends AuthState {}
+final class UserAvailable extends AuthState {
+  final String? email;
+
+  const UserAvailable({this.email});
+}
 
 final class UserUnavailable extends AuthState {}
+
+final class SignoutSuccess extends AuthState {}
+
+final class SignoutFailed extends AuthState {}

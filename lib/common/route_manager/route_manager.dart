@@ -1,5 +1,6 @@
 import 'package:ecom/features/navbar/presentation/navigation_menu.dart';
 import 'package:ecom/features/splash/presentation/splash_screen.dart';
+import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,10 +38,13 @@ class RouteManager {
             child: const LoginScreen(),
           ),
         );
-      case DetailsScreen.routeNmae:
+      case DetailsScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => const DetailsScreen(),
+          builder: (context) => DetailsScreen(
+            product: settings.arguments as ProductModel,
+          ),
         );
+
       // case CheckoutScreen.routeName:
       //   return MaterialPageRoute(
       //     builder: (context) => const CheckoutScreen(),

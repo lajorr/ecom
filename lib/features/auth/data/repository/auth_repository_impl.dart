@@ -57,4 +57,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(NoUserFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, void>> signOut() async {
+    try {
+      final a = await dataSource.signOut();
+      return Right(a);
+    } on FirebaseAuthException {
+      return Left(FirebaseFailure());
+    }
+  }
 }

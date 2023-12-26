@@ -13,12 +13,6 @@ class ProductSize extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List<Color> colorList = const [
-    //   Color.fromRGBO(27, 32, 40, 0.3),
-    //   Color(0xff1B2028),
-    //   Color(0xff292526),
-    // ];
-
     final colorList = product.listSizeColor;
 
     return Row(
@@ -85,7 +79,6 @@ class ProductSize extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: colorList?.length ?? 0,
                   itemBuilder: (context, index) {
-                    debugPrint(colorList?.first.color.colorCode);
                     final color = colorList![index].color.colorCode;
                     return Padding(
                       padding: const EdgeInsets.only(

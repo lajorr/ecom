@@ -14,17 +14,15 @@ import 'show_cart_button.dart';
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({
     Key? key,
-    // required this.product,
+    required this.product,
   }) : super(key: key);
 
-  // final Product product;
+  final ProductModel product;
 
-  static const routeNmae = '/prod-detail';
+  static const routeName = '/prod-detail';
 
   @override
   Widget build(BuildContext context) {
-    final product = ModalRoute.of(context)!.settings.arguments as ProductModel;
-
     final media = MediaQuery.of(context).size;
 
     return Scaffold(
