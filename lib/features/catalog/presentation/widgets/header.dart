@@ -1,6 +1,7 @@
-import '../../../constants/img_uri.dart';
-import '../../../constants/string_constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../constants/img_uri.dart';
+import '../../../../constants/string_constants.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});

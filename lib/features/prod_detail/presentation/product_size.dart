@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/shared/product/model/product_global_model.dart' as p;
+import 'package:ecom/shared/catalog/model/product_model.dart' as p;
 import 'package:flutter/material.dart';
 
 class ProductSize extends StatelessWidget {
@@ -9,7 +9,7 @@ class ProductSize extends StatelessWidget {
     required this.product,
   }) : super(key: key);
 
-  final p.Product product;
+  final p.ProductModel product;
 
   @override
   Widget build(BuildContext context) {

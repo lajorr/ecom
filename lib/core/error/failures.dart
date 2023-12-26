@@ -12,3 +12,8 @@ class InvalidInputFailure extends Failure {}
 class EmptyFieldFailure extends Failure{}
 
 class NoUserFailure extends Failure{}
+
+
+// catalog
+
+class ServerFailure extends Failure{}

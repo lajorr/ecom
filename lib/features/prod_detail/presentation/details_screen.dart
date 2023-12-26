@@ -6,7 +6,7 @@ import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/prod_detail/presentation/prod_info.dart';
 import 'package:ecom/features/prod_detail/presentation/product_size.dart';
-import 'package:ecom/shared/product/model/product_global_model.dart';
+import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 
 import 'show_cart_button.dart';
@@ -23,7 +23,7 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = ModalRoute.of(context)!.settings.arguments as Product;
+    final product = ModalRoute.of(context)!.settings.arguments as ProductModel;
 
     final media = MediaQuery.of(context).size;
 

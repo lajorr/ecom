@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/checkout/presentation/checkout_screen.dart';
 import '../../features/prod_detail/presentation/details_screen.dart';
 import '../../injection_container.dart';
 
@@ -42,10 +41,10 @@ class RouteManager {
         return MaterialPageRoute(
           builder: (context) => const DetailsScreen(),
         );
-      case CheckoutScreen.routeName:
-        return MaterialPageRoute(
-          builder: (context) => const CheckoutScreen(),
-        );
+      // case CheckoutScreen.routeName:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const CheckoutScreen(),
+      //   );
       default:
         return null;
     }

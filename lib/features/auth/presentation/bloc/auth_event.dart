@@ -12,20 +12,13 @@ sealed class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
-// class InputValidationEvent extends AuthEvent {
-//   final String email;
-//   final String password;
-
-//   const InputValidationEvent({required this.email, required this.password});
-// }
-
 class LoginEvent extends AuthEvent {
-  final String email;
-  final String password;
   const LoginEvent({
     required this.email,
     required this.password,
   });
+  final String email;
+  final String password;
 }
 
 class SignUpEvent extends AuthEvent {
@@ -35,6 +28,6 @@ class SignUpEvent extends AuthEvent {
   const SignUpEvent({required this.email, required this.password});
 }
 
-class CheckUserExistsEvent extends AuthEvent{}
+class CheckUserExistsEvent extends AuthEvent {}
 
 class GoogleSignInEvent extends AuthEvent {}

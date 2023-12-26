@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/shared/product/model/product_global_model.dart' as p;
+import 'package:ecom/shared/catalog/model/product_model.dart' as p;
 import 'package:flutter/material.dart';
 
 class ProdCard extends StatelessWidget {
@@ -8,7 +8,7 @@ class ProdCard extends StatelessWidget {
     required this.product,
   }) : super(key: key);
 
-  final p.Product product;
+  final p.ProductModel product;
 
   @override
   Widget build(BuildContext context) {

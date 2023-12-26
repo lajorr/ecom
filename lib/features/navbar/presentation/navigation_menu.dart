@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/img_uri.dart';
-import '../../home/presentation/home_screen.dart';
+import '../../catalog/presentation/screens/catalog_screen.dart';
 import '../../profile/presentation/profile_screen.dart';
 import 'nav_item.dart';
 
@@ -18,7 +18,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   int selectedIndex = 0;
 
   List<Widget> pages = [
-    const HomeScreen(),
+    const CatalogScreen(),
     // const FavScreen(),
     const ProfileScreen(),
   ];
