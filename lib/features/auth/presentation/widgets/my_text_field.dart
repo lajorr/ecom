@@ -7,7 +7,7 @@ class MyTextField extends StatefulWidget {
   const MyTextField({
     Key? key,
     required this.label,
-    required this.errorMsg,
+    this.errorMsg,
     required this.prefixIcon,
     this.inputType = TextInputType.text,
     this.obscure = false,
@@ -26,17 +26,35 @@ class MyTextField extends StatefulWidget {
 }
 
 class _MyTextFieldState extends State<MyTextField> {
-  late bool isPasswordField;
+  bool isPasswordField = false;
   bool isVisible = true;
+  String hintText = '';
 
   @override
   void initState() {
     super.initState();
-    if (widget.inputType == TextInputType.visiblePassword) {
-      isPasswordField = true;
-    } else {
-      isPasswordField = false;
+    switch (widget.inputType) {
+      case TextInputType.visiblePassword:
+        hintText = StringConstants.passwordHintText;
+        isPasswordField = true;
+        break;
+      case TextInputType.name:
+        hintText = "Username";
+        break;
+      case TextInputType.emailAddress:
+        hintText = "abc@asd.com";
+        break;
+      case TextInputType.phone:
+        hintText = "123456789";
+      default:
+        hintText = ".....";
     }
+
+    // if (widget.inputType == TextInputType.visiblePassword) {
+    //   isPasswordField = true;
+    // } else {
+    //   isPasswordField = false;
+    // }
   }
 
   @override
@@ -85,9 +103,7 @@ class _MyTextFieldState extends State<MyTextField> {
                   )
                 : null,
             border: const OutlineInputBorder(),
-            hintText: widget.obscure
-                ? StringConstants.passwordHintText
-                : StringConstants.emailHintText,
+            hintText: hintText,
           ),
         )
       ],

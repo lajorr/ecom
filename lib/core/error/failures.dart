@@ -13,6 +13,8 @@ class EmptyFieldFailure extends Failure{}
 
 class NoUserFailure extends Failure{}
 
+class UserUpdateFailure extends Failure{}
+
 
 // catalog
 

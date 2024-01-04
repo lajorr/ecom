@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/constants/img_uri.dart';
 import 'package:flutter/material.dart';
 
 import 'my_button.dart';
@@ -9,12 +8,12 @@ class CustomAppbar extends StatelessWidget {
     Key? key,
     required this.title,
     this.backButton = true,
-    this.actions = true,
+    required this.actions,
   }) : super(key: key);
 
   final String title;
   final bool backButton;
-  final bool actions;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +42,7 @@ class CustomAppbar extends StatelessWidget {
               ),
             ),
           ),
-          if (actions)
-            const Flexible(
-              flex: 1,
-              fit: FlexFit.loose,
-              child: MyButton(
-                size: 40,
-                dropShadow: false,
-                iconUri: ImageConstants.moreIcon,
-              ),
-            ),
+          if (actions.isNotEmpty) ...actions,
         ],
       ),
     );

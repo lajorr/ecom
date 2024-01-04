@@ -6,6 +6,7 @@ import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../profile/presentation/bloc/profile_bloc.dart';
 import '../widgets/my_text_field.dart';
 
 class LoginCard extends StatefulWidget {
@@ -37,7 +38,6 @@ class _LoginCardState extends State<LoginCard> {
         listener: (context, validationState) {
           if (validationState is ValidationSuccess) {
             if (!onSignUp) {
-              // print("signin??");
               BlocProvider.of<AuthBloc>(context).add(
                 LoginEvent(
                   email: email,
@@ -64,7 +64,7 @@ class _LoginCardState extends State<LoginCard> {
         builder: (context, validationState) =>
             BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is AuthFailure) {
+            if (state is AuthFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Theme.of(context).colorScheme.error,
@@ -72,6 +72,7 @@ class _LoginCardState extends State<LoginCard> {
                 ),
               );
             } else if (state is UserAvailable) {
+              BlocProvider.of<ProfileBloc>(context).add(FetchUserDataEvent());
               Navigator.of(context)
                   .pushReplacementNamed(NavigationMenu.routeName);
             }

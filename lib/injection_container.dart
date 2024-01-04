@@ -1,4 +1,5 @@
 import 'package:ecom/features/auth/domain/usecases/check_user_usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/set_user_data_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'package:ecom/features/catalog/data/data_source/product_data_source.dart';
@@ -9,6 +10,7 @@ import 'package:ecom/features/catalog/presentation/bloc/catalog_bloc.dart';
 import 'package:ecom/features/profile/data/data%20source/user_data_source.dart';
 import 'package:ecom/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:ecom/features/profile/domain/usecase/fetch_user_data_usecase.dart';
+import 'package:ecom/features/profile/domain/usecase/udpate_user_data_usecase.dart';
 import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -34,6 +36,7 @@ void init() {
       signupUsecase: sl(),
       googleSigninUsecase: sl(),
       signOutUsecase: sl(),
+      setUserDataUsecase: sl(),
     ),
   );
 
@@ -51,6 +54,7 @@ void init() {
   sl.registerFactory(
     () => ProfileBloc(
       fetchUserDataUsecase: sl(),
+      updateUserDataUsecase: sl(),
     ),
   );
 
@@ -63,6 +67,8 @@ void init() {
 
   sl.registerLazySingleton(() => GetProductDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchUserDataUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SetUserDataUsecase(repository: sl()));
+  sl.registerLazySingleton(() => UpdateUserDataUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(
@@ -85,7 +91,8 @@ void init() {
   sl.registerLazySingleton<AuthDataSource>(
       () => AuthDataSourceImpl(fireAuth: sl()));
 
-  sl.registerLazySingleton<ProductDataSource>(() => ProductDataSourceImpl());
+  sl.registerLazySingleton<ProductDataSource>(
+      () => ProductDataSourceImpl(fireAuth: sl()));
   sl.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(fireAuth: sl()));
 

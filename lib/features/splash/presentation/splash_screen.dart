@@ -1,6 +1,7 @@
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ecom/features/auth/presentation/screens/login_screen.dart';
 import 'package:ecom/features/navbar/presentation/navigation_menu.dart';
+import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,13 +28,11 @@ class _SpashScreenState extends State<SpashScreen> {
           const Duration(seconds: 3),
           () {
             if (state is UserAvailable) {
+              BlocProvider.of<ProfileBloc>(context).add(FetchUserDataEvent());
               Navigator.of(context)
                   .pushReplacementNamed(NavigationMenu.routeName);
-            }
-            else if (state is UserUnavailable)
-            {
-               Navigator.of(context)
-                  .pushReplacementNamed(LoginScreen.routeName);
+            } else if (state is UserUnavailable) {
+              Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
             }
           },
         );

@@ -6,14 +6,14 @@ import '../../../../core/usecase/usecase.dart';
 import '../repository/auth_repository.dart';
 import 'login_with_email_usecase.dart';
 
-class SignupWithEmailUsecase extends Usecase<User, Params> {
+class SignupWithEmailUsecase extends Usecase<User?, Params> {
   SignupWithEmailUsecase({
     required this.repository,
   });
 
   final AuthRepository repository;
   @override
-  Future<Either<Failure, User>> call(params) {
-    return repository.signUpWithEmail(params.email, params.password);
+  Future<Either<Failure, User?>> call(params) async {
+    return await repository.signUpWithEmail(params.email, params.password);
   }
 }
