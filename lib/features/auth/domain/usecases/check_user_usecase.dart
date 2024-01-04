@@ -9,7 +9,7 @@ class CheckUserUsercase extends Usecase<User, NoParams> {
 
   CheckUserUsercase({required this.repository});
   @override
-  Future<Either<Failure, User>> call(NoParams params) {
-    return repository.checkUser();
+  Future<Either<Failure, User>> call(NoParams params) async {
+    return await repository.checkUser();
   }
 }

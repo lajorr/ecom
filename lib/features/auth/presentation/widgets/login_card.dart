@@ -64,7 +64,7 @@ class _LoginCardState extends State<LoginCard> {
         builder: (context, validationState) =>
             BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is AuthFailure) {
+            if (state is AuthFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Theme.of(context).colorScheme.error,

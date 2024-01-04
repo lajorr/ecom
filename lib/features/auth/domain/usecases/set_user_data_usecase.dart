@@ -4,12 +4,12 @@ import 'package:ecom/core/usecase/usecase.dart';
 import 'package:ecom/features/auth/domain/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class SigninWithGoogleUsecase extends Usecase<User?, NoParams> {
-  SigninWithGoogleUsecase({required this.repository});
+class SetUserDataUsecase extends Usecase<void, User?> {
   final AuthRepository repository;
+
+  SetUserDataUsecase({required this.repository});
   @override
-  Future<Either<Failure, User?>> call(NoParams params) async {
-    return await repository.signInWithGoogle();
+  Future<Either<Failure, void>> call(User? params) async {
+    return await repository.setUserData(params);
   }
 }
-

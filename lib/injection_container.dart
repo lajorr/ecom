@@ -1,4 +1,5 @@
 import 'package:ecom/features/auth/domain/usecases/check_user_usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/set_user_data_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'package:ecom/features/catalog/data/data_source/product_data_source.dart';
@@ -34,6 +35,7 @@ void init() {
       signupUsecase: sl(),
       googleSigninUsecase: sl(),
       signOutUsecase: sl(),
+      setUserDataUsecase: sl(),
     ),
   );
 
@@ -63,6 +65,7 @@ void init() {
 
   sl.registerLazySingleton(() => GetProductDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchUserDataUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SetUserDataUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(

@@ -12,15 +12,15 @@ final class AuthInitial extends AuthState {}
 final class AuthLoading extends AuthState {}
 
 final class AuthSuccess extends AuthState {
-  final User user;
+  final User? user;
 
   const AuthSuccess({required this.user});
 }
 
-final class AuthFailure extends AuthState {
+final class AuthFailed extends AuthState {
   final String message;
 
-  const AuthFailure({required this.message});
+  const AuthFailed({required this.message});
 }
 
 final class InvalidCreds extends AuthState {
@@ -40,3 +40,7 @@ final class UserUnavailable extends AuthState {}
 final class SignoutSuccess extends AuthState {}
 
 final class SignoutFailed extends AuthState {}
+final class AuthSetUserFailed extends AuthState {}
+final class AuthSetUserSuccess extends AuthState {}
+
+
