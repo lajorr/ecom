@@ -1,11 +1,11 @@
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ecom/features/auth/presentation/screens/login_screen.dart';
+import 'package:ecom/features/auth/presentation/widgets/my_text_field.dart';
 import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:ecom/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/widgets/custom_appbar.dart';
 import '../../../../constants/string_constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -18,12 +18,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final formKey = GlobalKey<FormState>();
+
+  String? email;
+  String? username;
+  String? phNumber;
+
+  void onFormSave() {}
+
   @override
   Widget build(BuildContext context) {
-    // User currentUser = FireAuth().currentUser!;
-
-    // String email = currentUser.email!;
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -46,42 +50,129 @@ class _ProfileScreenState extends State<ProfileScreen> {
               );
             }
           },
-          child: BlocBuilder<ProfileBloc, ProfileState>(
+          child: BlocConsumer<ProfileBloc, ProfileState>(
+            listener: (context, state) {
+              if (state is ProfileLoaded) {
+                setState(() {
+                  email = state.email;
+                  username = state.username;
+                  phNumber = state.phNumber.toString();
+                });
+              }
+            },
             builder: (context, state) => Scaffold(
-              body: Builder(
-                builder: (context) {
-                  return SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          const CustomAppbar(
-                            title: StringConstants.profileText,
-                            actions: false,
-                            backButton: false,
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          if (state is ProfileLoaded) Text(state.email),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(SignOutEvent());
-                            },
-                            child: const Text(
-                              StringConstants.logOutText,
+              appBar: AppBar(
+                title: const Text('Profile'),
+                centerTitle: true,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => BlocProvider.value(
+                          value: context.read<ProfileBloc>(),
+                          child: AlertDialog(
+                            content: Form(
+                              key: formKey,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  MyTextField(
+                                    label: "Username",
+                                    // errorMsg: "Enter Username",
+                                    prefixIcon: const Icon(Icons.person),
+                                    inputType: TextInputType.name,
+                                    onFieldSave: (value) {
+                                      username = value;
+                                    },
+                                  ),
+                                  MyTextField(
+                                    label: "Phone Number",
+                                    // errorMsg: "Enter a phone number",
+                                    prefixIcon: const Icon(Icons.phone),
+                                    inputType: TextInputType.phone,
+                                    onFieldSave: (value) {
+                                      phNumber = value;
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
+                            actions: [
+                              Builder(builder: (context) {
+                                return MaterialButton(
+                                  onPressed: () {
+                                    formKey.currentState!.save();
+
+                                    BlocProvider.of<ProfileBloc>(context).add(
+                                      UpdateUserDataEvent(
+                                        username: username,
+                                        phNumber: phNumber,
+                                      ),
+                                    );
+
+                                    Navigator.of(context).pop();
+                                  },
+                                  color: Theme.of(context).colorScheme.primary,
+                                  child: const Text('Ok'),
+                                );
+                              }),
+                              MaterialButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                color: Theme.of(context).colorScheme.primary,
+                                child: const Text('Cancel'),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.edit),
+                  ),
+                ],
+              ),
+              body: Builder(builder: (context) {
+                if (state is ProfileLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
                 }
-              ),
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Text(email ?? ""),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Text(username ?? "___"),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Text(phNumber ?? "___"),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            BlocProvider.of<AuthBloc>(context)
+                                .add(SignOutEvent());
+                          },
+                          child: const Text(
+                            StringConstants.logOutText,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             ),
           ),
         );

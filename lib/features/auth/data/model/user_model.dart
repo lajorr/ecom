@@ -4,9 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 class UserModel extends UserEntity {
   const UserModel({
     required super.uid,
-    required super.name,
+    super.name,
     required super.email,
-    required super.phNumber,
+    super.phNumber,
   });
 
   Map<String, dynamic> toMap() {
@@ -16,6 +16,15 @@ class UserModel extends UserEntity {
       'email': email,
       'phNumber': phNumber,
     };
+  }
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      uid: map['uid'],
+      email: map['email'],
+      name: map['name'],
+      phNumber: map['phNumber'],
+    );
   }
 
   UserModel copyWith(

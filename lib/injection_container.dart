@@ -10,6 +10,7 @@ import 'package:ecom/features/catalog/presentation/bloc/catalog_bloc.dart';
 import 'package:ecom/features/profile/data/data%20source/user_data_source.dart';
 import 'package:ecom/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:ecom/features/profile/domain/usecase/fetch_user_data_usecase.dart';
+import 'package:ecom/features/profile/domain/usecase/udpate_user_data_usecase.dart';
 import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -53,6 +54,7 @@ void init() {
   sl.registerFactory(
     () => ProfileBloc(
       fetchUserDataUsecase: sl(),
+      updateUserDataUsecase: sl(),
     ),
   );
 
@@ -66,6 +68,7 @@ void init() {
   sl.registerLazySingleton(() => GetProductDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchUserDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => SetUserDataUsecase(repository: sl()));
+  sl.registerLazySingleton(() => UpdateUserDataUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(

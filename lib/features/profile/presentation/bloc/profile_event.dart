@@ -8,3 +8,13 @@ sealed class ProfileEvent extends Equatable {
 }
 
 class FetchUserDataEvent extends ProfileEvent {}
+
+class UpdateUserDataEvent extends ProfileEvent {
+  const UpdateUserDataEvent({
+    required this.username,
+    required this.phNumber,
+  });
+
+  final String? username;
+  final String? phNumber;
+}

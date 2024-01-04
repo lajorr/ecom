@@ -9,9 +9,9 @@ class UserEntity extends Equatable {
 
   const UserEntity({
     required this.uid,
-    required this.name,
+    this.name,
     required this.email,
-    required this.phNumber,
+    this.phNumber,
   });
 
   @override

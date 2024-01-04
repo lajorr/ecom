@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
 
 import '../../../../core/error/failures.dart';
 
 abstract class ProfileRepository {
-  Future<Either<Failure, User>> fetchUserData();
+  Future<Either<Failure, UserModel>> fetchUserData();
+  Future<Either<Failure, UserModel>> updateUserData(String name, int phNumber);
 }
