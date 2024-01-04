@@ -24,159 +24,154 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? username;
   String? phNumber;
 
-  void onFormSave() {}
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => sl<ProfileBloc>()..add(FetchUserDataEvent()),
-        ),
-        BlocProvider(
-          create: (context) => sl<AuthBloc>(),
-        ),
-      ],
-      child: Builder(builder: (context) {
-        return BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is SignoutSuccess) {
-              Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(StringConstants.signoutSuccessText),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            }
-          },
-          child: BlocConsumer<ProfileBloc, ProfileState>(
+    return BlocProvider(
+      create: (context) => sl<AuthBloc>(),
+      child: Builder(
+        builder: (context) {
+          return BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state is ProfileLoaded) {
-                setState(() {
-                  email = state.email;
-                  username = state.username;
-                  phNumber = state.phNumber.toString();
-                });
+              if (state is SignoutSuccess) {
+                Navigator.of(context)
+                    .pushReplacementNamed(LoginScreen.routeName);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(StringConstants.signoutSuccessText),
+                    backgroundColor: Colors.green,
+                  ),
+                );
               }
             },
-            builder: (context, state) => Scaffold(
-              appBar: AppBar(
-                title: const Text('Profile'),
-                centerTitle: true,
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (ctx) => BlocProvider.value(
-                          value: context.read<ProfileBloc>(),
-                          child: AlertDialog(
-                            content: Form(
-                              key: formKey,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  MyTextField(
-                                    label: "Username",
-                                    // errorMsg: "Enter Username",
-                                    prefixIcon: const Icon(Icons.person),
-                                    inputType: TextInputType.name,
-                                    onFieldSave: (value) {
-                                      username = value;
-                                    },
-                                  ),
-                                  MyTextField(
-                                    label: "Phone Number",
-                                    // errorMsg: "Enter a phone number",
-                                    prefixIcon: const Icon(Icons.phone),
-                                    inputType: TextInputType.phone,
-                                    onFieldSave: (value) {
-                                      phNumber = value;
-                                    },
-                                  ),
-                                ],
+            child: BlocBuilder<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Profile'),
+                  centerTitle: true,
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => BlocProvider.value(
+                            value: context.read<ProfileBloc>(),
+                            child: AlertDialog(
+                              content: Form(
+                                key: formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    MyTextField(
+                                      label: "Username",
+                                      prefixIcon: const Icon(Icons.person),
+                                      inputType: TextInputType.name,
+                                      onFieldSave: (value) {
+                                        username = value;
+                                      },
+                                    ),
+                                    MyTextField(
+                                      label: "Phone Number",
+                                      prefixIcon: const Icon(Icons.phone),
+                                      inputType: TextInputType.phone,
+                                      onFieldSave: (value) {
+                                        phNumber = value;
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            actions: [
-                              Builder(builder: (context) {
-                                return MaterialButton(
+                              actions: [
+                                Builder(builder: (context) {
+                                  return MaterialButton(
+                                    onPressed: () {
+                                      formKey.currentState!.save();
+
+                                      BlocProvider.of<ProfileBloc>(context).add(
+                                        UpdateUserDataEvent(
+                                          username: username,
+                                          phNumber: phNumber,
+                                        ),
+                                      );
+
+                                      Navigator.of(context).pop();
+                                    },
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    child: const Text('Ok'),
+                                  );
+                                }),
+                                MaterialButton(
                                   onPressed: () {
-                                    formKey.currentState!.save();
-
-                                    BlocProvider.of<ProfileBloc>(context).add(
-                                      UpdateUserDataEvent(
-                                        username: username,
-                                        phNumber: phNumber,
-                                      ),
-                                    );
-
                                     Navigator.of(context).pop();
                                   },
                                   color: Theme.of(context).colorScheme.primary,
-                                  child: const Text('Ok'),
-                                );
-                              }),
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                color: Theme.of(context).colorScheme.primary,
-                                child: const Text('Cancel'),
-                              ),
-                            ],
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Icons.edit),
-                  ),
-                ],
-              ),
-              body: Builder(builder: (context) {
-                if (state is ProfileLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        Text(email ?? ""),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(username ?? "___"),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(phNumber ?? "___"),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            BlocProvider.of<AuthBloc>(context)
-                                .add(SignOutEvent());
-                          },
-                          child: const Text(
-                            StringConstants.logOutText,
-                          ),
-                        ),
-                      ],
+                        );
+                      },
+                      icon: const Icon(Icons.edit),
                     ),
-                  ),
-                );
-              }),
-            ),
-          ),
-        );
-      }),
+                  ],
+                ),
+                body: Builder(builder: (context) {
+                  if (state is ProfileLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is ProfileLoaded) {
+                    email = state.email;
+                    username = state.username;
+                    phNumber = state.phNumber.toString();
+                  }
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          Text(email ?? ""),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Text(username ?? "___"),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Text(phNumber ?? "___"),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              BlocProvider.of<AuthBloc>(context)
+                                  .add(SignOutEvent());
+                            },
+                            child: const Text(
+                              StringConstants.logOutText,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              );
+            }),
+          );
+        },
+      ),
     );
   }
 }

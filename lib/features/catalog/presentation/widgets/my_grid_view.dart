@@ -33,7 +33,8 @@ class _MyGridViewState extends State<MyGridView> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is CatalogLoaded) {
+            } 
+            else if (state is CatalogLoaded) {
               final productList = state.productList;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),

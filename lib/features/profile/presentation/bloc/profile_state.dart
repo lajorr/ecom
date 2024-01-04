@@ -2,16 +2,21 @@ part of 'profile_bloc.dart';
 
 sealed class ProfileState extends Equatable {
   const ProfileState();
+}
 
+final class ProfileInitial extends ProfileState {
   @override
   List<Object> get props => [];
 }
 
-final class ProfileInitial extends ProfileState {}
-
-final class ProfileLoading extends ProfileState {}
+final class ProfileLoading extends ProfileState {
+  @override
+  List<Object> get props => [];
+}
 
 final class ProfileLoaded extends ProfileState {
+  @override
+  List<Object> get props => [];
   const ProfileLoaded({
     required this.username,
     required this.phNumber,
@@ -22,8 +27,17 @@ final class ProfileLoaded extends ProfileState {
   final int? phNumber;
 }
 
-final class ProfileUserUnavailable extends ProfileState {}
+final class ProfileUserUnavailable extends ProfileState {
+  @override
+  List<Object> get props => [];
+}
 
-final class ProfileUserUpdateSuccess extends ProfileState {}
+final class ProfileUserUpdateSuccess extends ProfileState {
+  @override
+  List<Object> get props => [];
+}
 
-final class ProfileUserUpdateFailed extends ProfileState {}
+final class ProfileUserUpdateFailed extends ProfileState {
+  @override
+  List<Object> get props => [];
+}
