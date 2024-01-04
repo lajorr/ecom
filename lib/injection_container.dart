@@ -91,7 +91,8 @@ void init() {
   sl.registerLazySingleton<AuthDataSource>(
       () => AuthDataSourceImpl(fireAuth: sl()));
 
-  sl.registerLazySingleton<ProductDataSource>(() => ProductDataSourceImpl());
+  sl.registerLazySingleton<ProductDataSource>(
+      () => ProductDataSourceImpl(fireAuth: sl()));
   sl.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(fireAuth: sl()));
 

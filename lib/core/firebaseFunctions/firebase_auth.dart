@@ -3,6 +3,8 @@ import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../shared/catalog/model/product_model.dart';
+
 class FireAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final userCollection = FirebaseFirestore.instance.collection('users');
@@ -25,23 +27,23 @@ class FireAuth {
     return user;
   }
 
-  // Future<List<ProductModel>> getallData() async {
-  //   final a = await productCollection.get();
-  //   // final products  = ProductModel.fromJson()
+  Future<List<ProductModel>> getAllProductsFromCollection() async {
+    final a = await productCollection.get();
+    // final products  = ProductModel.fromJson()
 
-  //   List<ProductModel> productListToReturn = [];
+    List<ProductModel> productListToReturn = [];
 
-  //   final productsListFromFirebase = a.docs;
+    final productsListFromFirebase = a.docs;
 
-  //   if (productsListFromFirebase.isNotEmpty) {
-  //     for (var product in productsListFromFirebase) {
-  //       productListToReturn.add(ProductModel.fromJson(product.data()));
-  //     }
-  //   }
+    if (productsListFromFirebase.isNotEmpty) {
+      for (var product in productsListFromFirebase) {
+        productListToReturn.add(ProductModel.fromJson(product.data()));
+      }
+    }
 
-  //   return productListToReturn;
-  //   // print(a.docs.first.data());
-  // }
+    return productListToReturn;
+    // print(a.docs.first.data());
+  }
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
