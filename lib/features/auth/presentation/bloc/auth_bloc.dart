@@ -86,11 +86,11 @@ Future<void> _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
   );
 
   if (signUpOrFail.isLeft()) {
-    print("ISLEFTTT");
+    
     emit(const AuthFailed(message: StringConstants.invalidCredsText));
     emit(UserUnavailable());
   } else {
-      print("ISRIGHT");
+      
     final userResult = signUpOrFail.getOrElse(() => throw UnimplementedError());
 
     if (userResult != null) {
@@ -100,16 +100,16 @@ Future<void> _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
 
       userStoredOrFail.fold(
         (failure) {
-          print("failedddd");
+          
           emit(AuthSetUserFailed());
         },
         (response) {
-          print("Successsss");
+          
           emit(AuthSetUserSuccess());
         },
       );
     } else {
-      print('Yo thau ta pugnai na parnee');
+      
       // Handle the case where userResult is not a User or is null
       emit(const AuthFailed(message: "User data unavailable"));
       emit(UserUnavailable());

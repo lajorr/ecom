@@ -11,8 +11,6 @@ class UpdateUserDataUsecase extends Usecase<UserModel, UserParams> {
 
   @override
   Future<Either<Failure, UserModel>> call(UserParams params) {
-
-    print('update usecaseee!!');
     return repository.updateUserData(
       params.username,
       params.phNumber,
