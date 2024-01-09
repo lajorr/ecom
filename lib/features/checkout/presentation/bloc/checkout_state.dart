@@ -15,9 +15,13 @@ final class CheckoutLoading extends CheckoutState {
 }
 
 final class CheckoutLoaded extends CheckoutState {
+  final List<CartProduct> cartProductList;
+
+  const CheckoutLoaded({required this.cartProductList});
   @override
   List<Object> get props => [];
 }
+
 final class CheckoutFailed extends CheckoutState {
   @override
   List<Object> get props => [];

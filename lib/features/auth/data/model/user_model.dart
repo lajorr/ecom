@@ -1,4 +1,4 @@
-import 'package:ecom/features/auth/domain/entity/user_entity.dart';
+import '../../domain/entity/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserModel extends UserEntity {

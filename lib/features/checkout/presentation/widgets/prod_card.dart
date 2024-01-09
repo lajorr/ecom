@@ -1,17 +1,20 @@
-import 'package:ecom/shared/catalog/model/product_model.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ecom/features/checkout/domain/entity/cart_product_entity.dart';
 import 'package:flutter/material.dart';
 
 class ProdCard extends StatelessWidget {
   const ProdCard({
     Key? key,
-    required this.product,
+    required this.cartProduct,
   }) : super(key: key);
 
-  final ProductModel product;
+  final CartProduct cartProduct;
 
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
+
+    final product = cartProduct.product;
     return Column(
       children: [
         Container(
@@ -71,7 +74,7 @@ class ProdCard extends StatelessWidget {
                     ),
                     onPressed: () {},
                   ),
-                  const Text('X3'),
+                  Text('X${cartProduct.quantity}'),
                 ],
               ),
             ],

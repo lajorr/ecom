@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/auth/domain/repository/auth_repository.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SetUserDataUsecase extends Usecase<void, User?> {

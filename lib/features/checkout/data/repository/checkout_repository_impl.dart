@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/checkout/data/data%20source/checkout_data_source.dart';
-import 'package:ecom/features/checkout/domain/entity/cart_product_entity.dart';
-import 'package:ecom/features/checkout/domain/repository/checkout_repository.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../domain/entity/cart_product_entity.dart';
+import '../../domain/repository/checkout_repository.dart';
+import '../data%20source/checkout_data_source.dart';
 
 class CheckoutRepositoryImpl implements CheckoutRepository {
   final CheckoutDataSource dataSource;

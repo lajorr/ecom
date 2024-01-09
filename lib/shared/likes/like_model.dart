@@ -1,4 +1,4 @@
-import 'package:ecom/shared/likes/like_entity.dart';
+import 'like_entity.dart';
 
 class LikeModel extends Like {
   LikeModel(

@@ -1,4 +1,4 @@
-import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
+import '../../../../core/firebaseFunctions/firebase_collections.dart';
 
 import '../../../../shared/likes/like_model.dart';
 

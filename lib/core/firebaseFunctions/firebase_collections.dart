@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/core/error/exception.dart';
-import 'package:ecom/shared/likes/like_model.dart';
+import '../error/exception.dart';
+import '../../shared/likes/like_model.dart';
 
 import '../../shared/catalog/model/product_model.dart';
 import 'firebase_auth.dart';
