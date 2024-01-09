@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entity/cart_product_entity.dart';
+import '../../domain/model/cart_model.dart';
 import '../../domain/repository/checkout_repository.dart';
 import '../data%20source/checkout_data_source.dart';
 
@@ -22,7 +23,7 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
   }
 
   @override
-  Future<Either<Failure, List<CartProduct>>> fetchCartProducts() async {
+  Future<Either<Failure, CartModel>> fetchCartProducts() async {
     print('FETCHING CART');
 
     try {
