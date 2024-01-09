@@ -1,9 +1,9 @@
 import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../common/widgets/prod_card.dart';
+import '../widgets/prod_card.dart';
 import '../../../../common/widgets/rounded_button.dart';
-import '../../../prod_detail/presentation/shipping_card.dart';
+import '../../../prod_detail/presentation/widgets/shipping_card.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});

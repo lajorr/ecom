@@ -9,14 +9,16 @@ class FirebaseFailure extends Failure {}
 
 class InvalidInputFailure extends Failure {}
 
-class EmptyFieldFailure extends Failure{}
+class EmptyFieldFailure extends Failure {}
 
-class NoUserFailure extends Failure{}
+class NoUserFailure extends Failure {}
 
-class UserUpdateFailure extends Failure{}
-
+class UserUpdateFailure extends Failure {}
 
 // catalog
 
-class ServerFailure extends Failure{}
-class DocumentFailure extends Failure{}
+class ServerFailure extends Failure {}
+
+class DocumentFailure extends Failure {}
+
+class CartFailure extends Failure {}
