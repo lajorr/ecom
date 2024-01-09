@@ -1,7 +1,7 @@
-import 'package:ecom/features/navbar/presentation/navigation_menu.dart';
-import 'package:ecom/features/splash/presentation/splash_screen.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
-import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
+import '../../features/navbar/presentation/navigation_menu.dart';
+import '../../features/splash/presentation/splash_screen.dart';
+import '../../shared/catalog/model/product_model.dart';
+import '../../shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

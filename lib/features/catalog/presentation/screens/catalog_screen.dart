@@ -1,5 +1,5 @@
-import 'package:ecom/features/catalog/presentation/widgets/category_list.dart';
-import 'package:ecom/features/catalog/presentation/widgets/search_box.dart';
+import '../widgets/category_list.dart';
+import '../widgets/search_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

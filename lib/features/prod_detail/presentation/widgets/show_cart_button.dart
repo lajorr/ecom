@@ -1,8 +1,7 @@
-import 'package:ecom/features/checkout/presentation/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants/img_uri.dart';
+import '../../../checkout/presentation/screens/checkout_screen.dart';
 
 class ShowCartButton extends StatelessWidget {
   const ShowCartButton({super.key});
@@ -11,10 +10,9 @@ class ShowCartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.of(context).pushNamed(CheckoutScreen.routeName);
+        Navigator.of(context).pushNamed(CheckoutScreen.routeName);
 
-        print("fetching ....");
-        context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+       
       },
       child: Container(
         height: 60,

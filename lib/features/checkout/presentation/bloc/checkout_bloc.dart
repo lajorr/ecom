@@ -45,7 +45,9 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       (cartProdList) {
         print('FETCH SUCCESS');
         emit(
-          CheckoutLoaded(),
+          CheckoutLoaded(
+            cartProductList: cartProdList,
+          ),
         );
         print(cartProdList);
       },

@@ -1,5 +1,5 @@
-import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
+import '../../../../core/firebaseFunctions/firebase_auth.dart';
+import '../../../auth/data/model/user_model.dart';
 
 abstract class UserDataSource {
   Future<UserModel?> getCurrentUser();
