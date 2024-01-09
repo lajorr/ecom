@@ -26,6 +26,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const shippingFee = 9.99;
+    final media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -40,14 +42,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 child: CircularProgressIndicator(),
               );
             } else if (state is CheckoutLoaded) {
-              final productList = state.cartProductList;
+              final cart = state.cartModel;
+              final productList = cart.products;
+
+              final totalAmt = shippingFee + cart.amount;
               return Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // prod list
                   if (productList.isEmpty)
-                    const SizedBox(
-                      child: Center(
+                    SizedBox(
+                      height: media.height * 0.2,
+                      child: const Center(
                         child: Text('Add Products to your Cart ...'),
                       ),
                     )
@@ -74,36 +79,33 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   const ShippingCard(),
 
                   // total amount
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Total(9 Items)",
+                        "Total(${productList.length} Items)",
                       ),
-                      Text('.0'),
+                      Text('\$${cart.amount}'),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: media.height * 0.01),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Shipping Fee"),
-                      Text('.00'),
+                      Text('\$$shippingFee'),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: media.height * 0.01),
                   const Divider(height: 30),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Sub Total "),
-                      Text('.0'),
+                      const Text("Sub Total "),
+                      Text('\$$totalAmt'),
                     ],
                   ),
+                  SizedBox(height: media.height * 0.05),
                   RoundedButton(
                     text: "Pay",
                     onTap: () {},

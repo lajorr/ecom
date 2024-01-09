@@ -259,6 +259,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             quantity: quantity,
                                           )),
                                         );
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('ADDED!!'),
+                                        backgroundColor: Colors.green,
+                                        duration: Duration(milliseconds: 500),
+                                      ),
+                                    );
                                   },
                                   text: StringConstants.addToCartText,
                                   iconUri: ImageConstants.shopCart,

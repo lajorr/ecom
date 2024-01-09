@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:ecom/core/usecase/usecase.dart';
 import 'package:ecom/features/checkout/domain/entity/cart_product_entity.dart';
+import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/domain/usecases/add_to_cart_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/fetch_cart_products_usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -42,14 +43,14 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
     fetchOrFail.fold(
       (failure) => emit(CheckoutFailed()),
-      (cartProdList) {
+      (cartModel) {
         print('FETCH SUCCESS');
         emit(
           CheckoutLoaded(
-            cartProductList: cartProdList,
+            cartModel: cartModel,
           ),
         );
-        print(cartProdList);
+        print(cartModel.products);
       },
     );
   }
