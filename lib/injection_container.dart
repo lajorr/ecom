@@ -11,6 +11,7 @@ import 'package:ecom/features/catalog/domain/usecase/create_like_document.dart';
 import 'package:ecom/features/catalog/domain/usecase/get_product_data_usecase.dart';
 import 'package:ecom/features/catalog/domain/usecase/like_unlike_prod_usecase.dart';
 import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
+import 'package:ecom/features/checkout/presentation/bloc/checkout_bloc.dart';
 import 'package:ecom/features/profile/data/data%20source/user_data_source.dart';
 import 'package:ecom/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:ecom/features/profile/domain/usecase/fetch_user_data_usecase.dart';
@@ -66,6 +67,9 @@ void init() {
       fetchUserDataUsecase: sl(),
       updateUserDataUsecase: sl(),
     ),
+  );
+  sl.registerFactory(
+    () => CheckoutBloc(),
   );
 
   //usecase
