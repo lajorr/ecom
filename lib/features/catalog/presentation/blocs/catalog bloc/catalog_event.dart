@@ -7,4 +7,4 @@ sealed class CatalogEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchProductDataEvent extends CatalogEvent{}
+class FetchProductDataEvent extends CatalogEvent {}

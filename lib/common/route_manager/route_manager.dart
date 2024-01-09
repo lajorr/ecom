@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/catalog/presentation/blocs/like bloc/like_bloc.dart';
 import '../../features/prod_detail/presentation/details_screen.dart';
 import '../../injection_container.dart';
 
@@ -40,8 +41,11 @@ class RouteManager {
         );
       case DetailsScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => DetailsScreen(
-            product: settings.arguments as ProductModel,
+          builder: (context) => BlocProvider(
+            create: (context) => sl<LikeBloc>(),
+            child: DetailsScreen(
+              product: settings.arguments as ProductModel,
+            ),
           ),
         );
 

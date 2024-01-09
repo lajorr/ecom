@@ -27,3 +27,13 @@ final class CatalogFailure extends CatalogState {
   @override
   List<Object> get props => [];
 }
+
+final class CatalogDocumentExists extends CatalogState {
+  @override
+  List<Object> get props => [];
+}
+
+final class CatalogDocumentNoExist extends CatalogState {
+  @override
+  List<Object> get props => [];
+}

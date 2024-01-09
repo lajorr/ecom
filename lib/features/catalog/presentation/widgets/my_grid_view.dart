@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../bloc/catalog_bloc.dart';
+import '../blocs/catalog bloc/catalog_bloc.dart';
 import 'my_grid_tile.dart';
 
 class MyGridView extends StatefulWidget {
@@ -33,8 +33,7 @@ class _MyGridViewState extends State<MyGridView> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } 
-            else if (state is CatalogLoaded) {
+            } else if (state is CatalogLoaded) {
               final productList = state.productList;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),

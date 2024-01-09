@@ -1,7 +1,8 @@
+
 import 'package:dartz/dartz.dart';
-import '../extensions/string_validator.dart';
 
 import '../error/failures.dart';
+import '../extensions/string_validator.dart';
 
 class TextValidator {
   Either<Failure, bool> inputChecker(String email, String password) {
