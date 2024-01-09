@@ -5,7 +5,7 @@ import 'package:ecom/common/widgets/my_button.dart';
 import 'package:ecom/common/widgets/rounded_button.dart';
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/prod_detail/presentation/prod_info.dart';
+import 'package:ecom/features/checkout/presentation/bloc/checkout_bloc.dart';
 import 'package:ecom/features/prod_detail/presentation/product_size.dart';
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +29,8 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  int quantity = 0;
+
   @override
   void initState() {
     super.initState();
@@ -102,7 +104,156 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       height: 20,
                     ),
                     //title row
-                    ProdInfo(product: widget.product),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 200,
+                              child: Text(
+                                widget.product.prodTitle,
+                                style: const TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    // color: Colors.red,
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(
+                                      25,
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.remove,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (quantity > 0) {
+                                          quantity -= 1;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Text(
+                                    quantity.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(
+                                      25,
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.add,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        quantity += 1;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        // rating
+                        Row(
+                          children: [
+                            SizedBox(
+                              // width: 200,
+                              width: media.width * 0.35,
+                              height: media.height * 0.03,
+                              child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: widget.product.rating.round(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Image.asset(
+                                    ImageConstants.getImageUri(
+                                        ImageConstants.starIcon),
+                                  );
+                                },
+                              ),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: '${widget.product.rating} ',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: "(${widget.product.viewsNo})",
+                                    style: const TextStyle(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: media.height * 0.01,
+                        ),
+                        // details
+
+                        Text(
+                          widget.product.prodDescription,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                        )
+
+                        // RichText(
+                        //   text: TextSpan(
+                        //     text: product.prodDescription,
+                        //     style: const TextStyle(
+                        //       fontSize: 16,
+                        //       color: Colors.grey,
+                        //     ),
+                        //     children: const <TextSpan>[
+                        //       TextSpan(
+                        //         text: StringConstants.readMoreText,
+                        //         style: TextStyle(
+                        //           fontSize: 18,
+                        //           fontWeight: FontWeight.bold,
+                        //           color: Colors.black,
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                      ],
+                    ),
 
                     Divider(
                       height: media.height * 0.07,
@@ -112,22 +263,29 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ProductSize(product: widget.product),
 
                     // add to cart button
-
                     Expanded(
                       child: Container(
                         margin: const EdgeInsets.only(
                           bottom: 15,
                         ),
-                        child: const Row(
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Expanded(
-                              child: RoundedButton(
-                                text: StringConstants.addToCartText,
-                                iconUri: ImageConstants.shopCart,
-                              ),
+                              child: Builder(builder: (context) {
+                                return RoundedButton(
+                                  onTap: () {
+                                    print("CART TAPPED");
+                                    context
+                                        .read<CheckoutBloc>()
+                                        .add(AddToCartEvent());
+                                  },
+                                  text: StringConstants.addToCartText,
+                                  iconUri: ImageConstants.shopCart,
+                                );
+                              }),
                             ),
-                            ShowCartButton(),
+                            const ShowCartButton(),
                           ],
                         ),
                       ),
