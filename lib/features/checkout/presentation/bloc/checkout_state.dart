@@ -18,3 +18,17 @@ final class CheckoutLoaded extends CheckoutState {
   @override
   List<Object> get props => [];
 }
+final class CheckoutFailed extends CheckoutState {
+  @override
+  List<Object> get props => [];
+}
+
+final class CheckoutAddFailed extends CheckoutState {
+  @override
+  List<Object> get props => [];
+}
+
+final class CheckoutAddSuccess extends CheckoutState {
+  @override
+  List<Object> get props => [];
+}

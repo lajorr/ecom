@@ -1,5 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/shared/catalog/model/product_model.dart' as p;
+import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 
 class ProdCard extends StatelessWidget {
@@ -8,7 +7,7 @@ class ProdCard extends StatelessWidget {
     required this.product,
   }) : super(key: key);
 
-  final p.ProductModel product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -66,36 +65,13 @@ class ProdCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Icon(
-                    Icons.more_horiz,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                        color: const Color(0xff1B2028),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.remove,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Text(
-                            '1',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ],
+                  IconButton(
+                    icon: const Icon(
+                      Icons.more_horiz,
                     ),
-                  )
+                    onPressed: () {},
+                  ),
+                  const Text('X3'),
                 ],
               ),
             ],

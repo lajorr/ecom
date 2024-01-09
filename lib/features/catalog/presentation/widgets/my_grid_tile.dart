@@ -5,7 +5,7 @@ import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../prod_detail/presentation/details_screen.dart';
+import '../../../prod_detail/presentation/screens/details_screen.dart';
 
 class MyGridTile extends StatelessWidget {
   const MyGridTile({

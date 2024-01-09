@@ -10,7 +10,7 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/catalog/presentation/blocs/like bloc/like_bloc.dart';
 import '../../features/checkout/presentation/bloc/checkout_bloc.dart';
 import '../../features/checkout/presentation/screens/checkout_screen.dart';
-import '../../features/prod_detail/presentation/details_screen.dart';
+import '../../features/prod_detail/presentation/screens/details_screen.dart';
 import '../../injection_container.dart';
 
 class RouteManager {
@@ -44,25 +44,24 @@ class RouteManager {
       case DetailsScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
-              providers: [
-                  BlocProvider(
-                      create: (context) => sl<LikeBloc>(),
-          
-                    ),
-                  BlocProvider(
-                      create: (context) => CheckoutBloc(),
-                  ),
-              ],
-                          child: DetailsScreen(
-                        product: settings.arguments as ProductModel,
-                      ),
+            providers: [
+              BlocProvider(
+                create: (context) => sl<LikeBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => sl<CheckoutBloc>(),
+              ),
+            ],
+            child: DetailsScreen(
+              product: settings.arguments as ProductModel,
+            ),
           ),
         );
 
       case CheckoutScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => CheckoutBloc(),
+            create: (context) => sl<CheckoutBloc>(),
             child: const CheckoutScreen(),
           ),
         );
