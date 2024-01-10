@@ -20,7 +20,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void initState() {
     super.initState();
 
-    print("fetching ....");
+    
     context.read<CheckoutBloc>().add(FetchCartProductsEvent());
   }
 

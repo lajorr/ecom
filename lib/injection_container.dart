@@ -124,6 +124,7 @@ void init() {
   );
 
   // datasource
+  //yesle chai euta matra intance banaidinxa thru out the app
   sl.registerLazySingleton<AuthDataSource>(
       () => AuthDataSourceImpl(fireAuth: sl()));
 
@@ -134,8 +135,10 @@ void init() {
 
   sl.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(fireAuth: sl()));
-  sl.registerLazySingleton<CheckoutDataSource>(
-      () => CheckoutDataSourceImpl(fireAuth: sl()));
+  sl.registerLazySingleton<CheckoutDataSource>(() => CheckoutDataSourceImpl(
+        fireAuth: sl(),
+        fireCollections: sl(),
+      ));
 
   //core
   sl.registerLazySingleton<TextValidator>(() => TextValidator());

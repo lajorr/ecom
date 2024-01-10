@@ -11,7 +11,7 @@ class AddToCartEvent extends CheckoutEvent {
   const AddToCartEvent({
     required this.cartProduct,
   });
-  final CartProduct cartProduct;
+  final CartProductModel cartProduct;
 }
 
 class FetchCartProductsEvent extends CheckoutEvent {}

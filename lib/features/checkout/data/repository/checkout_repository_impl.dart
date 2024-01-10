@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../domain/entity/cart_product_entity.dart';
 import '../../domain/model/cart_model.dart';
 import '../../domain/repository/checkout_repository.dart';
 import '../data%20source/checkout_data_source.dart';
@@ -11,8 +11,8 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
 
   CheckoutRepositoryImpl({required this.dataSource});
   @override
-  Future<Either<Failure, void>> addToCart(CartProduct product) async {
-    print('ADD TO CART IMPLEMENTATION');
+  Future<Either<Failure, void>> addToCart(CartProductModel product) async {
+    
 
     try {
       final response = await dataSource.addProductToCart(product);
@@ -24,13 +24,13 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
 
   @override
   Future<Either<Failure, CartModel>> fetchCartProducts() async {
-    print('FETCHING CART');
+    
 
     try {
       final cartProd = await dataSource.fetchCartProducts();
       return Right(cartProd);
     } catch (e) {
-      print("IMPL ERROR: $e");
+      
       return Left(CartFailure());
     }
   }

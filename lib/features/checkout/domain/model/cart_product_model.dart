@@ -6,5 +6,10 @@ class CartProductModel extends CartProduct {
     required super.quantity,
   });
 
-  
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'product': product.toJson(),
+      'quantity': quantity,
+    };
+  }
 }

@@ -3,11 +3,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/checkout/domain/entity/cart_product_entity.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/domain/usecases/add_to_cart_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/fetch_cart_products_usecase.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../domain/model/cart_product_model.dart';
 
 part 'checkout_event.dart';
 part 'checkout_state.dart';
@@ -26,13 +27,13 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   FutureOr<void> _onAddToCart(
       AddToCartEvent event, Emitter<CheckoutState> emit) async {
-    print('add to Cart event');
+    
 
     final addOrFail = await addToCartUsecase.call(event.cartProduct);
 
     addOrFail.fold((failure) => emit(CheckoutAddFailed()), (_) {
       emit(CheckoutAddSuccess());
-      print("SUCCESS");
+      
     });
   }
 
@@ -44,13 +45,13 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     fetchOrFail.fold(
       (failure) => emit(CheckoutFailed()),
       (cartModel) {
-        print('FETCH SUCCESS');
+        
         emit(
           CheckoutLoaded(
             cartModel: cartModel,
           ),
         );
-        print(cartModel.products);
+        
       },
     );
   }
