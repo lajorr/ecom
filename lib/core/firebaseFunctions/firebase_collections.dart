@@ -101,7 +101,7 @@ class FireCollections {
   // Future<
 
   Future<void> storeCartProducts(CartModel cart) async {
-    final List<DocumentReference<Map<String, dynamic>>> prodRefList = [];
+    final List<Map<String,dynamic>> prodRefList = [];
 
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserId = currentUser.uid!;
@@ -109,7 +109,8 @@ class FireCollections {
 
     for (var product in cart.products) {
       final docRef = cartCollection.doc(product.product.id);
-      prodRefList.add(docRef);
+      final refMap = {'ref': docRef,'quantity': product.quantity};
+      prodRefList.add(refMap);
     }
 
     final data = {
