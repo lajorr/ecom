@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecom/common/widgets/like_button.dart';
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
@@ -26,33 +25,22 @@ class MyGridTile extends StatelessWidget {
       child: Column(
         children: [
           //image
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: CachedNetworkImage(
-                  imageUrl: product.prodImage[0].imageUrl,
-                  placeholder: (context, url) => Center(
-                      child: Shimmer.fromColors(
-                    baseColor: Colors.red,
-                    highlightColor: Colors.yellow,
-                    child: Container(
-                      height: 100,
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  )),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: CachedNetworkImage(
+              imageUrl: product.prodImage[0].imageUrl,
+              placeholder: (context, url) => Center(
+                  child: Shimmer.fromColors(
+                baseColor: Colors.red,
+                highlightColor: Colors.yellow,
+                child: Container(
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-              Positioned(
-                right: 10,
-                top: 10,
-                child: LikeButton(
-                  product: product,
-                ),
-              ),
-            ],
+              )),
+            ),
           ),
 
           const SizedBox(

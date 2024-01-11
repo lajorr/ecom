@@ -1,12 +1,16 @@
+import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 import 'package:ecom/features/auth/domain/usecases/check_user_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/set_user_data_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signin_with_google_usecase.dart';
+import 'package:ecom/features/catalog/data/data_source/like_collection_data_source.dart';
 import 'package:ecom/features/catalog/data/data_source/product_data_source.dart';
 import 'package:ecom/features/catalog/data/repository/product_repository_impl.dart';
 import 'package:ecom/features/catalog/domain/repository/product_repository.dart';
+import 'package:ecom/features/catalog/domain/usecase/create_like_document.dart';
 import 'package:ecom/features/catalog/domain/usecase/get_product_data_usecase.dart';
-import 'package:ecom/features/catalog/presentation/bloc/catalog_bloc.dart';
+import 'package:ecom/features/catalog/domain/usecase/like_unlike_prod_usecase.dart';
+import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
 import 'package:ecom/features/profile/data/data%20source/user_data_source.dart';
 import 'package:ecom/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:ecom/features/profile/domain/usecase/fetch_user_data_usecase.dart';
@@ -23,6 +27,8 @@ import 'features/auth/domain/repository/auth_repository.dart';
 import 'features/auth/domain/usecases/login_with_email_usecase.dart';
 import 'features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/catalog/domain/usecase/fetch_like_doc_usecase.dart';
+import 'features/catalog/presentation/blocs/catalog bloc/catalog_bloc.dart';
 import 'features/profile/domain/repository/profile_repository.dart';
 
 final sl = GetIt.instance;
@@ -39,6 +45,10 @@ void init() {
       setUserDataUsecase: sl(),
     ),
   );
+  sl.registerFactory(() => LikeBloc(
+      createLikeDocumentUsecase: sl(),
+      fetchLikeDocUsecase: sl(),
+      likeUnlikeProdUsecase: sl()));
 
   sl.registerFactory(
     () => ValidationBloc(
@@ -70,6 +80,10 @@ void init() {
   sl.registerLazySingleton(() => SetUserDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateUserDataUsecase(repository: sl()));
 
+  sl.registerLazySingleton(() => CreateLikeDocumentUsecase(repository: sl()));
+  sl.registerLazySingleton(() => FetchLikeDocUsecase(repository: sl()));
+  sl.registerLazySingleton(() => LikeUnlikeProdUsecase(repository: sl()));
+
   //repo
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
@@ -78,7 +92,8 @@ void init() {
   );
   sl.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
-      dataSource: sl(),
+      productDataSource: sl(),
+      likesDataSource: sl(),
     ),
   );
   sl.registerLazySingleton<ProfileRepository>(
@@ -92,12 +107,15 @@ void init() {
       () => AuthDataSourceImpl(fireAuth: sl()));
 
   sl.registerLazySingleton<ProductDataSource>(
-      () => ProductDataSourceImpl(fireAuth: sl()));
+      () => ProductDataSourceImpl(fireCollection: sl()));
+  sl.registerLazySingleton<LikeCollectionDataSource>(
+      () => LikeCollectionDataSourceImpl(fireCollections: sl()));
+
   sl.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(fireAuth: sl()));
 
   //core
-
   sl.registerLazySingleton<TextValidator>(() => TextValidator());
   sl.registerLazySingleton<FireAuth>(() => FireAuth());
+  sl.registerLazySingleton<FireCollections>(() => FireCollections());
 }

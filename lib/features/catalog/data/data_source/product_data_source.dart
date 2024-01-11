@@ -1,4 +1,4 @@
-import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
+import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 
 import '../../../../shared/catalog/model/product_model.dart';
 
@@ -7,13 +7,13 @@ abstract class ProductDataSource {
 }
 
 class ProductDataSourceImpl implements ProductDataSource {
-  final FireAuth fireAuth;
+  final FireCollections fireCollection;
 
-  ProductDataSourceImpl({required this.fireAuth});
+  ProductDataSourceImpl({required this.fireCollection});
   @override
   Future<List<ProductModel>> getProductList() async {
     List<ProductModel> productList =
-        await fireAuth.getAllProductsFromCollection();
+        await fireCollection.getAllProductsFromCollection();
 
     return productList;
   }

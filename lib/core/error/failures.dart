@@ -19,3 +19,4 @@ class UserUpdateFailure extends Failure{}
 // catalog
 
 class ServerFailure extends Failure{}
+class DocumentFailure extends Failure{}

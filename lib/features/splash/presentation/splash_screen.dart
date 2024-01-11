@@ -18,6 +18,7 @@ class _SpashScreenState extends State<SpashScreen> {
     super.initState();
 
     BlocProvider.of<AuthBloc>(context).add(CheckUserExistsEvent());
+    // FireCollections().getUserLikeProd();
   }
 
   @override
