@@ -27,13 +27,10 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   FutureOr<void> _onAddToCart(
       AddToCartEvent event, Emitter<CheckoutState> emit) async {
-    
-
     final addOrFail = await addToCartUsecase.call(event.cartProduct);
 
     addOrFail.fold((failure) => emit(CheckoutAddFailed()), (_) {
       emit(CheckoutAddSuccess());
-      
     });
   }
 
@@ -45,13 +42,11 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     fetchOrFail.fold(
       (failure) => emit(CheckoutFailed()),
       (cartModel) {
-        
         emit(
           CheckoutLoaded(
             cartModel: cartModel,
           ),
         );
-        
       },
     );
   }

@@ -40,19 +40,18 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
         product: existingValue.product,
         quantity: existingValue.quantity + cartProduct.quantity,
       );
-      
 
       for (var cartItem in _cartList) {
         total += (cartItem.product.price * cartItem.quantity);
       }
       cartModel = CartModel(
           cId: DateTime.now().toString(),
-          userId: await fireAuth.getCurrentUserId(),
+          user: await fireAuth.getCurrentUserModel(),
           products: _cartList,
-          amount: total);
+          amount: double.parse(total.toStringAsFixed(2)));
     } else {
       _cartList.add(cartProduct);
-      
+
       total = 0;
 
       for (var cartItem in _cartList) {
@@ -60,28 +59,18 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
       }
 
       cartModel = CartModel(
-          cId: DateTime.now().toString(),
-          userId: await fireAuth.getCurrentUserId(),
-          products: _cartList,
-          amount: total);
-      
+        cId: DateTime.now().toString(),
+        user: await fireAuth.getCurrentUserModel(),
+        products: _cartList,
+        amount: double.parse(total.toStringAsFixed(2)),
+      );
+
+      fireCollections.storeCartProducts(cartModel);
     }
-    fireCollections.storeCartProducts(cartModel);
   }
 
   @override
   Future<CartModel> fetchCartProducts() async {
-    double total = 0;
-
-    for (var cartItem in _cartList) {
-      total += (cartItem.product.price * cartItem.quantity);
-    }
-
-    final cartModel = CartModel(
-        cId: DateTime.now().toString(),
-        userId: await fireAuth.getCurrentUserId(),
-        products: _cartList,
-        amount: total);
-    return cartModel;
+    return await fireCollections.fetchCartItems();
   }
 }

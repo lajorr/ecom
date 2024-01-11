@@ -20,13 +20,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void initState() {
     super.initState();
 
-    
     context.read<CheckoutBloc>().add(FetchCartProductsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    const shippingFee = 9.99;
+    const shippingFee = 0.00;
     final media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -102,7 +101,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text("Sub Total "),
-                      Text('\$$totalAmt'),
+                      Text('\$${totalAmt.toStringAsFixed(2)}'),
                     ],
                   ),
                   SizedBox(height: media.height * 0.05),

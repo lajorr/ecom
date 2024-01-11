@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 
+import '../../features/checkout/domain/model/cart_product_model.dart';
 import '../../shared/catalog/model/product_model.dart';
 import '../../shared/likes/like_model.dart';
 import '../error/exception.dart';
@@ -98,32 +99,67 @@ class FireCollections {
     }
   }
 
-  // Future<
-
   Future<void> storeCartProducts(CartModel cart) async {
-    final List<Map<String,dynamic>> prodRefList = [];
+    final List<Map<String, dynamic>> prodRefList = [];
 
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserId = currentUser.uid!;
     final userRef = userCollection.doc(currentUserId);
 
     for (var product in cart.products) {
-      final docRef = cartCollection.doc(product.product.id);
-      final refMap = {'ref': docRef,'quantity': product.quantity};
+      final docRef = productCollection.doc(product.product.id);
+      final refMap = {'ref': docRef, 'quantity': product.quantity};
       prodRefList.add(refMap);
     }
 
     final data = {
-      'cid': "${cart.userId}-cartId",
+      'cid': "${cart.user.uid}-cartId",
       'products': prodRefList,
       'user': userRef,
       'amount': cart.amount,
     };
 
     try {
-      cartCollection.doc('${cart.userId}-cartId').set(data);
+      cartCollection.doc('${cart.user.uid}-cartId').set(data);
     } catch (e) {
       throw DocumentException();
     }
+  }
+
+  Future<CartModel> fetchCartItems() async {
+    List<CartProductModel> cartProdList = [];
+
+    final currentUser = await fireAuth.getCurrentUserModel();
+    final currentUserId = currentUser.uid!;
+    final userRef = userCollection.doc(currentUserId);
+
+    final snapshot =
+        await cartCollection.where('user', isEqualTo: userRef).get();
+
+    final docData = snapshot.docs[0].data();
+
+    final prodList = (docData['products'] as List);
+
+    for (var prod in prodList) {
+      final prodRef = await (prod['ref'] as DocumentReference).get();
+      final prodRefJsonData =
+          prodRef.data() as Map<String, dynamic>; // product json
+
+      final prodM = ProductModel.fromJson(prodRefJsonData);
+
+      final cartM = CartProductModel(
+        product: prodM,
+        quantity: prod['quantity'],
+      );
+
+      cartProdList.add(cartM);
+    }
+
+    final cart = CartModel(
+        cId: docData['cid'],
+        user: await fireAuth.getCurrentUserModel(),
+        products: cartProdList,
+        amount: docData['amount']);
+    return cart;
   }
 }
