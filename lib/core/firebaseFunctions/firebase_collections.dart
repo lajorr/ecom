@@ -162,4 +162,21 @@ class FireCollections {
         amount: docData['amount']);
     return cart;
   }
+
+  Future<void> clearAllCartItems() async {
+    print('delteee');
+    final currentUser = await fireAuth.getCurrentUserModel();
+    final currentUserId = currentUser.uid!;
+    final userRef = userCollection.doc(currentUserId);
+
+    final cartSnapshot =
+        await cartCollection.where('user', isEqualTo: userRef).get();
+
+    print(cartSnapshot.docs);
+
+    final a = cartSnapshot.docs.first.reference.delete();
+    print("REFF");
+    print(a);
+    // await a.delete();
+  }
 }

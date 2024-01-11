@@ -12,8 +12,6 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
   CheckoutRepositoryImpl({required this.dataSource});
   @override
   Future<Either<Failure, void>> addToCart(CartProductModel product) async {
-    
-
     try {
       final response = await dataSource.addProductToCart(product);
       return Right(response);
@@ -24,14 +22,21 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
 
   @override
   Future<Either<Failure, CartModel>> fetchCartProducts() async {
-    
-
     try {
       final cartProd = await dataSource.fetchCartProducts();
       return Right(cartProd);
     } catch (e) {
-      
       return Left(CartFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> clearCartItems() async {
+    try {
+      final res = await dataSource.clearCartItems();
+      return Right(res);
+    } catch (e) {
+      return Left(FirebaseFailure());
     }
   }
 }

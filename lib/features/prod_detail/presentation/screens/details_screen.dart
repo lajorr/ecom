@@ -272,11 +272,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       onTap: () {
                         context.read<CheckoutBloc>().add(
                               AddToCartEvent(
-                                  // quantity: quantity,
-                                  cartProduct: CartProductModel(
-                                product: widget.product,
-                                quantity: quantity,
-                              )),
+                                cartProduct: CartProductModel(
+                                  product: widget.product,
+                                  quantity: quantity,
+                                ),
+                              ),
                             );
 
                         ScaffoldMessenger.of(context).showSnackBar(

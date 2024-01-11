@@ -1,3 +1,4 @@
+import 'package:ecom/features/checkout/domain/usecases/clear_cart_items_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/firebaseFunctions/firebase_auth.dart';
@@ -77,6 +78,7 @@ void init() {
     () => CheckoutBloc(
       addToCartUsecase: sl(),
       fetchCartProductsUsecase: sl(),
+      clearCartItemsUsecase: sl(),
     ),
   );
 
@@ -99,6 +101,7 @@ void init() {
   sl.registerLazySingleton(() => CreateLikeDocumentUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchLikeDocUsecase(repository: sl()));
   sl.registerLazySingleton(() => LikeUnlikeProdUsecase(repository: sl()));
+  sl.registerLazySingleton(() => ClearCartItemsUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(

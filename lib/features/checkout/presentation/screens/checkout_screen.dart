@@ -107,12 +107,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   SizedBox(height: media.height * 0.05),
                   RoundedButton(
                     text: "Pay",
-                    onTap: () {},
+                    onTap: () {
+                      context.read<CheckoutBloc>().add(PayForCartEvent());
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Payment Successful'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    },
                   ),
                 ],
               );
             } else {
-              return Container();
+              return const Center(
+                child: Text('No Product to Checkout yet! '),
+              );
             }
           },
         ),

@@ -7,6 +7,7 @@ import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
 abstract class CheckoutDataSource {
   Future<void> addProductToCart(CartProductModel product);
   Future<CartModel> fetchCartProducts();
+  Future<void> clearCartItems();
 }
 
 class CheckoutDataSourceImpl implements CheckoutDataSource {
@@ -72,5 +73,11 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   @override
   Future<CartModel> fetchCartProducts() async {
     return await fireCollections.fetchCartItems();
+  }
+
+  @override
+  Future<void> clearCartItems() async {
+    _cartList.clear();
+    return await fireCollections.clearAllCartItems();
   }
 }
