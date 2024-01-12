@@ -1,3 +1,4 @@
+import 'package:ecom/features/checkout/presentation/screens/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/img_uri.dart';
@@ -19,6 +20,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
   List<Widget> pages = [
     const CatalogScreen(),
+    const CheckoutScreen(),
     // const FavScreen(),
     const ProfileScreen(),
   ];
@@ -57,8 +59,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
                     if (i == 0) {
                       selectedIndex = i;
                     }
+                    if (i == 1) {
+                      selectedIndex = i;
+                    }
                     if (i == 3) {
-                      selectedIndex = 1;
+                      selectedIndex = 2;
                     }
                   });
                 },

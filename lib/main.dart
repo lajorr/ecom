@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/route_manager/route_manager.dart';
 import 'common/theme_manager/theme_manager.dart';
+import 'features/checkout/presentation/bloc/checkout_bloc.dart';
 import 'features/profile/presentation/bloc/profile_bloc.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
@@ -23,8 +24,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RouteManager routeManager = RouteManager();
-    return BlocProvider(
-      create: (context) => sl<ProfileBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<ProfileBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<CheckoutBloc>(),
+        ),
+      ],
       child: MaterialApp(
         title: 'E-com app',
         debugShowCheckedModeBanner: false,

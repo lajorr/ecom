@@ -49,3 +49,13 @@ final class CheckoutPaymentSuccess extends CheckoutState {
   @override
   List<Object> get props => [];
 }
+
+final class CheckoutRemoveItemFailed extends CheckoutState {
+  @override
+  List<Object> get props => [];
+}
+
+final class CheckoutRemoveItemSuccess extends CheckoutState {
+  @override
+  List<Object> get props => [];
+}

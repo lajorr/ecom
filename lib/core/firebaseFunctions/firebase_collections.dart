@@ -164,7 +164,6 @@ class FireCollections {
   }
 
   Future<void> clearAllCartItems() async {
-    print('delteee');
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserId = currentUser.uid!;
     final userRef = userCollection.doc(currentUserId);
@@ -172,11 +171,28 @@ class FireCollections {
     final cartSnapshot =
         await cartCollection.where('user', isEqualTo: userRef).get();
 
-    print(cartSnapshot.docs);
+    await cartSnapshot.docs.first.reference.delete();
+  }
 
-    final a = cartSnapshot.docs.first.reference.delete();
-    print("REFF");
-    print(a);
-    // await a.delete();
+  Future<void> removeItemFromCart(CartModel cart) async {
+    // removing the data by updating the curreng cartModel json with new one..
+    final List<Map<String, dynamic>> prodRefList = [];
+    final currentUser = await fireAuth.getCurrentUserModel();
+    final currentUserId = currentUser.uid!;
+    final userRef = userCollection.doc(currentUserId);
+    for (var product in cart.products) {
+      final docRef = productCollection.doc(product.product.id);
+      final refMap = {'ref': docRef, 'quantity': product.quantity};
+      prodRefList.add(refMap);
+    }
+
+    final data = {
+      'cid': "${cart.user.uid}-cartId",
+      'products': prodRefList,
+      'user': userRef,
+      'amount': cart.amount,
+    };
+
+    cartCollection.doc('$currentUserId-cartId').set(data);
   }
 }

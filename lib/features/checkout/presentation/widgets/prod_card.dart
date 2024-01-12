@@ -1,6 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/features/checkout/domain/entity/cart_product_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/checkout_bloc.dart';
 
 class ProdCard extends StatelessWidget {
   const ProdCard({
@@ -70,9 +72,21 @@ class ProdCard extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(
-                      Icons.more_horiz,
+                      Icons.delete,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      print("Delete tapped");
+
+                      context.read<CheckoutBloc>().add(
+                            RemoveProdFromCartEvent(
+                              prod: product,
+                            ),
+                          );
+
+                      context.read<CheckoutBloc>().add(
+                            FetchCartProductsEvent(),
+                          );
+                    },
                   ),
                   Text('X${cartProduct.quantity}'),
                 ],

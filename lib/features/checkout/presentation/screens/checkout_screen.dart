@@ -45,6 +45,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               final productList = cart.products;
 
               final totalAmt = shippingFee + cart.amount;
+
               return Column(
                 children: [
                   // prod list
@@ -120,9 +121,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ],
               );
             } else {
-              return const Center(
-                child: Text('No Product to Checkout yet! '),
-              );
+              return Container();
             }
           },
         ),
