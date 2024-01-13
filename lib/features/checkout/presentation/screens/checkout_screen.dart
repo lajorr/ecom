@@ -19,8 +19,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   void initState() {
     super.initState();
-
-    context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+    // context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+    print(context.read<CheckoutBloc>().state);
   }
 
   @override
@@ -34,17 +34,34 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<CheckoutBloc, CheckoutState>(
+        child: BlocConsumer<CheckoutBloc, CheckoutState>(
+          listener: (context, state) {
+            if (state is CheckoutAddSuccess) {
+              context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+            }
+          },
           builder: (context, state) {
             if (state is CheckoutLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
+            } else if (state is CheckoutPaymentSuccess) {
+              return const Center(
+                child: Text("Your Items will be delivered shortly"),
+              );
+            } else if (state is CheckoutFetchFailed) {
+              return const Center(
+                child: Text("Something went wrong while fetching data"),
+              );
             } else if (state is CheckoutLoaded) {
               final cart = state.cartModel;
+
+              // print("SCreen $cart");
               final productList = cart.products;
+              print("DATA SCreen ${cart.amount}");
 
               final totalAmt = shippingFee + cart.amount;
+              print("DATA SCREEN total $totalAmt");
 
               return Column(
                 children: [

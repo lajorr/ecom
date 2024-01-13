@@ -11,7 +11,7 @@ class RemoveCartItemUsecase extends Usecase<CartModel, ProductModel> {
 
   RemoveCartItemUsecase({required this.repository});
   @override
-  Future<Either<Failure, CartModel>> call(ProductModel params) {
-    return repository.removeCartItem(params);
+  Future<Either<Failure, CartModel>> call(ProductModel params) async{
+    return await repository.removeCartItem(params);
   }
 }

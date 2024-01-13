@@ -15,7 +15,6 @@ class CartEntity extends Equatable {
   final String cId;
   final UserModel user;
   final List<CartProductModel> products;
-
   final double amount;
 
   @override
@@ -23,5 +22,6 @@ class CartEntity extends Equatable {
         cId,
         user,
         products,
+        amount,
       ];
 }

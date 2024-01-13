@@ -45,29 +45,36 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: BlocBuilder<LikeBloc, LikeState>(
-            builder: (context, state) {
-              if (state is LikeLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is LikeSuccess) {
-                return page(
-                  media: media,
-                  state: state,
-                  context: context,
-                );
-              } else {
-                return page(
-                  media: media,
-                  context: context,
-                );
-              }
-            },
+    return BlocListener<CheckoutBloc, CheckoutState>(
+      listener: (context, state) {
+        if (state is CheckoutAddSuccess) {
+          context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: BlocBuilder<LikeBloc, LikeState>(
+              builder: (context, state) {
+                if (state is LikeLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is LikeSuccess) {
+                  return page(
+                    media: media,
+                    state: state,
+                    context: context,
+                  );
+                } else {
+                  return page(
+                    media: media,
+                    context: context,
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -278,7 +285,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 ),
                               ),
                             );
-
+        
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('ADDED!!'),

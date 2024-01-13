@@ -75,8 +75,6 @@ class ProdCard extends StatelessWidget {
                       Icons.delete,
                     ),
                     onPressed: () {
-                      print("Delete tapped");
-
                       context.read<CheckoutBloc>().add(
                             RemoveProdFromCartEvent(
                               prod: product,

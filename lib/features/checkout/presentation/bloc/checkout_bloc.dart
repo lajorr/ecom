@@ -36,21 +36,33 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   FutureOr<void> _onAddToCart(
       AddToCartEvent event, Emitter<CheckoutState> emit) async {
+    emit(CheckoutInitial());
     final addOrFail = await addToCartUsecase.call(event.cartProduct);
 
-    addOrFail.fold((failure) => emit(CheckoutAddFailed()), (_) {
-      emit(CheckoutAddSuccess());
-    });
+    addOrFail.fold(
+      (failure) => emit(CheckoutAddFailed()),
+      (_) {
+        // emit(CheckoutAddSuccess());
+        emit(
+          CheckoutLoaded(
+            cartModel: _,
+          ),
+        );
+      },
+    );
   }
 
   FutureOr<void> _onFetchCartProducts(
       FetchCartProductsEvent event, Emitter<CheckoutState> emit) async {
+    print("FETCH");
     emit(CheckoutLoading());
     final fetchOrFail = await fetchCartProductsUsecase.call(NoParams());
 
     fetchOrFail.fold(
-      (failure) => emit(CheckoutFailed()),
+      (failure) => emit(CheckoutFetchFailed()),
       (cartModel) {
+        print("DATA BLOC ${cartModel.toString()}");
+
         emit(
           CheckoutLoaded(
             cartModel: cartModel,
@@ -58,6 +70,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         );
       },
     );
+    print("DATA BLOC END");
   }
 
   FutureOr<void> _onPayForCartEvent(
@@ -73,10 +86,11 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       RemoveProdFromCartEvent event, Emitter<CheckoutState> emit) async {
     final removeOrFail = await removeCartItemUsecase.call(event.prod);
 
-    removeOrFail.fold((failure) => emit(CheckoutRemoveItemFailed()), (cartModel) {
-      print("BLOCCC");
-
-      emit(CheckoutLoaded(cartModel: cartModel));
+    removeOrFail.fold((failure) => emit(CheckoutRemoveItemFailed()),
+        (cartModel) {
+      emit(CheckoutLoaded(
+        cartModel: cartModel,
+      ));
     });
   }
 }

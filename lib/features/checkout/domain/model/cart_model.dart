@@ -8,4 +8,11 @@ class CartModel extends CartEntity {
     required super.amount,
   });
 
+  @override
+  String toString() {
+    return "cid:$cId, user:${user.name}, products:${products.length}, amount: $amount";
+  }
+
+  @override
+  List<Object?> get props => [cId, user, products, amount];
 }

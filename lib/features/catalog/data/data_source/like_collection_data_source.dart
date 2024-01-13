@@ -1,5 +1,4 @@
 import '../../../../core/firebaseFunctions/firebase_collections.dart';
-
 import '../../../../shared/likes/like_model.dart';
 
 abstract class LikeCollectionDataSource {
@@ -14,7 +13,7 @@ class LikeCollectionDataSourceImpl implements LikeCollectionDataSource {
   LikeCollectionDataSourceImpl({required this.fireCollections});
   @override
   Future<void> createLikeDocument(String prodId) async {
-    fireCollections.createDocument(prodId);
+    fireCollections.createLikeDocument(prodId);
   }
 
   @override

@@ -10,7 +10,10 @@ class FetchCartProductsUsecase extends Usecase<CartModel, NoParams> {
 
   FetchCartProductsUsecase({required this.repository});
   @override
-  Future<Either<Failure, CartModel>> call(NoParams params) {
-    return repository.fetchCartProducts();
+  Future<Either<Failure, CartModel>> call(NoParams params) async {
+    final cart = await repository.fetchCartProducts();
+    // print("DATA USECASE ${cart.}")
+    cart.map((r) => print("DATA USECASE ${r.amount}"));
+    return cart;
   }
 }

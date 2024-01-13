@@ -8,7 +8,7 @@ class ClearCartItemsUsecase extends Usecase<void, NoParams> {
 
   ClearCartItemsUsecase({required this.repository});
   @override
-  Future<Either<Failure, void>> call(NoParams params) {
-    return repository.clearCartItems();
+  Future<Either<Failure, void>> call(NoParams params) async{
+    return await repository.clearCartItems();
   }
 }

@@ -22,10 +22,12 @@ final class CheckoutLoaded extends CheckoutState {
   final CartModel cartModel;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        cartModel,
+      ];
 }
 
-final class CheckoutFailed extends CheckoutState {
+final class CheckoutFetchFailed extends CheckoutState {
   @override
   List<Object> get props => [];
 }
