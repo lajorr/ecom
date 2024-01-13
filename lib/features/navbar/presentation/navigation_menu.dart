@@ -1,4 +1,4 @@
-import 'package:ecom/features/checkout/presentation/screens/checkout_screen.dart';
+import '../../checkout/presentation/screens/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/img_uri.dart';

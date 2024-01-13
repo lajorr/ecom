@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../repository/auth_repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class CheckUserUsercase extends Usecase<User, NoParams> {
   final AuthRepository repository;

@@ -1,12 +1,12 @@
-import '../../../auth/presentation/bloc/auth_bloc.dart';
-import '../../../auth/presentation/screens/login_screen.dart';
-import '../../../auth/presentation/widgets/my_text_field.dart';
-import '../bloc/profile_bloc.dart';
-import '../../../../injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants/string_constants.dart';
+import '../../../../injection_container.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/screens/login_screen.dart';
+import '../../../auth/presentation/widgets/my_text_field.dart';
+import '../bloc/profile_bloc.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

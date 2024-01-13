@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/catalog/presentation/blocs/like bloc/like_bloc.dart';
-import '../../features/checkout/presentation/bloc/checkout_bloc.dart';
 import '../../features/checkout/presentation/screens/checkout_screen.dart';
 import '../../features/navbar/presentation/navigation_menu.dart';
 import '../../features/prod_detail/presentation/screens/details_screen.dart';
@@ -43,15 +42,8 @@ class RouteManager {
         );
       case DetailsScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => sl<LikeBloc>(),
-              ),
-              BlocProvider(
-                create: (context) => sl<CheckoutBloc>(),
-              ),
-            ],
+          builder: (context) => BlocProvider(
+            create: (context) => sl<LikeBloc>(),
             child: DetailsScreen(
               product: settings.arguments as ProductModel,
             ),

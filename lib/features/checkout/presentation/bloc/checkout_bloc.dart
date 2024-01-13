@@ -54,15 +54,12 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   FutureOr<void> _onFetchCartProducts(
       FetchCartProductsEvent event, Emitter<CheckoutState> emit) async {
-    print("FETCH");
     emit(CheckoutLoading());
     final fetchOrFail = await fetchCartProductsUsecase.call(NoParams());
 
     fetchOrFail.fold(
       (failure) => emit(CheckoutFetchFailed()),
       (cartModel) {
-        print("DATA BLOC ${cartModel.toString()}");
-
         emit(
           CheckoutLoaded(
             cartModel: cartModel,
@@ -70,7 +67,6 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         );
       },
     );
-    print("DATA BLOC END");
   }
 
   FutureOr<void> _onPayForCartEvent(

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/features/checkout/domain/model/cart_model.dart';
+import '../model/cart_model.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';

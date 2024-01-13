@@ -1,5 +1,4 @@
 import '../../../../core/firebaseFunctions/firebase_collections.dart';
-
 import '../../../../shared/catalog/model/product_model.dart';
 
 abstract class ProductDataSource {

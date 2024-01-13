@@ -45,13 +45,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
 
-    return BlocListener<CheckoutBloc, CheckoutState>(
-      listener: (context, state) {
-        if (state is CheckoutAddSuccess) {
-          context.read<CheckoutBloc>().add(FetchCartProductsEvent());
-        }
-      },
-      child: Scaffold(
+    return Builder(builder: (context) {
+      return Scaffold(
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -77,8 +72,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Column page({
@@ -285,7 +280,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 ),
                               ),
                             );
-        
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('ADDED!!'),

@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';
-import '../repository/product_repository.dart';
 import '../../../../shared/catalog/model/product_model.dart';
+import '../repository/product_repository.dart';
 
 class GetProductDataUsecase extends Usecase<List<ProductModel>, NoParams> {
   final ProductRepository repository;

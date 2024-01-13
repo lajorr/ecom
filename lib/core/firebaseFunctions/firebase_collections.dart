@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 
+import '../../features/checkout/domain/model/cart_model.dart';
 import '../../features/checkout/domain/model/cart_product_model.dart';
 import '../../shared/catalog/model/product_model.dart';
 import '../../shared/likes/like_model.dart';
@@ -100,7 +100,6 @@ class FireCollections {
   }
 
   Future<void> storeCartProducts(CartModel cart) async {
-    print('storing prd to firebase');
     final List<Map<String, dynamic>> prodRefList = [];
 
     final currentUser = await fireAuth.getCurrentUserModel();
@@ -135,58 +134,59 @@ class FireCollections {
     final currentUserId = currentUser.uid!;
     final userRef = userCollection.doc(currentUserId);
 
-    final snapshot =
-        await cartCollection.where('user', isEqualTo: userRef).get();
+    try {
+      final snapshot =
+          await cartCollection.where('user', isEqualTo: userRef).get();
 
-    if (snapshot.docs.isNotEmpty) {
-      print("DOC NOT EMPTY");
-      final docData = snapshot.docs[0].data();
+      if (snapshot.docs.isNotEmpty) {
+        final docData = snapshot.docs[0].data();
 
-      final prodList = (docData['products'] as List);
+        final prodList = (docData['products'] as List);
 
-      for (var prod in prodList) {
-        final prodRef = await (prod['ref'] as DocumentReference).get();
-        final prodRefJsonData =
-            prodRef.data() as Map<String, dynamic>; // product json
+        for (var prod in prodList) {
+          final prodRef = await (prod['ref'] as DocumentReference).get();
+          final prodRefJsonData =
+              prodRef.data() as Map<String, dynamic>; // product json
 
-        final prodM = ProductModel.fromJson(prodRefJsonData);
+          final prodM = ProductModel.fromJson(prodRefJsonData);
 
-        final cartM = CartProductModel(
-          product: prodM,
-          quantity: prod['quantity'],
+          final cartM = CartProductModel(
+            product: prodM,
+            quantity: prod['quantity'],
+          );
+
+          cartProdList.add(cartM);
+        }
+
+        // final userRefRem = await (docData['user'] as DocumentReference).get();
+        // final userData =  userRefRem.data() as Map<String,dynamic>;
+        // final userId = userData['uid']
+
+        cart = CartModel(
+          cId: docData['cid'],
+          user: await fireAuth.getCurrentUserModel(), // userId
+          products: cartProdList,
+          amount: docData['amount'],
         );
- 
-        cartProdList.add(cartM);
+      } else {
+        final data = {
+          'cid': "$currentUserId-cartId",
+          'products': <Map<String, dynamic>>[],
+          'user': userRef,
+          'amount': 0.00,
+        };
+        await cartCollection.doc("$currentUserId-cartId").set(data);
+        cart = CartModel(
+          cId: "$currentUserId-cartId",
+          user: currentUser,
+          products: data['products'] as List<CartProductModel>,
+          amount: 0,
+        );
       }
-
-      // final userRefRem = await (docData['user'] as DocumentReference).get();
-      // final userData =  userRefRem.data() as Map<String,dynamic>;
-      // final userId = userData['uid']
-
-      cart = CartModel(
-        cId: docData['cid'],
-        user: await fireAuth.getCurrentUserModel(), // userId
-        products: cartProdList,
-        amount: docData['amount'],
-      );
-      print("COLEECTIONNN ${docData['amount']}");
-    } else {
-      print("USER DOC NO FOUND");
-      final data = {
-        'cid': "$currentUserId-cartId",
-        'products': <Map<String, dynamic>>[],
-        'user': userRef,
-        'amount': 0.00,
-      };
-      await cartCollection.doc("$currentUserId-cartId").set(data);
-      cart = CartModel(
-        cId: "$currentUserId-cartId",
-        user: currentUser,
-        products: data['products'] as List<CartProductModel>,
-        amount: 0,
-      );
+      return cart;
+    } catch (e) {
+      throw ServerException();
     }
-    return cart;
   }
 
   Future<void> clearAllCartItems() async {

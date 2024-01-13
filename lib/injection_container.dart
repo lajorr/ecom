@@ -1,5 +1,5 @@
-import 'package:ecom/features/checkout/domain/usecases/clear_cart_items_usecase.dart';
-import 'package:ecom/features/checkout/domain/usecases/remove_cart_item_usecase.dart';
+import 'features/checkout/domain/usecases/clear_cart_items_usecase.dart';
+import 'features/checkout/domain/usecases/remove_cart_item_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/firebaseFunctions/firebase_auth.dart';

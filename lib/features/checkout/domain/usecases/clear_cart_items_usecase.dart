@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/checkout/domain/repository/checkout_repository.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../repository/checkout_repository.dart';
 
 class ClearCartItemsUsecase extends Usecase<void, NoParams> {
   final CheckoutRepository repository;

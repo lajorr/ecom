@@ -1,9 +1,9 @@
-import '../../../../shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants/string_constants.dart';
 import '../../../../injection_container.dart';
+import '../../../../shared/validation/bloc/validation_bloc.dart';
 import '../widgets/login_card.dart';
 
 class LoginScreen extends StatelessWidget {

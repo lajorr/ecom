@@ -1,3 +1,4 @@
+import 'package:ecom/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,22 +7,10 @@ import '../../../prod_detail/presentation/widgets/shipping_card.dart';
 import '../bloc/checkout_bloc.dart';
 import '../widgets/prod_card.dart';
 
-class CheckoutScreen extends StatefulWidget {
+class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
   static const routeName = '/checkout';
-
-  @override
-  State<CheckoutScreen> createState() => _CheckoutScreenState();
-}
-
-class _CheckoutScreenState extends State<CheckoutScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // context.read<CheckoutBloc>().add(FetchCartProductsEvent());
-    print(context.read<CheckoutBloc>().state);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,21 +36,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               );
             } else if (state is CheckoutPaymentSuccess) {
               return const Center(
-                child: Text("Your Items will be delivered shortly"),
+                child: Text(StringConstants.productDeliveryText),
               );
             } else if (state is CheckoutFetchFailed) {
               return const Center(
-                child: Text("Something went wrong while fetching data"),
+                child: Text(StringConstants.dataFetchErrorText),
               );
             } else if (state is CheckoutLoaded) {
               final cart = state.cartModel;
 
-              // print("SCreen $cart");
               final productList = cart.products;
-              print("DATA SCreen ${cart.amount}");
 
               final totalAmt = shippingFee + cart.amount;
-              print("DATA SCREEN total $totalAmt");
 
               return Column(
                 children: [
@@ -70,7 +56,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     SizedBox(
                       height: media.height * 0.2,
                       child: const Center(
-                        child: Text('Add Products to your Cart ...'),
+                        child: Text(StringConstants.emptyProductListText),
                       ),
                     )
                   else
@@ -109,7 +95,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Shipping Fee"),
+                      Text(StringConstants.shippingFeeText),
                       Text('\$$shippingFee'),
                     ],
                   ),
@@ -118,7 +104,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Sub Total "),
+                      const Text(StringConstants.subTotalText),
                       Text('\$${totalAmt.toStringAsFixed(2)}'),
                     ],
                   ),
@@ -129,7 +115,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       context.read<CheckoutBloc>().add(PayForCartEvent());
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Payment Successful'),
+                          content: Text(StringConstants.paymentSuccessfulText),
                           backgroundColor: Colors.green,
                         ),
                       );
