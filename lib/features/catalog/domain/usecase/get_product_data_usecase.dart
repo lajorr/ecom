@@ -11,6 +11,6 @@ class GetProductDataUsecase extends Usecase<List<ProductModel>, NoParams> {
   GetProductDataUsecase({required this.repository});
   @override
   Future<Either<Failure, List<ProductModel>>> call(NoParams params) async {
-    return repository.getProductData();
+    return await repository.getProductData();
   }
 }

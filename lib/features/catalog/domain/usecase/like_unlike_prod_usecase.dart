@@ -9,7 +9,7 @@ class LikeUnlikeProdUsecase extends Usecase<bool, String> {
 
   LikeUnlikeProdUsecase({required this.repository});
   @override
-  Future<Either<Failure, bool>> call(String params) {
-    return repository.likeUnlikeProd(params);
+  Future<Either<Failure, bool>> call(String params) async {
+    return await repository.likeUnlikeProd(params);
   }
 }

@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/features/catalog/domain/usecase/create_like_document.dart';
 import 'package:ecom/features/catalog/domain/usecase/fetch_like_doc_usecase.dart';
 import 'package:ecom/features/catalog/domain/usecase/like_unlike_prod_usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -12,7 +11,7 @@ part 'like_state.dart';
 
 class LikeBloc extends Bloc<LikeEvent, LikeState> {
   LikeBloc({
-    required this.createLikeDocumentUsecase,
+    
     required this.fetchLikeDocUsecase,
     required this.likeUnlikeProdUsecase,
   }) : super(LikeLoading()) {
@@ -20,7 +19,7 @@ class LikeBloc extends Bloc<LikeEvent, LikeState> {
     on<FetchLikeDocumentEvent>(_onFetchLikeDocements);
   }
 
-  final CreateLikeDocumentUsecase createLikeDocumentUsecase;
+  
   final FetchLikeDocUsecase fetchLikeDocUsecase;
   final LikeUnlikeProdUsecase likeUnlikeProdUsecase;
 

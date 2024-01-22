@@ -31,7 +31,7 @@ class FireCollections {
     return productListToReturn;
   }
 
-  Future<LikeModel?> getUserLikeProd(String prodId) async {
+  Future<LikeModel> getUserLikeProd(String prodId) async {
     final userId = await fireAuth.getCurrentUserId();
 
     final snapshot = await likesCollection
@@ -46,12 +46,11 @@ class FireCollections {
 
       return LikeModel.fromMap(likeProd);
     } else {
-      createLikeDocument(prodId);
-      return null;
+      return createDocument(prodId);
     }
   }
 
-  void createLikeDocument(String prodId) async {
+  Future<LikeModel> createDocument(String prodId) async {
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserId = currentUser.uid!;
 
@@ -68,7 +67,10 @@ class FireCollections {
 
     try {
       // Add the data to Firestore
-      await likesCollection.add(data);
+      final newLikeDoc = await likesCollection.add(data);
+      final docSnapshot = await newLikeDoc.get();
+      final docData = docSnapshot.data()!;
+      return LikeModel.fromMap(docData);
     } catch (e) {
       throw DocumentException();
     }
