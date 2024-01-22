@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/profile/data/data%20source/user_data_source.dart';
+import '../../../../core/error/failures.dart';
+import '../../../auth/data/model/user_model.dart';
+import '../data%20source/user_data_source.dart';
 
 import '../../domain/repository/profile_repository.dart';
 

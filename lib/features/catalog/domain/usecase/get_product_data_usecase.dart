@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/catalog/domain/repository/product_repository.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../../../../shared/catalog/model/product_model.dart';
+import '../repository/product_repository.dart';
 
 class GetProductDataUsecase extends Usecase<List<ProductModel>, NoParams> {
   final ProductRepository repository;

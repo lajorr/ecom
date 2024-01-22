@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/catalog/domain/usecase/get_product_data_usecase.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../../../core/usecase/usecase.dart';
+import '../../../../../shared/catalog/model/product_model.dart';
+import '../../../domain/usecase/get_product_data_usecase.dart';
 
 part 'catalog_event.dart';
 part 'catalog_state.dart';

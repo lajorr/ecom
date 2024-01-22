@@ -4,7 +4,8 @@
 // import 'package:ecom/features/home/presentation/my_grid_tile.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-// import 'package:provider/provider.dart';
+
+// import '../../catalog/presentation/widgets/my_grid_tile.dart';
 
 // class FavScreen extends StatelessWidget {
 //   const FavScreen({super.key});
@@ -14,22 +15,19 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       body: SafeArea(
-//         child: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           child: Column(
-//             children: [
-//               //
-//               const CustomAppbar(
-//                 title: StringConstants.favoritesText,
-//                 backButton: false,
-//                 actions: false,
-//               ),
-//               const SizedBox(
-//                 height: 10,
-//               ),
-
-//               Consumer<ProductProvider>(builder: (context, prodP, _) {
+//       appBar: AppBar(
+//         title: const Text('Favorites'),
+//         backgroundColor: Colors.transparent,
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           children: [
+//             const SizedBox(
+//               height: 10,
+//             ),
+            
+              
 //                 final favProds = prodP.getFavProd();
 
 //                 if (favProds.isEmpty) {
@@ -54,10 +52,10 @@
 //                       );
 //                     },
 //                   ),
-//                 );
-//               })
-//             ],
-//           ),
+                
+              
+//             )
+//           ],
 //         ),
 //       ),
 //     );

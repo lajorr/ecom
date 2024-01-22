@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/img_uri.dart';
+import '../../../../constants/img_uri.dart';
+import '../../../checkout/presentation/screens/checkout_screen.dart';
 
 class ShowCartButton extends StatelessWidget {
   const ShowCartButton({super.key});
@@ -9,11 +10,9 @@ class ShowCartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (context) => const CheckoutScreen(),
-        //   ),
-        // );
+        Navigator.of(context).pushNamed(CheckoutScreen.routeName);
+
+       
       },
       child: Container(
         height: 60,

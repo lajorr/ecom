@@ -10,6 +10,8 @@ import 'package:ecom/features/catalog/domain/repository/product_repository.dart'
 import 'package:ecom/features/catalog/domain/usecase/get_product_data_usecase.dart';
 import 'package:ecom/features/catalog/domain/usecase/like_unlike_prod_usecase.dart';
 import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
+import 'package:ecom/features/checkout/domain/usecases/clear_cart_items_usecase.dart';
+import 'package:ecom/features/checkout/domain/usecases/remove_cart_item_usecase.dart';
 import 'package:ecom/features/profile/data/data%20source/user_data_source.dart';
 import 'package:ecom/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:ecom/features/profile/domain/usecase/fetch_user_data_usecase.dart';
@@ -28,6 +30,12 @@ import 'features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/catalog/domain/usecase/fetch_like_doc_usecase.dart';
 import 'features/catalog/presentation/blocs/catalog bloc/catalog_bloc.dart';
+import 'features/checkout/data/data%20source/checkout_data_source.dart';
+import 'features/checkout/data/repository/checkout_repository_impl.dart';
+import 'features/checkout/domain/repository/checkout_repository.dart';
+import 'features/checkout/domain/usecases/add_to_cart_usecase.dart';
+import 'features/checkout/domain/usecases/fetch_cart_products_usecase.dart';
+import 'features/checkout/presentation/bloc/checkout_bloc.dart';
 import 'features/profile/domain/repository/profile_repository.dart';
 
 final sl = GetIt.instance;
@@ -66,8 +74,20 @@ void init() {
       updateUserDataUsecase: sl(),
     ),
   );
+  sl.registerFactory(
+    () => CheckoutBloc(
+      addToCartUsecase: sl(),
+      fetchCartProductsUsecase: sl(),
+      clearCartItemsUsecase: sl(),
+      removeCartItemUsecase: sl(),
+    ),
+  );
 
   //usecase
+
+  sl.registerLazySingleton(() => AddToCartUsecase(repository: sl()));
+  sl.registerLazySingleton(() => FetchCartProductsUsecase(repository: sl()));
+
   sl.registerLazySingleton(() => LoginWithEmailUsecase(repository: sl()));
   sl.registerLazySingleton(() => SignupWithEmailUsecase(repository: sl()));
   sl.registerLazySingleton(() => SigninWithGoogleUsecase(repository: sl()));
@@ -82,6 +102,8 @@ void init() {
   // sl.registerLazySingleton(() => CreateLikeDocumentUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchLikeDocUsecase(repository: sl()));
   sl.registerLazySingleton(() => LikeUnlikeProdUsecase(repository: sl()));
+  sl.registerLazySingleton(() => ClearCartItemsUsecase(repository: sl()));
+  sl.registerLazySingleton(() => RemoveCartItemUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(
@@ -100,8 +122,14 @@ void init() {
       dataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<CheckoutRepository>(
+    () => CheckoutRepositoryImpl(
+      dataSource: sl(),
+    ),
+  );
 
   // datasource
+  //yesle chai euta matra intance banaidinxa thru out the app
   sl.registerLazySingleton<AuthDataSource>(
       () => AuthDataSourceImpl(fireAuth: sl()));
 
@@ -112,6 +140,10 @@ void init() {
 
   sl.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(fireAuth: sl()));
+  sl.registerLazySingleton<CheckoutDataSource>(() => CheckoutDataSourceImpl(
+        fireAuth: sl(),
+        fireCollections: sl(),
+      ));
 
   //core
   sl.registerLazySingleton<TextValidator>(() => TextValidator());

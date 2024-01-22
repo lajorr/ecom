@@ -43,4 +43,13 @@ class StringConstants {
   //errors
   static const invalidCredsText = 'INVALID CREDENTIALS';
   static const invalidInputText = 'INVALID INPUT';
+
+  //checkout screen
+  static const productDeliveryText = "Your Items will be delivered shortly";
+  static const dataFetchErrorText = 'Something went wrong while fetching data';
+  static const emptyProductListText = "Add Products to your Cart ...";
+  static const shippingFeeText = "Shipping Fee";
+  static const subTotalText = "Sub Total";
+  static const paymentSuccessfulText = "Payment Successful";
+
 }

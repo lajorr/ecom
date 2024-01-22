@@ -1,17 +1,29 @@
-import 'package:ecom/features/catalog/presentation/widgets/category_list.dart';
-import 'package:ecom/features/catalog/presentation/widgets/search_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../injection_container.dart';
+import '../../../checkout/presentation/bloc/checkout_bloc.dart';
 import '../blocs/catalog bloc/catalog_bloc.dart';
+import '../widgets/category_list.dart';
 import '../widgets/header.dart';
 import '../widgets/my_grid_view.dart';
+import '../widgets/search_box.dart';
 
-class CatalogScreen extends StatelessWidget {
+class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key});
 
   static const routeName = '/home-screen';
+
+  @override
+  State<CatalogScreen> createState() => _CatalogScreenState();
+}
+
+class _CatalogScreenState extends State<CatalogScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,16 @@
-import 'package:ecom/features/navbar/presentation/navigation_menu.dart';
-import 'package:ecom/features/splash/presentation/splash_screen.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
-import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/catalog/presentation/blocs/like bloc/like_bloc.dart';
-import '../../features/prod_detail/presentation/details_screen.dart';
+import '../../features/checkout/presentation/screens/checkout_screen.dart';
+import '../../features/navbar/presentation/navigation_menu.dart';
+import '../../features/prod_detail/presentation/screens/details_screen.dart';
+import '../../features/splash/presentation/splash_screen.dart';
 import '../../injection_container.dart';
+import '../../shared/catalog/model/product_model.dart';
+import '../../shared/validation/bloc/validation_bloc.dart';
 
 class RouteManager {
   Route? onGenerateRoute(RouteSettings settings) {
@@ -49,10 +50,10 @@ class RouteManager {
           ),
         );
 
-      // case CheckoutScreen.routeName:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const CheckoutScreen(),
-      //   );
+      case CheckoutScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const CheckoutScreen(),
+        );
       default:
         return null;
     }

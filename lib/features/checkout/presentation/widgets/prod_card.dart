@@ -1,18 +1,22 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/shared/catalog/model/product_model.dart' as p;
+import '../../domain/entity/cart_product_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/checkout_bloc.dart';
 
 class ProdCard extends StatelessWidget {
   const ProdCard({
     Key? key,
-    required this.product,
+    required this.cartProduct,
   }) : super(key: key);
 
-  final p.ProductModel product;
+  final CartProduct cartProduct;
 
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
+
+    final product = cartProduct.product;
     return Column(
       children: [
         Container(
@@ -66,36 +70,23 @@ class ProdCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Icon(
-                    Icons.more_horiz,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                        color: const Color(0xff1B2028),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          Icons.remove,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Text(
-                            '1',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ],
+                  IconButton(
+                    icon: const Icon(
+                      Icons.delete,
                     ),
-                  )
+                    onPressed: () {
+                      context.read<CheckoutBloc>().add(
+                            RemoveProdFromCartEvent(
+                              prod: product,
+                            ),
+                          );
+
+                      context.read<CheckoutBloc>().add(
+                            FetchCartProductsEvent(),
+                          );
+                    },
+                  ),
+                  Text('X${cartProduct.quantity}'),
                 ],
               ),
             ],
