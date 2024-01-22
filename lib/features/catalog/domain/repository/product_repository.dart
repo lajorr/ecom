@@ -7,7 +7,6 @@ import '../../../../shared/likes/like_model.dart';
 abstract class ProductRepository {
   Future<Either<Failure, List<ProductModel>>> getProductData();
 
-  Future<Either<Failure, void>> createLikeDocument(String prodId);
   Future<Either<Failure, bool>> likeUnlikeProd(String prodId);
   Future<Either<Failure, LikeModel>> fetchLikeDocument(String prodId);
 }

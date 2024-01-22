@@ -33,9 +33,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void initState() {
     super.initState();
 
+    print("first" "${BlocProvider.of<LikeBloc>(context).state}");
+
     BlocProvider.of<LikeBloc>(context).add(
       FetchLikeDocumentEvent(prodId: widget.product.id),
     );
+
+    
   }
 
   @override
@@ -46,7 +50,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: BlocBuilder<LikeBloc, LikeState>(
+          child: BlocConsumer<LikeBloc, LikeState>(
+            listener: (context, state) {
+              print("listener:: $state");
+            },
             builder: (context, state) {
               if (state is LikeLoading) {
                 return const Center(

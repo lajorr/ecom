@@ -7,7 +7,6 @@ import 'package:ecom/features/catalog/data/data_source/like_collection_data_sour
 import 'package:ecom/features/catalog/data/data_source/product_data_source.dart';
 import 'package:ecom/features/catalog/data/repository/product_repository_impl.dart';
 import 'package:ecom/features/catalog/domain/repository/product_repository.dart';
-import 'package:ecom/features/catalog/domain/usecase/create_like_document.dart';
 import 'package:ecom/features/catalog/domain/usecase/get_product_data_usecase.dart';
 import 'package:ecom/features/catalog/domain/usecase/like_unlike_prod_usecase.dart';
 import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
@@ -46,7 +45,7 @@ void init() {
     ),
   );
   sl.registerFactory(() => LikeBloc(
-      createLikeDocumentUsecase: sl(),
+      // createLikeDocumentUsecase: sl(),
       fetchLikeDocUsecase: sl(),
       likeUnlikeProdUsecase: sl()));
 
@@ -80,7 +79,7 @@ void init() {
   sl.registerLazySingleton(() => SetUserDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateUserDataUsecase(repository: sl()));
 
-  sl.registerLazySingleton(() => CreateLikeDocumentUsecase(repository: sl()));
+  // sl.registerLazySingleton(() => CreateLikeDocumentUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchLikeDocUsecase(repository: sl()));
   sl.registerLazySingleton(() => LikeUnlikeProdUsecase(repository: sl()));
 
