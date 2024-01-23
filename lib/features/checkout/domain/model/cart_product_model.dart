@@ -1,3 +1,5 @@
+import 'package:ecom/shared/catalog/model/product_model.dart';
+
 import '../entity/cart_product_entity.dart';
 
 class CartProductModel extends CartProduct {
@@ -11,5 +13,13 @@ class CartProductModel extends CartProduct {
       'product': product.toJson(),
       'quantity': quantity,
     };
+  }
+
+  factory CartProductModel.fromJson({
+    required Map<String, dynamic> map,
+    required ProductModel product,
+  }) {
+    return CartProductModel(
+        product: product, quantity: (map['quantity'] as int));
   }
 }

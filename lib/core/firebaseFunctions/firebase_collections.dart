@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom/core/extensions/string_to_enum.dart';
 import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
-import 'package:ecom/features/checkout/domain/model/order_model.dart';
 
 import '../../features/checkout/domain/model/cart_model.dart';
 import '../../features/checkout/domain/model/cart_product_model.dart';
@@ -209,7 +208,6 @@ class FireCollections {
       user: currentUser,
       products: data['products'] as List<CartProductModel>,
       amount: 0,
-      
     );
 
     return cart;
@@ -238,36 +236,55 @@ class FireCollections {
     }
   }
 
-  Future<OrderModel> fetchOrders() async {
-    final OrderModel order;
-    final List<CartModel> cartList;
+  // Future<OrderModel> fetchOrders() async {
+  //   final OrderModel order;
+  //   final List<CartModel> cartList;
 
-    final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserId = currentUser.uid!;
-    final userRef = userCollection.doc(currentUserId);
+  //   final currentUser = await fireAuth.getCurrentUserModel();
+  //   final currentUserId = currentUser.uid!;
+  //   final userRef = userCollection.doc(currentUserId);
 
-    final userOrder =
-        await cartCollection.where('user', isEqualTo: userRef).get();
+  //   final userOrder =
+  //       await cartCollection.where('user', isEqualTo: userRef).get();
 
-    if (userOrder.docs.isNotEmpty) {
-      // final userDocId = userOrder.docs[0].id;
-      // ordersCollection.doc(userDocId).set(orderData);
-      cartList = userOrder.docs[0].data()['carts'];
+  //   final List<CartProductModel> cartProdusts = [];
 
-      order = OrderModel(
-        user: userRef,
-        cartList: cartList,
-      );
-    } else {
-      order = OrderModel(user: userRef, cartList: const []);
-    }
+  //   if (userOrder.docs.isNotEmpty) {
+  //     // final userDocId = userOrder.docs[0].id;
+  //     // ordersCollection.doc(userDocId).set(orderData);
+  //     // cartList = userOrder.docs[0].data()['carts'];
+  //     final carts =
+  //         userOrder.docs[0].data()['carts'] as List;
 
-    return order;
-  }
+
+      
+
+
+  //     for(var c in carts)
+  //     {
+
+
+  //       final cartM = CartModel(user: currentUser, products: products, amount: c['amount']);
+
+
+
+  //     }
+
+  //     order = OrderModel(
+  //       user: userRef,
+  //       cartList: cartList,
+  //     );
+  //   } else {
+  //     order = OrderModel(user: userRef, cartList: const []);
+  //   }
+
+  //   return order;
+  // }
 
   Future<void> cartToOrderCollection(
-       List<Map<String, dynamic>> cartList) async {
-    
+      List<Map<String, dynamic>> cartList) async {
+        print("COLLECTION");
+        print(cartList);
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserId = currentUser.uid!;
     final userRef = userCollection.doc(currentUserId);
@@ -280,11 +297,9 @@ class FireCollections {
         await ordersCollection.where('user', isEqualTo: userRef).get();
 
     if (userOrder.docs.isNotEmpty) {
-      
       final userDocId = userOrder.docs[0].id;
       ordersCollection.doc(userDocId).set(orderData);
     } else {
-      
       ordersCollection.add(orderData);
     }
 

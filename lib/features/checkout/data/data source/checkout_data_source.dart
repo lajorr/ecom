@@ -137,12 +137,16 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
       cartStatus: CartStatus.orderPlaced
     );
     final cartMap = cartModel.toMap();
+    print(cartMap);
     _carts.add(cartMap);
 
     // clear cart
     _productsList.clear();
     _amount = 0;
     await fireCollections.clearAllCartItems();
+
+    print(_carts);
+
 
     return await fireCollections.cartToOrderCollection(_carts);
   }
