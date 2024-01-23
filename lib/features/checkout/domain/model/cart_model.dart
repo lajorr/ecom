@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
-import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
 
 import '../entity/cart_entity.dart';
 

@@ -283,8 +283,8 @@ class FireCollections {
 
   Future<void> cartToOrderCollection(
       List<Map<String, dynamic>> cartList) async {
-        print("COLLECTION");
-        print(cartList);
+        
+        
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserId = currentUser.uid!;
     final userRef = userCollection.doc(currentUserId);
