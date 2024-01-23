@@ -1,4 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecom/core/extensions/string_to_enum.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
+import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
+import 'package:ecom/features/checkout/domain/model/order_model.dart';
 
 import '../../features/checkout/domain/model/cart_model.dart';
 import '../../features/checkout/domain/model/cart_product_model.dart';
@@ -14,6 +18,7 @@ class FireCollections {
   final likesCollection = FirebaseFirestore.instance.collection('likes');
   final cartCollection = FirebaseFirestore.instance.collection('cart');
   final userCollection = FirebaseFirestore.instance.collection('users');
+  final ordersCollection = FirebaseFirestore.instance.collection('orders');
 
   Future<List<ProductModel>> getAllProductsFromCollection() async {
     final querySnapshot = await productCollection.get();
@@ -115,14 +120,20 @@ class FireCollections {
     }
 
     final data = {
-      'cid': "${cart.user.uid}-cartId",
+      // 'cid': "${cart.user.uid}-cartId",
       'products': prodRefList,
       'user': userRef,
       'amount': cart.amount,
+      'status': cart.cartStatus.name
     };
 
     try {
-      cartCollection.doc('${cart.user.uid}-cartId').set(data);
+      final userCart =
+          await cartCollection.where('user', isEqualTo: userRef).get();
+      if (userCart.docs.isNotEmpty) {
+        final userDocId = userCart.docs[0].id;
+        cartCollection.doc(userDocId).set(data);
+      }
     } catch (e) {
       throw DocumentException();
     }
@@ -130,7 +141,7 @@ class FireCollections {
 
   Future<CartModel> fetchCartItems() async {
     List<CartProductModel> cartProdList = [];
-    CartModel cart;
+    CartModel currentCart;
 
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserId = currentUser.uid!;
@@ -160,35 +171,48 @@ class FireCollections {
           cartProdList.add(cartM);
         }
 
-        // final userRefRem = await (docData['user'] as DocumentReference).get();
-        // final userData =  userRefRem.data() as Map<String,dynamic>;
-        // final userId = userData['uid']
-
-        cart = CartModel(
-          cId: docData['cid'],
+        currentCart = CartModel(
+          // cId: docData['cid'],
           user: await fireAuth.getCurrentUserModel(), // userId
           products: cartProdList,
           amount: docData['amount'],
+          cartStatus: (docData['status'] as String).toCartStatus(),
         );
       } else {
-        final data = {
-          'cid': "$currentUserId-cartId",
-          'products': <Map<String, dynamic>>[],
-          'user': userRef,
-          'amount': 0.00,
-        };
-        await cartCollection.doc("$currentUserId-cartId").set(data);
-        cart = CartModel(
-          cId: "$currentUserId-cartId",
-          user: currentUser,
-          products: data['products'] as List<CartProductModel>,
-          amount: 0,
+        currentCart = await createEmptyCart(
+          currentUser: currentUser,
+          userId: currentUserId,
+          userRef: userRef,
         );
       }
-      return cart;
+      return currentCart;
     } catch (e) {
       throw ServerException();
     }
+  }
+
+  Future<CartModel> createEmptyCart({
+    required String userId,
+    required DocumentReference<Map<String, dynamic>> userRef,
+    required UserModel currentUser,
+  }) async {
+    final data = {
+      'products': <Map<String, dynamic>>[],
+      'user': userRef,
+      'amount': 0.00,
+      'status': CartStatus.cartCreated.name
+    };
+    // await cartCollection.doc("$userId-cartId").set(data);
+    final docRef = await cartCollection.add(data);
+    final cart = CartModel(
+      cId: docRef.id,
+      user: currentUser,
+      products: data['products'] as List<CartProductModel>,
+      amount: 0,
+      
+    );
+
+    return cart;
   }
 
   Future<void> clearAllCartItems() async {
@@ -201,9 +225,70 @@ class FireCollections {
       'products': [],
       'user': userRef,
       'amount': 0.00,
+      'status': CartStatus.cartCreated.name,
     };
 
-    cartCollection.doc('$currentUserId-cartId').set(data);
+    // ordersCollection.doc('$currentUserId-orders').set(currentCart.)
+
+    final userCart =
+        await cartCollection.where('user', isEqualTo: userRef).get();
+    if (userCart.docs.isNotEmpty) {
+      final userDocId = userCart.docs[0].id;
+      cartCollection.doc(userDocId).set(data);
+    }
+  }
+
+  Future<OrderModel> fetchOrders() async {
+    final OrderModel order;
+    final List<CartModel> cartList;
+
+    final currentUser = await fireAuth.getCurrentUserModel();
+    final currentUserId = currentUser.uid!;
+    final userRef = userCollection.doc(currentUserId);
+
+    final userOrder =
+        await cartCollection.where('user', isEqualTo: userRef).get();
+
+    if (userOrder.docs.isNotEmpty) {
+      // final userDocId = userOrder.docs[0].id;
+      // ordersCollection.doc(userDocId).set(orderData);
+      cartList = userOrder.docs[0].data()['carts'];
+
+      order = OrderModel(
+        user: userRef,
+        cartList: cartList,
+      );
+    } else {
+      order = OrderModel(user: userRef, cartList: const []);
+    }
+
+    return order;
+  }
+
+  Future<void> cartToOrderCollection(
+       List<Map<String, dynamic>> cartList) async {
+    
+    final currentUser = await fireAuth.getCurrentUserModel();
+    final currentUserId = currentUser.uid!;
+    final userRef = userCollection.doc(currentUserId);
+    final orderData = {
+      'user': userRef,
+      'carts': cartList,
+    };
+
+    final userOrder =
+        await ordersCollection.where('user', isEqualTo: userRef).get();
+
+    if (userOrder.docs.isNotEmpty) {
+      
+      final userDocId = userOrder.docs[0].id;
+      ordersCollection.doc(userDocId).set(orderData);
+    } else {
+      
+      ordersCollection.add(orderData);
+    }
+
+    clearAllCartItems();
   }
 
   Future<void> removeItemFromCart(CartModel cart) async {
@@ -219,14 +304,19 @@ class FireCollections {
     }
 
     final data = {
-      'cid': "${cart.user.uid}-cartId",
+      // 'cid': "${cart.user.uid}-cartId",
       'products': prodRefList,
       'user': userRef,
       'amount': cart.amount,
     };
 
     try {
-      cartCollection.doc('${cart.user.uid}-cartId').set(data);
+      final userCart =
+          await cartCollection.where('user', isEqualTo: userRef).get();
+      if (userCart.docs.isNotEmpty) {
+        final userDocId = userCart.docs[0].id;
+        cartCollection.doc(userDocId).set(data);
+      }
     } catch (e) {
       throw DocumentException();
     }

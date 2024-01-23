@@ -34,22 +34,22 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
   }
 
   @override
-  Future<Either<Failure, void>> clearCartItems() async {
-    try {
-      final res = await dataSource.clearAllCartItems();
-      return Right(res);
-    } catch (e) {
-      return Left(FirebaseFailure());
-    }
-  }
-
-  @override
   Future<Either<Failure, CartModel>> removeCartItem(ProductModel prod) async {
     try {
       final res = await dataSource.removeCartItem(prod);
       return Right(res);
     } catch (e) {
       return Left(CartFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> placeOrder() async {
+    try {
+      final res = await dataSource.placeOrder();
+      return Right(res);
+    } catch (e) {
+      return Left(DocumentFailure());
     }
   }
 }

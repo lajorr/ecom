@@ -1,3 +1,5 @@
+import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
+
 import '../../../../core/firebaseFunctions/firebase_auth.dart';
 import '../../../../core/firebaseFunctions/firebase_collections.dart';
 import '../../../../shared/catalog/model/product_model.dart';
@@ -7,8 +9,10 @@ import '../../domain/model/cart_product_model.dart';
 abstract class CheckoutDataSource {
   Future<CartModel> addProductToCart(CartProductModel product);
   Future<CartModel> fetchCartProducts();
-  Future<void> clearAllCartItems();
+
   Future<CartModel> removeCartItem(ProductModel prod);
+
+  Future<void> placeOrder();
 }
 
 class CheckoutDataSourceImpl implements CheckoutDataSource {
@@ -20,7 +24,8 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   final FireAuth fireAuth;
   final FireCollections fireCollections;
 
-  List<CartProductModel> _cartList = [];
+  List<CartProductModel> _productsList = [];
+  final List<Map<String, dynamic>> _carts = [];
 
   double _amount = 0;
 
@@ -29,36 +34,36 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
     final CartModel cartModel;
     double total = 0;
     bool exists = false;
-    for (var cartItem in _cartList) {
-      if (cartItem.product.id == cartProduct.product.id) {
+    for (var prod in _productsList) {
+      if (prod.product.id == cartProduct.product.id) {
         exists = true;
         break;
       }
     }
     if (exists) {
-      final existingValueIndex =
-          _cartList.indexWhere((cp) => cp.product.id == cartProduct.product.id);
+      final existingValueIndex = _productsList
+          .indexWhere((cp) => cp.product.id == cartProduct.product.id);
 
-      final existingValue = _cartList[existingValueIndex];
+      final existingValue = _productsList[existingValueIndex];
 
-      _cartList[existingValueIndex] = CartProductModel(
+      _productsList[existingValueIndex] = CartProductModel(
         product: existingValue.product,
         quantity: existingValue.quantity + cartProduct.quantity,
       );
       //* retotalling
-      for (var cartItem in _cartList) {
+      for (var cartItem in _productsList) {
         total += (cartItem.product.price * cartItem.quantity);
       }
       _amount = total;
       cartModel = CartModel(
           cId: DateTime.now().toString(),
           user: await fireAuth.getCurrentUserModel(),
-          products: _cartList,
+          products: _productsList,
           amount: double.parse((_amount).toStringAsFixed(2)));
     } else {
-      _cartList.add(cartProduct);
+      _productsList.add(cartProduct);
 
-      for (var cartItem in _cartList) {
+      for (var cartItem in _productsList) {
         total += (cartItem.product.price * cartItem.quantity);
       }
 
@@ -67,7 +72,7 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
       cartModel = CartModel(
         cId: DateTime.now().toString(),
         user: await fireAuth.getCurrentUserModel(),
-        products: _cartList,
+        products: _productsList,
         amount: double.parse(_amount.toStringAsFixed(2)),
       );
     }
@@ -80,11 +85,11 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   Future<CartModel> fetchCartProducts() async {
     final userId = await fireAuth.getCurrentUserId();
 
-    if (_cartList.isNotEmpty) {
+    if (_productsList.isNotEmpty) {
       final cart = CartModel(
         cId: "$userId-cartId",
         user: await fireAuth.getCurrentUserModel(), // userId
-        products: _cartList,
+        products: _productsList,
         amount: _amount,
       );
       return cart;
@@ -96,38 +101,49 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
   Future<CartModel> fetchFromFirebase() async {
     final cartModel = await fireCollections.fetchCartItems();
-    _cartList = cartModel.products;
+    _productsList = cartModel.products;
     _amount = cartModel.amount;
     return cartModel;
   }
 
   @override
-  Future<void> clearAllCartItems() async {
-    _cartList.clear();
-    _amount = 0;
-    await fireCollections.clearAllCartItems();
-  }
-
-  @override
   Future<CartModel> removeCartItem(ProductModel prod) async {
     double total = 0;
-    final userId = await fireAuth.getCurrentUserId();
+    // final userId = await fireAuth.getCurrentUserId();
 
-    _cartList.removeWhere((cartItem) => cartItem.product.id == prod.id);
+    _productsList.removeWhere((cartItem) => cartItem.product.id == prod.id);
 
-    for (var cartItem in _cartList) {
+    for (var cartItem in _productsList) {
       total += (cartItem.product.price * cartItem.quantity);
     }
     _amount = total;
 
     final cartModel = CartModel(
-      cId: "$userId-cartId",
       user: await fireAuth.getCurrentUserModel(),
-      products: _cartList,
+      products: _productsList,
       amount: double.parse(_amount.toStringAsFixed(2)),
     );
 
     fireCollections.removeItemFromCart(cartModel);
     return cartModel;
+  }
+
+  @override
+  Future<void> placeOrder() async {
+    final cartModel = CartModel(
+      user: await fireAuth.getCurrentUserModel(),
+      products: _productsList,
+      amount: double.parse(_amount.toStringAsFixed(2)),
+      cartStatus: CartStatus.orderPlaced
+    );
+    final cartMap = cartModel.toMap();
+    _carts.add(cartMap);
+
+    // clear cart
+    _productsList.clear();
+    _amount = 0;
+    await fireCollections.clearAllCartItems();
+
+    return await fireCollections.cartToOrderCollection(_carts);
   }
 }

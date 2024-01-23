@@ -12,5 +12,4 @@ class CartProductModel extends CartProduct {
       'quantity': quantity,
     };
   }
-  
 }
