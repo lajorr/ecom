@@ -10,6 +10,7 @@ import 'package:ecom/features/catalog/domain/repository/product_repository.dart'
 import 'package:ecom/features/catalog/domain/usecase/get_product_data_usecase.dart';
 import 'package:ecom/features/catalog/domain/usecase/like_unlike_prod_usecase.dart';
 import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
+import 'package:ecom/features/checkout/domain/usecases/fetch_order_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/place_order_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/remove_cart_item_usecase.dart';
 import 'package:ecom/features/profile/data/data%20source/user_data_source.dart';
@@ -76,10 +77,12 @@ void init() {
   );
   sl.registerFactory(
     () => CheckoutBloc(
-        addToCartUsecase: sl(),
-        fetchCartProductsUsecase: sl(),
-        removeCartItemUsecase: sl(),
-        placeOrderUsecase: sl()),
+      addToCartUsecase: sl(),
+      fetchCartProductsUsecase: sl(),
+      removeCartItemUsecase: sl(),
+      placeOrderUsecase: sl(),
+      fetchOrderUsecase: sl(),
+    ),
   );
 
   //usecase
@@ -98,12 +101,12 @@ void init() {
   sl.registerLazySingleton(() => SetUserDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateUserDataUsecase(repository: sl()));
 
-  // sl.registerLazySingleton(() => CreateLikeDocumentUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchLikeDocUsecase(repository: sl()));
   sl.registerLazySingleton(() => LikeUnlikeProdUsecase(repository: sl()));
 
   sl.registerLazySingleton(() => RemoveCartItemUsecase(repository: sl()));
   sl.registerLazySingleton(() => PlaceOrderUsecase(repository: sl()));
+  sl.registerLazySingleton(() => FetchOrderUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(

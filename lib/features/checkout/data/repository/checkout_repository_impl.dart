@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:ecom/features/checkout/domain/model/order_model.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../shared/catalog/model/product_model.dart';
@@ -49,6 +50,18 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
       final res = await dataSource.placeOrder();
       return Right(res);
     } catch (e) {
+      return Left(DocumentFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, OrderModel>> fetchOrder() async {
+    try {
+      final order = await dataSource.fetchAllOrders();
+      
+      return Right(order);
+    } catch (e) {
+      
       return Left(DocumentFailure());
     }
   }

@@ -5,6 +5,7 @@ import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart
 
 import '../../features/checkout/domain/model/cart_model.dart';
 import '../../features/checkout/domain/model/cart_product_model.dart';
+import '../../features/checkout/domain/model/order_model.dart';
 import '../../shared/catalog/model/product_model.dart';
 import '../../shared/likes/like_model.dart';
 import '../error/exception.dart';
@@ -236,61 +237,77 @@ class FireCollections {
     }
   }
 
-  // Future<OrderModel> fetchOrders() async {
-  //   final OrderModel order;
-  //   final List<CartModel> cartList;
+  Future<OrderModel> fetchOrders() async {
+    final OrderModel order;
+    List<CartModel> cartList = [];
 
-  //   final currentUser = await fireAuth.getCurrentUserModel();
-  //   final currentUserId = currentUser.uid!;
-  //   final userRef = userCollection.doc(currentUserId);
-
-  //   final userOrder =
-  //       await cartCollection.where('user', isEqualTo: userRef).get();
-
-  //   final List<CartProductModel> cartProdusts = [];
-
-  //   if (userOrder.docs.isNotEmpty) {
-  //     // final userDocId = userOrder.docs[0].id;
-  //     // ordersCollection.doc(userDocId).set(orderData);
-  //     // cartList = userOrder.docs[0].data()['carts'];
-  //     final carts =
-  //         userOrder.docs[0].data()['carts'] as List;
-
-
-      
-
-
-  //     for(var c in carts)
-  //     {
-
-
-  //       final cartM = CartModel(user: currentUser, products: products, amount: c['amount']);
-
-
-
-  //     }
-
-  //     order = OrderModel(
-  //       user: userRef,
-  //       cartList: cartList,
-  //     );
-  //   } else {
-  //     order = OrderModel(user: userRef, cartList: const []);
-  //   }
-
-  //   return order;
-  // }
-
-  Future<void> cartToOrderCollection(
-      List<Map<String, dynamic>> cartList) async {
-        
-        
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserId = currentUser.uid!;
     final userRef = userCollection.doc(currentUserId);
+
+    final userOrder =
+        await ordersCollection.where('user', isEqualTo: userRef).get();
+
+    if (userOrder.docs.isNotEmpty) {
+      final fetchedOrder = userOrder.docs[0].data();
+      final carts = fetchedOrder['carts'] as List;
+
+      for (var c in carts) {
+        List<CartProductModel> cartProdList = [];
+        final prodList = c['products'] as List;
+
+        for (var prod in prodList) {
+          final prodRef = await (prod['ref'] as DocumentReference).get();
+          final prodRefJsonData =
+              prodRef.data() as Map<String, dynamic>; // product json
+
+          final prodM = ProductModel.fromJson(prodRefJsonData);
+
+          final cartM = CartProductModel(
+            product: prodM,
+            quantity: prod['quantity'],
+          );
+
+          cartProdList.add(cartM);
+        }
+
+        final cartM = CartModel(
+          // cId: docData['cid'],
+          user: await fireAuth.getCurrentUserModel(), // userId
+          products: cartProdList,
+          amount: c['amount'],
+          cartStatus: (c['status'] as String).toCartStatus(),
+        );
+
+        cartList.add(cartM);
+      }
+
+      order = OrderModel(
+        user: currentUser,
+        cartList: cartList,
+      );
+    } else {
+      order = OrderModel(user: currentUser, cartList: const []);
+    }
+
+    return order;
+  }
+
+  Future<void> cartToOrderCollection(List<CartModel> cartList) async {
+    final currentUser = await fireAuth.getCurrentUserModel();
+    final currentUserId = currentUser.uid!;
+    final userRef = userCollection.doc(currentUserId);
+
+    final List<Map<String, dynamic>> cartMapList = [];
+
+    for (var cart in cartList) {
+      final cartMap = cart.toMap();
+      cartMapList.add(cartMap);
+    }
+
     final orderData = {
       'user': userRef,
-      'carts': cartList,
+      'carts': cartMapList,
     };
 
     final userOrder =

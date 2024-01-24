@@ -1,4 +1,5 @@
 import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
+import 'package:ecom/features/checkout/domain/model/order_model.dart';
 
 import '../../../../core/firebaseFunctions/firebase_auth.dart';
 import '../../../../core/firebaseFunctions/firebase_collections.dart';
@@ -13,6 +14,7 @@ abstract class CheckoutDataSource {
   Future<CartModel> removeCartItem(ProductModel prod);
 
   Future<void> placeOrder();
+  Future<OrderModel> fetchAllOrders();
 }
 
 class CheckoutDataSourceImpl implements CheckoutDataSource {
@@ -25,7 +27,8 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   final FireCollections fireCollections;
 
   List<CartProductModel> _productsList = [];
-  final List<Map<String, dynamic>> _carts = [];
+  List<CartModel> _carts = [];
+  // OrderModel? allOrders;
 
   double _amount = 0;
 
@@ -135,9 +138,8 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
         products: _productsList,
         amount: double.parse(_amount.toStringAsFixed(2)),
         cartStatus: CartStatus.orderPlaced);
-    final cartMap = cartModel.toMap();
 
-    _carts.add(cartMap);
+    _carts.add(cartModel);
 
     // clear cart
     _productsList.clear();
@@ -145,5 +147,23 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
     await fireCollections.clearAllCartItems();
 
     return await fireCollections.cartToOrderCollection(_carts);
+  }
+
+  @override
+  Future<OrderModel> fetchAllOrders() async {
+    if (_carts.isNotEmpty) {
+      final orderM = OrderModel(
+        user: await fireAuth.getCurrentUserModel(),
+        cartList: _carts,
+      );
+
+      return orderM;
+    } else {
+      final orderM = await fireCollections.fetchOrders();
+
+      _carts = orderM.cartList;
+
+      return orderM;
+    }
   }
 }

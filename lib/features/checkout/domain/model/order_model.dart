@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom/features/checkout/domain/entity/order_entity.dart';
 
 class OrderModel extends OrderEntity {
@@ -9,10 +8,10 @@ class OrderModel extends OrderEntity {
         cartList,
       ];
 
-  factory OrderModel.fromJson(Map<String, dynamic> map) {
-    return OrderModel(
-      user: (map['user'] as DocumentReference<Map<String, dynamic>>),
-      cartList: (map['carts']),
-    );
-  }
+  // factory OrderModel.fromJson(Map<String, dynamic> map) {
+  //   return OrderModel(
+  //     user: (map['user'] as DocumentReference<Map<String, dynamic>>),
+  //     cartList: (map['carts']),
+  //   );
+  // }
 }
