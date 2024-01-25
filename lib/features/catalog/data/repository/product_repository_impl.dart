@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/exception.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/catalog/data/data_source/like_collection_data_source.dart';
-import 'package:ecom/features/catalog/data/data_source/product_data_source.dart';
-import 'package:ecom/features/catalog/domain/repository/product_repository.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
+import '../../../../core/error/exception.dart';
+import '../../../../core/error/failures.dart';
+import '../data_source/like_collection_data_source.dart';
+import '../data_source/product_data_source.dart';
+import '../../domain/repository/product_repository.dart';
+import '../../../../shared/catalog/model/product_model.dart';
 
 import '../../../../shared/likes/like_model.dart';
 

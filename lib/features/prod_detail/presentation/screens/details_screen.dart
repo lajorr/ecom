@@ -5,7 +5,7 @@ import 'package:ecom/common/widgets/my_button.dart';
 import 'package:ecom/common/widgets/rounded_button.dart';
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/checkout/presentation/bloc/checkout_bloc.dart';
+import 'package:ecom/features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
 import 'package:ecom/features/prod_detail/presentation/widgets/product_size.dart';
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';

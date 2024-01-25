@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:ecom/core/usecase/usecase.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
+import 'package:ecom/features/checkout/domain/model/order_model.dart';
 import 'package:ecom/features/checkout/domain/usecases/add_to_cart_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/fetch_cart_products_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/fetch_order_usecase.dart';
@@ -12,7 +13,7 @@ import 'package:ecom/features/checkout/domain/usecases/remove_cart_item_usecase.
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../domain/model/cart_product_model.dart';
+import '../../../domain/model/cart_product_model.dart';
 
 part 'checkout_event.dart';
 part 'checkout_state.dart';
@@ -23,13 +24,11 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     required this.fetchCartProductsUsecase,
     required this.removeCartItemUsecase,
     required this.placeOrderUsecase,
-    required this.fetchOrderUsecase,
   }) : super(CheckoutInitial()) {
     on<AddToCartEvent>(_onAddToCart);
     on<FetchCartProductsEvent>(_onFetchCartProducts);
     on<PayForCartEvent>(_onPayForCartEvent);
     on<RemoveProdFromCartEvent>(_onRemoveProdFromCart);
-    on<FetchOrderHistoryEvent>(_onFetchOrderHistory);
   }
 
   final AddToCartUsecase addToCartUsecase;
@@ -37,7 +36,6 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   final RemoveCartItemUsecase removeCartItemUsecase;
   final PlaceOrderUsecase placeOrderUsecase;
-  final FetchOrderUsecase fetchOrderUsecase;
 
   FutureOr<void> _onAddToCart(
       AddToCartEvent event, Emitter<CheckoutState> emit) async {
@@ -77,10 +75,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   FutureOr<void> _onPayForCartEvent(
       PayForCartEvent event, Emitter<CheckoutState> emit) async {
     emit(CheckoutLoading());
-    // final payOrFail = await clearCartItemsUsecase.call(NoParams());
-    // payOrFail.fold((failure) => emit(CheckoutPaymentFailed()), (_) {
-    //   emit(CheckoutPaymentSuccess());
-    // });
+
     final payOrFail = await placeOrderUsecase.call(NoParams());
     payOrFail.fold((failure) => emit(CheckoutPaymentFailed()), (_) {
       emit(
@@ -99,16 +94,5 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         cartModel: cartModel,
       ));
     });
-  }
-
-  FutureOr<void> _onFetchOrderHistory(
-      FetchOrderHistoryEvent event, Emitter<CheckoutState> emit) async {
-    final fetchOrFail = await fetchOrderUsecase.call(NoParams());
-    fetchOrFail.fold(
-      (failure) => emit(CheckoutFetchOrderFailed()),
-      (orderM) {
-        emit(CheckoutFetchOrderSuccess());
-      },
-    );
   }
 }

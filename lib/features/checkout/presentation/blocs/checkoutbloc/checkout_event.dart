@@ -23,5 +23,3 @@ class RemoveProdFromCartEvent extends CheckoutEvent {
 
   const RemoveProdFromCartEvent({required this.prod});
 }
-
-class FetchOrderHistoryEvent extends CheckoutEvent{}

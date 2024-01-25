@@ -1,5 +1,5 @@
-import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
-import 'package:ecom/features/checkout/domain/model/order_model.dart';
+import '../../domain/entity/enums/cart_status_enum.dart';
+import '../../domain/model/order_model.dart';
 
 import '../../../../core/firebaseFunctions/firebase_auth.dart';
 import '../../../../core/firebaseFunctions/firebase_collections.dart';

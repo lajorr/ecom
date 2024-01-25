@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/error/failures.dart';
-import '../repository/product_repository.dart';
 
+import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';
+import '../repository/product_repository.dart';
 
 class LikeUnlikeProdUsecase extends Usecase<bool, String> {
   final ProductRepository repository;

@@ -14,6 +14,8 @@ final class CheckoutLoading extends CheckoutState {
   List<Object> get props => [];
 }
 
+
+
 final class CheckoutLoaded extends CheckoutState {
   const CheckoutLoaded({
     required this.cartModel,
@@ -57,11 +59,6 @@ final class CheckoutRemoveItemFailed extends CheckoutState {
   List<Object> get props => [];
 }
 
-final class CheckoutFetchOrderFailed extends CheckoutState {
-  @override
-  List<Object> get props => [];
-}
-final class CheckoutFetchOrderSuccess extends CheckoutState {
-  @override
-  List<Object> get props => [];
-}
+
+
+

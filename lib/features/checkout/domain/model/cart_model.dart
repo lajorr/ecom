@@ -1,4 +1,4 @@
-import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
+import '../entity/enums/cart_status_enum.dart';
 
 import '../entity/cart_entity.dart';
 

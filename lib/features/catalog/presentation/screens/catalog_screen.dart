@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../injection_container.dart';
-import '../../../checkout/presentation/bloc/checkout_bloc.dart';
+import '../../../checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
 import '../blocs/catalog bloc/catalog_bloc.dart';
 import '../widgets/category_list.dart';
 import '../widgets/header.dart';
@@ -23,7 +23,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   void initState() {
     super.initState();
     context.read<CheckoutBloc>().add(FetchCartProductsEvent());
-    context.read<CheckoutBloc>().add(FetchOrderHistoryEvent());
+    
   }
 
   @override

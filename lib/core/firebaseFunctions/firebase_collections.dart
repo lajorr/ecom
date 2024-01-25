@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/core/extensions/string_to_enum.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
+import '../extensions/string_to_enum.dart';
+import '../../features/auth/data/model/user_model.dart';
+import '../../features/checkout/domain/entity/enums/cart_status_enum.dart';
 
 import '../../features/checkout/domain/model/cart_model.dart';
 import '../../features/checkout/domain/model/cart_product_model.dart';

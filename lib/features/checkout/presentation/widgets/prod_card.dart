@@ -2,7 +2,7 @@ import '../../domain/entity/cart_product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/checkout_bloc.dart';
+import '../blocs/checkoutbloc/checkout_bloc.dart';
 
 class ProdCard extends StatelessWidget {
   const ProdCard({
