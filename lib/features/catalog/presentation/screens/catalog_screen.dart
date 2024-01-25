@@ -23,7 +23,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
   void initState() {
     super.initState();
     context.read<CheckoutBloc>().add(FetchCartProductsEvent());
-    
   }
 
   @override

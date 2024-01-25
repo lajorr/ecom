@@ -80,10 +80,6 @@ class ProdCard extends StatelessWidget {
                               prod: product,
                             ),
                           );
-
-                      context.read<CheckoutBloc>().add(
-                            FetchCartProductsEvent(),
-                          );
                     },
                   ),
                   Text('X${cartProduct.quantity}'),

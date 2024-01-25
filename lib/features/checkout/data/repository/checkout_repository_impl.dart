@@ -50,6 +50,7 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
       final res = await dataSource.placeOrder();
       return Right(res);
     } catch (e) {
+      print(e.toString());
       return Left(DocumentFailure());
     }
   }

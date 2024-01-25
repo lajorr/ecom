@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../extensions/string_to_enum.dart';
+
 import '../../features/auth/data/model/user_model.dart';
 import '../../features/checkout/domain/entity/enums/cart_status_enum.dart';
-
 import '../../features/checkout/domain/model/cart_model.dart';
 import '../../features/checkout/domain/model/cart_product_model.dart';
 import '../../features/checkout/domain/model/order_model.dart';
 import '../../shared/catalog/model/product_model.dart';
 import '../../shared/likes/like_model.dart';
 import '../error/exception.dart';
+import '../extensions/string_to_enum.dart';
 import 'firebase_auth.dart';
 
 class FireCollections {
@@ -187,6 +187,7 @@ class FireCollections {
       }
       return currentCart;
     } catch (e) {
+      print(e.toString());
       throw ServerException();
     }
   }
@@ -200,14 +201,14 @@ class FireCollections {
       'products': <Map<String, dynamic>>[],
       'user': userRef,
       'amount': 0.00,
-      'status': CartStatus.cartCreated.name
+      'status': CartStatus.cartCreated.name,
     };
     // await cartCollection.doc("$userId-cartId").set(data);
     final docRef = await cartCollection.add(data);
     final cart = CartModel(
       cId: docRef.id,
       user: currentUser,
-      products: data['products'] as List<CartProductModel>,
+      products: const [],
       amount: 0,
     );
 
@@ -220,7 +221,6 @@ class FireCollections {
     final userRef = userCollection.doc(currentUserId);
 
     final data = {
-      'cid': "$currentUserId-cartId",
       'products': [],
       'user': userRef,
       'amount': 0.00,
@@ -287,7 +287,10 @@ class FireCollections {
         cartList: cartList,
       );
     } else {
-      order = OrderModel(user: currentUser, cartList: const []);
+      order = OrderModel(
+        user: currentUser,
+        cartList: [] as List<CartModel>,
+      );
     }
 
     return order;
@@ -302,8 +305,11 @@ class FireCollections {
 
     for (var cart in cartList) {
       final cartMap = cart.toMap();
+      print(cartMap);
       cartMapList.add(cartMap);
     }
+
+    print(cartMapList);
 
     final orderData = {
       'user': userRef,

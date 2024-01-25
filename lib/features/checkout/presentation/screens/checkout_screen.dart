@@ -41,12 +41,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             IconButton(
               onPressed: () {
                 context.read<CheckoutBloc>().add(PayForCartEvent());
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(StringConstants.paymentSuccessfulText),
-                    backgroundColor: Colors.green,
-                  ),
-                );
               },
               icon: const Icon(Icons.payment),
             )
@@ -58,6 +52,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             listener: (context, state) {
               if (state is CheckoutAddSuccess) {
                 context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+              }
+              if (state is CheckoutRemoveItemSuccess) {
+                print("DElete success");
+                context.read<CheckoutBloc>().add(
+                      FetchCartProductsEvent(),
+                    );
+              }
+              if (state is CheckoutPaymentSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
+              if (state is CheckoutPaymentFailed) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.red,
+                  ),
+                );
               }
             },
             builder: (context, state) {
@@ -141,6 +157,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ],
                 );
               } else {
+                print(state);
                 return const SizedBox();
               }
             },

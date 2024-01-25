@@ -1,11 +1,10 @@
-import '../../domain/entity/enums/cart_status_enum.dart';
-import '../../domain/model/order_model.dart';
-
 import '../../../../core/firebaseFunctions/firebase_auth.dart';
 import '../../../../core/firebaseFunctions/firebase_collections.dart';
 import '../../../../shared/catalog/model/product_model.dart';
+import '../../domain/entity/enums/cart_status_enum.dart';
 import '../../domain/model/cart_model.dart';
 import '../../domain/model/cart_product_model.dart';
+import '../../domain/model/order_model.dart';
 
 abstract class CheckoutDataSource {
   Future<CartModel> addProductToCart(CartProductModel product);
@@ -28,7 +27,7 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
   List<CartProductModel> _productsList = [];
   List<CartModel> _carts = [];
-  // OrderModel? allOrders;
+  
 
   double _amount = 0;
 
@@ -96,10 +95,11 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
         amount: _amount,
       );
       return cart;
+    } else {
+      print("Firebase fetch");
+      final fireData = await fetchFromFirebase();
+      return fireData;
     }
-
-    final fireData = await fetchFromFirebase();
-    return fireData;
   }
 
   Future<CartModel> fetchFromFirebase() async {
@@ -112,7 +112,6 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   @override
   Future<CartModel> removeCartItem(ProductModel prod) async {
     double total = 0;
-    // final userId = await fireAuth.getCurrentUserId();
 
     _productsList.removeWhere((cartItem) => cartItem.product.id == prod.id);
 
@@ -133,20 +132,28 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
   @override
   Future<void> placeOrder() async {
+    if (_productsList.isEmpty) {
+      print("No Data in product List");
+      return;
+    }
     final cartModel = CartModel(
-        user: await fireAuth.getCurrentUserModel(),
-        products: _productsList,
-        amount: double.parse(_amount.toStringAsFixed(2)),
-        cartStatus: CartStatus.orderPlaced);
+      user: await fireAuth.getCurrentUserModel(),
+      products: _productsList,
+      amount: double.parse(_amount.toStringAsFixed(2)),
+      cartStatus: CartStatus.orderPlaced,
+    );
+    print(cartModel.toString());
 
     _carts.add(cartModel);
+    print(_carts);
+    
+     await fireCollections.cartToOrderCollection(_carts);
 
     // clear cart
     _productsList.clear();
     _amount = 0;
     await fireCollections.clearAllCartItems();
 
-    return await fireCollections.cartToOrderCollection(_carts);
   }
 
   @override

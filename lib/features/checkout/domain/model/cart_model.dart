@@ -1,6 +1,5 @@
-import '../entity/enums/cart_status_enum.dart';
-
 import '../entity/cart_entity.dart';
+import '../entity/enums/cart_status_enum.dart';
 
 class CartModel extends CartEntity {
   const CartModel({
@@ -13,7 +12,7 @@ class CartModel extends CartEntity {
 
   @override
   String toString() {
-    return "cid:$cId, user:${user.name}, products:${products.length}, amount: $amount";
+    return "cid:$cId, user:${user.name}, products:${products.length}, amount: $amount , status: ${cartStatus.name}";
   }
 
   Map<String, dynamic> toMap() {
