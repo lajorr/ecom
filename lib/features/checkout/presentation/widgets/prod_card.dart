@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,9 +9,11 @@ class ProdCard extends StatelessWidget {
   const ProdCard({
     Key? key,
     required this.cartProduct,
+    required this.isOrderPlaced,
   }) : super(key: key);
 
   final CartProduct cartProduct;
+  final bool isOrderPlaced;
 
   @override
   Widget build(BuildContext context) {
@@ -67,21 +70,23 @@ class ProdCard extends StatelessWidget {
                 ),
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: isOrderPlaced
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.delete,
+                  if (!isOrderPlaced)
+                    IconButton(
+                      icon: const Icon(
+                        Icons.delete,
+                      ),
+                      onPressed: () {
+                        context.read<CheckoutBloc>().add(
+                              RemoveProdFromCartEvent(
+                                prod: product,
+                              ),
+                            );
+                      },
                     ),
-                    onPressed: () {
-                      context.read<CheckoutBloc>().add(
-                            RemoveProdFromCartEvent(
-                              prod: product,
-                            ),
-                          );
-                    },
-                  ),
                   Text('X${cartProduct.quantity}'),
                 ],
               ),

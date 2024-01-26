@@ -1,4 +1,5 @@
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
+import 'package:ecom/features/checkout/presentation/widgets/cart_history_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,8 +32,7 @@ class _OrderHistoryState extends State<OrderHistory> {
         }
         if (state is OrderFetchSuccess) {
           final cartList = state.order.cartList;
-          print("FETCH SUCCESS UI");
-          print(cartList);
+
           return SizedBox(
             height: media.height * 0.18,
             width: double.infinity,
@@ -50,23 +50,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                       itemCount: cartList.length,
                       itemBuilder: (context, index) {
                         final cart = cartList[index];
-                        
-                        return Container(
-                          width: media.width * 0.33,
-                          margin: const EdgeInsets.only(right: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(children: [
-                            Text(
-                              "total: ${cart.amount}",
-                            ),
-                            Text(
-                              "items: ${cart.products.length}",
-                            ),
-                          ]),
-                        );
+
+                        return CartHistoryTile(cart: cart);
                       },
                     ),
                   ),

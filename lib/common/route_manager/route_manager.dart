@@ -1,3 +1,5 @@
+import 'package:ecom/features/checkout/domain/model/cart_model.dart';
+import 'package:ecom/features/checkout/presentation/screens/cart_history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,6 +55,12 @@ class RouteManager {
       case CheckoutScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => const CheckoutScreen(),
+        );
+
+      case CartHistoryScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) =>
+              CartHistoryScreen(cart: settings.arguments as CartModel),
         );
       default:
         return null;
