@@ -7,7 +7,6 @@ class ShippingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool hasCardInfo = true;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,48 +29,21 @@ class ShippingCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              hasCardInfo
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              ImageConstants.getImageUri(
-                                  ImageConstants.visaIcon),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text('**** **** **** 2143'),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.more_horiz),
-                        )
-                      ],
-                    )
-                  : Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          // color: Colors.green,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 103, 192, 1),
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const Text("Add Card Info"),
-                      ],
-                    ),
+              Row(
+                children: [
+                  Image.asset(
+                    ImageConstants.getImageUri(ImageConstants.visaIcon),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text('**** **** **** 2143'),
+                ],
+              ),
+              const Icon(
+                Icons.keyboard_arrow_down_sharp,
+                size: 32,
+              )
             ],
           ),
         )

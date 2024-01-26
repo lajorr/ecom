@@ -15,8 +15,6 @@ class _OrderHistoryState extends State<OrderHistory> {
   void initState() {
     super.initState();
 
-    print("order history widget");
-
     context.read<OrdersBloc>().add(
           FetchOrderHistoryEvent(),
         );

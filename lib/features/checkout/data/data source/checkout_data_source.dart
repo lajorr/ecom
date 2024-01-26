@@ -102,34 +102,33 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   Future<CartModel> fetchFromFirebase() async {
     final cartModel = await fireCollections.fetchCartItems();
     _productsList = cartModel.products;
-    print(_productsList);
+
     _amount = cartModel.amount;
     return cartModel;
   }
 
   @override
   Future<CartModel> removeCartItem(ProductModel prod) async {
-    try{
-    double total = 0;
+    try {
+      double total = 0;
 
-    _productsList.removeWhere((cartItem) => cartItem.product.id == prod.id);
-    print(_productsList);
+      _productsList.removeWhere((cartItem) => cartItem.product.id == prod.id);
 
-    for (var cartItem in _productsList) {
-      total += (cartItem.product.price * cartItem.quantity);
-    }
-    _amount = total;
+      for (var cartItem in _productsList) {
+        total += (cartItem.product.price * cartItem.quantity);
+      }
+      _amount = total;
 
-    final cartModel = CartModel(
-      user: await fireAuth.getCurrentUserModel(),
-      products: _productsList,
-      amount: double.parse(_amount.toStringAsFixed(2)),
-    );
+      final cartModel = CartModel(
+        user: await fireAuth.getCurrentUserModel(),
+        products: _productsList,
+        amount: double.parse(_amount.toStringAsFixed(2)),
+      );
 
-    await fireCollections.removeItemFromCart(cartModel);
-    print(cartModel);
-    return cartModel;}catch(e){
-      print(e.toString());
+      await fireCollections.removeItemFromCart(cartModel);
+
+      return cartModel;
+    } catch (e) {
       rethrow;
     }
   }
@@ -148,14 +147,12 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
     _carts.add(cartModel);
 
-    print(_carts);
-
     await fireCollections.cartToOrderCollection(_carts);
 
     // clear cart
     _productsList = [];
     _amount = 0;
-    print(_carts);
+
     await fireCollections.clearAllCartItems();
   }
 
@@ -166,9 +163,6 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
         user: await fireAuth.getCurrentUserModel(),
         cartList: _carts,
       );
-      print(_carts);
-
-      print(orderM);
 
       return orderM;
     } else {

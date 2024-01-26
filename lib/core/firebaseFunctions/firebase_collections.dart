@@ -189,7 +189,7 @@ class FireCollections {
       }
       return currentCart;
     } catch (e) {
-      print(e.toString());
+      
       throw ServerException();
     }
   }
@@ -356,7 +356,8 @@ class FireCollections {
         cartCollection.doc(userDocId).set(data);
       }
     } catch (e) {
-      print(e.toString());
+      
+      
       throw DocumentException();
     }
   }

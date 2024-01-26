@@ -73,8 +73,6 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
     removeOrFail.fold((failure) => emit(CheckoutRemoveItemFailed()),
         (cartModel) {
-      print("BLOCC");
-      print(cartModel);
       emit(CheckoutRemoveItemSuccess(
         cartModel: cartModel,
       ));

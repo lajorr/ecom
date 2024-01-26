@@ -67,7 +67,6 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
 
       return Right(order);
     } catch (e) {
-      print(e.toString());
       return Left(DocumentFailure(message: e.toString()));
     }
   }

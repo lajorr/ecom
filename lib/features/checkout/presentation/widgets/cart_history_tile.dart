@@ -16,7 +16,6 @@ class CartHistoryTile extends StatelessWidget {
     final media = MediaQuery.of(context).size;
     return InkWell(
       onTap: () {
-        print(cart);
         Navigator.of(context).pushNamed(
           CartHistoryScreen.routeName,
           arguments: cart,
