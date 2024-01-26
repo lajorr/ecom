@@ -18,7 +18,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await dataSource.signInWithEmailAndPassword(email, password);
       return Right(user!);
     } on FirebaseAuthException {
-      return Left(FirebaseFailure());
+      return const Left(FirebaseFailure());
     }
   }
 
@@ -29,7 +29,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await dataSource.signUpWithEmailAndPassword(email, password);
       return Right(user!);
     } on FirebaseAuthException {
-      return Left(FirebaseFailure());
+      return const Left(FirebaseFailure());
     }
   }
 
@@ -54,7 +54,7 @@ class AuthRepositoryImpl implements AuthRepository {
         return Right(user);
       }
     } on NoUserException {
-      return Left(NoUserFailure());
+      return const Left(NoUserFailure(message: "No Such User"));
     }
   }
 
@@ -64,7 +64,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final response = await dataSource.signOut();
       return Right(response);
     } on FirebaseAuthException {
-      return Left(FirebaseFailure());
+      return const Left(FirebaseFailure());
     }
   }
 
@@ -74,7 +74,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final response = await dataSource.setUserData(user);
       return Right(response);
     } on ServerException {
-      return Left(FirebaseFailure());
+      return const Left(FirebaseFailure());
     }
   }
 }

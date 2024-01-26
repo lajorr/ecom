@@ -6,12 +6,10 @@ import 'package:ecom/core/usecase/usecase.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/domain/usecases/add_to_cart_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/fetch_cart_products_usecase.dart';
-import 'package:ecom/features/checkout/domain/usecases/place_order_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/remove_cart_item_usecase.dart';
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../../constants/string_constants.dart';
 import '../../../domain/model/cart_product_model.dart';
 
 part 'checkout_event.dart';
@@ -22,11 +20,10 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     required this.addToCartUsecase,
     required this.fetchCartProductsUsecase,
     required this.removeCartItemUsecase,
-    required this.placeOrderUsecase,
   }) : super(CheckoutInitial()) {
     on<AddToCartEvent>(_onAddToCart);
     on<FetchCartProductsEvent>(_onFetchCartProducts);
-    on<PayForCartEvent>(_onPayForCartEvent);
+
     on<RemoveProdFromCartEvent>(_onRemoveProdFromCart);
   }
 
@@ -34,7 +31,6 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   final FetchCartProductsUsecase fetchCartProductsUsecase;
 
   final RemoveCartItemUsecase removeCartItemUsecase;
-  final PlaceOrderUsecase placeOrderUsecase;
 
   FutureOr<void> _onAddToCart(
       AddToCartEvent event, Emitter<CheckoutState> emit) async {
@@ -70,27 +66,15 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     );
   }
 
-  FutureOr<void> _onPayForCartEvent(
-      PayForCartEvent event, Emitter<CheckoutState> emit) async {
-    emit(CheckoutLoading());
-
-    final payOrFail = await placeOrderUsecase.call(NoParams());
-    payOrFail.fold(
-        (failure) => emit(const CheckoutPaymentFailed(
-            message: "Something went wrong during payment")), (_) {
-      emit(
-        const CheckoutPaymentSuccess(
-            message: StringConstants.paymentSuccessfulText),
-      );
-    });
-  }
-
   FutureOr<void> _onRemoveProdFromCart(
       RemoveProdFromCartEvent event, Emitter<CheckoutState> emit) async {
+    emit(CheckoutLoading());
     final removeOrFail = await removeCartItemUsecase.call(event.prod);
 
     removeOrFail.fold((failure) => emit(CheckoutRemoveItemFailed()),
         (cartModel) {
+      print("BLOCC");
+      print(cartModel);
       emit(CheckoutRemoveItemSuccess(
         cartModel: cartModel,
       ));

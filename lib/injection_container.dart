@@ -76,16 +76,16 @@ void init() {
       updateUserDataUsecase: sl(),
     ),
   );
-  sl.registerFactory(
-    () => CheckoutBloc(
-      addToCartUsecase: sl(),
-      fetchCartProductsUsecase: sl(),
-      removeCartItemUsecase: sl(),
-      placeOrderUsecase: sl(),
-    ),
-  );
+  sl.registerFactory(() => CheckoutBloc(
+        addToCartUsecase: sl(),
+        fetchCartProductsUsecase: sl(),
+        removeCartItemUsecase: sl(),
+      ));
 
-  sl.registerFactory(() => OrdersBloc(fetchOrderUsecase: sl()));
+  sl.registerFactory(() => OrdersBloc(
+        fetchOrderUsecase: sl(),
+        placeOrderUsecase: sl(),
+      ));
 
   //usecase
 

@@ -23,7 +23,7 @@ final class CheckoutLoaded extends CheckoutState {
 
   @override
   List<Object> get props => [
-        cartModel,
+        cartModel.products,
       ];
 }
 
@@ -42,19 +42,9 @@ final class CheckoutAddSuccess extends CheckoutState {
   List<Object> get props => [];
 }
 
-final class CheckoutPaymentFailed extends CheckoutState {
-  const CheckoutPaymentFailed({required this.message});
-  final String message;
-  @override
-  List<Object> get props => [];
-}
 
-final class CheckoutPaymentSuccess extends CheckoutState {
-  const CheckoutPaymentSuccess({required this.message});
-  final String message;
-  @override
-  List<Object> get props => [];
-}
+
+
 
 final class CheckoutRemoveItemFailed extends CheckoutState {
   @override

@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/exception.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../shared/catalog/model/product_model.dart';
+import '../../../../shared/likes/like_model.dart';
+import '../../domain/repository/product_repository.dart';
 import '../data_source/like_collection_data_source.dart';
 import '../data_source/product_data_source.dart';
-import '../../domain/repository/product_repository.dart';
-import '../../../../shared/catalog/model/product_model.dart';
-
-import '../../../../shared/likes/like_model.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   ProductRepositoryImpl({
@@ -21,7 +21,7 @@ class ProductRepositoryImpl implements ProductRepository {
       final productList = await productDataSource.getProductList();
       return Right(productList);
     } on ServerException {
-      return Left(ServerFailure());
+      return const Left(ServerFailure(message: "Unable to fetch Data"));
     }
   }
 
@@ -32,7 +32,7 @@ class ProductRepositoryImpl implements ProductRepository {
 
       return Right(likeDoc);
     } on DocumentException {
-      return Left(DocumentFailure());
+      return const Left(DocumentFailure(message: "Like Doc Not Fetched"));
     }
   }
 
@@ -40,7 +40,7 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure, bool>> likeUnlikeProd(String prodId) async {
     final likeStatus = await likesDataSource.likeUnlikeProd(prodId);
     if (likeStatus == null) {
-      return Left(DocumentFailure());
+      return const Left(DocumentFailure(message: "No Like Status"));
     } else {
       return Right(likeStatus);
     }

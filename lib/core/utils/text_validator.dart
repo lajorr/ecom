@@ -7,7 +7,7 @@ import '../extensions/string_validator.dart';
 class TextValidator {
   Either<Failure, bool> inputChecker(String email, String password) {
     if (email.isEmpty || password.isEmpty) {
-      return Left(EmptyFieldFailure());
+      return const Left(EmptyFieldFailure(message: "Fields are empty"));
     }
 
     if (email.isValidEmail() || password.isValidPassword()) {
@@ -15,7 +15,7 @@ class TextValidator {
     }
     else
     {
-      return Left(InvalidInputFailure());
+      return const Left(InvalidInputFailure(message: "Invalid Input"));
     }
   }
 }

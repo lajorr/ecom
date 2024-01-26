@@ -120,7 +120,7 @@ class FireCollections {
     }
 
     final data = {
-      // 'cid': "${cart.user.uid}-cartId",
+      
       'products': prodRefList,
       'user': userRef,
       'amount': cart.amount,
@@ -170,6 +170,8 @@ class FireCollections {
 
           cartProdList.add(cartM);
         }
+
+        
 
         currentCart = CartModel(
           // cId: docData['cid'],
@@ -257,11 +259,9 @@ class FireCollections {
         final prodList = c['products'] as List;
 
         for (var prod in prodList) {
-          final prodRef = await (prod['ref'] as DocumentReference).get();
-          final prodRefJsonData =
-              prodRef.data() as Map<String, dynamic>; // product json
+          final prodJson = prod['product'];
 
-          final prodM = ProductModel.fromJson(prodRefJsonData);
+          final prodM = ProductModel.fromJson(prodJson);
 
           final cartM = CartProductModel(
             product: prodM,
@@ -287,9 +287,10 @@ class FireCollections {
         cartList: cartList,
       );
     } else {
+      List<CartModel> emptyList = [];
       order = OrderModel(
         user: currentUser,
-        cartList: [] as List<CartModel>,
+        cartList: emptyList,
       );
     }
 
@@ -305,11 +306,9 @@ class FireCollections {
 
     for (var cart in cartList) {
       final cartMap = cart.toMap();
-      print(cartMap);
+
       cartMapList.add(cartMap);
     }
-
-    print(cartMapList);
 
     final orderData = {
       'user': userRef,
@@ -346,6 +345,7 @@ class FireCollections {
       'products': prodRefList,
       'user': userRef,
       'amount': cart.amount,
+      'status': cart.cartStatus.name,
     };
 
     try {
@@ -356,6 +356,7 @@ class FireCollections {
         cartCollection.doc(userDocId).set(data);
       }
     } catch (e) {
+      print(e.toString());
       throw DocumentException();
     }
   }

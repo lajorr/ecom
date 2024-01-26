@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/error/failures.dart';
 import '../../../auth/data/model/user_model.dart';
-import '../data%20source/user_data_source.dart';
-
 import '../../domain/repository/profile_repository.dart';
+import '../data%20source/user_data_source.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   final UserDataSource dataSource;
@@ -13,7 +13,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, UserModel>> fetchUserData() async {
     final user = await dataSource.getCurrentUser();
     if (user == null) {
-      return Left(NoUserFailure());
+      return const Left(NoUserFailure(message: "No User Found"));
     } else {
       return Right(user);
     }
@@ -27,7 +27,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       phNumber: phNumber,
     );
     if (user == null) {
-      return Left(UserUpdateFailure());
+      return const Left(UserUpdateFailure(message: "Fail to update use info"));
     } else {
       return Right(user);
     }

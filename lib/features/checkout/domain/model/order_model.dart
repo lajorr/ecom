@@ -7,11 +7,4 @@ class OrderModel extends OrderEntity {
         user,
         cartList,
       ];
-
-  // factory OrderModel.fromJson(Map<String, dynamic> map) {
-  //   return OrderModel(
-  //     user: (map['user'] as DocumentReference<Map<String, dynamic>>),
-  //     cartList: (map['carts']),
-  //   );
-  // }
 }

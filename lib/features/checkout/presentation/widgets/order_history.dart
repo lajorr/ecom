@@ -26,9 +26,13 @@ class _OrderHistoryState extends State<OrderHistory> {
     final media = MediaQuery.of(context).size;
     return BlocBuilder<OrdersBloc, OrdersState>(
       builder: (context, state) {
-        if (state is CheckoutFetchOrderSuccess) {
-          print("has data");
-          print(state.order);
+        if (state is OrderFetchFailed) {
+          return Text(state.message ?? "fail");
+        }
+        if (state is OrderFetchSuccess) {
+          final cartList = state.order.cartList;
+          print("FETCH SUCCESS UI");
+          print(cartList);
           return SizedBox(
             height: media.height * 0.18,
             width: double.infinity,
@@ -39,22 +43,37 @@ class _OrderHistoryState extends State<OrderHistory> {
                 SizedBox(
                   height: media.height * 0.01,
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        width: media.width * 0.33,
-                        margin: const EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      );
-                    },
+                if (cartList.isNotEmpty)
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: cartList.length,
+                      itemBuilder: (context, index) {
+                        final cart = cartList[index];
+                        
+                        return Container(
+                          width: media.width * 0.33,
+                          margin: const EdgeInsets.only(right: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(children: [
+                            Text(
+                              "total: ${cart.amount}",
+                            ),
+                            Text(
+                              "items: ${cart.products.length}",
+                            ),
+                          ]),
+                        );
+                      },
+                    ),
                   ),
-                ),
+                if (cartList.isEmpty)
+                  const Center(
+                    child: Text("No History Yet"),
+                  )
               ],
             ),
           );

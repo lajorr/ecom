@@ -1,5 +1,7 @@
-class NoUserException implements Exception{}
+class NoUserException implements Exception {}
 
-class ServerException implements Exception{}
+class ServerException implements Exception {}
 
-class DocumentException implements Exception{}
+class DocumentException implements Exception {}
+
+class EmptyCartException implements Exception {}

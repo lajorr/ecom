@@ -16,7 +16,7 @@ class AddToCartEvent extends CheckoutEvent {
 
 class FetchCartProductsEvent extends CheckoutEvent {}
 
-class PayForCartEvent extends CheckoutEvent {}
+
 
 class RemoveProdFromCartEvent extends CheckoutEvent {
   final ProductModel prod;

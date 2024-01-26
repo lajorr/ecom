@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
-import '../../domain/model/order_model.dart';
 
+import '../../../../core/error/exception.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../shared/catalog/model/product_model.dart';
 import '../../domain/model/cart_model.dart';
 import '../../domain/model/cart_product_model.dart';
+import '../../domain/model/order_model.dart';
 import '../../domain/repository/checkout_repository.dart';
 import '../data%20source/checkout_data_source.dart';
 
@@ -19,7 +20,7 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
 
       return Right(response);
     } catch (e) {
-      return Left(CartFailure());
+      return const Left(CartFailure());
     }
   }
 
@@ -30,7 +31,7 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
 
       return Right(cartProd);
     } catch (e) {
-      return Left(CartFailure());
+      return const Left(CartFailure());
     }
   }
 
@@ -40,7 +41,7 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
       final res = await dataSource.removeCartItem(prod);
       return Right(res);
     } catch (e) {
-      return Left(CartFailure());
+      return const Left(CartFailure());
     }
   }
 
@@ -49,9 +50,13 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
     try {
       final res = await dataSource.placeOrder();
       return Right(res);
+    } on EmptyCartException {
+      // print(e.toString());
+      return const Left(EmptyCartFailure(message: "No Product(s) in cart.."));
     } catch (e) {
-      print(e.toString());
-      return Left(DocumentFailure());
+      return Left(DocumentFailure(
+        message: e.toString(),
+      ));
     }
   }
 
@@ -59,11 +64,11 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
   Future<Either<Failure, OrderModel>> fetchOrder() async {
     try {
       final order = await dataSource.fetchAllOrders();
-      
+
       return Right(order);
     } catch (e) {
-      
-      return Left(DocumentFailure());
+      print(e.toString());
+      return Left(DocumentFailure(message: e.toString()));
     }
   }
 }

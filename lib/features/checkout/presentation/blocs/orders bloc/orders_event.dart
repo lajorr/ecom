@@ -8,3 +8,5 @@ sealed class OrdersEvent extends Equatable {
 }
 
 class FetchOrderHistoryEvent extends OrdersEvent{}
+
+class OrderCartItemsEvent extends OrdersEvent {}
