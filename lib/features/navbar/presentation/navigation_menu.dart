@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../constants/img_uri.dart';
 import '../../catalog/presentation/screens/catalog_screen.dart';
 import '../../checkout/presentation/screens/checkout_screen.dart';
+import '../../favorites/presentation/screens/fav_screen.dart';
 import '../../profile/presentation/screens/profile_screen.dart';
 import 'nav_item.dart';
 
@@ -21,7 +22,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   List<Widget> pages = [
     const CatalogScreen(),
     const CheckoutScreen(),
-    // const FavScreen(),
+    const FavScreen(),
     const ProfileScreen(),
   ];
 
@@ -56,15 +57,20 @@ class _NavigationMenuState extends State<NavigationMenu> {
                 iconUri: navIcons[i],
                 onTap: () {
                   setState(() {
-                    if (i == 0) {
-                      selectedIndex = i;
-                    }
-                    if (i == 1) {
-                      selectedIndex = i;
-                    }
-                    if (i == 3) {
-                      selectedIndex = 2;
-                    }
+                    // if (i == 0) {
+                    //   selectedIndex = i;
+                    // }
+                    // if (i == 1) {
+                    //   selectedIndex = i;
+                    // }
+                    // if (i == 2) {
+                    //   selectedIndex = i;
+                    // }
+                    // if (i == 3) {
+                    //   selectedIndex = 2;
+                    // }
+
+                    selectedIndex = i;
                   });
                 },
               ),

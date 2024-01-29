@@ -1,4 +1,9 @@
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
+import 'package:ecom/features/favorites/data/datasource/favorites_datasource.dart';
+import 'package:ecom/features/favorites/data/repository/favorites_repository_impl.dart';
+import 'package:ecom/features/favorites/domain/repository/favorites_repository.dart';
+import 'package:ecom/features/favorites/domain/usecase/fetch_fav_products_usecase.dart';
+import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:ecom/features/payment/data/data%20source/payment_datasource.dart';
 import 'package:ecom/features/payment/domain/repository/payment_repository.dart';
 import 'package:ecom/features/payment/domain/usecase/add_card_details_usecase.dart';
@@ -101,6 +106,12 @@ void init() {
     ),
   );
 
+  sl.registerFactory(
+    () => FavoritesBloc(
+      fetchFavProductsUsecase: sl(),
+    ),
+  );
+
   //usecase
 
   sl.registerLazySingleton(() => AddToCartUsecase(repository: sl()));
@@ -127,6 +138,7 @@ void init() {
   sl.registerLazySingleton(() => AddCardDetailsUsecase(repository: sl()));
   sl.registerLazySingleton(
       () => FetchCreditCardDetailsUsecase(repository: sl()));
+  sl.registerLazySingleton(() => FetchFavProductsUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(
@@ -155,6 +167,11 @@ void init() {
       dataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<FavoritesRepository>(
+    () => FavoritesRepositoryImpl(
+      dataSource: sl(),
+    ),
+  );
 
   // datasource
   //yesle chai euta matra intance banaidinxa thru out the app
@@ -176,6 +193,11 @@ void init() {
   );
   sl.registerLazySingleton<PaymentDatasource>(
     () => PaymentDatasourceImpl(
+      fireCollections: sl(),
+    ),
+  );
+  sl.registerLazySingleton<FavoritesDataSource>(
+    () => FavoritesDataSourceImpl(
       fireCollections: sl(),
     ),
   );

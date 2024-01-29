@@ -1,3 +1,4 @@
+import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<PaymentBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<FavoritesBloc>(),
         )
       ],
       child: MaterialApp(

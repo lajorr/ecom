@@ -86,19 +86,34 @@ class FireCollections {
   }
 
   Future<List<ProductModel>> fetchFavProducts() async {
-    // List<ProductModel> favProducts = [];
-    // final userId = await fireAuth.getCurrentUserId();
-    // final snapshot = await likesCollection
-    //     .where('user_id', isEqualTo: userId)
-    //     .where('is_liked', isEqualTo: true)
-    //     .get();
+    List<ProductModel> favProducts = [];
+    final userId = await fireAuth.getCurrentUserId();
 
-    // final likedDocs = snapshot.docs;
-    // print(likedDocs);
+    try {
+      final snapshot = await likesCollection
+          .where('user_id', isEqualTo: userId)
+          .where('is_liked', isEqualTo: true)
+          .get();
 
-    throw UnimplementedError();
+      final likedDocs = snapshot.docs;
 
-    // return favProducts;
+      for (var doc in likedDocs) {
+        final data = doc.data();
+        final prodRef =
+            await (data['prod_ref'] as DocumentReference<Map<String, dynamic>>)
+                .get();
+
+        final prodData = prodRef.data()!;
+        final prodM = ProductModel.fromJson(prodData);
+        favProducts.add(prodM);
+      }
+    } catch (e) {
+      throw ServerException();
+    }
+
+    print(favProducts);
+
+    return favProducts;
   }
 
   Future<bool?> updateFavStatus(String prodId) async {

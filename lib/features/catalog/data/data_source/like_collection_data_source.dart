@@ -1,5 +1,3 @@
-import 'package:ecom/shared/catalog/model/product_model.dart';
-
 import '../../../../core/firebaseFunctions/firebase_collections.dart';
 import '../../../../shared/likes/like_model.dart';
 
@@ -7,7 +5,6 @@ abstract class LikeCollectionDataSource {
   Future<LikeModel> createLikeDocument(String prodId);
   Future<LikeModel> fetchLikeDocument(String prodId);
   Future<bool?> likeUnlikeProd(String prodId);
-  Future<List<ProductModel>> fetchFavProducts();
 }
 
 class LikeCollectionDataSourceImpl implements LikeCollectionDataSource {
@@ -27,11 +24,5 @@ class LikeCollectionDataSourceImpl implements LikeCollectionDataSource {
   @override
   Future<bool?> likeUnlikeProd(String prodId) async {
     return fireCollections.updateFavStatus(prodId);
-  }
-
-  @override
-  Future<List<ProductModel>> fetchFavProducts() async {
-    final prodList = await fireCollections.fetchFavProducts();
-    return prodList;
   }
 }
