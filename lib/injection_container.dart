@@ -1,4 +1,9 @@
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
+import 'package:ecom/features/payment/data/data%20source/payment_datasource.dart';
+import 'package:ecom/features/payment/domain/repository/payment_repository.dart';
+import 'package:ecom/features/payment/domain/usecase/add_card_details_usecase.dart';
+import 'package:ecom/features/payment/domain/usecase/fetch_credit_card_details_usecase.dart';
+import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/firebaseFunctions/firebase_auth.dart';
@@ -32,6 +37,7 @@ import 'features/checkout/domain/usecases/fetch_order_usecase.dart';
 import 'features/checkout/domain/usecases/place_order_usecase.dart';
 import 'features/checkout/domain/usecases/remove_cart_item_usecase.dart';
 import 'features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
+import 'features/payment/data/repository/payment_repository_impl.dart';
 import 'features/profile/data/data%20source/user_data_source.dart';
 import 'features/profile/data/repository/profile_repository_impl.dart';
 import 'features/profile/domain/repository/profile_repository.dart';
@@ -82,10 +88,18 @@ void init() {
         removeCartItemUsecase: sl(),
       ));
 
-  sl.registerFactory(() => OrdersBloc(
-        fetchOrderUsecase: sl(),
-        placeOrderUsecase: sl(),
-      ));
+  sl.registerFactory(
+    () => OrdersBloc(
+      fetchOrderUsecase: sl(),
+      placeOrderUsecase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => PaymentBloc(
+      addCardDetailsUsecase: sl(),
+      fetchCreditCardDetailsUsecase: sl(),
+    ),
+  );
 
   //usecase
 
@@ -110,6 +124,10 @@ void init() {
   sl.registerLazySingleton(() => PlaceOrderUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchOrderUsecase(repository: sl()));
 
+  sl.registerLazySingleton(() => AddCardDetailsUsecase(repository: sl()));
+  sl.registerLazySingleton(
+      () => FetchCreditCardDetailsUsecase(repository: sl()));
+
   //repo
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
@@ -132,6 +150,11 @@ void init() {
       dataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<PaymentRepository>(
+    () => PaymentRepositoryImpl(
+      dataSource: sl(),
+    ),
+  );
 
   // datasource
   //yesle chai euta matra intance banaidinxa thru out the app
@@ -145,10 +168,17 @@ void init() {
 
   sl.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(fireAuth: sl()));
-  sl.registerLazySingleton<CheckoutDataSource>(() => CheckoutDataSourceImpl(
-        fireAuth: sl(),
-        fireCollections: sl(),
-      ));
+  sl.registerLazySingleton<CheckoutDataSource>(
+    () => CheckoutDataSourceImpl(
+      fireAuth: sl(),
+      fireCollections: sl(),
+    ),
+  );
+  sl.registerLazySingleton<PaymentDatasource>(
+    () => PaymentDatasourceImpl(
+      fireCollections: sl(),
+    ),
+  );
 
   //core
   sl.registerLazySingleton<TextValidator>(() => TextValidator());

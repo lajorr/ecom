@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants/string_constants.dart';
 import '../../../../injection_container.dart';
-import '../../../prod_detail/presentation/widgets/shipping_card.dart';
+import '../../../payment/presentation/widgets/shipping_card.dart';
 import '../blocs/checkoutbloc/checkout_bloc.dart';
 import '../blocs/orders bloc/orders_bloc.dart';
 import '../widgets/cart_bill_widget.dart';
@@ -27,6 +27,7 @@ class CheckoutScreen extends StatelessWidget {
       create: (context) => sl<OrdersBloc>(),
       child: Builder(builder: (context) {
         return Scaffold(
+          extendBody: true,
           appBar: AppBar(
             title: const Text('Checkout'),
             backgroundColor: Colors.transparent,

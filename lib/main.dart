@@ -1,3 +1,4 @@
+import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<CheckoutBloc>(),
         ),
+        BlocProvider(
+          create: (context) => sl<PaymentBloc>(),
+        )
       ],
       child: MaterialApp(
         title: 'E-com app',

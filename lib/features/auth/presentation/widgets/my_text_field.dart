@@ -11,7 +11,9 @@ class MyTextField extends StatefulWidget {
     required this.prefixIcon,
     this.inputType = TextInputType.text,
     this.obscure = false,
+    this.hintText,
     required this.onFieldSave,
+    this.validator,
   }) : super(key: key);
 
   final String label;
@@ -19,7 +21,10 @@ class MyTextField extends StatefulWidget {
   final Icon prefixIcon;
   final TextInputType inputType;
   final bool obscure;
+  final String? hintText;
   final Function(String?) onFieldSave;
+
+  final String? Function(String?)? validator;
 
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -28,34 +33,27 @@ class MyTextField extends StatefulWidget {
 class _MyTextFieldState extends State<MyTextField> {
   bool isPasswordField = false;
   bool isVisible = true;
-  String hintText = '';
 
-  @override
-  void initState() {
-    super.initState();
-    switch (widget.inputType) {
-      case TextInputType.visiblePassword:
-        hintText = StringConstants.passwordHintText;
-        isPasswordField = true;
-        break;
-      case TextInputType.name:
-        hintText = "Username";
-        break;
-      case TextInputType.emailAddress:
-        hintText = "abc@asd.com";
-        break;
-      case TextInputType.phone:
-        hintText = "123456789";
-      default:
-        hintText = ".....";
-    }
-
-    // if (widget.inputType == TextInputType.visiblePassword) {
-    //   isPasswordField = true;
-    // } else {
-    //   isPasswordField = false;
-    // }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   switch (widget.inputType) {
+  //     case TextInputType.visiblePassword:
+  //       hintText = StringConstants.passwordHintText;
+  //       isPasswordField = true;
+  //       break;
+  //     case TextInputType.name:
+  //       hintText = "Username";
+  //       break;
+  //     case TextInputType.emailAddress:
+  //       hintText = "abc@asd.com";
+  //       break;
+  //     case TextInputType.phone:
+  //       hintText = "123456789";
+  //     default:
+  //       hintText = ".....";
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +70,7 @@ class _MyTextFieldState extends State<MyTextField> {
           keyboardType: widget.inputType,
           obscureText: isPasswordField ? isVisible : false,
           onSaved: (newValue) => widget.onFieldSave(newValue),
-          validator: (value) {
+          validator: widget.validator ?? (value) {
             if (isPasswordField) {
               return null;
             }
@@ -103,7 +101,7 @@ class _MyTextFieldState extends State<MyTextField> {
                   )
                 : null,
             border: const OutlineInputBorder(),
-            hintText: hintText,
+            hintText: widget.hintText,
           ),
         )
       ],

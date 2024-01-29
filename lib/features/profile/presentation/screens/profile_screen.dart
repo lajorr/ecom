@@ -25,11 +25,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? phNumber;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<AuthBloc>(),
@@ -50,123 +45,122 @@ class _ProfileScreenState extends State<ProfileScreen> {
             },
             child: BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
+              if (state is ProfileLoaded) {
+                email = state.email;
+                username = state.username;
+                phNumber = state.phNumber.toString();
+              }
+              if (state is ProfileLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return Scaffold(
                 appBar: AppBar(
-                  title: const Text('Profile'),
                   centerTitle: true,
-                  actions: [
-                    IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => BlocProvider.value(
-                            value: context.read<ProfileBloc>(),
-                            child: AlertDialog(
-                              content: Form(
-                                key: formKey,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    MyTextField(
-                                      label: "Username",
-                                      prefixIcon: const Icon(Icons.person),
-                                      inputType: TextInputType.name,
-                                      onFieldSave: (value) {
-                                        username = value;
-                                      },
-                                    ),
-                                    MyTextField(
-                                      label: "Phone Number",
-                                      prefixIcon: const Icon(Icons.phone),
-                                      inputType: TextInputType.phone,
-                                      onFieldSave: (value) {
-                                        phNumber = value;
-                                      },
-                                    ),
-                                  ],
+                  backgroundColor: Colors.transparent,
+                  title: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(username ?? "___"),
+                      IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => BlocProvider.value(
+                              value: context.read<ProfileBloc>(),
+                              child: AlertDialog(
+                                content: Form(
+                                  key: formKey,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      MyTextField(
+                                        label: "Username",
+                                        prefixIcon: const Icon(Icons.person),
+                                        inputType: TextInputType.name,
+                                        onFieldSave: (value) {
+                                          username = value;
+                                        },
+                                      ),
+                                      MyTextField(
+                                        label: "Phone Number",
+                                        prefixIcon: const Icon(Icons.phone),
+                                        inputType: TextInputType.phone,
+                                        onFieldSave: (value) {
+                                          phNumber = value;
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              actions: [
-                                Builder(builder: (context) {
-                                  return MaterialButton(
+                                actions: [
+                                  Builder(builder: (context) {
+                                    return MaterialButton(
+                                      onPressed: () {
+                                        formKey.currentState!.save();
+
+                                        BlocProvider.of<ProfileBloc>(context)
+                                            .add(
+                                          UpdateUserDataEvent(
+                                            username: username,
+                                            phNumber: phNumber,
+                                          ),
+                                        );
+
+                                        Navigator.of(context).pop();
+                                      },
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      child: const Text('Ok'),
+                                    );
+                                  }),
+                                  MaterialButton(
                                     onPressed: () {
-                                      formKey.currentState!.save();
-
-                                      BlocProvider.of<ProfileBloc>(context).add(
-                                        UpdateUserDataEvent(
-                                          username: username,
-                                          phNumber: phNumber,
-                                        ),
-                                      );
-
                                       Navigator.of(context).pop();
                                     },
                                     color:
                                         Theme.of(context).colorScheme.primary,
-                                    child: const Text('Ok'),
-                                  );
-                                }),
-                                MaterialButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  color: Theme.of(context).colorScheme.primary,
-                                  child: const Text('Cancel'),
-                                ),
-                              ],
+                                    child: const Text('Cancel'),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        },
+                        icon: const Icon(Icons.edit),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    IconButton(
+                      onPressed: () async {
+                        BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
                       },
-                      icon: const Icon(Icons.edit),
+                      icon: const Icon(Icons.logout),
                     ),
                   ],
                 ),
-                body: Builder(builder: (context) {
-                  if (state is ProfileLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if (state is ProfileLoaded) {
-                    email = state.email;
-                    username = state.username;
-                    phNumber = state.phNumber.toString();
-                  }
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          Text(email ?? ""),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Text(username ?? "___"),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Text(phNumber ?? "___"),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(SignOutEvent());
-                            },
-                            child: const Text(
-                              StringConstants.logOutText,
-                            ),
-                          ),
-                        ],
-                      ),
+                body: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Text(email ?? ""),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Text(phNumber ?? "___"),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                      ],
                     ),
-                  );
-                }),
+                  ),
+                ),
               );
             }),
           );

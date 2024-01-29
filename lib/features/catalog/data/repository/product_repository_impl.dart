@@ -45,4 +45,12 @@ class ProductRepositoryImpl implements ProductRepository {
       return Right(likeStatus);
     }
   }
+
+  @override
+  Future<Either<Failure, List<ProductModel>>> fetchFavProducts() async {
+    // final a = await likesDataSource.fetchFavProducts();
+    // // print("IMPL");
+    // // print(a);
+    throw UnimplementedError();
+  }
 }

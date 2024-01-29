@@ -3,7 +3,7 @@ import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/presentation/widgets/cart_bill_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../../prod_detail/presentation/widgets/shipping_card.dart';
+import '../../../payment/presentation/widgets/shipping_card.dart';
 import '../widgets/cart_products_widget.dart';
 
 class CartHistoryScreen extends StatelessWidget {

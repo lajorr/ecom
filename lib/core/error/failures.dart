@@ -39,7 +39,7 @@ class DocumentFailure extends Failure {
 }
 
 class CartFailure extends Failure {
-  const CartFailure({ super.message = "Something went wrong with the cart"});
+  const CartFailure({super.message = "Something went wrong with the cart"});
 }
 
 class EmptyCartFailure extends Failure {

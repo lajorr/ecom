@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecom/features/payment/data/model/credit_card_model.dart';
 
 import '../../features/auth/data/model/user_model.dart';
 import '../../features/checkout/domain/entity/enums/cart_status_enum.dart';
@@ -19,6 +20,9 @@ class FireCollections {
   final cartCollection = FirebaseFirestore.instance.collection('cart');
   final userCollection = FirebaseFirestore.instance.collection('users');
   final ordersCollection = FirebaseFirestore.instance.collection('orders');
+
+  final creditCardCollection =
+      FirebaseFirestore.instance.collection('credit-cards');
 
   Future<List<ProductModel>> getAllProductsFromCollection() async {
     final querySnapshot = await productCollection.get();
@@ -81,6 +85,22 @@ class FireCollections {
     }
   }
 
+  Future<List<ProductModel>> fetchFavProducts() async {
+    // List<ProductModel> favProducts = [];
+    // final userId = await fireAuth.getCurrentUserId();
+    // final snapshot = await likesCollection
+    //     .where('user_id', isEqualTo: userId)
+    //     .where('is_liked', isEqualTo: true)
+    //     .get();
+
+    // final likedDocs = snapshot.docs;
+    // print(likedDocs);
+
+    throw UnimplementedError();
+
+    // return favProducts;
+  }
+
   Future<bool?> updateFavStatus(String prodId) async {
     final userId = await fireAuth.getCurrentUserId();
 
@@ -120,7 +140,6 @@ class FireCollections {
     }
 
     final data = {
-      
       'products': prodRefList,
       'user': userRef,
       'amount': cart.amount,
@@ -171,8 +190,6 @@ class FireCollections {
           cartProdList.add(cartM);
         }
 
-        
-
         currentCart = CartModel(
           // cId: docData['cid'],
           user: await fireAuth.getCurrentUserModel(), // userId
@@ -189,7 +206,6 @@ class FireCollections {
       }
       return currentCart;
     } catch (e) {
-      
       throw ServerException();
     }
   }
@@ -356,9 +372,51 @@ class FireCollections {
         cartCollection.doc(userDocId).set(data);
       }
     } catch (e) {
-      
-      
       throw DocumentException();
+    }
+  }
+
+  Future<void> storeCardInfo(CreditCardModel creditModel) async {
+    final user = await fireAuth.getCurrentUserModel();
+    final userRef = userCollection.doc(user.uid);
+
+    final creditJson = creditModel.toMap();
+
+    creditJson.addAll(
+      {'user': userRef},
+    );
+
+    final snapshot =
+        await creditCardCollection.where('user', isEqualTo: userRef).get();
+
+    if (snapshot.docs.isNotEmpty) {
+      final userCreditId = snapshot.docs[0].id;
+
+      creditCardCollection.doc(userCreditId).set(creditJson);
+    } else {
+      await creditCardCollection.add(creditJson);
+    }
+  }
+
+  Future<CreditCardModel> fetchCreditCardInfo() async {
+    final user = await fireAuth.getCurrentUserModel();
+    final userRef = userCollection.doc(user.uid);
+
+    final snapshot =
+        await creditCardCollection.where('user', isEqualTo: userRef).get();
+
+    if (snapshot.docs.isNotEmpty) {
+      final creditJson = snapshot.docs[0].data();
+
+      final creditM = CreditCardModel.fromMap(creditJson);
+      return creditM;
+    } else {
+      return const CreditCardModel(
+        cardNum: null,
+        cardHolderName: null,
+        cvv: null,
+        expiryDate: null,
+      );
     }
   }
 }
