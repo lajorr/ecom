@@ -14,7 +14,6 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
       final likeProds = await dataSource.fetchFavProducts();
       return Right(likeProds);
     } catch (e) {
-      print(e);
       return const Left(
         ServerFailure(message: "fetching products failed"),
       );

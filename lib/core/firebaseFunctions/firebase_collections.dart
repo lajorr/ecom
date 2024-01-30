@@ -111,8 +111,6 @@ class FireCollections {
       throw ServerException();
     }
 
-    print(favProducts);
-
     return favProducts;
   }
 
@@ -407,7 +405,7 @@ class FireCollections {
     if (snapshot.docs.isNotEmpty) {
       final userCreditId = snapshot.docs[0].id;
 
-      creditCardCollection.doc(userCreditId).set(creditJson);
+      await creditCardCollection.doc(userCreditId).set(creditJson);
     } else {
       await creditCardCollection.add(creditJson);
     }
@@ -417,21 +415,26 @@ class FireCollections {
     final user = await fireAuth.getCurrentUserModel();
     final userRef = userCollection.doc(user.uid);
 
-    final snapshot =
-        await creditCardCollection.where('user', isEqualTo: userRef).get();
+    try {
+      final snapshot =
+          await creditCardCollection.where('user', isEqualTo: userRef).get();
 
-    if (snapshot.docs.isNotEmpty) {
-      final creditJson = snapshot.docs[0].data();
+      if (snapshot.docs.isNotEmpty) {
+        final creditJson = snapshot.docs[0].data();
 
-      final creditM = CreditCardModel.fromMap(creditJson);
-      return creditM;
-    } else {
-      return const CreditCardModel(
-        cardNum: null,
-        cardHolderName: null,
-        cvv: null,
-        expiryDate: null,
-      );
+        final creditM = CreditCardModel.fromMap(creditJson);
+
+        return creditM;
+      } else {
+        return const CreditCardModel(
+          cardNum: null,
+          cardHolderName: null,
+          cvv: null,
+          expiryDate: null,
+        );
+      }
+    } catch (e) {
+      throw ServerException();
     }
   }
 }

@@ -26,8 +26,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
   FutureOr<void> _onAddPaymentInfo(
       AddPaymentDetailsEvent event, Emitter<PaymentState> emit) async {
-    emit(PaymentInfoAddLoading());
-
+    // emit(PaymentInfoAddLoading());
+    emit(PaymentInfoLoading());
     final addOrFail = await addCardDetailsUsecase.call(event.creditCardModel);
 
     addOrFail.fold((failure) => emit(PaymentInfoAddFailed()), (_) {

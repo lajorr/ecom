@@ -33,7 +33,12 @@ class _ShippingCardState extends State<ShippingCard> {
             fontSize: 16,
           ),
         ),
-        BlocBuilder<PaymentBloc, PaymentState>(
+        BlocConsumer<PaymentBloc, PaymentState>(
+          listener: (context, state) {
+            if (state is PaymentInfoAddSuccess) {
+              context.read<PaymentBloc>().add(FetchCreditCardInfoEvent());
+            }
+          },
           builder: (context, state) {
             if (state is PaymentInfoLoading) {
               return const Center(

@@ -13,7 +13,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
   Future<Either<Failure, void>> addCreditCardDetails(
       CreditCardModel creditModel) async {
     try {
-      final res = dataSource.storeCardInfo(creditModel: creditModel);
+      final res = await dataSource.storeCardInfo(creditModel: creditModel);
       return Right(res);
     } catch (e) {
       return const Left(DocumentFailure(message: 'credit store failed'));

@@ -18,23 +18,29 @@ class PaymentDatasourceImpl implements PaymentDatasource {
   Future<CreditCardModel> fetchCardInfo() async {
     final creditM = await fireCollections.fetchCreditCardInfo();
 
-    String formattedNum = '';
-    String cardNum = creditM.cardNum!;
+    CreditCardModel creditModelToReturn = creditM;
 
-    // to add space
-    for (var i = 0; i < cardNum.length; i++) {
-      if (i > 0 && i % 4 == 0) {
-        formattedNum += " ";
+    if (creditM.cardHolderName != null) {
+      String formattedNum = '';
+      String cardNum = creditM.cardNum!;
+
+      // to add space
+      for (var i = 0; i < cardNum.length; i++) {
+        if (i > 0 && i % 4 == 0) {
+          formattedNum += " ";
+        }
+        // to hide the string
+        if (i < 12) {
+          formattedNum += '*';
+        } else {
+          formattedNum += cardNum[i];
+        }
       }
-      // to hide the string
-      if (i < 12) {
-        formattedNum += '*';
-      } else {
-        formattedNum += cardNum[i];
-      }
+
+      final formattedCredit = creditM.copyWith(cardNum: formattedNum);
+      creditModelToReturn = formattedCredit;
     }
 
-    final formattedCredit = creditM.copyWith(cardNum: formattedNum);
-    return formattedCredit;
+    return creditModelToReturn;
   }
 }

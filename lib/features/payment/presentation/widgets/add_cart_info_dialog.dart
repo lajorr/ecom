@@ -27,8 +27,6 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
 
       final expDateTime = DateFormat('yM').parse(expDate);
 
-      // final fdate = DateFormat('yM').format(expDateTime);
-
       final creditM = CreditCardModel(
         cardNum: cardNumber,
         cardHolderName: cardHolderName,
@@ -115,7 +113,7 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
                     child: MyTextField(
                       label: 'Expiry Date',
                       prefixIcon: const Icon(Icons.credit_score),
-                      inputType: TextInputType.number,
+                      inputType: TextInputType.datetime,
                       onFieldSave: (value) {
                         expDate = value!;
                       },
