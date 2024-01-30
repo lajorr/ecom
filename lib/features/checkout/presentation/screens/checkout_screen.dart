@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ecom/features/checkout/presentation/widgets/payment_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +35,10 @@ class CheckoutScreen extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () {
-                  context.read<OrdersBloc>().add(OrderCartItemsEvent());
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => PaymentDialog(ctx: context),
+                  );
                 },
                 child: const Text("Pay"),
               )
