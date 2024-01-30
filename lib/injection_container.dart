@@ -1,9 +1,14 @@
+import 'package:ecom/core/location-functions/map_location.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
 import 'package:ecom/features/favorites/data/datasource/favorites_datasource.dart';
 import 'package:ecom/features/favorites/data/repository/favorites_repository_impl.dart';
 import 'package:ecom/features/favorites/domain/repository/favorites_repository.dart';
 import 'package:ecom/features/favorites/domain/usecase/fetch_fav_products_usecase.dart';
 import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
+import 'package:ecom/features/map/data/data%20source/map_data_source.dart';
+import 'package:ecom/features/map/domain/repositity/map_repository.dart';
+import 'package:ecom/features/map/domain/usecase/get_current_user_position_usecase.dart';
+import 'package:ecom/features/map/presentation/bloc/map_bloc.dart';
 import 'package:ecom/features/payment/data/data%20source/payment_datasource.dart';
 import 'package:ecom/features/payment/domain/repository/payment_repository.dart';
 import 'package:ecom/features/payment/domain/usecase/add_card_details_usecase.dart';
@@ -42,6 +47,7 @@ import 'features/checkout/domain/usecases/fetch_order_usecase.dart';
 import 'features/checkout/domain/usecases/place_order_usecase.dart';
 import 'features/checkout/domain/usecases/remove_cart_item_usecase.dart';
 import 'features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
+import 'features/map/data/repository/map_repository_impl.dart';
 import 'features/payment/data/repository/payment_repository_impl.dart';
 import 'features/profile/data/data%20source/user_data_source.dart';
 import 'features/profile/data/repository/profile_repository_impl.dart';
@@ -111,6 +117,11 @@ void init() {
       fetchFavProductsUsecase: sl(),
     ),
   );
+  sl.registerFactory(
+    () => MapBloc(
+      getCurrentUserPositionUsecase: sl(),
+    ),
+  );
 
   //usecase
 
@@ -139,6 +150,8 @@ void init() {
   sl.registerLazySingleton(
       () => FetchCreditCardDetailsUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchFavProductsUsecase(repository: sl()));
+  sl.registerLazySingleton(
+      () => GetCurrentUserPositionUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(
@@ -172,6 +185,11 @@ void init() {
       dataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<MapRepository>(
+    () => MapRepositoryImpl(
+      dataSource: sl(),
+    ),
+  );
 
   // datasource
   //yesle chai euta matra intance banaidinxa thru out the app
@@ -201,9 +219,16 @@ void init() {
       fireCollections: sl(),
     ),
   );
+  
+  sl.registerLazySingleton<MapDataSource>(
+    () => MapDataSourceImpl(
+      mapLocation: sl(),
+    ),
+  );
 
   //core
   sl.registerLazySingleton<TextValidator>(() => TextValidator());
   sl.registerLazySingleton<FireAuth>(() => FireAuth());
   sl.registerLazySingleton<FireCollections>(() => FireCollections());
+  sl.registerLazySingleton<MapLocation>(() => MapLocation());
 }

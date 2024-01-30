@@ -45,3 +45,7 @@ class CartFailure extends Failure {
 class EmptyCartFailure extends Failure {
   const EmptyCartFailure({required super.message});
 }
+
+class LocationFailure extends Failure {
+  const LocationFailure({required super.message});
+}

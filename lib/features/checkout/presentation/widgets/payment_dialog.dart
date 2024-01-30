@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/features/checkout/presentation/screens/show_map_screen.dart';
+import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
+import 'package:ecom/features/map/presentation/screens/show_map_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaymentDialog extends StatefulWidget {
   const PaymentDialog({
@@ -20,20 +22,23 @@ class _PaymentDialogState extends State<PaymentDialog> {
     return Builder(builder: (context) {
       return AlertDialog(
         title: const Text("Confirm Payment"),
-        content: const Column(
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Pick Location"),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(ShowMapScreen.routeName);
+              },
+              child: const Text("Pick Location"),
+            ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () {
-              // widget.ctx.read<OrdersBloc>().add(OrderCartItemsEvent());
-              // Navigator.of(widget.ctx).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const ShowMapScreen(),
-              ));
+              widget.ctx.read<OrdersBloc>().add(OrderCartItemsEvent());
+              Navigator.of(widget.ctx).pop();
             },
             child: const Text('Confirm'),
           ),
