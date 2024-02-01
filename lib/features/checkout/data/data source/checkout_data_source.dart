@@ -86,7 +86,7 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   Future<CartModel> fetchCartProducts() async {
     if (_productsList.isNotEmpty) {
       final cart = CartModel(
-        user: await fireAuth.getCurrentUserModel(), // userId
+        user: await fireAuth.getCurrentUserModel(),
         products: _productsList,
         amount: _amount,
       );
@@ -120,7 +120,9 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
       final cartModel = CartModel(
         user: await fireAuth.getCurrentUserModel(),
         products: _productsList,
-        amount: double.parse(_amount.toStringAsFixed(2)),
+        amount: double.parse(
+          _amount.toStringAsFixed(2),
+        ),
       );
 
       await fireCollections.removeItemFromCart(cartModel);
@@ -141,7 +143,7 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
     await fireCollections.cartToOrderCollection(_carts);
 
-    // clear cart
+    
     _productsList = [];
     _amount = 0;
 

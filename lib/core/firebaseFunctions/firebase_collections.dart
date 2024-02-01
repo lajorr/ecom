@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom/features/payment/data/model/credit_card_model.dart';
+import 'package:geocoding/geocoding.dart';
 
 import '../../features/auth/data/model/user_model.dart';
 import '../../features/checkout/domain/entity/enums/cart_status_enum.dart';
@@ -55,7 +56,7 @@ class FireCollections {
 
       return LikeModel.fromMap(likeProd);
     } else {
-      return createDocument(prodId);
+      return await createDocument(prodId);
     }
   }
 
@@ -303,14 +304,23 @@ class FireCollections {
 
           cartProdList.add(cartM);
         }
+        final deliveryLat = c['lat'] as double?;
+        final deliveryLng = c['lng'] as double?;
 
+        final deliveryLocation = await placemarkFromCoordinates(
+          deliveryLat!,
+          deliveryLng!,
+        );
+        final deliveryAddress = deliveryLocation.first.subLocality;
         final cartM = CartModel(
           user: await fireAuth.getCurrentUserModel(), // userId
           products: cartProdList,
           amount: c['amount'] as double,
           cartStatus: (c['status'] as String).toCartStatus(),
-          lat: c['lat'] as double?,
-          lng: c['lng'] as double?,
+          lat: deliveryLat,
+          lng: deliveryLng,
+
+          address: deliveryAddress,
         );
 
         cartList.add(cartM);
@@ -375,7 +385,6 @@ class FireCollections {
     }
 
     final data = {
-      // 'cid': "${cart.user.uid}-cartId",
       'products': prodRefList,
       'user': userRef,
       'amount': cart.amount,

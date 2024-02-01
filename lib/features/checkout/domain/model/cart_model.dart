@@ -12,11 +12,12 @@ class CartModel extends CartEntity {
     super.cartStatus = CartStatus.cartCreated,
     super.lat,
     super.lng,
+    super.address,
   });
 
   @override
   String toString() {
-    return "cid:$cId, user:${user.name}, products:${products.length}, amount: $amount , status: ${cartStatus.name}, lat:$lat , lng:$lng";
+    return "cid:$cId, user:${user.name}, products:${products.length}, amount: $amount , status: ${cartStatus.name}, lat:$lat , lng:$lng , address:$address";
   }
 
   Map<String, dynamic> toMap() {
@@ -31,6 +32,7 @@ class CartModel extends CartEntity {
       'status': cartStatus.name,
       'lat': lat,
       'lng': lng,
+      'address': address,
     };
   }
 
@@ -41,6 +43,7 @@ class CartModel extends CartEntity {
     CartStatus? cartStatus,
     double? lat,
     double? lng,
+    String? address,
   }) {
     return CartModel(
       user: user ?? this.user,
@@ -48,9 +51,11 @@ class CartModel extends CartEntity {
       amount: amount ?? this.amount,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
+      cartStatus: cartStatus ?? this.cartStatus,
+      address: address ?? this.address,
     );
   }
 
   @override
-  List<Object?> get props => [cId, user, products, amount, lat, lng];
+  List<Object?> get props => [cId, user, products, amount, lat, lng,address,];
 }

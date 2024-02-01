@@ -14,6 +14,7 @@ class CartEntity extends Equatable {
     required this.cartStatus,
     this.lat,
     this.lng,
+    this.address,
   });
 
   final String? cId;
@@ -24,6 +25,8 @@ class CartEntity extends Equatable {
 
   final double? lat;
   final double? lng;
+
+  final String? address;
 
   @override
   List<Object?> get props => [

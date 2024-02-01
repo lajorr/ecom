@@ -6,6 +6,7 @@ import '../../../../injection_container.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/screens/login_screen.dart';
 import '../../../auth/presentation/widgets/my_text_field.dart';
+import '../../../checkout/presentation/widgets/order_history.dart';
 import '../bloc/profile_bloc.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -146,6 +147,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
+                        Stack(
+                          children: [
+                            const CircleAvatar(
+                              radius: 50,
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: -10,
+                              child: IconButton(
+                                onPressed: () {
+                                  print('tapped');
+                                },
+                                icon: const Icon(
+                                  Icons.photo_camera,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                         const SizedBox(
                           height: 50,
                         ),
@@ -157,6 +177,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(
                           height: 25,
                         ),
+                        Builder(builder: (context) {
+                          return const OrderHistory();
+                        }),
                       ],
                     ),
                   ),

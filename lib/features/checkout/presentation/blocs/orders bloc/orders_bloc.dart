@@ -6,6 +6,7 @@ import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/domain/usecases/fetch_order_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/place_order_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geocoding/geocoding.dart';
 
 import '../../../../../constants/string_constants.dart';
 import '../../../../../core/usecase/usecase.dart';
@@ -46,7 +47,17 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
       OrderCartItemsEvent event, Emitter<OrdersState> emit) async {
     emit(CheckoutOrderLoading());
 
-    final payOrFail = await placeOrderUsecase.call(event.cartModel);
+    final cM = event.cartModel;
+    final lat = cM.lat;
+    final lng = cM.lng;
+    final address = await placemarkFromCoordinates(
+      lat!,
+      lng!,
+    );
+    final subLocality = address.first.subLocality!;
+    final cMA = cM.copyWith(address: subLocality);
+
+    final payOrFail = await placeOrderUsecase.call(cMA);
     payOrFail.fold((failure) {
       emit(
         OrderPaymentFailed(message: failure.message),

@@ -13,7 +13,7 @@ class LikeButtonPressedEvent extends LikeEvent {
   const LikeButtonPressedEvent({required this.prodId});
 }
 
-class CreateLikeDocumentEvent extends LikeEvent {}
+// class CreateLikeDocumentEvent extends LikeEvent {}
 
 class FetchLikeDocumentEvent extends LikeEvent {
   final String prodId;

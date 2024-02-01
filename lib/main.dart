@@ -1,3 +1,4 @@
+import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
 import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:ecom/features/map/presentation/bloc/map_bloc.dart';
 import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<MapBloc>(),
-        )
+        ),
+        BlocProvider(create: (context) => sl<OrdersBloc>(),)
       ],
       child: MaterialApp(
         title: 'E-com app',

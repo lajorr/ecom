@@ -36,23 +36,21 @@ class _FavScreenState extends State<FavScreen> {
           } else if (state is FavoritesLoaded) {
             final favProds = state.prodList;
 
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: MasonryGridView.builder(
-                  gridDelegate:
-                      const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: favProds.length,
-                  itemBuilder: (context, index) {
-                    final prod = favProds[index];
-
-                    return MyGridTile(
-                      product: prod,
-                    );
-                  },
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: MasonryGridView.builder(
+                gridDelegate:
+                    const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
                 ),
+                itemCount: favProds.length,
+                itemBuilder: (context, index) {
+                  final prod = favProds[index];
+            
+                  return MyGridTile(
+                    product: prod,
+                  );
+                },
               ),
             );
           } else {

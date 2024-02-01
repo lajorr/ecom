@@ -51,7 +51,6 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
       final res = await dataSource.placeOrder(cartM);
       return Right(res);
     } on EmptyCartException {
-      // print(e.toString());
       return const Left(EmptyCartFailure(message: "No Product(s) in cart.."));
     } catch (e) {
       return Left(DocumentFailure(
