@@ -56,7 +56,6 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     fetchOrFail.fold(
       (failure) => emit(CheckoutFetchFailed()),
       (cartModel) {
-        print(cartModel);
         emit(
           CheckoutLoaded(
             cartModel: cartModel,

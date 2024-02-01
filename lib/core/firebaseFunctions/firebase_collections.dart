@@ -214,7 +214,6 @@ class FireCollections {
           lat: docData['lat'] as double?,
           lng: docData['lng'] as double?,
         );
-        print(currentCart);
       } else {
         currentCart = await createEmptyCart(
           currentUser: currentUser,
@@ -314,7 +313,6 @@ class FireCollections {
           lng: c['lng'] as double?,
         );
 
-        print(cartM);
         cartList.add(cartM);
       }
 

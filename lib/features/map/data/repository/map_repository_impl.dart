@@ -16,16 +16,9 @@ class MapRepositoryImpl implements MapRepository {
       final pos = await dataSource.getCurrentPosition();
       return Right(pos);
     } on LocationException {
-      print('no gps');
       return const Left(
         LocationFailure(message: 'No Gps Service found.. Please turn it on.'),
       );
     }
-  }
-
-  @override
-  Future<Either<Failure, Position>> addDeliveryLocation() {
-    // TODO: implement addDeliveryLocation
-    throw UnimplementedError();
   }
 }
