@@ -46,9 +46,9 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
   }
 
   @override
-  Future<Either<Failure, void>> placeOrder() async {
+  Future<Either<Failure, void>> placeOrder(CartModel cartM) async {
     try {
-      final res = await dataSource.placeOrder();
+      final res = await dataSource.placeOrder(cartM);
       return Right(res);
     } on EmptyCartException {
       // print(e.toString());

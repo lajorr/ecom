@@ -4,4 +4,5 @@ import 'package:geolocator/geolocator.dart';
 
 abstract class MapRepository {
   Future<Either<Failure, Position>> getCurrentUserPosition();
+  Future<Either<Failure, Position>> addDeliveryLocation();
 }

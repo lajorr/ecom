@@ -19,15 +19,18 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   final GetCurrentUserPositionUsecase getCurrentUserPositionUsecase;
 
+  double lat = 0;
+
   FutureOr<void> _onGetCurrentPosition(
       GetCurrentPositionEvent event, Emitter<MapState> emit) async {
     emit(MapLoading());
-    print("BLOCC");
+
     final posOrFail = await getCurrentUserPositionUsecase.call(NoParams());
-    posOrFail.fold((l) {
-      emit(MapFailed());
+    posOrFail.fold((failure) {
+      emit(
+        MapFailed(message: failure.message),
+      );
     }, (pos) {
-      print("SUCCESS");
       emit(MapLoaded(position: pos));
     });
   }

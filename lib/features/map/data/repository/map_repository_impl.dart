@@ -5,7 +5,6 @@ import 'package:ecom/features/map/data/data%20source/map_data_source.dart';
 import 'package:ecom/features/map/domain/repositity/map_repository.dart';
 import 'package:geolocator/geolocator.dart';
 
-
 class MapRepositoryImpl implements MapRepository {
   final MapDataSource dataSource;
 
@@ -16,9 +15,17 @@ class MapRepositoryImpl implements MapRepository {
     try {
       final pos = await dataSource.getCurrentPosition();
       return Right(pos);
-    } catch (e) {
-      print(e);
-      throw LocationException();
+    } on LocationException {
+      print('no gps');
+      return const Left(
+        LocationFailure(message: 'No Gps Service found.. Please turn it on.'),
+      );
     }
+  }
+
+  @override
+  Future<Either<Failure, Position>> addDeliveryLocation() {
+    // TODO: implement addDeliveryLocation
+    throw UnimplementedError();
   }
 }

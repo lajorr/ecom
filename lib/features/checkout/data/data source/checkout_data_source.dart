@@ -3,7 +3,6 @@ import 'package:ecom/core/error/exception.dart';
 import '../../../../core/firebaseFunctions/firebase_auth.dart';
 import '../../../../core/firebaseFunctions/firebase_collections.dart';
 import '../../../../shared/catalog/model/product_model.dart';
-import '../../domain/entity/enums/cart_status_enum.dart';
 import '../../domain/model/cart_model.dart';
 import '../../domain/model/cart_product_model.dart';
 import '../../domain/model/order_model.dart';
@@ -14,7 +13,7 @@ abstract class CheckoutDataSource {
 
   Future<CartModel> removeCartItem(ProductModel prod);
 
-  Future<void> placeOrder();
+  Future<void> placeOrder(CartModel cartM);
   Future<OrderModel> fetchAllOrders();
 }
 
@@ -59,7 +58,6 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
       }
       _amount = total;
       cartModel = CartModel(
-          // cId: DateTime.now().toString(),
           user: await fireAuth.getCurrentUserModel(),
           products: _productsList,
           amount: double.parse((_amount).toStringAsFixed(2)));
@@ -134,18 +132,12 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   }
 
   @override
-  Future<void> placeOrder() async {
+  Future<void> placeOrder(CartModel cartM) async {
     if (_productsList.isEmpty) {
       throw EmptyCartException();
     }
-    final cartModel = CartModel(
-      user: await fireAuth.getCurrentUserModel(),
-      products: _productsList,
-      amount: double.parse(_amount.toStringAsFixed(2)),
-      cartStatus: CartStatus.orderPlaced,
-    );
 
-    _carts.add(cartModel);
+    _carts.add(cartM);
 
     await fireCollections.cartToOrderCollection(_carts);
 

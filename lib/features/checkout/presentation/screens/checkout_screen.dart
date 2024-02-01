@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/features/checkout/presentation/widgets/payment_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +10,7 @@ import '../blocs/orders bloc/orders_bloc.dart';
 import '../widgets/cart_bill_widget.dart';
 import '../widgets/cart_products_widget.dart';
 import '../widgets/order_history.dart';
+import '../widgets/payment_dialog.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({
@@ -27,75 +27,81 @@ class CheckoutScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<OrdersBloc>(),
       child: Builder(builder: (context) {
-        return Scaffold(
-          extendBody: true,
-          appBar: AppBar(
-            title: const Text('Checkout'),
-            backgroundColor: Colors.transparent,
-            actions: [
-              TextButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) => PaymentDialog(ctx: context),
-                  );
-                },
-                child: const Text("Pay"),
-              )
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: BlocListener<OrdersBloc, OrdersState>(
-              listener: (context, state) {
-                if (state is OrderPaymentSuccess) {
-                  context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+        return BlocListener<OrdersBloc, OrdersState>(
+          listener: (context, state) {
+            if (state is OrderPaymentSuccess) {
+              context.read<CheckoutBloc>().add(FetchCartProductsEvent());
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                }
-                if (state is OrderPaymentFailed) {
-                  context.read<OrdersBloc>().add(FetchOrderHistoryEvent());
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              },
-              child: BlocConsumer<CheckoutBloc, CheckoutState>(
-                listener: (context, state) {
-                  if (state is CheckoutAddSuccess) {
-                    context.read<CheckoutBloc>().add(FetchCartProductsEvent());
-                  }
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            }
+            if (state is OrderPaymentFailed) {
+              context.read<OrdersBloc>().add(FetchOrderHistoryEvent());
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
+          child: BlocConsumer<CheckoutBloc, CheckoutState>(
+            listener: (context, state) {
+              if (state is CheckoutAddSuccess) {
+                context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+              }
 
-                  if (state is CheckoutRemoveItemSuccess) {
-                    context.read<CheckoutBloc>().add(
-                          FetchCartProductsEvent(),
-                        );
-                  }
-                },
-                builder: (context, state) {
-                  if (state is CheckoutLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+              if (state is CheckoutRemoveItemSuccess) {
+                context.read<CheckoutBloc>().add(
+                      FetchCartProductsEvent(),
                     );
-                  } else if (state is CheckoutFetchFailed) {
-                    return const Center(
-                      child: Text(StringConstants.dataFetchErrorText),
-                    );
-                  } else if (state is CheckoutLoaded) {
-                    final cart = state.cartModel;
+              }
+            },
+            builder: (context, state) {
+              if (state is CheckoutLoading) {
+                return const Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else if (state is CheckoutFetchFailed) {
+                return const Scaffold(
+                  body: Center(
+                    child: Text(StringConstants.dataFetchErrorText),
+                  ),
+                );
+              } else if (state is CheckoutLoaded) {
+                final cart = state.cartModel;
 
-                    final productList = cart.products;
+                final productList = cart.products;
 
-                    final totalAmt = shippingFee + cart.amount;
-                    return Column(
+                final totalAmt = shippingFee + cart.amount;
+
+                return Scaffold(
+                  extendBody: true,
+                  appBar: AppBar(
+                    title: const Text('Checkout'),
+                    backgroundColor: Colors.transparent,
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) =>
+                                PaymentDialog(ctx: context, cartModel: cart),
+                          );
+                        },
+                        child: const Text("Pay"),
+                      )
+                    ],
+                  ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
                       children: [
                         // prod list
                         if (productList.isEmpty)
@@ -124,13 +130,15 @@ class CheckoutScreen extends StatelessWidget {
                           return const OrderHistory();
                         }),
                       ],
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-              ),
-            ),
+                    ),
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text('ELSe'),
+                );
+              }
+            },
           ),
         );
       }),

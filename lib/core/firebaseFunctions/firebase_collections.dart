@@ -156,7 +156,9 @@ class FireCollections {
       'products': prodRefList,
       'user': userRef,
       'amount': cart.amount,
-      'status': cart.cartStatus.name
+      'status': cart.cartStatus.name,
+      'lat': cart.lat,
+      'lng': cart.lng
     };
 
     try {
@@ -209,7 +211,10 @@ class FireCollections {
           products: cartProdList,
           amount: docData['amount'],
           cartStatus: (docData['status'] as String).toCartStatus(),
+          lat: docData['lat'] as double?,
+          lng: docData['lng'] as double?,
         );
+        print(currentCart);
       } else {
         currentCart = await createEmptyCart(
           currentUser: currentUser,
@@ -234,13 +239,15 @@ class FireCollections {
       'amount': 0.00,
       'status': CartStatus.cartCreated.name,
     };
-    // await cartCollection.doc("$userId-cartId").set(data);
+
     final docRef = await cartCollection.add(data);
     final cart = CartModel(
       cId: docRef.id,
       user: currentUser,
       products: const [],
       amount: 0,
+      lat: null,
+      lng: null,
     );
 
     return cart;
@@ -257,8 +264,6 @@ class FireCollections {
       'amount': 0.00,
       'status': CartStatus.cartCreated.name,
     };
-
-    // ordersCollection.doc('$currentUserId-orders').set(currentCart.)
 
     final userCart =
         await cartCollection.where('user', isEqualTo: userRef).get();
@@ -301,13 +306,15 @@ class FireCollections {
         }
 
         final cartM = CartModel(
-          // cId: docData['cid'],
           user: await fireAuth.getCurrentUserModel(), // userId
           products: cartProdList,
-          amount: c['amount'],
+          amount: c['amount'] as double,
           cartStatus: (c['status'] as String).toCartStatus(),
+          lat: c['lat'] as double?,
+          lng: c['lng'] as double?,
         );
 
+        print(cartM);
         cartList.add(cartM);
       }
 

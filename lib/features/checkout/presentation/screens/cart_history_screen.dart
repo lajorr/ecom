@@ -40,6 +40,8 @@ class CartHistoryScreen extends StatelessWidget {
                     shippingFee: 0.0,
                     totalAmt: cart.amount,
                   ),
+                  Text("lat: ${cart.lat}"),
+                  Text("lng: ${cart.lng}"),
                 ],
               ),
             )

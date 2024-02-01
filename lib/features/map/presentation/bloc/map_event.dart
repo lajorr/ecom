@@ -8,3 +8,4 @@ sealed class MapEvent extends Equatable {
 }
 
 class GetCurrentPositionEvent extends MapEvent {}
+class AddMarkerEvent extends MapEvent {}

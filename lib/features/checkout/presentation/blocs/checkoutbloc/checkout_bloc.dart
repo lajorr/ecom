@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
@@ -20,7 +19,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     required this.addToCartUsecase,
     required this.fetchCartProductsUsecase,
     required this.removeCartItemUsecase,
-  }) : super(CheckoutInitial()) {
+  }) : super(CheckoutLoading()) {
     on<AddToCartEvent>(_onAddToCart);
     on<FetchCartProductsEvent>(_onFetchCartProducts);
 
@@ -34,7 +33,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   FutureOr<void> _onAddToCart(
       AddToCartEvent event, Emitter<CheckoutState> emit) async {
-    emit(CheckoutInitial());
+    emit(CheckoutLoading());
     final addOrFail = await addToCartUsecase.call(event.cartProduct);
 
     addOrFail.fold(
@@ -57,6 +56,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     fetchOrFail.fold(
       (failure) => emit(CheckoutFetchFailed()),
       (cartModel) {
+        print(cartModel);
         emit(
           CheckoutLoaded(
             cartModel: cartModel,

@@ -16,4 +16,7 @@ final class MapLoaded extends MapState {
 
 final class MapLoading extends MapState {}
 
-final class MapFailed extends MapState {}
+final class MapFailed extends MapState {
+  const MapFailed({required this.message});
+  final String message;
+}

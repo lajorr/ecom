@@ -8,7 +8,6 @@ import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/catalog/presentation/blocs/like bloc/like_bloc.dart';
 import '../../features/checkout/presentation/screens/checkout_screen.dart';
-import '../../features/map/presentation/bloc/map_bloc.dart';
 import '../../features/navbar/presentation/navigation_menu.dart';
 import '../../features/prod_detail/presentation/screens/details_screen.dart';
 import '../../features/splash/presentation/splash_screen.dart';
@@ -67,9 +66,9 @@ class RouteManager {
 
       case ShowMapScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => sl<MapBloc>(),
-            child: const ShowMapScreen(),
+          builder: (context) => ShowMapScreen(
+            onConfirmPosition:
+                (settings.arguments as Map<String, dynamic>)['onConfirmPos'],
           ),
         );
       default:

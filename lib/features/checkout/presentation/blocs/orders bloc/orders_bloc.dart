@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/domain/usecases/fetch_order_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/place_order_usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -32,6 +33,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     fetchOrFail.fold(
       (failure) => emit(OrderFetchFailed(message: failure.message)),
       (orderM) {
+        print(orderM);
         emit(
           OrderFetchSuccess(
             order: orderM,
@@ -44,8 +46,9 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   FutureOr<void> _onPayForCartEvent(
       OrderCartItemsEvent event, Emitter<OrdersState> emit) async {
     emit(CheckoutOrderLoading());
+    print(event.cartModel);
 
-    final payOrFail = await placeOrderUsecase.call(NoParams());
+    final payOrFail = await placeOrderUsecase.call(event.cartModel);
     payOrFail.fold((failure) {
       emit(
         OrderPaymentFailed(message: failure.message),
