@@ -30,16 +30,17 @@ class MyGridTile extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: product.prodImage[0].imageUrl,
               placeholder: (context, url) => Center(
-                  child: Shimmer.fromColors(
-                baseColor: Colors.red,
-                highlightColor: Colors.yellow,
-                child: Container(
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
+                child: Shimmer.fromColors(
+                  baseColor: Colors.red,
+                  highlightColor: Colors.yellow,
+                  child: Container(
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
-              )),
+              ),
             ),
           ),
 

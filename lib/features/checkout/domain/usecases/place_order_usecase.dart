@@ -10,7 +10,6 @@ class PlaceOrderUsecase extends Usecase<void, CartModel> {
   final CheckoutRepository repository;
   @override
   Future<Either<Failure, void>> call(CartModel params) async {
-    print(params);
     return await repository.placeOrder(params);
   }
 }

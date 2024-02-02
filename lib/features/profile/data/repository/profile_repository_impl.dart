@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
@@ -30,6 +32,17 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return const Left(UserUpdateFailure(message: "Fail to update use info"));
     } else {
       return Right(user);
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> uploadProfilePicture(
+      Uint8List imageFile) async {
+    try {
+      final res = await dataSource.storeUserProfilePicture(imageFile);
+      return Right(res);
+    } catch (e) {
+      return const Left(FirebaseFailure());
     }
   }
 }

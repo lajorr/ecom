@@ -18,6 +18,7 @@ final class ProfileLoaded extends ProfileState {
   @override
   List<Object> get props => [];
   const ProfileLoaded({
+    required this.imageUrl,
     required this.username,
     required this.phNumber,
     required this.email,
@@ -25,6 +26,7 @@ final class ProfileLoaded extends ProfileState {
   final String email;
   final String? username;
   final int? phNumber;
+  final String? imageUrl;
 }
 
 final class ProfileUserUnavailable extends ProfileState {
@@ -38,6 +40,21 @@ final class ProfileUserUpdateSuccess extends ProfileState {
 }
 
 final class ProfileUserUpdateFailed extends ProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ProfilePictureUploadSuccess extends ProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ProfilePictureUploadFailed extends ProfileState {
+  @override
+  List<Object> get props => [];
+}
+
+final class ProfilePictureUploadLoading extends ProfileState {
   @override
   List<Object> get props => [];
 }

@@ -25,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? email;
   String? username;
   String? phNumber;
+  String? imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -51,123 +52,129 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 email = state.email;
                 username = state.username;
                 phNumber = state.phNumber.toString();
-              }
-              if (state is ProfileLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return Scaffold(
-                appBar: AppBar(
-                  centerTitle: true,
-                  backgroundColor: Colors.transparent,
-                  title: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(username ?? "___"),
-                      IconButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (ctx) => BlocProvider.value(
-                              value: context.read<ProfileBloc>(),
-                              child: AlertDialog(
-                                content: Form(
-                                  key: formKey,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      MyTextField(
-                                        label: "Username",
-                                        prefixIcon: const Icon(Icons.person),
-                                        inputType: TextInputType.name,
-                                        onFieldSave: (value) {
-                                          username = value;
-                                        },
-                                      ),
-                                      MyTextField(
-                                        label: "Phone Number",
-                                        prefixIcon: const Icon(Icons.phone),
-                                        inputType: TextInputType.phone,
-                                        onFieldSave: (value) {
-                                          phNumber = value;
-                                        },
-                                      ),
-                                    ],
+                imageUrl = state.imageUrl;
+                return Scaffold(
+                  appBar: AppBar(
+                    centerTitle: true,
+                    backgroundColor: Colors.transparent,
+                    title: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(username ?? "___"),
+                        IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => BlocProvider.value(
+                                value: context.read<ProfileBloc>(),
+                                child: AlertDialog(
+                                  content: Form(
+                                    key: formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        MyTextField(
+                                          label: "Username",
+                                          prefixIcon: const Icon(Icons.person),
+                                          inputType: TextInputType.name,
+                                          onFieldSave: (value) {
+                                            username = value;
+                                          },
+                                        ),
+                                        MyTextField(
+                                          label: "Phone Number",
+                                          prefixIcon: const Icon(Icons.phone),
+                                          inputType: TextInputType.phone,
+                                          onFieldSave: (value) {
+                                            phNumber = value;
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                actions: [
-                                  Builder(builder: (context) {
-                                    return MaterialButton(
+                                  actions: [
+                                    Builder(builder: (context) {
+                                      return MaterialButton(
+                                        onPressed: () {
+                                          formKey.currentState!.save();
+
+                                          BlocProvider.of<ProfileBloc>(context)
+                                              .add(
+                                            UpdateUserDataEvent(
+                                              username: username,
+                                              phNumber: phNumber,
+                                            ),
+                                          );
+
+                                          Navigator.of(context).pop();
+                                        },
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        child: const Text('Ok'),
+                                      );
+                                    }),
+                                    MaterialButton(
                                       onPressed: () {
-                                        formKey.currentState!.save();
-
-                                        BlocProvider.of<ProfileBloc>(context)
-                                            .add(
-                                          UpdateUserDataEvent(
-                                            username: username,
-                                            phNumber: phNumber,
-                                          ),
-                                        );
-
                                         Navigator.of(context).pop();
                                       },
                                       color:
                                           Theme.of(context).colorScheme.primary,
-                                      child: const Text('Ok'),
-                                    );
-                                  }),
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    child: const Text('Cancel'),
-                                  ),
-                                ],
+                                      child: const Text('Cancel'),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          },
+                          icon: const Icon(Icons.edit),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      IconButton(
+                        onPressed: () async {
+                          BlocProvider.of<AuthBloc>(context)
+                              .add(SignOutEvent());
                         },
-                        icon: const Icon(Icons.edit),
+                        icon: const Icon(Icons.logout),
                       ),
                     ],
                   ),
-                  actions: [
-                    IconButton(
-                      onPressed: () async {
-                        BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
-                      },
-                      icon: const Icon(Icons.logout),
-                    ),
-                  ],
-                ),
-                body: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        const ProfileImage(),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        Text(email ?? ""),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(phNumber ?? "___"),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Builder(builder: (context) {
-                          return const OrderHistory();
-                        }),
-                      ],
+                  body: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          ProfileImage(imageUrl: imageUrl),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          Text(email ?? ""),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Text(phNumber ?? "___"),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Builder(builder: (context) {
+                            return const OrderHistory();
+                          }),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
+                );
+              } else if (state is ProfileLoading) {
+                return const Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else {
+                return Container();
+              }
             }),
           );
         },

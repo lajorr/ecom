@@ -18,3 +18,8 @@ class UpdateUserDataEvent extends ProfileEvent {
   final String? username;
   final String? phNumber;
 }
+
+class UploadProfilePictureEvent extends ProfileEvent {
+  const UploadProfilePictureEvent({required this.image});
+  final Uint8List image;
+}
