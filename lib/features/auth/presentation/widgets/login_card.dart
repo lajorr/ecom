@@ -71,7 +71,6 @@ class _LoginCardState extends State<LoginCard> {
                 ),
               );
             } else if (state is UserAvailable) {
-              // BlocProvider.of<ProfileBloc>(context).add(FetchUserDataEvent());
               Navigator.of(context)
                   .pushReplacementNamed(NavigationMenu.routeName);
             }

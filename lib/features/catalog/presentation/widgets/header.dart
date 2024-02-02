@@ -27,7 +27,7 @@ class Header extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Text(
-                    state.username ?? '...',
+                    state.currentUser.name ?? '...',
                     style: Theme.of(context).textTheme.bodyMedium,
                     textAlign: TextAlign.start,
                   ),
@@ -43,9 +43,9 @@ class Header extends StatelessWidget {
                 ),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
-                    child: (state.imageUrl != null)
+                    child: (state.currentUser.imageUrl != null)
                         ? CachedNetworkImage(
-                            imageUrl: state.imageUrl!,
+                            imageUrl: state.currentUser.imageUrl!,
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Center(
                               child: Shimmer.fromColors(

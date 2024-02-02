@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:ecom/core/usecase/usecase.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/profile/domain/usecase/update_user_data_usecase.dart';
 import 'package:ecom/features/profile/domain/usecase/upload_profile_picture_usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -44,11 +45,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileUserUpdateSuccess());
       emit(
         ProfileLoaded(
-          email: user.email ?? "",
-          phNumber: user.phNumber,
-          username: user.name,
-          imageUrl: user.imageUrl,
-        ),
+            // email: user.email ?? "",
+            // phNumber: user.phNumber,
+            // username: user.name,
+            // imageUrl: user.imageUrl,
+            currentUser: user),
       );
     });
   }
@@ -64,11 +65,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             ), (user) {
       emit(
         ProfileLoaded(
-          email: user.email!,
-          phNumber: user.phNumber,
-          username: user.name,
-          imageUrl: user.imageUrl,
-        ),
+            // email: user.email!,
+            // phNumber: user.phNumber,
+            // username: user.name,
+            // imageUrl: user.imageUrl,
+            currentUser: user),
       );
     });
   }
@@ -82,11 +83,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     uploadOrFail.fold((failure) => emit(ProfilePictureUploadFailed()), (user) {
       emit(
         ProfileLoaded(
-          imageUrl: user.imageUrl,
-          username: user.name,
-          phNumber: user.phNumber,
-          email: user.email!,
-        ),
+            // imageUrl: user.imageUrl,
+            // username: user.name,
+            // phNumber: user.phNumber,
+            // email: user.email!,
+            currentUser: user),
       );
     });
   }

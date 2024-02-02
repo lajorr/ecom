@@ -31,29 +31,43 @@ class _CatalogScreenState extends State<CatalogScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<CatalogBloc>(),
-      child: const Scaffold(
+      child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 14.0,
             ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
+            child: BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+                if (state is ProfileLoaded) {
+                  // final a = state.currentUser.uid ==
+                  final user = state.currentUser;
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
 
-                //header
-                Header(),
-                // search Box
-                SearchBox(),
-                //category
-                CategoryList(),
-                // grid
-                Expanded(
-                  child: MyGridView(),
-                ),
-              ],
+                      //header
+                      const Header(),
+                      // search Box
+                      const SearchBox(),
+                      //category
+                      const CategoryList(),
+                      // grid
+                      Expanded(
+                        child: MyGridView(currentUser: user),
+                      ),
+                    ],
+                  );
+                } else if (state is ProfileLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return Container();
+                }
+              },
             ),
           ),
         ),

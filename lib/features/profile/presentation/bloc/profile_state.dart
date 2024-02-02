@@ -18,15 +18,17 @@ final class ProfileLoaded extends ProfileState {
   @override
   List<Object> get props => [];
   const ProfileLoaded({
-    required this.imageUrl,
-    required this.username,
-    required this.phNumber,
-    required this.email,
+    required this.currentUser,
+    // required this.imageUrl,
+    // required this.username,
+    // required this.phNumber,
+    // required this.email,
   });
-  final String email;
-  final String? username;
-  final int? phNumber;
-  final String? imageUrl;
+  // final String email;
+  // final String? username;
+  // final int? phNumber;
+  // final String? imageUrl;
+  final UserModel currentUser;
 }
 
 final class ProfileUserUnavailable extends ProfileState {

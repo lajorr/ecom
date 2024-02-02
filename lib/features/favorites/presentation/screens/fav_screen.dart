@@ -46,7 +46,7 @@ class _FavScreenState extends State<FavScreen> {
                 itemCount: favProds.length,
                 itemBuilder: (context, index) {
                   final prod = favProds[index];
-            
+
                   return MyGridTile(
                     product: prod,
                   );

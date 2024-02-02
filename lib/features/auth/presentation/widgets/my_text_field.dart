@@ -20,7 +20,7 @@ class MyTextField extends StatefulWidget {
   final String? errorMsg;
   final Icon prefixIcon;
   final TextInputType inputType;
-  final bool obscure;
+  final bool? obscure;
   final String? hintText;
   final Function(String?) onFieldSave;
 
@@ -47,7 +47,7 @@ class _MyTextFieldState extends State<MyTextField> {
         ),
         TextFormField(
           keyboardType: widget.inputType,
-          obscureText: isPasswordField ? isVisible : false,
+          obscureText: isVisible,
           onSaved: (newValue) => widget.onFieldSave(newValue),
           validator: widget.validator ??
               (value) {

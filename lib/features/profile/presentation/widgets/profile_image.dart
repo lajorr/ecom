@@ -45,7 +45,7 @@ class _ProfileImageState extends State<ProfileImage> {
           String? imgUrl;
           Uint8List? uintImage;
           if (state is ProfileLoaded) {
-            imgUrl = state.imageUrl;
+            imgUrl = state.currentUser.imageUrl;
           } else if (state is ProfilePictureUploadSuccess) {
             uintImage = image;
           }

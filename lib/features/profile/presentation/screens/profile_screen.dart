@@ -49,10 +49,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
               if (state is ProfileLoaded) {
-                email = state.email;
-                username = state.username;
-                phNumber = state.phNumber.toString();
-                imageUrl = state.imageUrl;
+                final user = state.currentUser;
+                email = user.email;
+                username = user.name;
+                phNumber = user.phNumber.toString();
+                imageUrl = user.imageUrl;
                 return Scaffold(
                   appBar: AppBar(
                     centerTitle: true,
