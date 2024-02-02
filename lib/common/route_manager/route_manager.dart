@@ -48,7 +48,8 @@ class RouteManager {
           builder: (context) => BlocProvider(
             create: (context) => sl<LikeBloc>(),
             child: DetailsScreen(
-              product: settings.arguments as ProductModel,
+              product: (settings.arguments as Map<String, dynamic>)['product'],
+              isOwner: (settings.arguments as Map<String, dynamic>)['isOwner'],
             ),
           ),
         );

@@ -19,9 +19,11 @@ class DetailsScreen extends StatefulWidget {
   const DetailsScreen({
     Key? key,
     required this.product,
+    required this.isOwner,
   }) : super(key: key);
 
   final ProductModel product;
+  final bool isOwner;
 
   static const routeName = '/prod-detail';
 
@@ -81,6 +83,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
     LikeSuccess? state,
     required BuildContext context,
   }) {
+    String userText = ' ...';
+
+    if (widget.product.owner != null) {
+      userText = widget.product.owner!.name!;
+      if (widget.isOwner) {
+        userText = '$userText (YOU)';
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -136,6 +147,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            //prod name
             SizedBox(
               width: 200,
               child: Text(
@@ -146,61 +158,71 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
             ),
-            Row(
-              children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    // color: Colors.red,
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(
-                      25,
+            // increment / decrement quantity
+            if (!widget.isOwner)
+              Row(
+                children: [
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(
+                        25,
+                      ),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.remove,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (quantity > 1) {
+                            quantity -= 1;
+                          }
+                        });
+                      },
                     ),
                   ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.remove,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        if (quantity > 1) {
-                          quantity -= 1;
-                        }
-                      });
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Text(
-                    quantity.toString(),
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(
-                      25,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      quantity.toString(),
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.add,
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(
+                        25,
+                      ),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        quantity += 1;
-                      });
-                    },
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.add,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          quantity += 1;
+                        });
+                      },
+                    ),
                   ),
-                ),
-              ],
-            )
+                ],
+              )
           ],
+        ),
+
+        //product owner
+        Text(
+          '@$userText',
+          style: const TextStyle(
+              fontStyle: FontStyle.italic,
+              color: Colors.grey,
+              fontWeight: FontWeight.w300),
         ),
         // rating
         Row(
@@ -260,45 +282,46 @@ class _DetailsScreenState extends State<DetailsScreen> {
         ProductSize(product: widget.product),
 
         // add to cart button
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(
-              bottom: 15,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Builder(builder: (context) {
-                    return RoundedButton(
-                      onTap: () {
-                        context.read<CheckoutBloc>().add(
-                              AddToCartEvent(
-                                cartProduct: CartProductModel(
-                                  product: widget.product,
-                                  quantity: quantity,
+        if (!widget.isOwner)
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(
+                bottom: 15,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Builder(builder: (context) {
+                      return RoundedButton(
+                        onTap: () {
+                          context.read<CheckoutBloc>().add(
+                                AddToCartEvent(
+                                  cartProduct: CartProductModel(
+                                    product: widget.product,
+                                    quantity: quantity,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('ADDED!!'),
-                            backgroundColor: Colors.green,
-                            duration: Duration(milliseconds: 500),
-                          ),
-                        );
-                      },
-                      text: StringConstants.addToCartText,
-                      iconUri: ImageConstants.shopCart,
-                    );
-                  }),
-                ),
-                const ShowCartButton(),
-              ],
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('ADDED!!'),
+                              backgroundColor: Colors.green,
+                              duration: Duration(milliseconds: 500),
+                            ),
+                          );
+                        },
+                        text: StringConstants.addToCartText,
+                        iconUri: ImageConstants.shopCart,
+                      );
+                    }),
+                  ),
+                  const ShowCartButton(),
+                ],
+              ),
             ),
           ),
-        ),
       ],
     );
   }

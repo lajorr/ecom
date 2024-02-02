@@ -20,7 +20,7 @@ class MyTextField extends StatefulWidget {
   final String? errorMsg;
   final Icon prefixIcon;
   final TextInputType inputType;
-  final bool obscure;
+  final bool? obscure;
   final String? hintText;
   final Function(String?) onFieldSave;
 
@@ -32,28 +32,17 @@ class MyTextField extends StatefulWidget {
 
 class _MyTextFieldState extends State<MyTextField> {
   bool isPasswordField = false;
-  bool isVisible = true;
+  bool isVisible = false;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   switch (widget.inputType) {
-  //     case TextInputType.visiblePassword:
-  //       hintText = StringConstants.passwordHintText;
-  //       isPasswordField = true;
-  //       break;
-  //     case TextInputType.name:
-  //       hintText = "Username";
-  //       break;
-  //     case TextInputType.emailAddress:
-  //       hintText = "abc@asd.com";
-  //       break;
-  //     case TextInputType.phone:
-  //       hintText = "123456789";
-  //     default:
-  //       hintText = ".....";
-  //   }
-  // }
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.inputType == TextInputType.visiblePassword) {
+      isPasswordField = true;
+      isVisible = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +57,21 @@ class _MyTextFieldState extends State<MyTextField> {
         ),
         TextFormField(
           keyboardType: widget.inputType,
-          obscureText: isPasswordField ? isVisible : false,
+          obscureText: isVisible,
           onSaved: (newValue) => widget.onFieldSave(newValue),
-          validator: widget.validator ?? (value) {
-            if (isPasswordField) {
-              return null;
-            }
-            if (value == null || value.isEmpty) {
-              return StringConstants.emailErrorMsg1;
-            }
-            if (!value.contains('@') || !value.contains('.com')) {
-              return StringConstants.emailErrorMsg2;
-            }
-            return null;
-          },
+          validator: widget.validator ??
+              (value) {
+                if (isPasswordField) {
+                  return null;
+                }
+                if (value == null || value.isEmpty) {
+                  return StringConstants.emailErrorMsg1;
+                }
+                if (!value.contains('@') || !value.contains('.com')) {
+                  return StringConstants.emailErrorMsg2;
+                }
+                return null;
+              },
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(12),
             prefixIcon: widget.prefixIcon,

@@ -50,11 +50,28 @@ class FireCollections {
 
     if (productsListFromFirebase.isNotEmpty) {
       for (var product in productsListFromFirebase) {
-        productListToReturn.add(ProductModel.fromJson(product.data()));
+        UserModel? owner;
+        final prodJson = product.data();
+
+        final ownerRef =
+            prodJson['owner'] as DocumentReference<Map<String, dynamic>>?;
+        if (ownerRef != null) {
+          owner = await getUserFromRef(ownerRef);
+        }
+
+        productListToReturn.add(ProductModel.fromJson(prodJson, owner));
       }
     }
 
     return productListToReturn;
+  }
+
+  Future<UserModel> getUserFromRef(DocumentReference ownerRef) async {
+    final ownerSnapshot = await ownerRef.get();
+    final ownerJson = ownerSnapshot.data() as Map<String, dynamic>;
+    print(ownerJson);
+    final owner = UserModel.fromMap(ownerJson);
+    return owner;
   }
 
   Future<LikeModel> getUserLikeProd(String prodId) async {
@@ -115,13 +132,18 @@ class FireCollections {
       final likedDocs = snapshot.docs;
 
       for (var doc in likedDocs) {
+        UserModel? owner;
         final data = doc.data();
         final prodRef =
             await (data['prod_ref'] as DocumentReference<Map<String, dynamic>>)
                 .get();
 
         final prodData = prodRef.data()!;
-        final prodM = ProductModel.fromJson(prodData);
+        final ownerRef =
+            prodData['owner'] as DocumentReference<Map<String, dynamic>>;
+        owner = await getUserFromRef(ownerRef);
+        owner = await getUserFromRef(ownerRef);
+        final prodM = ProductModel.fromJson(prodData, owner);
         favProducts.add(prodM);
       }
     } catch (e) {
@@ -211,13 +233,17 @@ class FireCollections {
           final prodRef = await (prod['ref'] as DocumentReference).get();
           final prodRefJsonData =
               prodRef.data() as Map<String, dynamic>; // product json
-
-          final prodM = ProductModel.fromJson(prodRefJsonData);
+          final ownerRef = prodRefJsonData['owner']
+              as DocumentReference<Map<String, dynamic>>;
+          final owner = await getUserFromRef(ownerRef);
+          final prodM = ProductModel.fromJson(prodRefJsonData, owner);
+          print(prodM);
 
           final cartM = CartProductModel(
             product: prodM,
             quantity: prod['quantity'],
           );
+          print(cartM);
 
           cartProdList.add(cartM);
         }
@@ -238,6 +264,7 @@ class FireCollections {
           userRef: userRef,
         );
       }
+      print(currentCart);
       return currentCart;
     } catch (e) {
       throw ServerException();
@@ -309,9 +336,15 @@ class FireCollections {
         final prodList = c['products'] as List;
 
         for (var prod in prodList) {
+          UserModel? owner;
           final prodJson = prod['product'];
+          final ownerRef =
+              (prodJson['owner'] as DocumentReference<Map<String, dynamic>>?);
 
-          final prodM = ProductModel.fromJson(prodJson);
+          if (ownerRef != null) {
+            owner = await getUserFromRef(ownerRef);
+          }
+          final prodM = ProductModel.fromJson(prodJson, owner);
 
           final cartM = CartProductModel(
             product: prodM,

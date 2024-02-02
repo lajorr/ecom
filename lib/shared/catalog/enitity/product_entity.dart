@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../features/auth/data/model/user_model.dart';
+
 class ProductEntity extends Equatable {
   final String id;
   final String prodTitle;
@@ -10,8 +12,10 @@ class ProductEntity extends Equatable {
   final double rating;
   final double price;
   final String viewsNo;
+  final UserModel? owner;
 
   const ProductEntity({
+    this.owner,
     required this.id,
     required this.prodTitle,
     required this.prodDescription,
@@ -34,6 +38,7 @@ class ProductEntity extends Equatable {
         rating,
         price,
         viewsNo,
+        owner,
       ];
 }
 
