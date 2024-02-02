@@ -6,7 +6,6 @@ import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../profile/presentation/bloc/profile_bloc.dart';
 import '../widgets/my_text_field.dart';
 
 class LoginCard extends StatefulWidget {
@@ -72,7 +71,7 @@ class _LoginCardState extends State<LoginCard> {
                 ),
               );
             } else if (state is UserAvailable) {
-              BlocProvider.of<ProfileBloc>(context).add(FetchUserDataEvent());
+              // BlocProvider.of<ProfileBloc>(context).add(FetchUserDataEvent());
               Navigator.of(context)
                   .pushReplacementNamed(NavigationMenu.routeName);
             }

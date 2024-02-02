@@ -25,6 +25,22 @@ class FireCollections {
   final creditCardCollection =
       FirebaseFirestore.instance.collection('credit-cards');
 
+  Future<void> setUserData({required UserModel user, String? imageUrl}) async {
+    UserModel userData = user;
+    if (imageUrl != null) {
+      userData = user.copyWith(imageUrl: imageUrl);
+    }
+
+    final userJson = userData.toMap();
+    try {
+      await userCollection.doc(user.uid).set(userJson);
+    } on FirebaseException {
+      throw FirebaseException;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
   Future<List<ProductModel>> getAllProductsFromCollection() async {
     final querySnapshot = await productCollection.get();
 

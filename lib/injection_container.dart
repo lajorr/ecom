@@ -1,3 +1,4 @@
+import 'package:ecom/core/firebaseFunctions/firebase_storage.dart';
 import 'package:ecom/core/location-functions/map_location.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
 import 'package:ecom/features/favorites/data/datasource/favorites_datasource.dart';
@@ -14,6 +15,7 @@ import 'package:ecom/features/payment/domain/repository/payment_repository.dart'
 import 'package:ecom/features/payment/domain/usecase/add_card_details_usecase.dart';
 import 'package:ecom/features/payment/domain/usecase/fetch_credit_card_details_usecase.dart';
 import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
+import 'package:ecom/features/profile/domain/usecase/upload_profile_picture_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/firebaseFunctions/firebase_auth.dart';
@@ -53,7 +55,7 @@ import 'features/profile/data/data%20source/user_data_source.dart';
 import 'features/profile/data/repository/profile_repository_impl.dart';
 import 'features/profile/domain/repository/profile_repository.dart';
 import 'features/profile/domain/usecase/fetch_user_data_usecase.dart';
-import 'features/profile/domain/usecase/udpate_user_data_usecase.dart';
+import 'features/profile/domain/usecase/update_user_data_usecase.dart';
 import 'features/profile/presentation/bloc/profile_bloc.dart';
 import 'shared/validation/bloc/validation_bloc.dart';
 
@@ -71,10 +73,8 @@ void init() {
       setUserDataUsecase: sl(),
     ),
   );
-  sl.registerFactory(() => LikeBloc(
-      // createLikeDocumentUsecase: sl(),
-      fetchLikeDocUsecase: sl(),
-      likeUnlikeProdUsecase: sl()));
+  sl.registerFactory(
+      () => LikeBloc(fetchLikeDocUsecase: sl(), likeUnlikeProdUsecase: sl()));
 
   sl.registerFactory(
     () => ValidationBloc(
@@ -91,6 +91,7 @@ void init() {
     () => ProfileBloc(
       fetchUserDataUsecase: sl(),
       updateUserDataUsecase: sl(),
+      uploadProfilePictureUsecase: sl(),
     ),
   );
   sl.registerFactory(() => CheckoutBloc(
@@ -152,6 +153,7 @@ void init() {
   sl.registerLazySingleton(() => FetchFavProductsUsecase(repository: sl()));
   sl.registerLazySingleton(
       () => GetCurrentUserPositionUsecase(repository: sl()));
+  sl.registerLazySingleton(() => UploadProfilePictureUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(
@@ -194,7 +196,11 @@ void init() {
   // datasource
   //yesle chai euta matra intance banaidinxa thru out the app
   sl.registerLazySingleton<AuthDataSource>(
-      () => AuthDataSourceImpl(fireAuth: sl()));
+    () => AuthDataSourceImpl(
+      fireAuth: sl(),
+      fireCollections: sl(),
+    ),
+  );
 
   sl.registerLazySingleton<ProductDataSource>(
       () => ProductDataSourceImpl(fireCollection: sl()));
@@ -202,7 +208,12 @@ void init() {
       () => LikeCollectionDataSourceImpl(fireCollections: sl()));
 
   sl.registerLazySingleton<UserDataSource>(
-      () => UserDataSourceImpl(fireAuth: sl()));
+    () => UserDataSourceImpl(
+      fireAuth: sl(),
+      fireStorage: sl(),
+      fireCollections: sl(),
+    ),
+  );
   sl.registerLazySingleton<CheckoutDataSource>(
     () => CheckoutDataSourceImpl(
       fireAuth: sl(),
@@ -219,7 +230,7 @@ void init() {
       fireCollections: sl(),
     ),
   );
-  
+
   sl.registerLazySingleton<MapDataSource>(
     () => MapDataSourceImpl(
       mapLocation: sl(),
@@ -231,4 +242,5 @@ void init() {
   sl.registerLazySingleton<FireAuth>(() => FireAuth());
   sl.registerLazySingleton<FireCollections>(() => FireCollections());
   sl.registerLazySingleton<MapLocation>(() => MapLocation());
+  sl.registerLazySingleton<FireStorage>(() => FireStorage());
 }

@@ -1,3 +1,4 @@
+import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,6 +23,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   void initState() {
     super.initState();
+    context.read<ProfileBloc>().add(FetchUserDataEvent());
     context.read<CheckoutBloc>().add(FetchCartProductsEvent());
   }
 

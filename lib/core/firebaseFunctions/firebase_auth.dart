@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../features/auth/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+
+import '../../features/auth/data/model/user_model.dart';
 
 class FireAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -11,17 +12,20 @@ class FireAuth {
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   Future<UserModel> getCurrentUserModel() async {
+    UserModel user;
+
     final userDocSnapshot = await userCollection.doc(currentUser!.uid).get();
-    final UserModel user;
     if (userDocSnapshot.exists) {
-      final userMap = userDocSnapshot.data();
-      user = UserModel.fromMap(userMap!);
+      final userJson = userDocSnapshot.data();
+      user = UserModel.fromMap(userJson!);
     } else {
       user = UserModel(
         uid: currentUser!.uid,
         email: currentUser!.email,
       );
+      
     }
+
     return user;
   }
 
@@ -41,7 +45,6 @@ class FireAuth {
   }
 
   Future<User?> signInWithGoogle() async {
-    // final googleAuthProvider = GoogleAuthProvider();
     debugPrint('googgle Sign in firebase auth');
     throw UnimplementedError();
   }
@@ -58,11 +61,5 @@ class FireAuth {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
-  }
-
-  Future<void> setUserData(UserModel user) async {
-    await userCollection.doc(user.uid).set(
-          user.toMap(),
-        );
   }
 }

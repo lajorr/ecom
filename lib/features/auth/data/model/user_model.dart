@@ -1,12 +1,14 @@
-import '../../domain/entity/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../domain/entity/user_entity.dart';
 
 class UserModel extends UserEntity {
   const UserModel({
     required super.uid,
-    super.name,
     required super.email,
+    super.name,
     super.phNumber,
+    super.imageUrl,
   });
 
   Map<String, dynamic> toMap() {
@@ -14,26 +16,33 @@ class UserModel extends UserEntity {
       'uid': uid,
       'name': name,
       'email': email,
-      'phNumber': phNumber,
+      'ph_number': phNumber,
+      'image_url': imageUrl
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      uid: map['uid'],
-      email: map['email'],
-      name: map['name'],
-      phNumber: map['phNumber'],
-    );
+        uid: map['uid'],
+        email: map['email'],
+        name: map['name'],
+        phNumber: map['ph_number'],
+        imageUrl: map['image_url']);
   }
 
-  UserModel copyWith(
-      {String? uid, String? email, String? name, int? phoneNumber}) {
+  UserModel copyWith({
+    String? uid,
+    String? email,
+    String? name,
+    int? phNumber,
+    String? imageUrl,
+  }) {
     return UserModel(
       uid: uid ?? this.uid,
       name: name ?? this.name,
       email: email ?? this.email,
-      phNumber: phoneNumber ?? phNumber,
+      phNumber: phNumber ?? this.phNumber,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
@@ -44,6 +53,7 @@ class UserModel extends UserEntity {
         name: user.displayName,
         email: user.email,
         phNumber: int.parse(user.phoneNumber ?? '0'),
+        imageUrl: user.photoURL,
       );
     } else {
       return const UserModel(
@@ -51,6 +61,7 @@ class UserModel extends UserEntity {
         name: null,
         email: null,
         phNumber: null,
+        imageUrl: null,
       );
     }
   }
