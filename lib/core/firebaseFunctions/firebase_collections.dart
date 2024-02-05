@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom/features/payment/data/model/credit_card_model.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:intl/intl.dart';
 
 import '../../features/auth/data/model/user_model.dart';
 import '../../features/checkout/domain/entity/enums/cart_status_enum.dart';
@@ -70,7 +69,7 @@ class FireCollections {
   Future<UserModel> getUserFromRef(DocumentReference ownerRef) async {
     final ownerSnapshot = await ownerRef.get();
     final ownerJson = ownerSnapshot.data() as Map<String, dynamic>;
-    print(ownerJson);
+    
     final owner = UserModel.fromMap(ownerJson);
     return owner;
   }
@@ -238,13 +237,12 @@ class FireCollections {
               as DocumentReference<Map<String, dynamic>>;
           final owner = await getUserFromRef(ownerRef);
           final prodM = ProductModel.fromJson(prodRefJsonData, owner);
-          print(prodM);
+          
 
           final cartM = CartProductModel(
             product: prodM,
             quantity: prod['quantity'],
           );
-          print(cartM);
 
           cartProdList.add(cartM);
         }
@@ -265,7 +263,6 @@ class FireCollections {
           userRef: userRef,
         );
       }
-      print(currentCart);
       return currentCart;
     } catch (e) {
       throw ServerException();
@@ -458,7 +455,6 @@ class FireCollections {
     final userRef = userCollection.doc(user.uid);
 
     final creditJson = creditModel.toMap();
-    print(creditJson);
 
     creditJson.addAll(
       {'user': userRef},
@@ -488,8 +484,6 @@ class FireCollections {
         final creditJson = snapshot.docs[0].data();
 
         final creditM = CreditCardModel.fromMap(creditJson);
-        print(creditJson);
-        print(DateFormat('yMd').format(creditM.expiryDate!));
 
         return creditM;
       } else {

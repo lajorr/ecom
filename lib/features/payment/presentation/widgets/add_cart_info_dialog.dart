@@ -26,7 +26,6 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
       _formKey.currentState!.save();
 
       final expDateTime = DateFormat('yMd').parse(expDate);
-  print(expDateTime);
       final creditM = CreditCardModel(
         cardNum: cardNumber,
         cardHolderName: cardHolderName,

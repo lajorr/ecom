@@ -12,7 +12,6 @@ import '../../features/navbar/presentation/navigation_menu.dart';
 import '../../features/prod_detail/presentation/screens/details_screen.dart';
 import '../../features/splash/presentation/splash_screen.dart';
 import '../../injection_container.dart';
-import '../../shared/catalog/model/product_model.dart';
 import '../../shared/validation/bloc/validation_bloc.dart';
 
 class RouteManager {
