@@ -32,7 +32,17 @@ class MyTextField extends StatefulWidget {
 
 class _MyTextFieldState extends State<MyTextField> {
   bool isPasswordField = false;
-  bool isVisible = true;
+  bool isVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.inputType == TextInputType.visiblePassword) {
+      isPasswordField = true;
+      isVisible = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
