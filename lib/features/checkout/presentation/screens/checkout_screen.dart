@@ -95,34 +95,36 @@ class CheckoutScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      // prod list
-                      if (productList.isEmpty)
-                        SizedBox(
-                          height: media.height * 0.2,
-                          child: const Center(
-                            child: Text(StringConstants.emptyProductListText),
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        // prod list
+                        if (productList.isEmpty)
+                          SizedBox(
+                            height: media.height * 0.2,
+                            child: const Center(
+                              child: Text(StringConstants.emptyProductListText),
+                            ),
+                          )
+                        else
+                          CartProductsWidget(
+                            cart: cart,
                           ),
-                        )
-                      else
-                        CartProductsWidget(
+                  
+                        //shipping info
+                        const ShippingCard(),
+                  
+                        // total amount
+                        CartBillWidget(
+                          productList: productList,
                           cart: cart,
+                          shippingFee: shippingFee,
+                          totalAmt: totalAmt,
                         ),
-
-                      //shipping info
-                      const ShippingCard(),
-
-                      // total amount
-                      CartBillWidget(
-                        productList: productList,
-                        cart: cart,
-                        shippingFee: shippingFee,
-                        totalAmt: totalAmt,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

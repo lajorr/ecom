@@ -22,36 +22,39 @@ class CartBillWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Total(${productList.length} Items)",
-            ),
-            Text('\$${cart.amount}'),
-          ],
-        ),
-        SizedBox(height: media.height * 0.01),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(StringConstants.shippingFeeText),
-            Text('\$$shippingFee'),
-          ],
-        ),
-        SizedBox(height: media.height * 0.01),
-        const Divider(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(StringConstants.subTotalText),
-            Text('\$${totalAmt.toStringAsFixed(2)}'),
-          ],
-        ),
-        SizedBox(height: media.height * 0.02),
-      ],
+    return SingleChildScrollView(
+      
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Total(${productList.length} Items)",
+              ),
+              Text('\$${cart.amount}'),
+            ],
+          ),
+          SizedBox(height: media.height * 0.01),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(StringConstants.shippingFeeText),
+              Text('\$$shippingFee'),
+            ],
+          ),
+          SizedBox(height: media.height * 0.01),
+          const Divider(height: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(StringConstants.subTotalText),
+              Text('\$${totalAmt.toStringAsFixed(2)}'),
+            ],
+          ),
+          SizedBox(height: media.height * 0.02),
+        ],
+      ),
     );
   }
 }

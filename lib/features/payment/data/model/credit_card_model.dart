@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom/features/payment/domain/entity/credit_card_entity.dart';
-import 'package:intl/intl.dart';
 
 class CreditCardModel extends CreditCardEntity {
   const CreditCardModel({
@@ -14,16 +14,17 @@ class CreditCardModel extends CreditCardEntity {
       'card_number': cardNum,
       'card_holder': cardHolderName,
       'cvv': cvv,
-      'expiry_date': DateFormat('yM').format(expiryDate!),
+      'expiry_date': expiryDate,
     };
   }
 
   factory CreditCardModel.fromMap(Map<String, dynamic> map) {
+    final date = (map['expiry_date'] as Timestamp).toDate().toString();
     return CreditCardModel(
       cardNum: map['card_number'],
       cardHolderName: map['card_holder'],
       cvv: map['cvv'],
-      expiryDate: DateFormat('yM').parse(map['expiry_date'] as String),
+      expiryDate: DateTime.tryParse(date),
     );
   }
 

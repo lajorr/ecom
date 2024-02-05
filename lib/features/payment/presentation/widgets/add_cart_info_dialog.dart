@@ -19,14 +19,14 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
   String cardHolderName = '';
   String cardNumber = '';
   String cvv = '';
-  String expDate = '';
+  String expDate = '___';
 
   void onSave() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      final expDateTime = DateFormat('yM').parse(expDate);
-
+      final expDateTime = DateFormat('yMd').parse(expDate);
+  print(expDateTime);
       final creditM = CreditCardModel(
         cardNum: cardNumber,
         cardHolderName: cardHolderName,
@@ -56,6 +56,7 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
             children: [
               MyTextField(
                 label: 'Card Holder',
+                hintText: 'John Doe',
                 prefixIcon: const Icon(Icons.credit_score),
                 onFieldSave: (value) {
                   cardHolderName = value!;
@@ -69,6 +70,7 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
               ),
               MyTextField(
                 label: 'Card Number',
+                hintText: '1234567891011321',
                 prefixIcon: const Icon(Icons.credit_card),
                 onFieldSave: (value) {
                   cardNumber = value!;
@@ -109,23 +111,49 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
                   const SizedBox(
                     width: 10,
                   ),
+
+                  //* Date Picker
                   Expanded(
-                    child: MyTextField(
-                      label: 'Expiry Date',
-                      prefixIcon: const Icon(Icons.credit_score),
-                      inputType: TextInputType.datetime,
-                      onFieldSave: (value) {
-                        expDate = value!;
-                      },
-                      hintText: 'mm/dd',
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "Enter date";
-                        }
-                        return null;
-                      },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Expiry Date'),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            final pickedDate = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2003),
+                              lastDate: DateTime(2100),
+                            );
+                            if (pickedDate != null) {
+                              setState(() {
+                                expDate = DateFormat('yMd').format(pickedDate);
+                              });
+                            }
+                          },
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              // color: Colors.red,
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: Text(
+                                expDate,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ],
