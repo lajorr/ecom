@@ -29,25 +29,25 @@ class _PaymentDialogState extends State<PaymentDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return AlertDialog(
-        title: const Text("Confirm Payment"),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(ShowMapScreen.routeName,
-                    arguments: {'onConfirmPos': onConfirmPos});
-              },
-              child: const Text("Pick Location"),
-            ),
-          ],
-        ),
-        actions: [
+    return AlertDialog(
+      title: const Text("Confirm Payment"),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
           TextButton(
             onPressed: () {
+              Navigator.of(context).pushNamed(ShowMapScreen.routeName,
+                  arguments: {'onConfirmPos': onConfirmPos});
+            },
+            child: const Text("Pick Location"),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            if (markerLatlng != null) {
               final lat = markerLatlng!.latitude;
               final lng = markerLatlng!.longitude;
 
@@ -61,11 +61,19 @@ class _PaymentDialogState extends State<PaymentDialog> {
                     OrderCartItemsEvent(cartModel: cartWLat),
                   );
               Navigator.of(widget.ctx).pop();
-            },
-            child: const Text('Confirm'),
-          ),
-        ],
-      );
-    });
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Please Choose a delivery location.."),
+                  backgroundColor: Colors.red,
+                  duration: Duration(milliseconds: 1000),
+                ),
+              );
+            }
+          },
+          child: const Text('Confirm'),
+        ),
+      ],
+    );
   }
 }
