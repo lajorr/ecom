@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../../auth/data/model/user_model.dart';
 import '../entity/cart_entity.dart';
 import '../entity/enums/cart_status_enum.dart';
@@ -20,10 +22,10 @@ class CartModel extends CartEntity {
     return "cid:$cId, user:${user.name}, products:${products.length}, amount: $amount , status: ${cartStatus.name}, lat:$lat , lng:$lng , address:$address";
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap({required DocumentReference userRef}) {
     return {
       'amount': amount,
-      'user': user.toMap(),
+      'user': userRef,
       'products': products
           .map(
             (prod) => prod.toMap(),
@@ -57,5 +59,13 @@ class CartModel extends CartEntity {
   }
 
   @override
-  List<Object?> get props => [cId, user, products, amount, lat, lng,address,];
+  List<Object?> get props => [
+        cId,
+        user,
+        products,
+        amount,
+        lat,
+        lng,
+        address,
+      ];
 }

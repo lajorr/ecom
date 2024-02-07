@@ -1,11 +1,12 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecom/common/widgets/like_button.dart';
 import 'package:ecom/common/widgets/my_button.dart';
 import 'package:ecom/common/widgets/rounded_button.dart';
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
+import 'package:ecom/features/prod_detail/presentation/widgets/chat_widget.dart';
 import 'package:ecom/features/prod_detail/presentation/widgets/product_size.dart';
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +20,11 @@ class DetailsScreen extends StatefulWidget {
   const DetailsScreen({
     Key? key,
     required this.product,
-    required this.isOwner,
+    required this.currentUser,
   }) : super(key: key);
 
   final ProductModel product;
-  final bool isOwner;
+  final UserModel currentUser;
 
   static const routeName = '/prod-detail';
 
@@ -33,10 +34,13 @@ class DetailsScreen extends StatefulWidget {
 
 class _DetailsScreenState extends State<DetailsScreen> {
   int quantity = 1;
+  late bool isOwner;
 
   @override
   void initState() {
     super.initState();
+
+    isOwner = widget.currentUser == widget.product.owner;
 
     BlocProvider.of<LikeBloc>(context).add(
       FetchLikeDocumentEvent(prodId: widget.product.id),
@@ -84,10 +88,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
     required BuildContext context,
   }) {
     String userText = ' ...';
+    final owner = widget.product.owner;
 
-    if (widget.product.owner != null) {
+    if (owner != null) {
       userText = widget.product.owner!.name!;
-      if (widget.isOwner) {
+      if (isOwner) {
         userText = '$userText (YOU)';
       }
     }
@@ -159,7 +164,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
             // increment / decrement quantity
-            if (!widget.isOwner)
+            if (!isOwner)
               Row(
                 children: [
                   Container(
@@ -217,61 +222,78 @@ class _DetailsScreenState extends State<DetailsScreen> {
         ),
 
         //product owner
-        Text(
-          '@$userText',
-          style: const TextStyle(
-              fontStyle: FontStyle.italic,
-              color: Colors.grey,
-              fontWeight: FontWeight.w300),
-        ),
-        // rating
         Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            SizedBox(
-              // width: 200,
-              width: media.width * 0.35,
-              height: media.height * 0.03,
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: widget.product.rating.round(),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Image.asset(
-                    ImageConstants.getImageUri(ImageConstants.starIcon),
-                  );
-                },
-              ),
-            ),
-            RichText(
-              text: TextSpan(
-                text: '${widget.product.rating} ',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "(${widget.product.viewsNo})",
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '@$userText',
                     style: const TextStyle(
-                      color: Colors.blue,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  // rating
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: media.width * 0.35,
+                        height: media.height * 0.03,
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: widget.product.rating.round(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Image.asset(
+                              ImageConstants.getImageUri(
+                                  ImageConstants.starIcon),
+                            );
+                          },
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: '${widget.product.rating} ',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "(${widget.product.viewsNo})",
+                              style: const TextStyle(
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: media.height * 0.01,
+                  ),
+                  // details
+                  Text(
+                    widget.product.prodDescription,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
                     ),
                   ),
                 ],
               ),
             ),
+            if (!isOwner)
+              ChatWidget(
+                owner: owner,
+                currentUser: widget.currentUser,
+              ),
           ],
-        ),
-        SizedBox(
-          height: media.height * 0.01,
-        ),
-        // details
-        Text(
-          widget.product.prodDescription,
-          textAlign: TextAlign.start,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
-          ),
         ),
 
         Divider(
@@ -282,7 +304,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         ProductSize(product: widget.product),
 
         // add to cart button
-        if (!widget.isOwner)
+        if (!isOwner)
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(

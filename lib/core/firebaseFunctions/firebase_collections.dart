@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecom/features/chat/data/model/message_model.dart';
 import 'package:ecom/features/payment/data/model/credit_card_model.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -21,6 +22,8 @@ class FireCollections {
   final cartCollection = FirebaseFirestore.instance.collection('cart');
   final userCollection = FirebaseFirestore.instance.collection('users');
   final ordersCollection = FirebaseFirestore.instance.collection('orders');
+  final chatRoomsCollection =
+      FirebaseFirestore.instance.collection('chat-rooms');
 
   final creditCardCollection =
       FirebaseFirestore.instance.collection('credit-cards');
@@ -69,7 +72,7 @@ class FireCollections {
   Future<UserModel> getUserFromRef(DocumentReference ownerRef) async {
     final ownerSnapshot = await ownerRef.get();
     final ownerJson = ownerSnapshot.data() as Map<String, dynamic>;
-    
+
     final owner = UserModel.fromMap(ownerJson);
     return owner;
   }
@@ -237,7 +240,6 @@ class FireCollections {
               as DocumentReference<Map<String, dynamic>>;
           final owner = await getUserFromRef(ownerRef);
           final prodM = ProductModel.fromJson(prodRefJsonData, owner);
-          
 
           final cartM = CartProductModel(
             product: prodM,
@@ -396,7 +398,7 @@ class FireCollections {
     final List<Map<String, dynamic>> cartMapList = [];
 
     for (var cart in cartList) {
-      final cartMap = cart.toMap();
+      final cartMap = cart.toMap(userRef: userRef);
 
       cartMapList.add(cartMap);
     }
@@ -497,5 +499,66 @@ class FireCollections {
     } catch (e) {
       throw ServerException();
     }
+  }
+
+  //* Chat collectionss
+
+  Future<void> storeMessagesInCollection(MessageModel message) async {
+    final ids = [message.sender.uid, message.reciever.uid];
+    ids.sort(); // so that both the use would have the same chat room..
+    final chatRoomId = ids.join('_');
+
+    // covert to json
+    final senderRef = userCollection.doc(message.sender.uid);
+    final recieverRef = userCollection.doc(message.reciever.uid);
+
+    final messageJson =
+        message.toMap(senderRef: senderRef, recieverRef: recieverRef);
+
+    print(messageJson);
+
+    //add message to firestore
+    await chatRoomsCollection
+        .doc(chatRoomId)
+        .collection("messages")
+        .add(messageJson);
+
+    print("storedd");
+  }
+
+  Future<List<MessageModel>> getMessages(String user1Id, String user2Id) async {
+    List<MessageModel> messages = [];
+
+    final ids = [user1Id, user2Id];
+    ids.sort(); // so that both the use would have the same chat room..
+    final chatRoomId = ids.join('_');
+    final allMessagesSnapshot = await chatRoomsCollection
+        .doc(chatRoomId)
+        .collection("messages")
+        .orderBy("created_at", descending: false)
+        .get();
+
+    final messageDocs = allMessagesSnapshot.docs;
+
+    for (var msgDoc in messageDocs) {
+      final msgJson = msgDoc.data();
+      final senderSnap = await (msgJson['sender'] as DocumentReference).get();
+      final senderJson = senderSnap.data() as Map<String, dynamic>;
+      final sender = UserModel.fromMap(senderJson);
+
+      final recieverSnap =
+          await (msgJson['reciever'] as DocumentReference).get();
+      final recieverJson = recieverSnap.data() as Map<String, dynamic>;
+      final reciever = UserModel.fromMap(recieverJson);
+
+      final msg = MessageModel.fromJson(
+        json: msgJson,
+        sender: sender,
+        reciever: reciever,
+      );
+      messages.add(msg);
+    }
+    print(messages);
+    return messages;
   }
 }

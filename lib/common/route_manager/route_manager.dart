@@ -1,3 +1,5 @@
+import 'package:ecom/features/auth/data/model/user_model.dart';
+import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/presentation/screens/cart_history_screen.dart';
 import 'package:ecom/features/map/presentation/screens/show_map_screen.dart';
@@ -48,7 +50,8 @@ class RouteManager {
             create: (context) => sl<LikeBloc>(),
             child: DetailsScreen(
               product: (settings.arguments as Map<String, dynamic>)['product'],
-              isOwner: (settings.arguments as Map<String, dynamic>)['isOwner'],
+              currentUser:
+                  (settings.arguments as Map<String, dynamic>)['currentUser'],
             ),
           ),
         );
@@ -69,6 +72,15 @@ class RouteManager {
           builder: (context) => ShowMapScreen(
             onConfirmPosition:
                 (settings.arguments as Map<String, dynamic>)['onConfirmPos'],
+          ),
+        );
+      case ChatScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) => ChatScreen(
+            owner: (settings.arguments as Map<String, dynamic>)['owner']
+                as UserModel,
+            currentUser: (settings.arguments
+                as Map<String, dynamic>)['current_user'] as UserModel,
           ),
         );
       default:

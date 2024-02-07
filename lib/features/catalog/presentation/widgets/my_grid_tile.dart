@@ -25,11 +25,10 @@ class MyGridTile extends StatelessWidget {
           final currentUser = state.currentUser;
           return GestureDetector(
             onTap: () {
-              final isOwner = currentUser.uid == product.owner?.uid;
               Navigator.of(context)
                   .pushNamed(DetailsScreen.routeName, arguments: {
                 'product': product,
-                'isOwner': isOwner,
+                'currentUser': currentUser,
               });
             },
             child: Column(
