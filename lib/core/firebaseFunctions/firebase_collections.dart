@@ -518,47 +518,40 @@ class FireCollections {
     print(messageJson);
 
     //add message to firestore
-    await chatRoomsCollection
-        .doc(chatRoomId)
-        .collection("messages")
-        .add(messageJson);
+    try {
+      await chatRoomsCollection
+          .doc(chatRoomId)
+          .collection("messages")
+          .add(messageJson);
 
-    print("storedd");
+      print("storedd");
+    } catch (e) {
+      print(e);
+      throw ServerException();
+    }
   }
 
-  Future<List<MessageModel>> getMessages(String user1Id, String user2Id) async {
-    List<MessageModel> messages = [];
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getMessages(
+      String user1Id, String user2Id) async {
+    QuerySnapshot<Map<String, dynamic>> allMessagesSnapshot;
 
     final ids = [user1Id, user2Id];
     ids.sort(); // so that both the use would have the same chat room..
     final chatRoomId = ids.join('_');
-    final allMessagesSnapshot = await chatRoomsCollection
-        .doc(chatRoomId)
-        .collection("messages")
-        .orderBy("created_at", descending: false)
-        .get();
+
+    try {
+      allMessagesSnapshot = await chatRoomsCollection
+          .doc(chatRoomId)
+          .collection("messages")
+          .orderBy("created_at", descending: false)
+          .get();
+    } catch (e) {
+      print(e);
+      throw ServerException();
+    }
 
     final messageDocs = allMessagesSnapshot.docs;
 
-    for (var msgDoc in messageDocs) {
-      final msgJson = msgDoc.data();
-      final senderSnap = await (msgJson['sender'] as DocumentReference).get();
-      final senderJson = senderSnap.data() as Map<String, dynamic>;
-      final sender = UserModel.fromMap(senderJson);
-
-      final recieverSnap =
-          await (msgJson['reciever'] as DocumentReference).get();
-      final recieverJson = recieverSnap.data() as Map<String, dynamic>;
-      final reciever = UserModel.fromMap(recieverJson);
-
-      final msg = MessageModel.fromJson(
-        json: msgJson,
-        sender: sender,
-        reciever: reciever,
-      );
-      messages.add(msg);
-    }
-    print(messages);
-    return messages;
+    return messageDocs;
   }
 }

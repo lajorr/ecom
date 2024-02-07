@@ -1,5 +1,9 @@
 import 'package:ecom/core/firebaseFunctions/firebase_storage.dart';
 import 'package:ecom/core/location-functions/map_location.dart';
+import 'package:ecom/features/chat/data/data%20source/chat_data_source.dart';
+import 'package:ecom/features/chat/domain/repository/chat_repository.dart';
+import 'package:ecom/features/chat/domain/usecase/send_message_usecase.dart';
+import 'package:ecom/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
 import 'package:ecom/features/favorites/data/datasource/favorites_datasource.dart';
 import 'package:ecom/features/favorites/data/repository/favorites_repository_impl.dart';
@@ -40,6 +44,8 @@ import 'features/catalog/domain/usecase/get_product_data_usecase.dart';
 import 'features/catalog/domain/usecase/like_unlike_prod_usecase.dart';
 import 'features/catalog/presentation/blocs/catalog bloc/catalog_bloc.dart';
 import 'features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
+import 'features/chat/data/repository/chat_repository_impl.dart';
+import 'features/chat/domain/usecase/fetch_messages_usecase.dart';
 import 'features/checkout/data/data%20source/checkout_data_source.dart';
 import 'features/checkout/data/repository/checkout_repository_impl.dart';
 import 'features/checkout/domain/repository/checkout_repository.dart';
@@ -123,6 +129,9 @@ void init() {
       getCurrentUserPositionUsecase: sl(),
     ),
   );
+  sl.registerFactory(
+    () => ChatBloc(sendMessageUsecase: sl(), fetchMessagesUsecase: sl()),
+  );
 
   //usecase
 
@@ -154,6 +163,8 @@ void init() {
   sl.registerLazySingleton(
       () => GetCurrentUserPositionUsecase(repository: sl()));
   sl.registerLazySingleton(() => UploadProfilePictureUsecase(repository: sl()));
+  sl.registerLazySingleton(() => SendMessageUsecase(repository: sl()));
+  sl.registerLazySingleton(() => FetchMessagesUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(
@@ -189,6 +200,11 @@ void init() {
   );
   sl.registerLazySingleton<MapRepository>(
     () => MapRepositoryImpl(
+      dataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton<ChatRepository>(
+    () => ChatRepositoryImpl(
       dataSource: sl(),
     ),
   );
@@ -234,6 +250,12 @@ void init() {
   sl.registerLazySingleton<MapDataSource>(
     () => MapDataSourceImpl(
       mapLocation: sl(),
+    ),
+  );
+  sl.registerLazySingleton<ChatDataSource>(
+    () => ChatDataSourceImpl(
+      fireCollections: sl(),
+      fireAuth: sl(),
     ),
   );
 

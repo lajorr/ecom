@@ -11,3 +11,8 @@ class SendMessageEvent extends ChatEvent {
   const SendMessageEvent({required this.message});
   final MessageModel message;
 }
+
+class FetchMessagesEvent extends ChatEvent {
+  const FetchMessagesEvent({required this.otherUserId});
+  final String otherUserId;
+}

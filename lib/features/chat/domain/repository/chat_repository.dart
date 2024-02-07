@@ -5,4 +5,5 @@ import '../../data/model/message_model.dart';
 
 abstract class ChatRepository {
   Future<Either<Failure, void>> sendMessage(MessageModel message);
+  Future<Either<Failure, List<MessageModel>>> fetchMessages(String otherUserId);
 }
