@@ -144,42 +144,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                   body: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          ProfileImage(imageUrl: imageUrl),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          Text(email ?? ""),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Text(phNumber ?? "___"),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushNamed(AllChatsScreen.routeName);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).primaryColor),
-                            child: const Text(
-                              'Chats',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            ProfileImage(imageUrl: imageUrl),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            Text(email ?? ""),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            Text(phNumber ?? "___"),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(AllChatsScreen.routeName);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor),
+                              child: const Text(
+                                'Chats',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
-                          Builder(builder: (context) {
-                            return const OrderHistory();
-                          }),
-                        ],
+                            Builder(builder: (context) {
+                              return const OrderHistory();
+                            }),
+                          ],
+                        ),
                       ),
                     ),
                   ),

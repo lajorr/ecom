@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecom/core/error/exception.dart';
 import 'package:ecom/core/error/failures.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/chat/data/data%20source/chat_data_source.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
 import 'package:ecom/features/chat/domain/repository/chat_repository.dart';
@@ -34,6 +35,17 @@ class ChatRepositoryImpl implements ChatRepository {
       return const Left(
         ServerFailure(message: 'Something Went Wrong'),
       );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<UserModel>>> fetchChatRoomData() async {
+    try {
+      final users = await dataSource.getChatRoomData();
+      return Right(users);
+    } catch (e) {
+      print(e);
+      return const Left(ServerFailure(message: 'Unable to fetch rooms'));
     }
   }
 }

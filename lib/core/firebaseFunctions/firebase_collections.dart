@@ -560,10 +560,8 @@ class FireCollections {
     return messageDocs;
   }
 
-  Future<void> getUserChatRooms() async {
-    // final currentUserId = await fireAuth.getCurrentUserId();
-
-    List<UserModel> chatUserList = [];
+  Future<List<DocumentSnapshot<Object?>>> getUserChatRooms() async {
+    List<DocumentSnapshot<Object?>> userDocSnapList = [];
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserRef = userCollection.doc(currentUser.uid);
     final snapshot = await chatRoomsCollection
@@ -580,12 +578,9 @@ class FireCollections {
           .first as DocumentReference;
 
       final otherUser = await otherUserRef.get();
-      final otherUserData = otherUser.data() as Map<String, dynamic>;
-
-      final otherUM = UserModel.fromMap(otherUserData);
-      print(otherUM);
-      chatUserList.add(otherUM);
+      userDocSnapList.add(otherUser);
     }
-    print(chatUserList);
+    print(userDocSnapList);
+    return userDocSnapList;
   }
 }

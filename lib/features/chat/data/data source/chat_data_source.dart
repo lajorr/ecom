@@ -9,6 +9,7 @@ import '../../../auth/data/model/user_model.dart';
 abstract class ChatDataSource {
   Future<void> storeMessagesInCollection(MessageModel message);
   Future<List<MessageModel>> getMessages(String otherUserId);
+  Future<List<UserModel>> getChatRoomData();
 }
 
 class ChatDataSourceImpl implements ChatDataSource {
@@ -65,5 +66,23 @@ class ChatDataSourceImpl implements ChatDataSource {
     } else {
       return _messages;
     }
+  }
+
+  @override
+  Future<List<UserModel>> getChatRoomData() async {
+    List<UserModel> chatUserList = [];
+
+    final userDocSnapList = await fireCollections.getUserChatRooms();
+
+    for (var otherUser in userDocSnapList) {
+      final otherUserData = otherUser.data() as Map<String, dynamic>;
+
+      final otherUM = UserModel.fromMap(otherUserData);
+      print(otherUM);
+      chatUserList.add(otherUM);
+    }
+    print(chatUserList);
+
+    return chatUserList;
   }
 }

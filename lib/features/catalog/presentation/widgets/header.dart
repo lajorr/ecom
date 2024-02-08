@@ -41,7 +41,8 @@ class Header extends StatelessWidget {
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: ClipRRect(
+                child: 
+                ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: (state.currentUser.imageUrl != null)
                         ? CachedNetworkImage(
@@ -66,6 +67,8 @@ class Header extends StatelessWidget {
                             fit: BoxFit.cover,
                             alignment: Alignment.topCenter,
                           )),
+              
+              
               )
             ],
           );

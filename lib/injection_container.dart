@@ -2,6 +2,7 @@ import 'package:ecom/core/firebaseFunctions/firebase_storage.dart';
 import 'package:ecom/core/location-functions/map_location.dart';
 import 'package:ecom/features/chat/data/data%20source/chat_data_source.dart';
 import 'package:ecom/features/chat/domain/repository/chat_repository.dart';
+import 'package:ecom/features/chat/domain/usecase/fetch_chat_room_data_usecase.dart';
 import 'package:ecom/features/chat/domain/usecase/send_message_usecase.dart';
 import 'package:ecom/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
@@ -131,7 +132,11 @@ void init() {
   );
 
   sl.registerFactory(
-    () => ChatBloc(sendMessageUsecase: sl(), fetchMessagesUsecase: sl()),
+    () => ChatBloc(
+      sendMessageUsecase: sl(),
+      fetchMessagesUsecase: sl(),
+      fetchChatRoomDataUsecase: sl(),
+    ),
   );
 
   //usecase
@@ -164,8 +169,11 @@ void init() {
   sl.registerLazySingleton(
       () => GetCurrentUserPositionUsecase(repository: sl()));
   sl.registerLazySingleton(() => UploadProfilePictureUsecase(repository: sl()));
+
+  //chat
   sl.registerLazySingleton(() => SendMessageUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchMessagesUsecase(repository: sl()));
+  sl.registerLazySingleton(() => FetchChatRoomDataUsecase(repository: sl()));
 
   //repo
   sl.registerLazySingleton<AuthRepository>(

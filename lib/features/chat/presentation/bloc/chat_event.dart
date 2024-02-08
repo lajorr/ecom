@@ -16,3 +16,5 @@ class FetchMessagesEvent extends ChatEvent {
   const FetchMessagesEvent({required this.otherUserId});
   final String otherUserId;
 }
+
+class FetchChatRoomsEvent extends ChatEvent {}
