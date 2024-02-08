@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common/route_manager/route_manager.dart';
 import 'common/theme_manager/theme_manager.dart';
+import 'features/chat/presentation/bloc/chat_bloc.dart';
 import 'features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
 import 'features/profile/presentation/bloc/profile_bloc.dart';
 import 'firebase_options.dart';
@@ -45,7 +46,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<MapBloc>(),
         ),
-        BlocProvider(create: (context) => sl<OrdersBloc>(),)
+        BlocProvider(
+          create: (context) => sl<OrdersBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<ChatBloc>(),
+        )
       ],
       child: MaterialApp(
         title: 'E-com app',

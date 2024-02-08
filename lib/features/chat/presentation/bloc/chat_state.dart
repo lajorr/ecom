@@ -9,9 +9,14 @@ final class ChatInitial extends ChatState {
   List<Object> get props => [];
 }
 
-final class ChatLoading extends ChatState {
+final class ChatFetching extends ChatState {
   @override
   List<Object> get props => [];
+}
+
+final class ChatStoring extends ChatState {
+  @override
+  List<Object?> get props => [];
 }
 
 final class ChatLoaded extends ChatState {

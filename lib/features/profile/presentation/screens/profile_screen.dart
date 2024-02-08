@@ -1,3 +1,4 @@
+import 'package:ecom/features/chat/presentation/screens/all_chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -158,6 +159,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text(phNumber ?? "___"),
                           const SizedBox(
                             height: 25,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(AllChatsScreen.routeName);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(context).primaryColor),
+                            child: const Text(
+                              'Chats',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                           Builder(builder: (context) {
                             return const OrderHistory();

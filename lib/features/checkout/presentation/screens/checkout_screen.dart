@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -95,36 +94,34 @@ class CheckoutScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                body: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        // prod list
-                        if (productList.isEmpty)
-                          SizedBox(
-                            height: media.height * 0.2,
-                            child: const Center(
-                              child: Text(StringConstants.emptyProductListText),
-                            ),
-                          )
-                        else
-                          CartProductsWidget(
-                            cart: cart,
+                body: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      // prod list
+                      if (productList.isEmpty)
+                        SizedBox(
+                          height: media.height * 0.2,
+                          child: const Center(
+                            child: Text(StringConstants.emptyProductListText),
                           ),
-                  
-                        //shipping info
-                        const ShippingCard(),
-                  
-                        // total amount
-                        CartBillWidget(
-                          productList: productList,
+                        )
+                      else
+                        CartProductsWidget(
                           cart: cart,
-                          shippingFee: shippingFee,
-                          totalAmt: totalAmt,
                         ),
-                      ],
-                    ),
+                
+                      //shipping info
+                      const ShippingCard(),
+                
+                      // total amount
+                      CartBillWidget(
+                        productList: productList,
+                        cart: cart,
+                        shippingFee: shippingFee,
+                        totalAmt: totalAmt,
+                      ),
+                    ],
                   ),
                 ),
               );

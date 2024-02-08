@@ -129,6 +129,7 @@ void init() {
       getCurrentUserPositionUsecase: sl(),
     ),
   );
+
   sl.registerFactory(
     () => ChatBloc(sendMessageUsecase: sl(), fetchMessagesUsecase: sl()),
   );
@@ -255,7 +256,6 @@ void init() {
   sl.registerLazySingleton<ChatDataSource>(
     () => ChatDataSourceImpl(
       fireCollections: sl(),
-      fireAuth: sl(),
     ),
   );
 

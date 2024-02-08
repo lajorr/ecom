@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom/core/error/exception.dart';
-import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
 
@@ -15,28 +14,24 @@ abstract class ChatDataSource {
 class ChatDataSourceImpl implements ChatDataSource {
   ChatDataSourceImpl({
     required this.fireCollections,
-    required this.fireAuth,
   });
 
   final FireCollections fireCollections;
-  final FireAuth fireAuth;
 
-  List<MessageModel> messages = [];
+  final List<MessageModel> _messages = [];
 
   @override
   Future<void> storeMessagesInCollection(MessageModel message) async {
-    messages.add(message);
+    // yo kasari add vairaxa list ma?????
+    // messages.add(message);
     await fireCollections.storeMessagesInCollection(message);
   }
 
   @override
   Future<List<MessageModel>> getMessages(String otherUserId) async {
-    final currentUserId = await fireAuth.getCurrentUserId();
-
-    if (messages.isEmpty) {
+    if (_messages.isEmpty) {
       try {
         final messageDocs = await fireCollections.getMessages(
-          currentUserId,
           otherUserId,
         );
         for (var msgDoc in messageDocs) {
@@ -56,10 +51,10 @@ class ChatDataSourceImpl implements ChatDataSource {
             sender: sender,
             reciever: reciever,
           );
-          messages.add(msg);
+          _messages.add(msg);
         }
-        print(messages);
-        return messages;
+        print(_messages);
+        return _messages;
       } on ServerException {
         print('server Exception');
         rethrow;
@@ -68,7 +63,7 @@ class ChatDataSourceImpl implements ChatDataSource {
         throw ServerException();
       }
     } else {
-      return messages;
+      return _messages;
     }
   }
 }

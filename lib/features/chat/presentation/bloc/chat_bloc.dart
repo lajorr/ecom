@@ -24,20 +24,20 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   FutureOr<void> _onSendMessage(
       SendMessageEvent event, Emitter<ChatState> emit) async {
-    emit(ChatLoading());
+    // emit(ChatStoring());
     final sentOrFail = await sendMessageUsecase.call(event.message);
     sentOrFail.fold(
         (failure) => emit(
               ChatFailed(message: failure.message),
             ), (_) {
       print("success");
-      emit(ChatUploaded());
+      // emit(ChatUploaded());
     });
   }
 
   FutureOr<void> _onFetchMessage(
       FetchMessagesEvent event, Emitter<ChatState> emit) async {
-    emit(ChatLoading());
+    emit(ChatFetching());
     final fetchOrFail = await fetchMessagesUsecase.call(event.otherUserId);
 
     fetchOrFail.fold(

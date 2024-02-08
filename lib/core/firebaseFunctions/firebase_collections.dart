@@ -517,12 +517,15 @@ class FireCollections {
 
     print(messageJson);
 
+    final membersData = {
+      'members': [recieverRef, senderRef]
+    };
+
     //add message to firestore
     try {
-      await chatRoomsCollection
-          .doc(chatRoomId)
-          .collection("messages")
-          .add(messageJson);
+      chatRoomsCollection.doc(chatRoomId)
+        ..set(membersData)
+        ..collection("messages").add(messageJson);
 
       print("storedd");
     } catch (e) {
@@ -532,8 +535,10 @@ class FireCollections {
   }
 
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getMessages(
-      String user1Id, String user2Id) async {
+      String user2Id) async {
     QuerySnapshot<Map<String, dynamic>> allMessagesSnapshot;
+
+    final user1Id = await fireAuth.getCurrentUserId();
 
     final ids = [user1Id, user2Id];
     ids.sort(); // so that both the use would have the same chat room..
@@ -553,5 +558,34 @@ class FireCollections {
     final messageDocs = allMessagesSnapshot.docs;
 
     return messageDocs;
+  }
+
+  Future<void> getUserChatRooms() async {
+    // final currentUserId = await fireAuth.getCurrentUserId();
+
+    List<UserModel> chatUserList = [];
+    final currentUser = await fireAuth.getCurrentUserModel();
+    final currentUserRef = userCollection.doc(currentUser.uid);
+    final snapshot = await chatRoomsCollection
+        .where('members', arrayContains: currentUserRef)
+        .get();
+    final docs = snapshot.docs;
+
+    for (var doc in docs) {
+      final roomData = doc.data();
+      final roomMembers = roomData['members'] as List;
+
+      final otherUserRef = roomMembers
+          .where((memberRef) => memberRef != currentUserRef)
+          .first as DocumentReference;
+
+      final otherUser = await otherUserRef.get();
+      final otherUserData = otherUser.data() as Map<String, dynamic>;
+
+      final otherUM = UserModel.fromMap(otherUserData);
+      print(otherUM);
+      chatUserList.add(otherUM);
+    }
+    print(chatUserList);
   }
 }

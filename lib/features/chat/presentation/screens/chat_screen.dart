@@ -43,92 +43,107 @@ class _ChatScreenState extends State<ChatScreen> {
       message: message,
       createdAt: DateTime.now(),
     );
-    _messages.add(msg);
     context.read<ChatBloc>().add(SendMessageEvent(message: msg));
-    _textController.clear();
-    setState(() {});
+    setState(() {
+      _messages.add(msg);
+      _textController.clear();
+    });
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ChatBloc, ChatState>(
-      listener: (context, state) {
-        if (state is ChatLoaded) {
-          setState(() {
-            _messages = state.userMessages;
-          });
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.grey[200],
-          toolbarHeight: 70,
-          title: Row(
-            children: [
-              const CircleAvatar(
-                backgroundColor: Colors.amber,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(widget.owner.name!),
-            ],
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(children: [
-            Expanded(
-              child: Container(
-                height: double.infinity,
-                width: double.infinity,
-                padding: const EdgeInsets.all(5),
-                child: SingleChildScrollView(
-                  reverse: true,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ..._messages
-                          .map(
-                            (msgM) => MsgTileSelf(
-                              message: msgM.message,
-                              createdAt: msgM.createdAt,
-                            ),
-                          )
-                          .toList(),
-                    ],
-                  ),
-                ),
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[200],
+        toolbarHeight: 70,
+        title: Row(
+          children: [
+            const CircleAvatar(
+              backgroundColor: Colors.amber,
             ),
             const SizedBox(
-              height: 10,
+              width: 10,
             ),
-            TextField(
-              controller: _textController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                hintText: "Write a message..",
-                suffixIcon: _textController.text.isNotEmpty
-                    ? IconButton(
-                        icon: Icon(
-                          Icons.send,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        onPressed: onSend,
-                      )
-                    : null,
-              ),
-              onChanged: (value) {
-                setState(() {
-                  message = value;
-                });
-              },
-            ),
-          ]),
+            Text(widget.owner.name!),
+          ],
         ),
+      ),
+      body: BlocConsumer<ChatBloc, ChatState>(
+        listener: (context, state) {
+          if (state is ChatLoaded) {
+            print("loaded");
+            setState(() {
+              _messages = state.userMessages;
+            });
+          }
+        },
+        builder: (context, state) {
+          if (state is ChatFetching || state is ChatStoring) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is ChatFailed) {
+            return Center(
+              child: Text(state.message),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(children: [
+                Expanded(
+                  child: Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(5),
+                    child: SingleChildScrollView(
+                      reverse: true,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ..._messages
+                              .map(
+                                (msgM) => MsgTileSelf(
+                                  message: msgM.message,
+                                  createdAt: msgM.createdAt,
+                                ),
+                              )
+                              .toList(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: _textController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    hintText: "Write a message..",
+                    suffixIcon: _textController.text.isNotEmpty
+                        ? IconButton(
+                            icon: Icon(
+                              Icons.send,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            onPressed: onSend,
+                          )
+                        : null,
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      message = value;
+                    });
+                  },
+                ),
+              ]),
+            );
+          }
+        },
       ),
     );
   }
