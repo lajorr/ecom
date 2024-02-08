@@ -2,6 +2,7 @@
 import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
 import 'package:ecom/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:ecom/features/chat/presentation/widgets/message%20tile/msg_tile_other.dart';
 import 'package:ecom/features/chat/presentation/widgets/message%20tile/msg_tile_self.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,13 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
     Key? key,
-    required this.owner,
+    required this.otherUser,
     required this.currentUser,
   }) : super(key: key);
 
   static const routeName = '/chat-screen';
 
-  final UserModel owner;
+  final UserModel otherUser;
   final UserModel currentUser;
 
   @override
@@ -33,12 +34,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
     context
         .read<ChatBloc>()
-        .add(FetchMessagesEvent(otherUserId: widget.owner.uid!));
+        .add(FetchMessagesEvent(otherUserId: widget.otherUser.uid!));
   }
 
   void onSend() {
     final msg = MessageModel(
-      reciever: widget.owner,
+      reciever: widget.otherUser,
       sender: widget.currentUser,
       message: message,
       createdAt: DateTime.now(),
@@ -48,7 +49,6 @@ class _ChatScreenState extends State<ChatScreen> {
       _messages.add(msg);
       _textController.clear();
     });
-    
   }
 
   @override
@@ -65,14 +65,13 @@ class _ChatScreenState extends State<ChatScreen> {
             const SizedBox(
               width: 10,
             ),
-            Text(widget.owner.name!),
+            Text(widget.otherUser.name!),
           ],
         ),
       ),
       body: BlocConsumer<ChatBloc, ChatState>(
         listener: (context, state) {
           if (state is ChatLoaded) {
-            print("loaded");
             setState(() {
               _messages = state.userMessages;
             });
@@ -101,14 +100,19 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          ..._messages
-                              .map(
-                                (msgM) => MsgTileSelf(
-                                  message: msgM.message,
-                                  createdAt: msgM.createdAt,
-                                ),
-                              )
-                              .toList(),
+                          ..._messages.map((msgM) {
+                            if (msgM.sender == widget.currentUser) {
+                              return MsgTileSelf(
+                                message: msgM.message,
+                                createdAt: msgM.createdAt,
+                              );
+                            } else {
+                              return MsgTileOther(
+                                message: msgM.message,
+                                createdAt: msgM.createdAt,
+                              );
+                            }
+                          }).toList(),
                         ],
                       ),
                     ),

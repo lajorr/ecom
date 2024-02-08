@@ -19,8 +19,6 @@ class ChatDataSourceImpl implements ChatDataSource {
 
   final FireCollections fireCollections;
 
-  final List<MessageModel> _messages = [];
-
   @override
   Future<void> storeMessagesInCollection(MessageModel message) async {
     // yo kasari add vairaxa list ma?????
@@ -30,41 +28,35 @@ class ChatDataSourceImpl implements ChatDataSource {
 
   @override
   Future<List<MessageModel>> getMessages(String otherUserId) async {
-    if (_messages.isEmpty) {
-      try {
-        final messageDocs = await fireCollections.getMessages(
-          otherUserId,
+    final List<MessageModel> messages = [];
+
+    try {
+      final messageDocs = await fireCollections.getMessages(
+        otherUserId,
+      );
+      for (var msgDoc in messageDocs) {
+        final msgJson = msgDoc.data();
+        final senderSnap = await (msgJson['sender'] as DocumentReference).get();
+        final senderJson = senderSnap.data() as Map<String, dynamic>;
+        final sender = UserModel.fromMap(senderJson);
+
+        final recieverSnap =
+            await (msgJson['reciever'] as DocumentReference).get();
+        final recieverJson = recieverSnap.data() as Map<String, dynamic>;
+        final reciever = UserModel.fromMap(recieverJson);
+
+        final msg = MessageModel.fromJson(
+          json: msgJson,
+          sender: sender,
+          reciever: reciever,
         );
-        for (var msgDoc in messageDocs) {
-          final msgJson = msgDoc.data();
-          final senderSnap =
-              await (msgJson['sender'] as DocumentReference).get();
-          final senderJson = senderSnap.data() as Map<String, dynamic>;
-          final sender = UserModel.fromMap(senderJson);
-
-          final recieverSnap =
-              await (msgJson['reciever'] as DocumentReference).get();
-          final recieverJson = recieverSnap.data() as Map<String, dynamic>;
-          final reciever = UserModel.fromMap(recieverJson);
-
-          final msg = MessageModel.fromJson(
-            json: msgJson,
-            sender: sender,
-            reciever: reciever,
-          );
-          _messages.add(msg);
-        }
-        print(_messages);
-        return _messages;
-      } on ServerException {
-        print('server Exception');
-        rethrow;
-      } catch (e) {
-        print(e);
-        throw ServerException();
+        messages.add(msg);
       }
-    } else {
-      return _messages;
+      return messages;
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException();
     }
   }
 
@@ -78,10 +70,8 @@ class ChatDataSourceImpl implements ChatDataSource {
       final otherUserData = otherUser.data() as Map<String, dynamic>;
 
       final otherUM = UserModel.fromMap(otherUserData);
-      print(otherUM);
       chatUserList.add(otherUM);
     }
-    print(chatUserList);
 
     return chatUserList;
   }

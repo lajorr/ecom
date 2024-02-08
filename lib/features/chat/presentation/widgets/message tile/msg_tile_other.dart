@@ -1,7 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MsgTileOther extends StatelessWidget {
-  const MsgTileOther({super.key});
+  const MsgTileOther({
+    Key? key,
+    required this.message,
+    required this.createdAt,
+  }) : super(key: key);
+  final String message;
+  final DateTime createdAt;
 
   @override
   Widget build(BuildContext context) {
@@ -17,24 +25,29 @@ class MsgTileOther extends StatelessWidget {
               maxWidth: media.width * 0.45,
             ),
             decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
+              color: Colors.purple[800],
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(25),
                 topLeft: Radius.circular(25),
                 bottomRight: Radius.circular(25),
               ),
             ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 12.0,
                 vertical: 10,
               ),
-              child: Text('Hi'),
+              child: Text(
+                message,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
-          const Text(
-            "12/4",
-            style: TextStyle(
+          Text(
+            DateFormat('Hm').format(createdAt),
+            style: const TextStyle(
               fontSize: 11,
             ),
           )

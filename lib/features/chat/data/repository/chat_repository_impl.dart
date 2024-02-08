@@ -15,7 +15,6 @@ class ChatRepositoryImpl implements ChatRepository {
       final res = await dataSource.storeMessagesInCollection(message);
       return Right(res);
     } catch (e) {
-      print(e);
       return const Left(ServerFailure(message: 'Message not sent'));
     }
   }
@@ -31,7 +30,6 @@ class ChatRepositoryImpl implements ChatRepository {
         ServerFailure(message: "Unable to fetch messages"),
       );
     } catch (e) {
-      print(e);
       return const Left(
         ServerFailure(message: 'Something Went Wrong'),
       );
@@ -44,7 +42,6 @@ class ChatRepositoryImpl implements ChatRepository {
       final users = await dataSource.getChatRoomData();
       return Right(users);
     } catch (e) {
-      print(e);
       return const Left(ServerFailure(message: 'Unable to fetch rooms'));
     }
   }

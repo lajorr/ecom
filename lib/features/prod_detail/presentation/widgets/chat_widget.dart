@@ -5,22 +5,22 @@ import 'package:flutter/material.dart';
 class ChatWidget extends StatelessWidget {
   const ChatWidget({
     Key? key,
-    required this.owner,
+    required this.otherUser,
     required this.currentUser,
   }) : super(key: key);
 
-  final UserModel? owner;
+  final UserModel? otherUser;
   final UserModel currentUser;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: owner == null
+      onTap: otherUser == null
           ? null
           : () {
               Navigator.of(context).pushNamed(
                 ChatScreen.routeName,
                 arguments: {
-                  "owner": owner!,
+                  "other_user": otherUser!,
                   "current_user": currentUser,
                 },
               );
@@ -29,7 +29,7 @@ class ChatWidget extends StatelessWidget {
         radius: 23,
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon(
-          owner != null ? Icons.messenger : Icons.comments_disabled_sharp,
+          otherUser != null ? Icons.messenger : Icons.comments_disabled_sharp,
           color: Colors.white,
         ),
       ),

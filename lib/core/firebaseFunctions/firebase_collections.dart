@@ -515,7 +515,6 @@ class FireCollections {
     final messageJson =
         message.toMap(senderRef: senderRef, recieverRef: recieverRef);
 
-    print(messageJson);
 
     final membersData = {
       'members': [recieverRef, senderRef]
@@ -527,9 +526,7 @@ class FireCollections {
         ..set(membersData)
         ..collection("messages").add(messageJson);
 
-      print("storedd");
     } catch (e) {
-      print(e);
       throw ServerException();
     }
   }
@@ -551,7 +548,6 @@ class FireCollections {
           .orderBy("created_at", descending: false)
           .get();
     } catch (e) {
-      print(e);
       throw ServerException();
     }
 
@@ -580,7 +576,6 @@ class FireCollections {
       final otherUser = await otherUserRef.get();
       userDocSnapList.add(otherUser);
     }
-    print(userDocSnapList);
     return userDocSnapList;
   }
 }

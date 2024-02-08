@@ -78,15 +78,18 @@ class RouteManager {
       case ChatScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => ChatScreen(
-            owner: (settings.arguments as Map<String, dynamic>)['owner']
-                as UserModel,
+            otherUser: (settings.arguments
+                as Map<String, dynamic>)['other_user'] as UserModel,
             currentUser: (settings.arguments
                 as Map<String, dynamic>)['current_user'] as UserModel,
           ),
         );
       case AllChatsScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => const AllChatsScreen(),
+          builder: (context) => AllChatsScreen(
+            currentUser:
+                (settings.arguments as Map<String, dynamic>)['current_user'],
+          ),
         );
       default:
         return null;

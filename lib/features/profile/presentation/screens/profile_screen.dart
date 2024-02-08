@@ -50,11 +50,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
               if (state is ProfileLoaded) {
-                final user = state.currentUser;
-                email = user.email;
-                username = user.name;
-                phNumber = user.phNumber.toString();
-                imageUrl = user.imageUrl;
+                final currentUser = state.currentUser;
+                email = currentUser.email;
+                username = currentUser.name;
+                phNumber = currentUser.phNumber.toString();
+                imageUrl = currentUser.imageUrl;
                 return Scaffold(
                   appBar: AppBar(
                     centerTitle: true,
@@ -163,8 +163,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed(AllChatsScreen.routeName);
+                                Navigator.of(context).pushNamed(
+                                    AllChatsScreen.routeName,
+                                    arguments: {'current_user': currentUser});
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:

@@ -36,7 +36,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         (failure) => emit(
               ChatFailed(message: failure.message),
             ), (_) {
-      print("success");
       // emit(ChatUploaded());
     });
   }
@@ -50,7 +49,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         (failure) => emit(
               ChatFailed(message: failure.message),
             ), (messages) {
-      print("fetch Sucess");
       emit(
         ChatLoaded(userMessages: messages),
       );
@@ -68,7 +66,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         ),
       ),
       (userList) {
-        print('Success');
         emit(
           ChatRoomLoaded(userList: userList),
         );
