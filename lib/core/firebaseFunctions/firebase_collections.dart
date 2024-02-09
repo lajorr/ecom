@@ -503,29 +503,38 @@ class FireCollections {
 
   //* Chat collectionss
 
-  Future<void> storeMessagesInCollection(MessageModel message) async {
-    final ids = [message.sender.uid, message.reciever.uid];
+  Future<void> storeMessagesInCollection(List<MessageModel> messages) async {
+    List<Map<String, dynamic>> messagesJson = [];
+
+    final message = messages.first;
+    final member1 = message.sender.uid;
+    final member2 = message.reciever.uid;
+
+    final ids = [member1, member2];
     ids.sort(); // so that both the use would have the same chat room..
     final chatRoomId = ids.join('_');
 
     // covert to json
-    final senderRef = userCollection.doc(message.sender.uid);
-    final recieverRef = userCollection.doc(message.reciever.uid);
 
-    final messageJson =
-        message.toMap(senderRef: senderRef, recieverRef: recieverRef);
+    for (var msg in messages) {
+      final senderRef = userCollection.doc(msg.sender.uid);
+      final recieverRef = userCollection.doc(msg.reciever.uid);
 
+      final msgJson = msg.toMap(
+        senderRef: senderRef,
+        recieverRef: recieverRef,
+      );
+      messagesJson.add(msgJson);
+    }
 
     final membersData = {
-      'members': [recieverRef, senderRef]
+      'messages': messagesJson,
+      'members': [userCollection.doc(member1), userCollection.doc(member2)]
     };
 
     //add message to firestore
     try {
-      chatRoomsCollection.doc(chatRoomId)
-        ..set(membersData)
-        ..collection("messages").add(messageJson);
-
+      chatRoomsCollection.doc(chatRoomId).set(membersData);
     } catch (e) {
       throw ServerException();
     }

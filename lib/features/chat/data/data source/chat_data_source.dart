@@ -18,18 +18,17 @@ class ChatDataSourceImpl implements ChatDataSource {
   });
 
   final FireCollections fireCollections;
+  final List<MessageModel> _messages = [];
 
   @override
   Future<void> storeMessagesInCollection(MessageModel message) async {
     // yo kasari add vairaxa list ma?????
     // messages.add(message);
-    await fireCollections.storeMessagesInCollection(message);
+    await fireCollections.storeMessagesInCollection(_messages);
   }
 
   @override
   Future<List<MessageModel>> getMessages(String otherUserId) async {
-    final List<MessageModel> messages = [];
-
     try {
       final messageDocs = await fireCollections.getMessages(
         otherUserId,
@@ -50,9 +49,9 @@ class ChatDataSourceImpl implements ChatDataSource {
           sender: sender,
           reciever: reciever,
         );
-        messages.add(msg);
+        _messages.add(msg);
       }
-      return messages;
+      return _messages;
     } on ServerException {
       rethrow;
     } catch (e) {
