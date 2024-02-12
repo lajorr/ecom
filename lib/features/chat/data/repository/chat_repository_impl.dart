@@ -20,10 +20,10 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<Either<Failure, List<MessageModel>>> fetchMessages(
+  Future<Either<Failure, Stream<List<MessageModel>>>> fetchMessages(
       String otherUserId) async {
     try {
-      final messages = await dataSource.getMessages(otherUserId);
+      final messages = dataSource.getMessages(otherUserId);
       return Right(messages);
     } on ServerException {
       return const Left(

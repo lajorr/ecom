@@ -45,12 +45,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     emit(ChatFetching());
     final fetchOrFail = await fetchMessagesUsecase.call(event.otherUserId);
 
-    fetchOrFail.fold(
-        (failure) => emit(
-              ChatFailed(message: failure.message),
-            ), (messages) {
+    fetchOrFail.fold((failure) => emit(ChatFailed(message: failure.message)),
+        (messages) {
       emit(
-        ChatLoaded(userMessages: messages),
+        ChatLoaded(messageStream: messages),
       );
     });
   }

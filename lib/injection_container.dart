@@ -264,6 +264,7 @@ void init() {
   sl.registerLazySingleton<ChatDataSource>(
     () => ChatDataSourceImpl(
       fireCollections: sl(),
+      fireAuth: sl(),
     ),
   );
 

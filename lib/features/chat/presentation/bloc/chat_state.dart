@@ -20,12 +20,12 @@ final class ChatStoring extends ChatState {
 }
 
 final class ChatLoaded extends ChatState {
-  const ChatLoaded({required this.userMessages});
-  final List<MessageModel> userMessages;
+  const ChatLoaded({required this.messageStream});
+  final Stream<List<MessageModel>> messageStream;
 
   @override
   List<Object> get props => [
-        userMessages,
+        messageStream,
       ];
 }
 

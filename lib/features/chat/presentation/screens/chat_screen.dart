@@ -2,10 +2,11 @@
 import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
 import 'package:ecom/features/chat/presentation/bloc/chat_bloc.dart';
-import 'package:ecom/features/chat/presentation/widgets/message%20tile/msg_tile_other.dart';
-import 'package:ecom/features/chat/presentation/widgets/message%20tile/msg_tile_self.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../widgets/message tile/msg_tile_other.dart';
+import '../widgets/message tile/msg_tile_self.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -26,7 +27,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   String message = '';
-  List<MessageModel> _messages = [];
 
   @override
   void initState() {
@@ -46,13 +46,15 @@ class _ChatScreenState extends State<ChatScreen> {
     );
     context.read<ChatBloc>().add(SendMessageEvent(message: msg));
     setState(() {
-      _messages.add(msg);
+      // _messages.add(msg);
       _textController.clear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    List<MessageModel> messages = [];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
@@ -69,14 +71,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
-      body: BlocConsumer<ChatBloc, ChatState>(
-        listener: (context, state) {
-          if (state is ChatLoaded) {
-            setState(() {
-              _messages = state.userMessages;
-            });
-          }
-        },
+      body: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
           if (state is ChatFetching || state is ChatStoring) {
             return const Center(
@@ -86,37 +81,45 @@ class _ChatScreenState extends State<ChatScreen> {
             return Center(
               child: Text(state.message),
             );
-          } else {
+          } else if (state is ChatLoaded) {
+            final msgStream = state.messageStream;
+
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
                 Expanded(
-                  child: Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(5),
-                    child: SingleChildScrollView(
-                      reverse: true,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          ..._messages.map((msgM) {
-                            if (msgM.sender == widget.currentUser) {
-                              return MsgTileSelf(
-                                message: msgM.message,
-                                createdAt: msgM.createdAt,
-                              );
-                            } else {
-                              return MsgTileOther(
-                                message: msgM.message,
-                                createdAt: msgM.createdAt,
-                              );
-                            }
-                          }).toList(),
-                        ],
-                      ),
-                    ),
-                  ),
+                  child: StreamBuilder<List<MessageModel>>(
+                      stream: msgStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData && snapshot.data != null) {
+                          final messageM = snapshot.data!;
+                          messages = messageM.reversed.toList();
+
+                          return Expanded(
+                            child: ListView.builder(
+                              reverse: true,
+                              itemCount: messages.length,
+                              itemBuilder: (context, index) {
+                                final message = messages[index];
+                                if (message.sender == widget.currentUser) {
+                                  return MsgTileSelf(
+                                    message: message.message,
+                                    createdAt: message.createdAt,
+                                  );
+                                } else {
+                                  return MsgTileOther(
+                                    message: message.message,
+                                    createdAt: message.createdAt,
+                                  );
+                                }
+                              },
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                      }),
                 ),
                 const SizedBox(
                   height: 10,
@@ -146,6 +149,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ]),
             );
+          } else {
+            return Container();
           }
         },
       ),

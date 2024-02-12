@@ -8,8 +8,8 @@ class FireStorage {
   final FireAuth fireAuth = FireAuth();
 
   Future<String> uploadImageToStorage(
-      String childName, Uint8List imageFile) async {
-    final userId = await fireAuth.getCurrentUserId();
+      String childName, Uint8List imageFile)  {
+    final userId = fireAuth.getCurrentUserId();
     final Reference storageRef = _storage.ref().child(childName).child(userId);
 
     try {

@@ -9,6 +9,7 @@ class FireAuth {
   final userCollection = FirebaseFirestore.instance.collection('users');
 
   User? get currentUser => _firebaseAuth.currentUser;
+
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   Future<UserModel> getCurrentUserModel() async {
@@ -23,15 +24,13 @@ class FireAuth {
         uid: currentUser!.uid,
         email: currentUser!.email,
       );
-      
     }
 
     return user;
   }
 
-  Future<String> getCurrentUserId() async {
-    final user = await getCurrentUserModel();
-    return user.uid!;
+  String getCurrentUserId() {
+    return _firebaseAuth.currentUser!.uid;
   }
 
   Future<User?> signInWithEmailAndPassword(

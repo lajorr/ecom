@@ -1,57 +1,65 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/core/error/exception.dart';
+import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
 
+import '../../../../core/error/exception.dart';
 import '../../../auth/data/model/user_model.dart';
 
 abstract class ChatDataSource {
   Future<void> storeMessagesInCollection(MessageModel message);
-  Future<List<MessageModel>> getMessages(String otherUserId);
+  Stream<List<MessageModel>> getMessages(String otherUserId);
   Future<List<UserModel>> getChatRoomData();
 }
 
 class ChatDataSourceImpl implements ChatDataSource {
   ChatDataSourceImpl({
     required this.fireCollections,
+    required this.fireAuth,
   });
 
   final FireCollections fireCollections;
-  final List<MessageModel> _messages = [];
+  final FireAuth fireAuth;
 
   @override
   Future<void> storeMessagesInCollection(MessageModel message) async {
-    // yo kasari add vairaxa list ma?????
-    // messages.add(message);
-    await fireCollections.storeMessagesInCollection(_messages);
+    await fireCollections.storeMessagesInCollection(message);
   }
 
   @override
-  Future<List<MessageModel>> getMessages(String otherUserId) async {
+  Stream<List<MessageModel>> getMessages(String otherUserId) async* {
     try {
-      final messageDocs = await fireCollections.getMessages(
+      final messageDocs = fireCollections.getMessages(
         otherUserId,
       );
-      for (var msgDoc in messageDocs) {
-        final msgJson = msgDoc.data();
-        final senderSnap = await (msgJson['sender'] as DocumentReference).get();
-        final senderJson = senderSnap.data() as Map<String, dynamic>;
-        final sender = UserModel.fromMap(senderJson);
 
-        final recieverSnap =
-            await (msgJson['reciever'] as DocumentReference).get();
-        final recieverJson = recieverSnap.data() as Map<String, dynamic>;
-        final reciever = UserModel.fromMap(recieverJson);
+      await for (var msgDoc in messageDocs) {
+        List<MessageModel> messageList = [];
+        final msgDocs = msgDoc.docs;
 
-        final msg = MessageModel.fromJson(
-          json: msgJson,
-          sender: sender,
-          reciever: reciever,
-        );
-        _messages.add(msg);
+        for (var msgDoc in msgDocs) {
+          final msgJson = msgDoc.data();
+          final senderSnap =
+              await (msgJson['sender'] as DocumentReference).get();
+          final senderJson = senderSnap.data() as Map<String, dynamic>;
+          final sender = UserModel.fromMap(senderJson);
+
+          final recieverSnap =
+              await (msgJson['reciever'] as DocumentReference).get();
+          final recieverJson = recieverSnap.data() as Map<String, dynamic>;
+          final reciever = UserModel.fromMap(recieverJson);
+
+          final msg = MessageModel.fromJson(
+            json: msgJson,
+            sender: sender,
+            reciever: reciever,
+          );
+
+          messageList.add(msg);
+        }
+        yield messageList;
       }
-      return _messages;
     } on ServerException {
       rethrow;
     } catch (e) {
