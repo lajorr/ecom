@@ -18,3 +18,5 @@ class FetchMessagesEvent extends ChatEvent {
 }
 
 class FetchChatRoomsEvent extends ChatEvent {}
+
+class DisposeMessageStreamEvent extends ChatEvent {}

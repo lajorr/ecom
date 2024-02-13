@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
@@ -40,20 +39,10 @@ class ChatDataSourceImpl implements ChatDataSource {
 
         for (var msgDoc in msgDocs) {
           final msgJson = msgDoc.data();
-          final senderSnap =
-              await (msgJson['sender'] as DocumentReference).get();
-          final senderJson = senderSnap.data() as Map<String, dynamic>;
-          final sender = UserModel.fromMap(senderJson);
-
-          final recieverSnap =
-              await (msgJson['reciever'] as DocumentReference).get();
-          final recieverJson = recieverSnap.data() as Map<String, dynamic>;
-          final reciever = UserModel.fromMap(recieverJson);
+          
 
           final msg = MessageModel.fromJson(
             json: msgJson,
-            sender: sender,
-            reciever: reciever,
           );
 
           messageList.add(msg);

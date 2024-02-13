@@ -1,4 +1,5 @@
 import 'package:ecom/features/auth/data/model/user_model.dart';
+import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
 import 'package:ecom/features/chat/presentation/screens/all_chats_screen.dart';
 import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
@@ -77,11 +78,14 @@ class RouteManager {
         );
       case ChatScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => ChatScreen(
-            otherUser: (settings.arguments
-                as Map<String, dynamic>)['other_user'] as UserModel,
-            currentUser: (settings.arguments
-                as Map<String, dynamic>)['current_user'] as UserModel,
+          builder: (context) => BlocProvider(
+            create: (context) => sl<ShowSendButtonCubit>(),
+            child: ChatScreen(
+              otherUser: (settings.arguments
+                  as Map<String, dynamic>)['other_user'] as UserModel,
+              currentUser: (settings.arguments
+                  as Map<String, dynamic>)['current_user'] as UserModel,
+            ),
           ),
         );
       case AllChatsScreen.routeName:

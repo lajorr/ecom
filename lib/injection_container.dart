@@ -4,7 +4,7 @@ import 'package:ecom/features/chat/data/data%20source/chat_data_source.dart';
 import 'package:ecom/features/chat/domain/repository/chat_repository.dart';
 import 'package:ecom/features/chat/domain/usecase/fetch_chat_room_data_usecase.dart';
 import 'package:ecom/features/chat/domain/usecase/send_message_usecase.dart';
-import 'package:ecom/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
 import 'package:ecom/features/favorites/data/datasource/favorites_datasource.dart';
 import 'package:ecom/features/favorites/data/repository/favorites_repository_impl.dart';
@@ -47,6 +47,7 @@ import 'features/catalog/presentation/blocs/catalog bloc/catalog_bloc.dart';
 import 'features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
 import 'features/chat/data/repository/chat_repository_impl.dart';
 import 'features/chat/domain/usecase/fetch_messages_usecase.dart';
+import 'features/chat/presentation/blocs/chat bloc/chat_bloc.dart';
 import 'features/checkout/data/data%20source/checkout_data_source.dart';
 import 'features/checkout/data/repository/checkout_repository_impl.dart';
 import 'features/checkout/domain/repository/checkout_repository.dart';
@@ -138,6 +139,8 @@ void init() {
       fetchChatRoomDataUsecase: sl(),
     ),
   );
+
+  sl.registerFactory(() => ShowSendButtonCubit());
 
   //usecase
 

@@ -8,7 +8,7 @@ class FireStorage {
   final FireAuth fireAuth = FireAuth();
 
   Future<String> uploadImageToStorage(
-      String childName, Uint8List imageFile)  {
+      String childName, Uint8List imageFile) async {
     final userId = fireAuth.getCurrentUserId();
     final Reference storageRef = _storage.ref().child(childName).child(userId);
 
@@ -17,7 +17,7 @@ class FireStorage {
       final TaskSnapshot snapshot = await uploadTask;
       final String downloadUrl = await snapshot.ref.getDownloadURL();
       return downloadUrl;
-    } on FirebaseException  {
+    } on FirebaseException {
       throw FirebaseException;
     }
   }

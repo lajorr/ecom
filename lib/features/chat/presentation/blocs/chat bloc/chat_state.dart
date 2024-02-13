@@ -64,3 +64,8 @@ final class ChatRoomFailed extends ChatState {
         message,
       ];
 }
+
+final class ChatDisposed extends ChatState {
+  @override
+  List<Object?> get props => [];
+}

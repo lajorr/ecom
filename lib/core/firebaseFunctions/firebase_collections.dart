@@ -506,8 +506,8 @@ class FireCollections {
   //* Chat collectionss
 
   Future<void> storeMessagesInCollection(MessageModel message) async {
-    final member1 = message.sender.uid;
-    final member2 = message.reciever.uid;
+    final member1 = message.senderId;
+    final member2 = message.recieverId;
 
     final ids = [member1, member2];
     ids.sort(); // so that both the use would have the same chat room..
@@ -515,13 +515,7 @@ class FireCollections {
 
     // covert to json
 
-    final senderRef = userCollection.doc(message.sender.uid);
-    final recieverRef = userCollection.doc(message.reciever.uid);
-
-    final msgJson = message.toMap(
-      senderRef: senderRef,
-      recieverRef: recieverRef,
-    );
+    final msgJson = message.toMap();
 
     final membersData = {
       'members': [userCollection.doc(member1), userCollection.doc(member2)]

@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecom/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../constants/img_uri.dart';
 import '../../../auth/data/model/user_model.dart';
+import '../blocs/chat bloc/chat_bloc.dart';
 
 class AllChatsScreen extends StatefulWidget {
   const AllChatsScreen({

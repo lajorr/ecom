@@ -1,12 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
-import 'package:ecom/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/chat bloc/chat_bloc.dart';
 import '../widgets/message tile/msg_tile_other.dart';
 import '../widgets/message tile/msg_tile_self.dart';
+
+// tyo state change vayo vane error audainaaa...
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -26,7 +29,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
-  String message = '';
 
   @override
   void initState() {
@@ -37,18 +39,24 @@ class _ChatScreenState extends State<ChatScreen> {
         .add(FetchMessagesEvent(otherUserId: widget.otherUser.uid!));
   }
 
+  @override
+  void deactivate() {
+    BlocProvider.of<ChatBloc>(context).add(DisposeMessageStreamEvent());
+    super.deactivate();
+  }
+
   void onSend() {
     final msg = MessageModel(
-      reciever: widget.otherUser,
-      sender: widget.currentUser,
-      message: message,
+      message: _textController.text.trim(),
       createdAt: DateTime.now(),
+      recieverId: widget.otherUser.uid!,
+      senderId: widget.currentUser.uid!,
     );
     context.read<ChatBloc>().add(SendMessageEvent(message: msg));
-    setState(() {
-      // _messages.add(msg);
-      _textController.clear();
-    });
+    _textController.clear();
+    context
+        .read<ShowSendButtonCubit>()
+        .toggleSendVisibility(_textController.text.trim());
   }
 
   @override
@@ -71,7 +79,14 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
-      body: BlocBuilder<ChatBloc, ChatState>(
+      body: BlocConsumer<ChatBloc, ChatState>(
+        listener: (context, state) {
+          if (state is ChatUploaded) {
+            context
+                .read<ChatBloc>()
+                .add(FetchMessagesEvent(otherUserId: widget.otherUser.uid!));
+          }
+        },
         builder: (context, state) {
           if (state is ChatFetching || state is ChatStoring) {
             return const Center(
@@ -95,57 +110,65 @@ class _ChatScreenState extends State<ChatScreen> {
                           final messageM = snapshot.data!;
                           messages = messageM.reversed.toList();
 
-                          return Expanded(
-                            child: ListView.builder(
-                              reverse: true,
-                              itemCount: messages.length,
-                              itemBuilder: (context, index) {
-                                final message = messages[index];
-                                if (message.sender == widget.currentUser) {
-                                  return MsgTileSelf(
-                                    message: message.message,
-                                    createdAt: message.createdAt,
-                                  );
-                                } else {
-                                  return MsgTileOther(
-                                    message: message.message,
-                                    createdAt: message.createdAt,
-                                  );
-                                }
-                              },
-                            ),
+                          return ListView.builder(
+                            reverse: true,
+                            itemCount: messages.length,
+                            itemBuilder: (context, index) {
+                              final message = messages[index];
+                              if (message.senderId == widget.currentUser.uid) {
+                                return MsgTileSelf(
+                                  message: message.message,
+                                  createdAt: message.createdAt,
+                                );
+                              } else {
+                                return MsgTileOther(
+                                  message: message.message,
+                                  createdAt: message.createdAt,
+                                );
+                              }
+                            },
                           );
                         } else {
                           return const Center(
-                              child: CircularProgressIndicator());
+                            child: CircularProgressIndicator(),
+                          );
                         }
                       }),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: _textController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
+                Container(
+                  height: 70,
+                  alignment: Alignment.bottomCenter,
+                  child: TextField(
+                    controller: _textController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      hintText: "Write a message..",
+                      suffixIcon:
+                          BlocBuilder<ShowSendButtonCubit, ShowSendButtonState>(
+                        builder: (context, state) {
+                          if (state is ShowSendButtonTrue) {
+                            return IconButton(
+                              icon: Icon(
+                                Icons.send,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: onSend,
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        },
+                      ),
                     ),
-                    hintText: "Write a message..",
-                    suffixIcon: _textController.text.isNotEmpty
-                        ? IconButton(
-                            icon: Icon(
-                              Icons.send,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            onPressed: onSend,
-                          )
-                        : null,
+                    onChanged: (value) {
+                      context
+                          .read<ShowSendButtonCubit>()
+                          .toggleSendVisibility(value);
+                    },
+                    onEditingComplete: onSend,
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      message = value;
-                    });
-                  },
                 ),
               ]),
             );

@@ -22,11 +22,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<SendMessageEvent>(_onSendMessage);
     on<FetchMessagesEvent>(_onFetchMessage);
     on<FetchChatRoomsEvent>(_onFetchChatRooms);
+    on<DisposeMessageStreamEvent>(_onDisposeMessageStream);
   }
 
   final SendMessageUsecase sendMessageUsecase;
   final FetchMessagesUsecase fetchMessagesUsecase;
   final FetchChatRoomDataUsecase fetchChatRoomDataUsecase;
+
+  Stream<List<MessageModel>> messageStream = const Stream.empty();
 
   FutureOr<void> _onSendMessage(
       SendMessageEvent event, Emitter<ChatState> emit) async {
@@ -36,7 +39,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         (failure) => emit(
               ChatFailed(message: failure.message),
             ), (_) {
-      // emit(ChatUploaded());
+      emit(ChatUploaded());
     });
   }
 
@@ -47,8 +50,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
     fetchOrFail.fold((failure) => emit(ChatFailed(message: failure.message)),
         (messages) {
+      messageStream = messages;
       emit(
-        ChatLoaded(messageStream: messages),
+        ChatLoaded(messageStream: messageStream),
       );
     });
   }
@@ -69,5 +73,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         );
       },
     );
+  }
+
+  FutureOr<void> _onDisposeMessageStream(
+      DisposeMessageStreamEvent event, Emitter<ChatState> emit) {
+    emit(ChatDisposed());
   }
 }
