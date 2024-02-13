@@ -51,7 +51,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<ChatBloc>(),
-        )
+        ),
+        
       ],
       child: MaterialApp(
         title: 'E-com app',

@@ -15,6 +15,7 @@ import 'package:ecom/features/map/data/data%20source/map_data_source.dart';
 import 'package:ecom/features/map/domain/repositity/map_repository.dart';
 import 'package:ecom/features/map/domain/usecase/get_current_user_position_usecase.dart';
 import 'package:ecom/features/map/presentation/bloc/map_bloc.dart';
+import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
 import 'package:ecom/features/payment/data/data%20source/payment_datasource.dart';
 import 'package:ecom/features/payment/domain/repository/payment_repository.dart';
 import 'package:ecom/features/payment/domain/usecase/add_card_details_usecase.dart';
@@ -141,6 +142,7 @@ void init() {
   );
 
   sl.registerFactory(() => ShowSendButtonCubit());
+  sl.registerFactory(() => NavIndexCubit());
 
   //usecase
 

@@ -1,7 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecom/common/widgets/profile_pic_widget.dart';
 import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:ecom/features/profile/presentation/widgets/profile_picker_dialog.dart';
 import 'package:flutter/material.dart';
@@ -38,50 +37,42 @@ class _ProfileImageState extends State<ProfileImage> {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context).size;
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         if (state is ProfileLoaded || state is ProfilePictureUploadSuccess) {
           String? imgUrl;
-          Uint8List? uintImage;
+
           if (state is ProfileLoaded) {
             imgUrl = state.currentUser.imageUrl;
-          } else if (state is ProfilePictureUploadSuccess) {
-            uintImage = image;
           }
 
           return Stack(
             clipBehavior: Clip.none,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Container(
-                    height: media.height * 0.12,
-                    width: media.height * 0.12,
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    child: imgUrl == null && uintImage == null
-                        ? Container()
-                        : imgUrl != null && uintImage == null
-                            ? CachedNetworkImage(
-                                imageUrl: imgUrl,
-                                fit: BoxFit.cover,
-                              )
-                            : imgUrl == null && uintImage != null
-                                ? Image(
-                                    image: MemoryImage(image!),
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment.topCenter,
-                                  )
-                                : Container()
-                    //  image == null
-                    //     ? Container()
-                    //     : Image(
-                    //         image: MemoryImage(image!),
-                    //         fit: BoxFit.cover,
-                    //         alignment: Alignment.topCenter,
-                    //       ),
-                    ),
-              ),
+              ProfilePicWidget(imageUrl: imgUrl, size: 0.12),
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(50),
+              //   child: Container(
+              //     height: media.height * 0.12,
+              //     width: media.height * 0.12,
+              //     color: Theme.of(context).colorScheme.primaryContainer,
+              //     child: imgUrl == null && uintImage == null
+              //         ? Container()
+              //         : imgUrl != null && uintImage == null
+              //             ? CachedNetworkImage(
+              //                 imageUrl: imgUrl,
+              //                 fit: BoxFit.cover,
+              //               )
+              //             : imgUrl == null && uintImage != null
+              //                 ? Image(
+              //                     image: MemoryImage(image!),
+              //                     fit: BoxFit.cover,
+              //                     alignment: Alignment.topCenter,
+              //                   )
+              //                 : Container(),
+              //   ),
+              // ),
+
               Positioned(
                 bottom: 5,
                 right: -5,
@@ -95,8 +86,6 @@ class _ProfileImageState extends State<ProfileImage> {
                         builder: (context) =>
                             ProfilePickerDialog(onPressedOk: onConfirmImage),
                       );
-
-                      setState(() {});
                     },
                     icon: const Icon(
                       Icons.photo_camera,

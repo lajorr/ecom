@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../auth/presentation/bloc/auth_bloc.dart';
 import '../../auth/presentation/screens/login_screen.dart';
-import '../../navbar/presentation/navigation_menu.dart';
+import '../../navbar/presentation/screens/navigation_menu.dart';
 import '../../profile/presentation/bloc/profile_bloc.dart';
 
 class SpashScreen extends StatefulWidget {

@@ -40,7 +40,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
             child: BlocBuilder<ProfileBloc, ProfileState>(
               builder: (context, state) {
                 if (state is ProfileLoaded) {
-                  // final a = state.currentUser.uid ==
                   final user = state.currentUser;
                   return Column(
                     children: [

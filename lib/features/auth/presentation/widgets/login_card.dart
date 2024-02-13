@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:ecom/features/navbar/presentation/navigation_menu.dart';
+import 'package:ecom/features/navbar/presentation/screens/navigation_menu.dart';
 import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ecom/common/widgets/profile_pic_widget.dart';
 import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
 import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
@@ -69,8 +70,9 @@ class _ChatScreenState extends State<ChatScreen> {
         toolbarHeight: 70,
         title: Row(
           children: [
-            const CircleAvatar(
-              backgroundColor: Colors.amber,
+            ProfilePicWidget(
+              imageUrl: widget.otherUser.imageUrl,
+              size: 0.06,
             ),
             const SizedBox(
               width: 10,
