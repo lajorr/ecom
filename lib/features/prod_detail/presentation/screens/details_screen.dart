@@ -51,39 +51,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
 
-    return Scaffold(
-      extendBody: true,
-      resizeToAvoidBottomInset: true,
-      body: SafeArea(
-        child: BlocBuilder<LikeBloc, LikeState>(
-          builder: (context, state) {
-            if (state is LikeLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is LikeSuccess) {
-              return page(
-                media: media,
-                state: state,
-                context: context,
-              );
-            } else {
-              return page(
-                media: media,
-                context: context,
-              );
-            }
-          },
-        ),
-      ),
-    );
-  }
-
-  SizedBox page({
-    required Size media,
-    LikeSuccess? state,
-    required BuildContext context,
-  }) {
     String userText = ' ...';
     final owner = widget.product.owner;
 
@@ -94,263 +61,271 @@ class _DetailsScreenState extends State<DetailsScreen> {
       }
     }
 
-    return SizedBox(
-      height: media.height,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              //image
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      extendBody: true,
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: SizedBox(
+          height: media.height,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Stack(
-                    children: [
-                      SizedBox(
-                        height: media.height * 0.5,
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: widget.product.prodImage.length,
-                          itemBuilder: (context, index) {
-                            final image = widget.product.prodImage[index];
-
-                            return SizedBox(
-                              width: media.width - 40,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(25),
-                                child: CachedNetworkImage(
-                                  imageUrl: image.imageUrl,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const MyButton(
-                              size: 50,
-                              dropShadow: true,
-                            ),
-                            LikeButton(
-                              prodId: widget.product.id,
-                              isFav: state?.isLiked ?? false,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  //title row
-
-                  Row(
+                  //image
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      //prod name
-                      SizedBox(
-                        width: 200,
-                        child: Text(
-                          widget.product.prodTitle,
-                          style: const TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      // increment / decrement quantity
-                      if (!isOwner)
-                        Row(
-                          children: [
-                            Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(
-                                  25,
-                                ),
-                              ),
-                              child: IconButton(
-                                icon: const Icon(
-                                  Icons.remove,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    if (quantity > 1) {
-                                      quantity -= 1;
-                                    }
-                                  });
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                quantity.toString(),
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium,
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(
-                                  25,
-                                ),
-                              ),
-                              child: IconButton(
-                                icon: const Icon(
-                                  Icons.add,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    quantity += 1;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        )
-                    ],
-                  ),
-
-                  //product owner
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Stack(
                         children: [
-                          Text(
-                            '@$userText',
-                            style: const TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w300),
-                          ),
-                          // rating
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: media.width * 0.35,
-                                height: media.height * 0.03,
-                                child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: widget.product.rating.round(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return Image.asset(
-                                      ImageConstants.getImageUri(
-                                          ImageConstants.starIcon),
-                                    );
-                                  },
-                                ),
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  text: '${widget.product.rating} ',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: "(${widget.product.viewsNo})",
-                                      style: const TextStyle(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
                           SizedBox(
-                            height: media.height * 0.01,
+                            height: media.height * 0.5,
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: widget.product.prodImage.length,
+                              itemBuilder: (context, index) {
+                                final image = widget.product.prodImage[index];
+
+                                return SizedBox(
+                                  width: media.width - 40,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(25),
+                                    child: CachedNetworkImage(
+                                      imageUrl: image.imageUrl,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                          // details
-                          Text(
-                            widget.product.prodDescription,
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
+                          // appbar
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const MyButton(
+                                  size: 50,
+                                  dropShadow: true,
+                                ),
+                                LikeButton(
+                                  prodId: widget.product.id,
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      if (!isOwner)
-                        ChatWidget(
-                          otherUser: owner,
-                          currentUser: widget.currentUser,
-                        ),
+
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      //title row
+
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          //prod name
+                          SizedBox(
+                            width: 200,
+                            child: Text(
+                              widget.product.prodTitle,
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          // increment / decrement quantity
+                          if (!isOwner)
+                            Row(
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(
+                                      25,
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.remove,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (quantity > 1) {
+                                          quantity -= 1;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Text(
+                                    quantity.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(
+                                      25,
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.add,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        quantity += 1;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                        ],
+                      ),
+
+                      //product owner
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '@$userText',
+                                style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                              // rating
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: media.width * 0.35,
+                                    height: media.height * 0.03,
+                                    child: ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: widget.product.rating.round(),
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return Image.asset(
+                                          ImageConstants.getImageUri(
+                                              ImageConstants.starIcon),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: '${widget.product.rating} ',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: "(${widget.product.viewsNo})",
+                                          style: const TextStyle(
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: media.height * 0.01,
+                              ),
+                              // details
+                              Text(
+                                widget.product.prodDescription,
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (!isOwner)
+                            ChatWidget(
+                              otherUser: owner,
+                              currentUser: widget.currentUser,
+                            ),
+                        ],
+                      ),
+
+                      Divider(
+                        height: media.height * 0.05,
+                      ),
+
+                      // size
+                      ProductSize(product: widget.product),
                     ],
                   ),
 
-                  Divider(
-                    height: media.height * 0.05,
-                  ),
+                  // add to cart button
+                  if (!isOwner)
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 15,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Builder(builder: (context) {
+                              return RoundedButton(
+                                onTap: () {
+                                  context.read<CheckoutBloc>().add(
+                                        AddToCartEvent(
+                                          cartProduct: CartProductModel(
+                                            product: widget.product,
+                                            quantity: quantity,
+                                          ),
+                                        ),
+                                      );
 
-                  // size
-                  ProductSize(product: widget.product),
-                ],
-              ),
-
-              // add to cart button
-              if (!isOwner)
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Builder(builder: (context) {
-                          return RoundedButton(
-                            onTap: () {
-                              context.read<CheckoutBloc>().add(
-                                    AddToCartEvent(
-                                      cartProduct: CartProductModel(
-                                        product: widget.product,
-                                        quantity: quantity,
-                                      ),
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('ADDED!!'),
+                                      backgroundColor: Colors.green,
+                                      duration: Duration(milliseconds: 500),
                                     ),
                                   );
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('ADDED!!'),
-                                  backgroundColor: Colors.green,
-                                  duration: Duration(milliseconds: 500),
-                                ),
+                                },
+                                text: StringConstants.addToCartText,
+                                iconUri: ImageConstants.shopCart,
                               );
-                            },
-                            text: StringConstants.addToCartText,
-                            iconUri: ImageConstants.shopCart,
-                          );
-                        }),
+                            }),
+                          ),
+                          const ShowCartButton(),
+                        ],
                       ),
-                      const ShowCartButton(),
-                    ],
-                  ),
-                ),
-            ],
+                    ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
 import 'package:flutter/material.dart';
@@ -8,22 +7,38 @@ class LikeButton extends StatefulWidget {
   const LikeButton({
     Key? key,
     required this.prodId,
-    required this.isFav,
   }) : super(key: key);
 
   final String prodId;
-  final bool isFav;
 
   @override
   State<LikeButton> createState() => _LikeButtonState();
 }
 
-class _LikeButtonState extends State<LikeButton> {
-  late bool isFav;
+class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
+  bool isFav = false;
+  late bool likeLoaded;
+  late AnimationController _controller;
+  late Animation<double> _animation;
   @override
   void initState() {
     super.initState();
-    isFav = widget.isFav;
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    )..forward();
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_controller);
+    context.read<LikeBloc>().add(FetchLikeDocumentEvent(prodId: widget.prodId));
+    likeLoaded = false;
+  }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,22 +56,24 @@ class _LikeButtonState extends State<LikeButton> {
         listener: (context, state) {
           if (state is LikeSuccess) {
             isFav = state.isLiked;
+            likeLoaded = true;
           }
         },
         builder: (context, state) {
           if (state is LikeLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return Container();
           } else if (state is LikeSuccess) {
-            return CircleAvatar(
-              radius: 25,
-              backgroundColor: Theme.of(context).primaryColor,
-              child: Image.asset(
-                ImageConstants.getImageUri(
-                  isFav
-                      ? ImageConstants.favIcon
-                      : ImageConstants.likeIconOutline,
+            return FadeTransition(
+              opacity: _animation,
+              child: CircleAvatar(
+                radius: 25,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: Image.asset(
+                  ImageConstants.getImageUri(
+                    isFav
+                        ? ImageConstants.favIcon
+                        : ImageConstants.likeIconOutline,
+                  ),
                 ),
               ),
             );
