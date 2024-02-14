@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:ecom/features/payment/presentation/widgets/add_cart_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +8,9 @@ import '../../../../constants/img_uri.dart';
 import '../bloc/payment_bloc.dart';
 
 class ShippingCard extends StatefulWidget {
-  const ShippingCard({super.key});
+  const ShippingCard({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ShippingCard> createState() => _ShippingCardState();
@@ -54,6 +58,9 @@ class _ShippingCardState extends State<ShippingCard> {
               } else {
                 hasCreditInfo = true;
               }
+              context
+                  .read<CreditCardSetCubit>()
+                  .setCreditCardStatus(hasCreditInfo);
 
               return Container(
                 height: media.height * 0.09,

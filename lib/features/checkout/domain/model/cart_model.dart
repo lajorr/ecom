@@ -26,11 +26,6 @@ class CartModel extends CartEntity {
     return {
       'amount': amount,
       'user': userRef,
-      'products': products
-          .map(
-            (prod) => prod.toMap(),
-          )
-          .toList(),
       'status': cartStatus.name,
       'lat': lat,
       'lng': lng,

@@ -1,3 +1,4 @@
+import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +22,7 @@ class CheckoutScreen extends StatelessWidget {
     const shippingFee = 0.00;
     final media = MediaQuery.of(context).size;
 
-    return Builder(builder: (context) {
+    return Builder(builder: (contextt) {
       return BlocListener<OrdersBloc, OrdersState>(
         listener: (context, state) {
           if (state is OrderPaymentSuccess) {
@@ -56,7 +57,7 @@ class CheckoutScreen extends StatelessWidget {
                   );
             }
           },
-          builder: (context, state) {
+          builder: (ctx, state) {
             if (state is CheckoutLoading) {
               return const Scaffold(
                 body: Center(
@@ -82,15 +83,23 @@ class CheckoutScreen extends StatelessWidget {
                   title: const Text('Checkout'),
                   backgroundColor: Colors.transparent,
                   actions: [
-                    TextButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) =>
-                              PaymentDialog(ctx: context, cartModel: cart),
-                        );
+                    BlocBuilder<CreditCardSetCubit, CreditCardSetState>(
+                      builder: (context, state) {
+                        if (state is CreditCardSetTrue) {
+                          return TextButton(
+                            onPressed: () {
+                              showDialog(
+                                context: ctx,
+                                builder: (ctx) =>
+                                    PaymentDialog(ctx: ctx, cartModel: cart),
+                              );
+                            },
+                            child: const Text("Pay"),
+                          );
+                        } else {
+                          return Container();
+                        }
                       },
-                      child: const Text("Pay"),
                     )
                   ],
                 ),

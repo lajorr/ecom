@@ -3,6 +3,7 @@ import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cub
 import 'package:ecom/features/chat/presentation/screens/all_chats_screen.dart';
 import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
+import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:ecom/features/checkout/presentation/screens/cart_history_screen.dart';
 import 'package:ecom/features/map/presentation/screens/show_map_screen.dart';
 import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
@@ -64,7 +65,10 @@ class RouteManager {
 
       case CheckoutScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => const CheckoutScreen(),
+          builder: (context) => BlocProvider(
+            create: (context) => CreditCardSetCubit(),
+            child: const CheckoutScreen(),
+          ),
         );
 
       case CartHistoryScreen.routeName:

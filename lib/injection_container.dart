@@ -5,6 +5,7 @@ import 'package:ecom/features/chat/domain/repository/chat_repository.dart';
 import 'package:ecom/features/chat/domain/usecase/fetch_chat_room_data_usecase.dart';
 import 'package:ecom/features/chat/domain/usecase/send_message_usecase.dart';
 import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
+import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
 import 'package:ecom/features/favorites/data/datasource/favorites_datasource.dart';
 import 'package:ecom/features/favorites/data/repository/favorites_repository_impl.dart';
@@ -141,8 +142,10 @@ void init() {
     ),
   );
 
+  // Cubit
   sl.registerFactory(() => ShowSendButtonCubit());
   sl.registerFactory(() => NavIndexCubit());
+  sl.registerFactory(() => CreditCardSetCubit());
 
   //usecase
 

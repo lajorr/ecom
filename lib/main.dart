@@ -1,3 +1,4 @@
+import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
 import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:ecom/features/map/presentation/bloc/map_bloc.dart';
@@ -52,7 +53,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<ChatBloc>(),
         ),
-        
+        BlocProvider(
+          create: (context) => sl<CreditCardSetCubit>(),
+        ),
       ],
       child: MaterialApp(
         title: 'E-com app',
