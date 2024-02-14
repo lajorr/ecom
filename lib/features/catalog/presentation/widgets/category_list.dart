@@ -1,4 +1,7 @@
+import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
+import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants/img_uri.dart';
 import '../../../../constants/string_constants.dart';
@@ -16,18 +19,22 @@ class _CategoryListState extends State<CategoryList> {
     {
       'icon': ImageConstants.allCategory,
       'title': StringConstants.allItemsText,
+      'category': Category.all,
     },
     {
       'icon': ImageConstants.dressIcon,
       'title': StringConstants.dressText,
+      'category': Category.dress,
     },
     {
       'icon': ImageConstants.techIcon,
       'title': StringConstants.techText,
+      'category': Category.tech,
     },
     {
       'icon': ImageConstants.watchIcon,
       'title': StringConstants.watchText,
+      'category': Category.watch,
     },
   ];
 
@@ -51,6 +58,11 @@ class _CategoryListState extends State<CategoryList> {
               setState(() {
                 selectedIndex = index;
               });
+              context.read<CatalogBloc>().add(
+                    FilterProductsEvent(
+                      category: cat['category'],
+                    ),
+                  );
             },
             child: CategoryTile(
               iconUri: cat['icon'],

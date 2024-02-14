@@ -1,7 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/usecase/usecase.dart';
@@ -12,10 +12,13 @@ part 'catalog_event.dart';
 part 'catalog_state.dart';
 
 class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
+  List<ProductModel> _allProductsList = [];
+
   CatalogBloc({
     required this.getProductDataUsecase,
   }) : super(CatalogInitial()) {
     on<FetchProductDataEvent>(_onFetchProductDataEvent);
+    on<FilterProductsEvent>(_onFilterProducts);
   }
 
   final GetProductDataUsecase getProductDataUsecase;
@@ -29,7 +32,23 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
         (failure) => emit(
               CatalogFailure(),
             ), (productList) {
-      emit(CatalogLoaded(productList: productList));
+      _allProductsList = productList;
+      emit(CatalogLoaded(productList: _allProductsList));
     });
+  }
+
+  FutureOr<void> _onFilterProducts(
+      FilterProductsEvent event, Emitter<CatalogState> emit) {
+    emit(CatalogLoading());
+    final cat = event.category;
+    List<ProductModel> filteredList = [];
+    if (cat == Category.all) {
+      filteredList = _allProductsList;
+    } else {
+      filteredList =
+          _allProductsList.where((prodM) => prodM.category == cat).toList();
+    }
+
+    emit(CatalogLoaded(productList: filteredList));
   }
 }

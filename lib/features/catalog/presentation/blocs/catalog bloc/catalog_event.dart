@@ -8,3 +8,10 @@ sealed class CatalogEvent extends Equatable {
 }
 
 class FetchProductDataEvent extends CatalogEvent {}
+
+class FilterProductsEvent extends CatalogEvent {
+  const FilterProductsEvent({
+    required this.category,
+  });
+  final Category category;
+}

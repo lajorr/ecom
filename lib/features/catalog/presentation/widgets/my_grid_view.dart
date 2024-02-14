@@ -29,17 +29,22 @@ class _MyGridViewState extends State<MyGridView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CatalogBloc, CatalogState>(
-      builder: (context, state) {
-        if (state is CatalogLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (state is CatalogLoaded) {
-          final productList = state.productList;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: MasonryGridView.count(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: BlocBuilder<CatalogBloc, CatalogState>(
+        builder: (context, state) {
+          if (state is CatalogLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is CatalogLoaded) {
+            final productList = state.productList;
+            if (productList.isEmpty) {
+              return const Center(
+                child: Text('No Such Products'),
+              );
+            }
+            return MasonryGridView.count(
               crossAxisCount: 2,
               mainAxisSpacing: 20,
               crossAxisSpacing: 4,
@@ -51,12 +56,12 @@ class _MyGridViewState extends State<MyGridView> {
                   product: product,
                 );
               },
-            ),
-          );
-        } else {
-          return Container();
-        }
-      },
+            );
+          } else {
+            return Container();
+          }
+        },
+      ),
     );
   }
 }

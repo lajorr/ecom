@@ -9,6 +9,6 @@ abstract class ProductRepository {
 
   Future<Either<Failure, bool>> likeUnlikeProd(String prodId);
   Future<Either<Failure, LikeModel>> fetchLikeDocument(String prodId);
-
   
+
 }
