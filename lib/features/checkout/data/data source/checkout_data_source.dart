@@ -143,7 +143,6 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
     await fireCollections.cartToOrderCollection(_carts);
 
-    
     _productsList = [];
     _amount = 0;
 
@@ -166,5 +165,11 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
       return orderM;
     }
+  }
+
+  void clearData() {
+    _productsList.clear();
+    _carts.clear();
+    _amount = 0;
   }
 }

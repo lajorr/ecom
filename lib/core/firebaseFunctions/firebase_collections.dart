@@ -235,12 +235,14 @@ class FireCollections {
         final prodList = (docData['products'] as List);
 
         for (var prod in prodList) {
+          UserModel? owner;
           final prodRef = await (prod['ref'] as DocumentReference).get();
           final prodRefJsonData =
               prodRef.data() as Map<String, dynamic>; // product json
-          final ownerRef = prodRefJsonData['owner']
-              as DocumentReference<Map<String, dynamic>>;
-          final owner = await getUserFromRef(ownerRef);
+          final ownerRef = prodRefJsonData['owner'] as DocumentReference?;
+          if (ownerRef != null) {
+            owner = await getUserFromRef(ownerRef);
+          }
           final prodM = ProductModel.fromJson(prodRefJsonData, owner);
 
           final cartM = CartProductModel(

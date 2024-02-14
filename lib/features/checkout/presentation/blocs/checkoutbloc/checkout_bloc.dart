@@ -54,7 +54,9 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     final fetchOrFail = await fetchCartProductsUsecase.call(NoParams());
 
     fetchOrFail.fold(
-      (failure) => emit(CheckoutFetchFailed()),
+      (failure) {
+        emit(CheckoutFetchFailed());
+      },
       (cartModel) {
         emit(
           CheckoutLoaded(

@@ -110,10 +110,10 @@ class CheckoutScreen extends StatelessWidget {
                         CartProductsWidget(
                           cart: cart,
                         ),
-                
+
                       //shipping info
                       const ShippingCard(),
-                
+
                       // total amount
                       CartBillWidget(
                         productList: productList,
