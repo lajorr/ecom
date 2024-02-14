@@ -19,6 +19,7 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
   }) : super(CatalogInitial()) {
     on<FetchProductDataEvent>(_onFetchProductDataEvent);
     on<FilterProductsEvent>(_onFilterProducts);
+    on<SearchProductsEvent>(_onSearchProducts);
   }
 
   final GetProductDataUsecase getProductDataUsecase;
@@ -49,6 +50,21 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
           _allProductsList.where((prodM) => prodM.category == cat).toList();
     }
 
+    emit(CatalogLoaded(productList: filteredList));
+  }
+
+  FutureOr<void> _onSearchProducts(
+      SearchProductsEvent event, Emitter<CatalogState> emit) {
+    emit(CatalogLoading());
+    List<ProductModel> filteredList = [];
+
+    final query = event.query.toLowerCase();
+
+    filteredList = _allProductsList
+        .where(
+          (prodM) => prodM.prodTitle.toLowerCase().contains(query),
+        )
+        .toList();
     emit(CatalogLoaded(productList: filteredList));
   }
 }

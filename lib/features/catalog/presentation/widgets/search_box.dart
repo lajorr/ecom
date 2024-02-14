@@ -1,4 +1,6 @@
+import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants/img_uri.dart';
 import '../../../../constants/string_constants.dart';
@@ -32,11 +34,15 @@ class SearchBox extends StatelessWidget {
                 // prefix:
                 hintText: StringConstants.searchHintText,
 
-                // hintStyle: ,
                 enabledBorder: outlinedBorder,
                 focusedBorder: outlinedBorder,
                 border: outlinedBorder,
               ),
+              onChanged: (value) {
+                context
+                    .read<CatalogBloc>()
+                    .add(SearchProductsEvent(query: value));
+              },
             ),
           ),
           const SizedBox(
@@ -46,7 +52,6 @@ class SearchBox extends StatelessWidget {
           Container(
             height: 50,
             width: 50,
-            // color: Colors.red,
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(12),

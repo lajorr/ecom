@@ -15,3 +15,9 @@ class FilterProductsEvent extends CatalogEvent {
   });
   final Category category;
 }
+
+class SearchProductsEvent extends CatalogEvent {
+  const SearchProductsEvent({required this.query});
+
+  final String query;
+}

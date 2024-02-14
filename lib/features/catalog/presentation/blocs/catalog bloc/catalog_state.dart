@@ -37,12 +37,3 @@ final class CatalogDocumentNoExist extends CatalogState {
   @override
   List<Object> get props => [];
 }
-
-final class CatalogFiltered extends CatalogState {
-  const CatalogFiltered({required this.filteredList});
-
-  final List<ProductModel> filteredList;
-
-  @override
-  List<Object?> get props => [];
-}
