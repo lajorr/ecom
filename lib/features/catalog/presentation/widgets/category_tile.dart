@@ -19,18 +19,28 @@ class CategoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.only(right: 10),
+      margin: const EdgeInsets.only(right: 10, top: 5, bottom: 5),
       decoration: BoxDecoration(
-          color: isActive ? Theme.of(context).primaryColor : Colors.white,
-          border: Border.all(
-            color: const Color(0xffEDEDED),
-          ),
-          borderRadius: BorderRadius.circular(12)),
+        color: Colors.white,
+        border: Border.all(
+          color: const Color(0xffEDEDED),
+        ),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: isActive
+            ? const [
+                BoxShadow(
+                  color: Color.fromARGB(48, 41, 37, 38),
+                  blurRadius: 1,
+                  spreadRadius: 1,
+                  offset: Offset(0, 3),
+                )
+              ]
+            : null,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // icon
-          // Icon(Icons.add),
           Image.asset(
             ImageConstants.getImageUri(iconUri),
           ),
@@ -40,9 +50,6 @@ class CategoryTile extends StatelessWidget {
           //title
           Text(
             title,
-            style: TextStyle(
-              color: isActive ? Colors.white : Colors.black,
-            ),
           ),
         ],
       ),

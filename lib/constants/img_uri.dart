@@ -7,7 +7,7 @@ class ImageConstants {
 
   static const allCategory = 'category_icons/category.png';
   static const dressIcon = 'category_icons/Dress.png';
-  static const hatIcon = 'category_icons/hat.png';
+  static const techIcon = 'category_icons/hat.png';
   static const watchIcon = 'category_icons/watch.png';
 
   static const starIcon = 'star.png';

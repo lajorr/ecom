@@ -31,35 +31,31 @@ class _MyGridViewState extends State<MyGridView> {
   Widget build(BuildContext context) {
     return BlocBuilder<CatalogBloc, CatalogState>(
       builder: (context, state) {
-        return Builder(
-          builder: (context) {
-            if (state is CatalogLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is CatalogLoaded) {
-              final productList = state.productList;
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: MasonryGridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 4,
-                  itemCount: productList.length,
-                  itemBuilder: (context, index) {
-                    final product = productList[index];
+        if (state is CatalogLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (state is CatalogLoaded) {
+          final productList = state.productList;
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: MasonryGridView.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 4,
+              itemCount: productList.length,
+              itemBuilder: (context, index) {
+                final product = productList[index];
 
-                    return MyGridTile(
-                      product: product,
-                    );
-                  },
-                ),
-              );
-            } else {
-              return Container();
-            }
-          },
-        );
+                return MyGridTile(
+                  product: product,
+                );
+              },
+            ),
+          );
+        } else {
+          return Container();
+        }
       },
     );
   }

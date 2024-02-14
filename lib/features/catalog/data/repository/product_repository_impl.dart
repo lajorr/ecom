@@ -18,7 +18,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, List<ProductModel>>> getProductData() async {
     try {
-      final productList = await productDataSource.getProductList();
+      final productList = await productDataSource.getAllProductList();
       return Right(productList);
     } on ServerException {
       return const Left(ServerFailure(message: "Unable to fetch Data"));
