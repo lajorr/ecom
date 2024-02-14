@@ -17,6 +17,17 @@ abstract class CheckoutDataSource {
   Future<OrderModel> fetchAllOrders();
 }
 
+List<CartProductModel> _productsList = [];
+List<CartModel> _carts = [];
+
+double _amount = 0;
+
+void clearData() {
+  _productsList.clear();
+  _carts.clear();
+  _amount = 0;
+}
+
 class CheckoutDataSourceImpl implements CheckoutDataSource {
   CheckoutDataSourceImpl({
     required this.fireAuth,
@@ -25,11 +36,6 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
   final FireAuth fireAuth;
   final FireCollections fireCollections;
-
-  List<CartProductModel> _productsList = [];
-  List<CartModel> _carts = [];
-
-  double _amount = 0;
 
   @override
   Future<CartModel> addProductToCart(CartProductModel cartProduct) async {
@@ -165,11 +171,5 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
       return orderM;
     }
-  }
-
-  void clearData() {
-    _productsList.clear();
-    _carts.clear();
-    _amount = 0;
   }
 }

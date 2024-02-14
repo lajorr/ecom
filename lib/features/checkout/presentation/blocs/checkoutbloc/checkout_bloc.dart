@@ -24,6 +24,8 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     on<FetchCartProductsEvent>(_onFetchCartProducts);
 
     on<RemoveProdFromCartEvent>(_onRemoveProdFromCart);
+
+    on<ClearLocalDataEvent>(_onClearLocalData);
   }
 
   final AddToCartUsecase addToCartUsecase;
@@ -79,4 +81,10 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       ));
     });
   }
+
+  FutureOr<void> _onClearLocalData(
+      ClearLocalDataEvent event, Emitter<CheckoutState> emit) {
+
+        
+      }
 }

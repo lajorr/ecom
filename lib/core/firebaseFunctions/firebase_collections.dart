@@ -339,11 +339,13 @@ class FireCollections {
 
         for (var c in carts) {
           List<CartProductModel> cartProdList = [];
-          final prodList = c['products'] as List;
+          final prodList = c['products'] as List; // list of ref and quantity
+          UserModel? owner;
 
           for (var prod in prodList) {
-            UserModel? owner;
-            final prodJson = prod['product'];
+            final prodSnap = await (prod['ref'] as DocumentReference).get();
+
+            final prodJson = prodSnap.data() as Map<String, dynamic>;
             final ownerRef = (prodJson['owner'] as DocumentReference?);
 
             if (ownerRef != null) {
@@ -422,9 +424,7 @@ class FireCollections {
       final cartMap = cart.toMap(userRef: userRef);
       cartMap.addAll({'products': prodRefList});
       cartMapList.add(cartMap);
-
     }
-
 
     final orderData = {
       'user': userRef,
