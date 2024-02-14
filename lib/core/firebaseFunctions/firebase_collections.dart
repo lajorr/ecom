@@ -190,11 +190,6 @@ class FireCollections {
     final currentUserId = currentUser.uid!;
     final userRef = userCollection.doc(currentUserId);
 
-    // for (var product in cart.products) {
-    //   final docRef = productCollection.doc(product.product.id);
-    //   final refMap = {'ref': docRef, 'quantity': product.quantity};
-    //   prodRefList.add(refMap);
-    // }
     prodRefList = generateProdRefList(cart.products);
 
     final data = {

@@ -1,3 +1,4 @@
+import 'package:ecom/core/extensions/string_to_enum.dart';
 import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/shared/catalog/enitity/product_entity.dart';
 
@@ -20,7 +21,7 @@ class ProductModel extends ProductEntity {
       id: json["id"],
       prodTitle: json["prod_title"],
       prodDescription: json["prod_description"],
-      category: json["category"],
+      category: (json["category"] as String).toCategory(),
       listSizeColor: json["size_color"] == null
           ? []
           : List<SizeColor>.from(

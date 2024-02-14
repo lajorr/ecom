@@ -28,7 +28,7 @@ class CategoryList extends StatelessWidget {
           ),
           CategoryTile(
             iconUri: ImageConstants.hatIcon,
-            title: StringConstants.hatText,
+            title: StringConstants.techText,
           ),
           CategoryTile(
             iconUri: ImageConstants.watchIcon,

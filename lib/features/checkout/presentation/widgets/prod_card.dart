@@ -54,7 +54,7 @@ class ProdCard extends StatelessWidget {
                           product.prodTitle,
                         ),
                         Text(
-                          product.category,
+                          product.category.name,
                           style: const TextStyle(
                               color: Colors.grey, fontWeight: FontWeight.w400),
                         ),

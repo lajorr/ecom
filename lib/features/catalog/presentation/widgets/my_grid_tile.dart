@@ -68,7 +68,7 @@ class MyGridTile extends StatelessWidget {
                     ),
                     //vcategory
                     Text(
-                      product.category,
+                      product.category.name,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,

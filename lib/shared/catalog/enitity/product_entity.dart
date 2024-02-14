@@ -1,3 +1,4 @@
+import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../features/auth/data/model/user_model.dart';
@@ -6,7 +7,7 @@ class ProductEntity extends Equatable {
   final String id;
   final String prodTitle;
   final String prodDescription;
-  final String category;
+  final Category category;
   final List<SizeColor>? listSizeColor;
   final List<ProdImage> prodImage;
   final double rating;

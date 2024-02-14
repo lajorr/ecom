@@ -21,7 +21,7 @@ class StringConstants {
 
   static const allItemsText = "All Items";
   static const dressText = "Dress";
-  static const hatText = "Hat";
+  static const techText = "Tech";
   static const watchText = "Watch";
 
   static const addToCartText = "Add To Cart";
