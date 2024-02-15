@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -10,10 +8,7 @@ import 'my_grid_tile.dart';
 class MyGridView extends StatefulWidget {
   const MyGridView({
     Key? key,
-    required this.currentUser,
   }) : super(key: key);
-
-  final UserModel currentUser;
 
   @override
   State<MyGridView> createState() => _MyGridViewState();

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecom/constants/img_uri.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +27,8 @@ class ProfilePicWidget extends StatelessWidget {
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Center(
                   child: Shimmer.fromColors(
-                    baseColor: Colors.red,
-                    highlightColor: Colors.yellow,
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
                     child: Container(
                       height: media.height * size,
                       decoration: const BoxDecoration(
