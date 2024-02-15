@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -8,6 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../constants/img_uri.dart';
 import '../../../auth/data/model/user_model.dart';
 import '../blocs/chat bloc/chat_bloc.dart';
+import 'chat_screen.dart';
 
 class AllChatsScreen extends StatefulWidget {
   const AllChatsScreen({
@@ -32,6 +31,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('All Chats'),
@@ -40,8 +40,10 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
       body: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
           if (state is ChatRoomLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: ChatRoomShimmer(media: media),
             );
           } else if (state is ChatRoomFailed) {
             return Center(
@@ -66,7 +68,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(10),
                       boxShadow: const [
                         BoxShadow(
                           color: Color.fromARGB(100, 0, 0, 0),
@@ -78,8 +80,8 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                     child: Row(children: [
                       // pp
                       Container(
-                        width: 60,
-                        height: 60,
+                        height: media.height * 0.06,
+                        width: media.height * 0.06,
                         decoration: BoxDecoration(
                           color: Colors.red,
                           borderRadius: BorderRadius.circular(30),
@@ -129,6 +131,33 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
           }
         },
       ),
+    );
+  }
+}
+
+class ChatRoomShimmer extends StatelessWidget {
+  const ChatRoomShimmer({
+    super.key,
+    required this.media,
+  });
+
+  final Size media;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Container(
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(16),
+          height: media.height * 0.1,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+        );
+      },
     );
   }
 }
