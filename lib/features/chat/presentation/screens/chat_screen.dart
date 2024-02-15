@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/common/widgets/profile_pic_widget.dart';
 import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
@@ -9,8 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/chat bloc/chat_bloc.dart';
 import '../widgets/message tile/msg_tile_other.dart';
 import '../widgets/message tile/msg_tile_self.dart';
-
-// tyo state change vayo vane error audainaaa...
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -90,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
           }
         },
         builder: (context, state) {
-          if (state is ChatFetching || state is ChatStoring) {
+          if (state is ChatFetching ) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -98,7 +95,8 @@ class _ChatScreenState extends State<ChatScreen> {
             return Center(
               child: Text(state.message),
             );
-          } else if (state is ChatLoaded) {
+          }
+           else if (state is ChatLoaded) {
             final msgStream = state.messageStream;
 
             return Padding(
