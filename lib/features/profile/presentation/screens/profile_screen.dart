@@ -185,46 +185,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
-                  body: Center(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            ProfileImage(imageUrl: imageUrl),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            Text(email ?? ""),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            Text(phNumber ?? "___"),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pushNamed(
-                                    AllChatsScreen.routeName,
-                                    arguments: {'current_user': currentUser});
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor),
-                              child: const Text(
-                                'Chats',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                  body: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: ProfileImage(imageUrl: imageUrl),
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          Text(email ?? ""),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Text(phNumber ?? "___"),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                  AllChatsScreen.routeName,
+                                  arguments: {'current_user': currentUser});
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(context).primaryColor),
+                            child: const Text(
+                              'Chats',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
-                            Builder(builder: (context) {
-                              return const OrderHistory();
-                            }),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: media.height * 0.05,
+                          ),
+                          const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Order History",
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                          const OrderHistory(),
+                        ],
                       ),
                     ),
                   ),
