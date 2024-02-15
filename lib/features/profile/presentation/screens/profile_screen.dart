@@ -1,4 +1,3 @@
-import 'package:ecom/common/functions/clear_cache.dart';
 import 'package:ecom/features/chat/presentation/screens/all_chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +9,7 @@ import '../../../auth/presentation/screens/login_screen.dart';
 import '../../../auth/presentation/widgets/my_text_field.dart';
 import '../../../checkout/presentation/widgets/order_history.dart';
 import '../bloc/profile_bloc.dart';
+import '../widgets/log_out_dialog.dart';
 import '../widgets/profile_image.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -28,6 +28,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? username;
   String? phNumber;
   String? imageUrl;
+
+  String? validator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please Enter a Value';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,20 +85,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         MyTextField(
+                                          initValue: username,
                                           label: "Username",
                                           prefixIcon: const Icon(Icons.person),
                                           inputType: TextInputType.name,
                                           onFieldSave: (value) {
                                             username = value;
                                           },
+                                          validator: validator,
                                         ),
                                         MyTextField(
+                                          initValue: phNumber,
                                           label: "Phone Number",
                                           prefixIcon: const Icon(Icons.phone),
                                           inputType: TextInputType.phone,
                                           onFieldSave: (value) {
                                             phNumber = value;
                                           },
+                                          validator: validator,
                                         ),
                                       ],
                                     ),
@@ -101,16 +112,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       return MaterialButton(
                                         onPressed: () {
                                           formKey.currentState!.save();
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            BlocProvider.of<ProfileBloc>(
+                                                    context)
+                                                .add(
+                                              UpdateUserDataEvent(
+                                                username: username,
+                                                phNumber: phNumber,
+                                              ),
+                                            );
 
-                                          BlocProvider.of<ProfileBloc>(context)
-                                              .add(
-                                            UpdateUserDataEvent(
-                                              username: username,
-                                              phNumber: phNumber,
-                                            ),
-                                          );
-
-                                          Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          }
                                         },
                                         color: Theme.of(context)
                                             .colorScheme
@@ -140,44 +154,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onPressed: () async {
                           showDialog(
                             context: context,
-                            builder: (ctx) => AlertDialog(
-                              content: SizedBox(
-                                width: media.width * 0.6,
-                                child: const Text(
-                                    'Are you sure you wanna log out??'),
-                              ),
-                              actions: [
-                                OutlinedButton(
-                                  onPressed: () {
-                                    ClearCache.clearAllLocalData();
-                                    BlocProvider.of<AuthBloc>(context)
-                                        .add(SignOutEvent());
-                                  },
-                                  style: OutlinedButton.styleFrom(
-                                    side: BorderSide(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                  child: Text(
-                                    'Yoss',
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Theme.of(context).primaryColor),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text(
-                                    'No',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            builder: (ctx) => LogOutDialog(
+                              media: media,
+                              ctx: context,
                             ),
                           );
                         },

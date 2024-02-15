@@ -14,6 +14,7 @@ class MyTextField extends StatefulWidget {
     this.hintText,
     required this.onFieldSave,
     this.validator,
+    this.initValue,
   }) : super(key: key);
 
   final String label;
@@ -25,6 +26,8 @@ class MyTextField extends StatefulWidget {
   final Function(String?) onFieldSave;
 
   final String? Function(String?)? validator;
+
+  final String? initValue;
 
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -56,6 +59,7 @@ class _MyTextFieldState extends State<MyTextField> {
           height: 5,
         ),
         TextFormField(
+          initialValue: widget.initValue,
           keyboardType: widget.inputType,
           obscureText: isVisible,
           onSaved: (newValue) => widget.onFieldSave(newValue),
