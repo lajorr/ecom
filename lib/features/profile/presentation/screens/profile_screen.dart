@@ -108,37 +108,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                   actions: [
-                                    Builder(builder: (context) {
-                                      return MaterialButton(
-                                        onPressed: () {
-                                          formKey.currentState!.save();
-                                          if (formKey.currentState!
-                                              .validate()) {
-                                            BlocProvider.of<ProfileBloc>(
-                                                    context)
-                                                .add(
-                                              UpdateUserDataEvent(
-                                                username: username,
-                                                phNumber: phNumber,
-                                              ),
-                                            );
-
-                                            Navigator.of(context).pop();
-                                          }
-                                        },
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        child: const Text('Ok'),
-                                      );
-                                    }),
-                                    MaterialButton(
+                                    OutlinedButton(
                                       onPressed: () {
-                                        Navigator.of(context).pop();
+                                        Navigator.of(ctx).pop();
                                       },
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      child: const Text('Cancel'),
+                                      style: OutlinedButton.styleFrom(
+                                        side: BorderSide(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Theme.of(context).primaryColor),
+                                      onPressed: () {
+                                        formKey.currentState!.save();
+                                        if (formKey.currentState!.validate()) {
+                                          BlocProvider.of<ProfileBloc>(context)
+                                              .add(
+                                            UpdateUserDataEvent(
+                                              username: username,
+                                              phNumber: phNumber,
+                                            ),
+                                          );
+
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
+                                      child: const Text(
+                                        'OK',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
