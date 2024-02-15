@@ -3,6 +3,7 @@ import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_
 import 'package:ecom/features/payment/presentation/widgets/add_cart_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../constants/img_uri.dart';
 import '../bloc/payment_bloc.dart';
@@ -45,8 +46,17 @@ class _ShippingCardState extends State<ShippingCard> {
           },
           builder: (context, state) {
             if (state is PaymentInfoLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
+              return Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: Container(
+                  width: double.infinity,
+                  height: media.height * 0.09,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               );
             }
             if (state is PaymentInfoFetchSuccess) {

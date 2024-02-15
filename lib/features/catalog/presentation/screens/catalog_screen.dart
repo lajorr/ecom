@@ -1,4 +1,3 @@
-import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +22,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ProfileBloc>().add(FetchUserDataEvent());
     context.read<CheckoutBloc>().add(FetchCartProductsEvent());
   }
 
@@ -31,44 +29,30 @@ class _CatalogScreenState extends State<CatalogScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<CatalogBloc>(),
-      child: Scaffold(
+      child: const Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14.0,
-            ),
-            child: BlocBuilder<ProfileBloc, ProfileState>(
-              builder: (context, state) {
-                if (state is ProfileLoaded) {
-                  final user = state.currentUser;
-                  return Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 14.0,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
 
-                      //header
-                      const Header(),
-                      // search Box
-                      const SearchBox(),
-                      //category
-                      const CategoryList(),
-                      // grid
-                      Expanded(
-                        child: MyGridView(currentUser: user),
-                      ),
-                    ],
-                  );
-                } else if (state is ProfileLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return Container();
-                }
-              },
-            ),
-          ),
+                  //header
+                  Header(),
+                  // search Box
+                  SearchBox(),
+                  //category
+                  CategoryList(),
+                  // grid
+                  Expanded(
+                    child: MyGridView(),
+                  ),
+                ],
+              )),
         ),
       ),
     );

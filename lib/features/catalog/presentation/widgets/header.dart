@@ -1,16 +1,30 @@
-import 'package:ecom/common/widgets/profile_pic_widget.dart';
-import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../../../common/widgets/profile_pic_widget.dart';
 import '../../../../constants/string_constants.dart';
+import '../../../navbar/presentation/cubit/nav_index_cubit.dart';
 import '../../../profile/presentation/bloc/profile_bloc.dart';
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   const Header({super.key});
 
   @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
+  @override
+  void initState() {
+    context.read<ProfileBloc>().add(FetchUserDataEvent());
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         if (state is ProfileLoaded) {
@@ -45,8 +59,10 @@ class Header extends StatelessWidget {
             ],
           );
         } else if (state is ProfileLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            child: HeaderShimmer(media: media),
           );
         } else {
           return const Center(
@@ -54,6 +70,56 @@ class Header extends StatelessWidget {
           );
         }
       },
+    );
+  }
+}
+
+class HeaderShimmer extends StatelessWidget {
+  const HeaderShimmer({
+    super.key,
+    required this.media,
+  });
+
+  final Size media;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: media.height * 0.02,
+              width: media.width * 0.3,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(media.width * 0.5),
+              ),
+            ),
+            SizedBox(
+              height: media.height * 0.01,
+            ),
+            Container(
+              height: media.height * 0.02,
+              width: media.width * 0.2,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(media.width * 0.5),
+              ),
+            ),
+          ],
+        ),
+        Container(
+          height: media.height * 0.08,
+          width: media.height * 0.08,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(media.width * 0.5),
+          ),
+        )
+      ],
     );
   }
 }
