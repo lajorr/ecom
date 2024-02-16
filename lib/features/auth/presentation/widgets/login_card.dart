@@ -32,6 +32,7 @@ class _LoginCardState extends State<LoginCard> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return Builder(builder: (context) {
       return BlocConsumer<ValidationBloc, ValidationState>(
         listener: (context, validationState) {
@@ -77,10 +78,11 @@ class _LoginCardState extends State<LoginCard> {
           },
           builder: (context, state) {
             return LoadingWidet(
+              media: media,
               isLoading: state is AuthLoading,
               child: Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height / 1.8,
+                height: media.height * 0.5,
                 padding: const EdgeInsets.all(22),
                 margin: const EdgeInsets.symmetric(
                   horizontal: 25,
@@ -104,6 +106,7 @@ class _LoginCardState extends State<LoginCard> {
                         ),
                         MyTextField(
                           label: StringConstants.emailLabel,
+                          hintText: "abc@gmail.com",
                           errorMsg: (validationState is ValidationFailure)
                               ? validationState.message
                               : null,
@@ -123,6 +126,7 @@ class _LoginCardState extends State<LoginCard> {
                               ? validationState.message
                               : null,
                           label: StringConstants.passwordLabel,
+                          hintText: "xxxxxxxx",
                           prefixIcon: const Icon(
                             Icons.vpn_key,
                           ),
@@ -174,25 +178,27 @@ class _LoginCardState extends State<LoginCard> {
                         ),
 
                         // login from google
-                        Container(
-                          height: 50,
-                          width: double.infinity,
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 20,
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // BlocProvider.of<AuthBloc>(context).si
-                            },
-                            child: const Text(
-                              StringConstants.googleLoginText,
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
+                        // Container(
+                        //   height: 50,
+                        //   width: double.infinity,
+                        //   margin: const EdgeInsets.symmetric(
+                        //     vertical: 20,
+                        //   ),
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //       // BlocProvider.of<AuthBloc>(context).si
+                        //     },
+                        //     child: const Text(
+                        //       StringConstants.googleLoginText,
+                        //       style: TextStyle(
+                        //         decoration: TextDecoration.underline,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        SizedBox(
+                          height: media.height * 0.01,
                         ),
-
                         TextButton(
                           onPressed: () {
                             setState(() {
@@ -227,10 +233,12 @@ class LoadingWidet extends StatelessWidget {
     Key? key,
     required this.child,
     required this.isLoading,
+    required this.media,
   }) : super(key: key);
 
   final Widget child;
   final bool isLoading;
+  final Size media;
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +247,7 @@ class LoadingWidet extends StatelessWidget {
         child,
         if (isLoading)
           Container(
-            height: MediaQuery.of(context).size.height / 2,
+            height: media.height * 0.5,
             margin: const EdgeInsets.symmetric(horizontal: 25),
             color: const Color.fromARGB(77, 0, 0, 0),
             child: const Center(
