@@ -1,141 +1,87 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class GridViewShimmer extends StatelessWidget {
   const GridViewShimmer({
-    super.key,
+    Key? key,
     required this.media,
-  });
+    required this.height,
+  }) : super(key: key);
 
   final Size media;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        //search
-        Container(
-          height: media.height * 0.07,
-          margin: const EdgeInsets.symmetric(
-            vertical: 10,
-          ),
-          child: Row(
+    return SizedBox(
+      height: height,
+      child: MasonryGridView.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 10,
+        itemCount: 4,
+        itemBuilder: (context, index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
+              Container(
+                height: media.height * 0.28,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              const SizedBox(
-                width: 10,
+              SizedBox(
+                height: media.height * 0.01,
               ),
               Container(
-                width: media.height * 0.07,
+                height: media.height * 0.025,
+                width: media.width * 0.25,
                 decoration: BoxDecoration(
                   color: Colors.grey,
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
-            ],
-          ),
-        ),
-        // cat list
-        Container(
-          height: media.height * 0.07,
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          child: ListView.builder(
-            itemCount: 4,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return Container(
-                width: media.width * 0.25,
-                margin: const EdgeInsets.only(
-                  right: 10,
-                ),
+              SizedBox(
+                height: media.height * 0.01,
+              ),
+              Container(
+                height: media.height * 0.015,
+                width: media.width * 0.125,
                 decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              );
-            },
-          ),
-        ),
-        SizedBox(
-          height: media.height * 0.01,
-        ),
-        SizedBox(
-          height: media.height * 0.57,
-          child: MasonryGridView.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 10,
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              SizedBox(
+                height: media.height * 0.01,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    height: media.height * 0.28,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  SizedBox(
-                    height: media.height * 0.01,
-                  ),
-                  Container(
                     height: media.height * 0.025,
-                    width: media.width * 0.25,
+                    width: media.width * 0.2,
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: Colors.red,
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  SizedBox(
-                    height: media.height * 0.01,
-                  ),
                   Container(
-                    height: media.height * 0.015,
+                    height: media.height * 0.025,
                     width: media.width * 0.125,
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  SizedBox(
-                    height: media.height * 0.01,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: media.height * 0.025,
-                        width: media.width * 0.2,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      Container(
-                        height: media.height * 0.025,
-                        width: media.width * 0.125,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ],
-                  )
                 ],
-              );
-            },
-          ),
-        ),
-      ],
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }

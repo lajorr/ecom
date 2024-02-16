@@ -1,7 +1,9 @@
 import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/features/catalog/presentation/widgets/grid_view_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../catalog/presentation/widgets/my_grid_tile.dart';
 import '../bloc/favorites_bloc.dart';
@@ -22,6 +24,7 @@ class _FavScreenState extends State<FavScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("FAV"),
@@ -31,8 +34,13 @@ class _FavScreenState extends State<FavScreen> {
       body: BlocBuilder<FavoritesBloc, FavoritesState>(
         builder: (context, state) {
           if (state is FavoritesLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: GridViewShimmer(
+                media: media,
+                height: media.height,
+              ),
             );
           } else if (state is FavoritesLoaded) {
             final favProds = state.prodList;

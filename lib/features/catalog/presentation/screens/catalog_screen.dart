@@ -1,4 +1,4 @@
-import 'package:ecom/features/catalog/presentation/widgets/grid_view_shimmer.dart';
+import 'package:ecom/features/catalog/presentation/widgets/catalog_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -50,7 +50,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                       return Shimmer.fromColors(
                         baseColor: Colors.grey.shade300,
                         highlightColor: Colors.grey.shade100,
-                        child: GridViewShimmer(
+                        child: CatalogShimmer(
                           media: media,
                         ),
                       );
