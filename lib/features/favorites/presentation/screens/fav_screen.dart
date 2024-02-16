@@ -26,20 +26,18 @@ class _FavScreenState extends State<FavScreen> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("FAV"),
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-      ),
       body: BlocBuilder<FavoritesBloc, FavoritesState>(
         builder: (context, state) {
           if (state is FavoritesLoading) {
-            return Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade100,
-              child: GridViewShimmer(
-                media: media,
-                height: media.height,
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: GridViewShimmer(
+                  media: media,
+                  height: media.height,
+                ),
               ),
             );
           } else if (state is FavoritesLoaded) {
@@ -55,19 +53,25 @@ class _FavScreenState extends State<FavScreen> {
 
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: MasonryGridView.builder(
-                gridDelegate:
-                    const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemCount: favProds.length,
-                itemBuilder: (context, index) {
-                  final prod = favProds[index];
-
-                  return MyGridTile(
-                    product: prod,
-                  );
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  context.read<FavoritesBloc>().add(FetchFavProductsEvent());
                 },
+                color: Colors.white,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: MasonryGridView.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 10,
+                  itemCount: favProds.length,
+                  itemBuilder: (context, index) {
+                    final prod = favProds[index];
+
+                    return MyGridTile(
+                      product: prod,
+                    );
+                  },
+                ),
               ),
             );
           } else {
