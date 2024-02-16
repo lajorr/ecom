@@ -1,5 +1,5 @@
 class StringConstants {
-  static const welcomeMsg = "Welcome \n to E-com";
+  static const welcomeMsg = "Welcome \n to Q-cart";
   static const loginText = "Login";
   static const signupText = "Sign Up";
   static const haveAnAccountText = "Already have an account? login now!!";

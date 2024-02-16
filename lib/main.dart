@@ -62,7 +62,8 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'E-com app',
+        title: 'Q-cart',
+        
         debugShowCheckedModeBanner: false,
         theme: ThemeManager.getThemeData(),
         onGenerateRoute: routeManager.onGenerateRoute,
