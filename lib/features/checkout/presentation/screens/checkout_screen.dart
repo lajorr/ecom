@@ -1,14 +1,16 @@
-import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../constants/img_uri.dart';
 import '../../../../constants/string_constants.dart';
 import '../../../payment/presentation/widgets/shipping_card.dart';
 import '../blocs/checkoutbloc/checkout_bloc.dart';
+import '../blocs/cubit/credit_card_set_cubit.dart';
 import '../blocs/orders bloc/orders_bloc.dart';
 import '../widgets/cart_bill_widget.dart';
 import '../widgets/cart_products_widget.dart';
+import '../widgets/checkout_shimmer.dart';
 import '../widgets/payment_dialog.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -59,9 +61,12 @@ class CheckoutScreen extends StatelessWidget {
         },
         builder: (ctx, state) {
           if (state is CheckoutLoading) {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
+            return Scaffold(
+
+              body: Shimmer.fromColors(
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.grey.shade100,
+                child: CheckoutShimmer(media: media),
               ),
             );
           } else if (state is CheckoutFetchFailed) {
