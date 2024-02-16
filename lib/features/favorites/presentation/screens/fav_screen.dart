@@ -1,3 +1,4 @@
+import 'package:ecom/constants/img_uri.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -35,6 +36,14 @@ class _FavScreenState extends State<FavScreen> {
             );
           } else if (state is FavoritesLoaded) {
             final favProds = state.prodList;
+
+            if (favProds.isEmpty) {
+              return Center(
+                child: Image.asset(
+                  ImageConstants.getImageUri(ImageConstants.emptyFolder),
+                ),
+              );
+            }
 
             return Padding(
               padding: const EdgeInsets.all(16.0),

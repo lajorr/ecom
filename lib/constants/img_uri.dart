@@ -34,6 +34,7 @@ class ImageConstants {
 
   static const emptyCartIcon = 'empty/empty_cart.png';
   static const notAvailableIcon = 'empty/not_available_circle.png';
+  static const emptyFolder = 'empty/empty_folder.png';
 
   static String getImageUri(String path) {
     return "assets/images/$path";

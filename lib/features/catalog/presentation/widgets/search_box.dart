@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,12 @@ import '../../../../constants/img_uri.dart';
 import '../../../../constants/string_constants.dart';
 
 class SearchBox extends StatelessWidget {
-  const SearchBox({super.key});
+  const SearchBox({
+    Key? key,
+    required this.media,
+  }) : super(key: key);
+
+  final Size media;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +23,8 @@ class SearchBox extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
     );
 
-    return Padding(
+    return Container(
+      height: media.height * 0.1,
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Row(
         children: [
@@ -50,8 +57,8 @@ class SearchBox extends StatelessWidget {
           ),
           //filter
           Container(
-            height: 50,
-            width: 50,
+            height: media.height * 0.1,
+            width: media.height * 0.07,
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(12),

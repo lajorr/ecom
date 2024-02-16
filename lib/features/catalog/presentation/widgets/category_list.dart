@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,12 @@ import '../../../../constants/string_constants.dart';
 import 'category_tile.dart';
 
 class CategoryList extends StatefulWidget {
-  const CategoryList({super.key});
+  const CategoryList({
+    Key? key,
+    required this.media,
+  }) : super(key: key);
+
+  final Size media;
 
   @override
   State<CategoryList> createState() => _CategoryListState();
@@ -42,9 +48,8 @@ class _CategoryListState extends State<CategoryList> {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context).size;
     return Container(
-      height: media.height * 0.075,
+      height: widget.media.height * 0.075,
       margin: const EdgeInsets.symmetric(
         vertical: 5,
       ),
@@ -59,9 +64,7 @@ class _CategoryListState extends State<CategoryList> {
                 selectedIndex = index;
               });
               context.read<CatalogBloc>().add(
-                    FilterProductsEvent(
-                      category: cat['category'],
-                    ),
+                    FilterProductsEvent(category: cat['category']),
                   );
             },
             child: CategoryTile(

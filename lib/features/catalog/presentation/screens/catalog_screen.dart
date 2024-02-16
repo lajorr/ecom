@@ -1,7 +1,8 @@
+import 'package:ecom/features/catalog/presentation/widgets/grid_view_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
-import '../../../../injection_container.dart';
 import '../../../checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
 import '../blocs/catalog bloc/catalog_bloc.dart';
 import '../widgets/category_list.dart';
@@ -23,37 +24,67 @@ class _CatalogScreenState extends State<CatalogScreen> {
   void initState() {
     super.initState();
     context.read<CheckoutBloc>().add(FetchCartProductsEvent());
+    BlocProvider.of<CatalogBloc>(context).add(FetchProductDataEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<CatalogBloc>(),
-      child: const Scaffold(
-        body: SafeArea(
-          child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 14.0,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
+    final media = MediaQuery.of(context).size;
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 14.0,
+            ),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
 
-                  //header
-                  Header(),
-                  // search Box
-                  SearchBox(),
-                  //category
-                  CategoryList(),
-                  // grid
-                  Expanded(
-                    child: MyGridView(),
-                  ),
-                ],
-              )),
-        ),
+                //header
+                const Header(),
+                BlocBuilder<CatalogBloc, CatalogState>(
+                  builder: (context, state) {
+                    if (state is CatalogLoading) {
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: GridViewShimmer(
+                          media: media,
+                        ),
+                      );
+                    }
+                     else if (state is CatalogLoaded) {
+                      final productList = state.productList;
+                      return Expanded(
+                        child: Column(
+                          children: [
+                            // search Box
+                            SearchBox(
+                              media: media,
+                            ),
+                            //category
+                            CategoryList(
+                              media: media,
+                            ),
+                            // grid
+                            Expanded(
+                              child: MyGridView(productList: productList),
+                            ),
+                          ],
+                        ),
+                      );
+                    } 
+                    else if (state is CatalogFailure) {
+                      return const Text('Something went wrong');
+                    } else {
+                      return Container();
+                    }
+                  },
+                ),
+              ],
+            )),
       ),
     );
   }
