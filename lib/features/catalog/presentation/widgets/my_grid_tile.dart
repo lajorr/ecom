@@ -1,9 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecom/constants/img_uri.dart';
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../prod_detail/presentation/screens/details_screen.dart';
 import '../../../profile/presentation/bloc/profile_bloc.dart';
@@ -18,6 +18,7 @@ class MyGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         if (state is ProfileLoaded) {
@@ -37,18 +38,18 @@ class MyGridTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   child: CachedNetworkImage(
                     imageUrl: product.prodImage[0].imageUrl,
-                    // placeholder: (context, url) => Center(
-                    //   child: Shimmer.fromColors(
-                    //     baseColor: Colors.grey.shade500,
-                  //     highlightColor: Colors.grey.shade100,
-                    //     child: Container(
-                    //       // height: double.infinity,
-                    //       decoration: const BoxDecoration(
-                    //         color: Colors.grey,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    placeholder: (context, url) => Center(
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: Container(
+                          height: media.height * 0.28,
+                          decoration: const BoxDecoration(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
 

@@ -1,6 +1,7 @@
 import 'package:ecom/features/chat/presentation/screens/all_chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../constants/string_constants.dart';
 import '../../../../injection_container.dart';
@@ -229,9 +230,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 );
               } else if (state is ProfileLoading) {
-                return const Scaffold(
+                return Scaffold(
                   body: Center(
-                    child: CircularProgressIndicator(),
+                    child: Center(
+                      child: Lottie.network(
+                        'https://lottie.host/9ae8ec07-82fc-4db9-af4c-1ae669cb294e/y4012cjn1O.json',
+                      ),
+                    ),
                   ),
                 );
               } else {

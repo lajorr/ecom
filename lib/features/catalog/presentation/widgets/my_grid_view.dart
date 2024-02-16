@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../constants/img_uri.dart';
 import '../blocs/catalog bloc/catalog_bloc.dart';
 import 'my_grid_tile.dart';
 
@@ -39,14 +40,30 @@ class _MyGridViewState extends State<MyGridView> {
           } else if (state is CatalogLoaded) {
             final productList = state.productList;
             if (productList.isEmpty) {
-              return const Center(
-                child: Text('No Such Products'),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    ImageConstants.getImageUri(
+                      ImageConstants.notAvailableIcon,
+                    ),
+                  ),
+                  SizedBox(
+                    height: media.height * 0.03,
+                  ),
+                  const Text(
+                    'Not Available',
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               );
             }
             return MasonryGridView.count(
               crossAxisCount: 2,
               mainAxisSpacing: 20,
-              crossAxisSpacing: 4,
+              crossAxisSpacing: 10,
               itemCount: productList.length,
               itemBuilder: (context, index) {
                 final product = productList[index];

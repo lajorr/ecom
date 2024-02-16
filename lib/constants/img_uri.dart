@@ -17,7 +17,6 @@ class ImageConstants {
   static const heartIcon = 'nav_icons/heart-nav-icon.png';
   static const profileIcon = 'nav_icons/profile.png';
 
-
   static const backArrow = 'arrow-down.png';
 
   static const likeIconFill = 'heart-fill.png';
@@ -32,6 +31,9 @@ class ImageConstants {
   static const image2 = 'prod_images/image431.png';
   static const image3 = 'prod_images/image432.png';
   static const image4 = 'prod_images/image433.png';
+
+  static const emptyCartIcon = 'empty/empty_cart.png';
+  static const notAvailableIcon = 'empty/not_available_circle.png';
 
   static String getImageUri(String path) {
     return "assets/images/$path";
