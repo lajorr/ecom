@@ -35,7 +35,6 @@ import 'features/auth/domain/usecases/check_user_usecase.dart';
 import 'features/auth/domain/usecases/login_with_email_usecase.dart';
 import 'features/auth/domain/usecases/set_user_data_usecase.dart';
 import 'features/auth/domain/usecases/sign_out_usecase.dart';
-import 'features/auth/domain/usecases/signin_with_google_usecase.dart';
 import 'features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/catalog/data/data_source/like_collection_data_source.dart';
@@ -78,7 +77,6 @@ void init() {
       checkUserUsercase: sl(),
       loginUsecase: sl(),
       signupUsecase: sl(),
-      googleSigninUsecase: sl(),
       signOutUsecase: sl(),
       setUserDataUsecase: sl(),
     ),
@@ -154,7 +152,7 @@ void init() {
 
   sl.registerLazySingleton(() => LoginWithEmailUsecase(repository: sl()));
   sl.registerLazySingleton(() => SignupWithEmailUsecase(repository: sl()));
-  sl.registerLazySingleton(() => SigninWithGoogleUsecase(repository: sl()));
+
   sl.registerLazySingleton(() => CheckUserUsercase(repository: sl()));
   sl.registerLazySingleton(() => SignOutUsecase(repository: sl()));
 

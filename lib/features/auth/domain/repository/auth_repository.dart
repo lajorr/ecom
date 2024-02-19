@@ -7,11 +7,9 @@ abstract class AuthRepository {
   Future<Either<Failure, User>> loginWithEmail(String email, String password);
   Future<Either<Failure, User?>> signUpWithEmail(String email, String password);
 
-  Future<Either<Failure,User>> signInWithGoogle();
+  Future<Either<Failure, User>> checkUser();
 
-  Future<Either<Failure,User>> checkUser();
-
-  Future<Either<Failure,void>> signOut();
+  Future<Either<Failure, void>> signOut();
 
   Future<Either<Failure, void>> setUserData(User? user);
 }

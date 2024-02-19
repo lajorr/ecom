@@ -19,6 +19,10 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(user!);
     } on FirebaseAuthException {
       return const Left(FirebaseFailure());
+    } on ServerException {
+      return const Left(
+        ServerFailure(message: "Cannot connect to the server"),
+      );
     }
   }
 
@@ -30,16 +34,10 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(user!);
     } on FirebaseAuthException {
       return const Left(FirebaseFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, User>> signInWithGoogle() async {
-    try {
-      final user = await dataSource.signInWithGoogle();
-      return Right(user!);
-    } catch (e) {
-      throw UnimplementedError();
+    } on ServerException {
+      return const Left(
+        ServerFailure(message: "Cannot connect to the server"),
+      );
     }
   }
 
@@ -65,6 +63,10 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(response);
     } on FirebaseAuthException {
       return const Left(FirebaseFailure());
+    } on ServerException {
+      return const Left(
+        ServerFailure(message: "Cannot connect to the server"),
+      );
     }
   }
 
