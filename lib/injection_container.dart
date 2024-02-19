@@ -33,7 +33,6 @@ import 'features/auth/data/repository/auth_repository_impl.dart';
 import 'features/auth/domain/repository/auth_repository.dart';
 import 'features/auth/domain/usecases/check_user_usecase.dart';
 import 'features/auth/domain/usecases/login_with_email_usecase.dart';
-import 'features/auth/domain/usecases/set_user_data_usecase.dart';
 import 'features/auth/domain/usecases/sign_out_usecase.dart';
 import 'features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
@@ -78,7 +77,6 @@ void init() {
       loginUsecase: sl(),
       signupUsecase: sl(),
       signOutUsecase: sl(),
-      setUserDataUsecase: sl(),
     ),
   );
   sl.registerFactory(
@@ -158,7 +156,6 @@ void init() {
 
   sl.registerLazySingleton(() => GetProductDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchUserDataUsecase(repository: sl()));
-  sl.registerLazySingleton(() => SetUserDataUsecase(repository: sl()));
   sl.registerLazySingleton(() => UpdateUserDataUsecase(repository: sl()));
 
   sl.registerLazySingleton(() => FetchLikeDocUsecase(repository: sl()));

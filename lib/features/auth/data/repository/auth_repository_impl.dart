@@ -27,11 +27,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> signUpWithEmail(
+  Future<Either<Failure, User?>> signUpWithEmail(
       String email, String password) async {
     try {
       final user = await dataSource.signUpWithEmailAndPassword(email, password);
-      return Right(user!);
+      return Right(user);
     } on FirebaseAuthException {
       return const Left(FirebaseFailure());
     } on ServerException {
@@ -67,16 +67,6 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Left(
         ServerFailure(message: "Cannot connect to the server"),
       );
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> setUserData(User? user) async {
-    try {
-      final response = await dataSource.setUserData(user);
-      return Right(response);
-    } on ServerException {
-      return const Left(FirebaseFailure());
     }
   }
 }

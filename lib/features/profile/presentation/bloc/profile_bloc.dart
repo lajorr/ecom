@@ -64,12 +64,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               ProfileUserUnavailable(),
             ), (user) {
       emit(
-        ProfileLoaded(
-            // email: user.email!,
-            // phNumber: user.phNumber,
-            // username: user.name,
-            // imageUrl: user.imageUrl,
-            currentUser: user),
+        ProfileLoaded(currentUser: user),
       );
     });
   }

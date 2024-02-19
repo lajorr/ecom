@@ -40,7 +40,3 @@ final class UserUnavailable extends AuthState {}
 final class SignoutSuccess extends AuthState {}
 
 final class SignoutFailed extends AuthState {}
-final class AuthSetUserFailed extends AuthState {}
-final class AuthSetUserSuccess extends AuthState {}
-
-

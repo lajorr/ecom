@@ -36,12 +36,18 @@ class _SpashScreenState extends State<SpashScreen> {
                   .pushReplacementNamed(NavigationMenu.routeName);
             } else if (state is UserUnavailable) {
               Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+            } else if (state is AuthFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                ),
+              );
             }
           },
         );
       },
       child: Scaffold(
-        body: SafeArea( 
+        body: SafeArea(
           child: Center(
             child: Lottie.network(
               'https://lottie.host/b16d8847-a93f-467f-89bb-9cde5e2fb97a/3NcQfnAQYe.json',

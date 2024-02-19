@@ -1,7 +1,8 @@
 import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../model/user_model.dart';
 
 abstract interface class AuthDataSource {
   Future<User?> signInWithEmailAndPassword(String email, String password);
@@ -10,8 +11,6 @@ abstract interface class AuthDataSource {
   Future<User?> checkUser();
 
   Future<void> signOut();
-
-  Future<void> setUserData(User? user);
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
@@ -37,6 +36,8 @@ class AuthDataSourceImpl implements AuthDataSource {
       String email, String password) async {
     final user =
         await fireAuth.signUpWithEmail(email: email, password: password);
+
+    setUserData(user);
     return user;
   }
 
@@ -51,7 +52,6 @@ class AuthDataSourceImpl implements AuthDataSource {
     fireAuth.signOut();
   }
 
-  @override
   Future<void> setUserData(User? user) async {
     final myUser = UserModel.fromFirebaseUser(user);
 

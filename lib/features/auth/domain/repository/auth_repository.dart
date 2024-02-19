@@ -10,6 +10,4 @@ abstract class AuthRepository {
   Future<Either<Failure, User>> checkUser();
 
   Future<Either<Failure, void>> signOut();
-
-  Future<Either<Failure, void>> setUserData(User? user);
 }

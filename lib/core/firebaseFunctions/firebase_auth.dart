@@ -59,7 +59,6 @@ class FireAuth {
         email: email,
         password: password,
       );
-
       return userCred.user;
     } catch (e) {
       throw (ServerException());
