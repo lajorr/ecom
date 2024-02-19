@@ -98,10 +98,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   FutureOr<void> _onSignOut(SignOutEvent event, Emitter<AuthState> emit) async {
     final signOurOrFail = await signOutUsecase.call(NoParams());
 
-    signOurOrFail.fold(
-        (failure) => emit(
-              SignoutFailed(),
-            ), (response) {
+    signOurOrFail.fold((failure) {
+      emit(
+        SignoutFailed(),
+      );
+    }, (response) {
       emit(AuthLoading());
       emit(SignoutSuccess());
     });

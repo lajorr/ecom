@@ -23,8 +23,8 @@ List<CartModel> _carts = [];
 double _amount = 0;
 
 void clearData() {
-  _productsList.clear();
-  _carts.clear();
+  _productsList = [];
+  _carts = [];
   _amount = 0;
 }
 
