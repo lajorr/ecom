@@ -25,6 +25,7 @@ class LogOutDialog extends StatelessWidget {
         OutlinedButton(
           onPressed: () {
             ClearCache.clearAllLocalData();
+            Navigator.of(context).pop();
             BlocProvider.of<AuthBloc>(ctx).add(SignOutEvent());
           },
           style: OutlinedButton.styleFrom(

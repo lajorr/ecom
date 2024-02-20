@@ -6,6 +6,7 @@ import 'package:ecom/features/profile/presentation/widgets/profile_picker_dialog
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProfileImage extends StatefulWidget {
   const ProfileImage({
@@ -25,10 +26,6 @@ class _ProfileImageState extends State<ProfileImage> {
   String? imageUrl;
 
   void onConfirmImage(Uint8List imageBytes) {
-    setState(() {
-      image = imageBytes;
-    });
-
     context
         .read<ProfileBloc>()
         .add(UploadProfilePictureEvent(image: imageBytes));
@@ -37,42 +34,18 @@ class _ProfileImageState extends State<ProfileImage> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if (state is ProfileLoaded || state is ProfilePictureUploadSuccess) {
+        if (state is ProfileLoaded) {
           String? imgUrl;
 
-          if (state is ProfileLoaded) {
-            imgUrl = state.currentUser.imageUrl;
-          }
+          imgUrl = state.currentUser.imageUrl;
 
           return Stack(
             clipBehavior: Clip.none,
             children: [
               ProfilePicWidget(imageUrl: imgUrl, size: 0.12),
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(50),
-              //   child: Container(
-              //     height: media.height * 0.12,
-              //     width: media.height * 0.12,
-              //     color: Theme.of(context).colorScheme.primaryContainer,
-              //     child: imgUrl == null && uintImage == null
-              //         ? Container()
-              //         : imgUrl != null && uintImage == null
-              //             ? CachedNetworkImage(
-              //                 imageUrl: imgUrl,
-              //                 fit: BoxFit.cover,
-              //               )
-              //             : imgUrl == null && uintImage != null
-              //                 ? Image(
-              //                     image: MemoryImage(image!),
-              //                     fit: BoxFit.cover,
-              //                     alignment: Alignment.topCenter,
-              //                   )
-              //                 : Container(),
-              //   ),
-              // ),
-
               Positioned(
                 bottom: 5,
                 right: -5,
@@ -98,8 +71,19 @@ class _ProfileImageState extends State<ProfileImage> {
             ],
           );
         } else if (state is ProfileLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                height: media.height * 0.12,
+                width: media.height * 0.12,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(media.width * 0.5),
+                ),
+              ),
+            ),
           );
         } else {
           return const Center(

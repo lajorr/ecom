@@ -1,3 +1,4 @@
+import 'package:ecom/core/error/exception.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,10 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../model/user_model.dart';
 
 abstract interface class AuthDataSource {
-  Future<User?> signInWithEmailAndPassword(String email, String password);
+  Future<User> signInWithEmailAndPassword(String email, String password);
 
   Future<User?> signUpWithEmailAndPassword(String email, String password);
-  Future<User?> checkUser();
+  Future<UserModel?> checkUser();
 
   Future<void> signOut();
 }
@@ -22,13 +23,16 @@ class AuthDataSourceImpl implements AuthDataSource {
   final FireCollections fireCollections;
 
   @override
-  Future<User?> signInWithEmailAndPassword(
-      String email, String password) async {
-    final user = await fireAuth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    return user;
+  Future<User> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      final user = await fireAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return user!;
+    } catch (e) {
+      throw ServerException();
+    }
   }
 
   @override
@@ -42,8 +46,10 @@ class AuthDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<User?> checkUser() async {
-    final user = fireAuth.currentUser;
+  Future<UserModel?> checkUser() async {
+    final user = await fireAuth.getCurrentUserModel();
+    (user);
+
     return user;
   }
 

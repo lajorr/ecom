@@ -1,4 +1,5 @@
 import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
+import 'package:ecom/common/widgets/my_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,6 +46,10 @@ class _NavigationMenuState extends State<NavigationMenu> {
         if (state is NavIndexCurrent) {
           final selectedIndex = state.index;
           return Scaffold(
+            drawerEnableOpenDragGesture: false,
+            drawer: MyDrawer(
+              ctx: context,
+            ),
             body: pages[selectedIndex],
             bottomNavigationBar: Container(
               height: 70,

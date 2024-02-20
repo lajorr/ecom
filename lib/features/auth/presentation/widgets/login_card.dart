@@ -177,25 +177,6 @@ class _LoginCardState extends State<LoginCard> {
                           ],
                         ),
 
-                        // login from google
-                        // Container(
-                        //   height: 50,
-                        //   width: double.infinity,
-                        //   margin: const EdgeInsets.symmetric(
-                        //     vertical: 20,
-                        //   ),
-                        //   child: ElevatedButton(
-                        //     onPressed: () {
-                        //       // BlocProvider.of<AuthBloc>(context).si
-                        //     },
-                        //     child: const Text(
-                        //       StringConstants.googleLoginText,
-                        //       style: TextStyle(
-                        //         decoration: TextDecoration.underline,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         SizedBox(
                           height: media.height * 0.01,
                         ),

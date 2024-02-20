@@ -12,7 +12,7 @@ final class AuthInitial extends AuthState {}
 final class AuthLoading extends AuthState {}
 
 final class AuthSuccess extends AuthState {
-  final User? user;
+  final UserModel? user;
 
   const AuthSuccess({required this.user});
 }
@@ -30,9 +30,11 @@ final class InvalidCreds extends AuthState {
 }
 
 final class UserAvailable extends AuthState {
-  final String? email;
+  const UserAvailable({
+    required this.user,
+  });
 
-  const UserAvailable({this.email});
+  final UserModel? user;
 }
 
 final class UserUnavailable extends AuthState {}

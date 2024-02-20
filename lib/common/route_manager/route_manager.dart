@@ -7,10 +7,10 @@ import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_
 import 'package:ecom/features/checkout/presentation/screens/cart_history_screen.dart';
 import 'package:ecom/features/map/presentation/screens/show_map_screen.dart';
 import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
+import 'package:ecom/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/catalog/presentation/blocs/like bloc/like_bloc.dart';
 import '../../features/checkout/presentation/screens/checkout_screen.dart';
@@ -25,10 +25,7 @@ class RouteManager {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => sl<AuthBloc>(),
-            child: const SpashScreen(),
-          ),
+          builder: (context) => const SplashScreen(),
         );
       case NavigationMenu.routeName:
         return MaterialPageRoute(
@@ -41,9 +38,9 @@ class RouteManager {
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
             providers: [
-              BlocProvider(
-                create: (context) => sl<AuthBloc>(),
-              ),
+              // BlocProvider(
+              //   create: (context) => sl<AuthBloc>(),
+              // ),
               BlocProvider(
                 create: (context) => sl<ValidationBloc>(),
               ),
@@ -91,17 +88,18 @@ class RouteManager {
             child: ChatScreen(
               otherUser: (settings.arguments
                   as Map<String, dynamic>)['other_user'] as UserModel,
-              currentUser: (settings.arguments
-                  as Map<String, dynamic>)['current_user'] as UserModel,
+              currentUserId: (settings.arguments
+                  as Map<String, dynamic>)['current_user'] as String,
             ),
           ),
         );
       case AllChatsScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => AllChatsScreen(
-            currentUser:
-                (settings.arguments as Map<String, dynamic>)['current_user'],
-          ),
+          builder: (context) => const AllChatsScreen(),
+        );
+      case EditProfileScreen.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const EditProfileScreen(),
         );
       default:
         return null;

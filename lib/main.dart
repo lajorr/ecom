@@ -1,3 +1,4 @@
+import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
@@ -60,10 +61,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<CatalogBloc>(),
         ),
+        BlocProvider(
+          create: (context) => sl<AuthBloc>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Q-cart',
-        
         debugShowCheckedModeBanner: false,
         theme: ThemeManager.getThemeData(),
         onGenerateRoute: routeManager.onGenerateRoute,

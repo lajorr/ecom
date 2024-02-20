@@ -50,8 +50,12 @@ final class ChatRoomLoading extends ChatState {
 }
 
 final class ChatRoomLoaded extends ChatState {
-  const ChatRoomLoaded({required this.userList});
+  const ChatRoomLoaded({
+    required this.userList,
+  });
+
   final List<UserModel> userList;
+
   @override
   List<Object?> get props => [userList];
 }

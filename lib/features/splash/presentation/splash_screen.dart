@@ -7,14 +7,14 @@ import '../../auth/presentation/screens/login_screen.dart';
 import '../../navbar/presentation/screens/navigation_menu.dart';
 import '../../profile/presentation/bloc/profile_bloc.dart';
 
-class SpashScreen extends StatefulWidget {
-  const SpashScreen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<SpashScreen> createState() => _SpashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SpashScreenState extends State<SpashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();

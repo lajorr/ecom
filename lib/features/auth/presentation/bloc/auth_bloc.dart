@@ -7,8 +7,8 @@ import 'package:ecom/features/auth/domain/usecases/login_with_email_usecase.dart
 import 'package:ecom/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:ecom/features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+
+import '../../data/model/user_model.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -52,8 +52,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       });
     } else {
       loginOrFail.map((user) {
-        emit(AuthSuccess(user: user));
-        emit(const UserAvailable());
+        emit(
+          UserAvailable(user: user),
+        );
       });
     }
   }
@@ -63,12 +64,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     final userOrFail = await checkUserUsercase.call(NoParams());
 
-    if (userOrFail.isLeft()) {
-      emit(UserUnavailable());
-    } else {
-      debugPrint('availabe');
-      emit(const UserAvailable());
-    }
+    userOrFail.fold((failure) => emit(UserUnavailable()), (user) {
+      emit(
+        UserAvailable(user: user),
+      );
+    });
   }
 
   Future<void> _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
@@ -87,7 +87,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       },
       (user) {
         if (user != null) {
-          emit(UserAvailable(email: user.email));
+          emit(
+            UserAvailable(user: user),
+          );
         } else {
           emit(UserUnavailable());
         }

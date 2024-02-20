@@ -13,13 +13,13 @@ class ChatScreen extends StatefulWidget {
   const ChatScreen({
     Key? key,
     required this.otherUser,
-    required this.currentUser,
+    required this.currentUserId,
   }) : super(key: key);
 
   static const routeName = '/chat-screen';
 
   final UserModel otherUser;
-  final UserModel currentUser;
+  final String currentUserId;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -48,7 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
       message: _textController.text.trim(),
       createdAt: DateTime.now(),
       recieverId: widget.otherUser.uid!,
-      senderId: widget.currentUser.uid!,
+      senderId: widget.currentUserId,
     );
     context.read<ChatBloc>().add(SendMessageEvent(message: msg));
     _textController.clear();
@@ -87,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
           }
         },
         builder: (context, state) {
-          if (state is ChatFetching ) {
+          if (state is ChatFetching) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -95,8 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
             return Center(
               child: Text(state.message),
             );
-          }
-           else if (state is ChatLoaded) {
+          } else if (state is ChatLoaded) {
             final msgStream = state.messageStream;
 
             return Padding(
@@ -115,7 +114,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             itemCount: messages.length,
                             itemBuilder: (context, index) {
                               final message = messages[index];
-                              if (message.senderId == widget.currentUser.uid) {
+                              if (message.senderId == widget.currentUserId) {
                                 return MsgTileSelf(
                                   message: message.message,
                                   createdAt: message.createdAt,

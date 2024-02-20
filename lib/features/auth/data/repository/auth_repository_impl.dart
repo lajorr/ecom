@@ -5,6 +5,7 @@ import '../../../../core/error/exception.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../dataSource/auth_data_source.dart';
+import '../model/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource dataSource;
@@ -12,11 +13,12 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required this.dataSource});
 
   @override
-  Future<Either<Failure, User>> loginWithEmail(
+  Future<Either<Failure, UserModel>> loginWithEmail(
       String email, String password) async {
     try {
       final user = await dataSource.signInWithEmailAndPassword(email, password);
-      return Right(user!);
+      final userM = UserModel.fromFirebaseUser(user);
+      return Right(userM);
     } on FirebaseAuthException {
       return const Left(FirebaseFailure());
     } on ServerException {
@@ -27,11 +29,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User?>> signUpWithEmail(
+  Future<Either<Failure, UserModel?>> signUpWithEmail(
       String email, String password) async {
     try {
       final user = await dataSource.signUpWithEmailAndPassword(email, password);
-      return Right(user);
+      final userM = UserModel.fromFirebaseUser(user);
+      return Right(userM);
     } on FirebaseAuthException {
       return const Left(FirebaseFailure());
     } on ServerException {
@@ -42,7 +45,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> checkUser() async {
+  Future<Either<Failure, UserModel>> checkUser() async {
     try {
       final user = await dataSource.checkUser();
 

@@ -1,22 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../constants/img_uri.dart';
-import '../../../auth/data/model/user_model.dart';
 import '../blocs/chat bloc/chat_bloc.dart';
 import 'chat_screen.dart';
 
 class AllChatsScreen extends StatefulWidget {
   const AllChatsScreen({
     Key? key,
-    required this.currentUser,
+    // required this.currentUser,
   }) : super(key: key);
 
   static const routeName = '/all-chats';
 
-  final UserModel currentUser;
+  // final UserModel currentUser;
 
   @override
   State<AllChatsScreen> createState() => _AllChatsScreenState();
@@ -60,7 +60,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                     Navigator.of(context)
                         .pushReplacementNamed(ChatScreen.routeName, arguments: {
                       'other_user': user,
-                      'current_user': widget.currentUser,
+                      'current_user': FireAuth().getCurrentUserId(),
                     });
                   },
                   child: Container(
