@@ -12,7 +12,6 @@ import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../catalog/presentation/blocs/like bloc/like_bloc.dart';
 import '../../../checkout/domain/model/cart_product_model.dart';
 import '../widgets/show_cart_button.dart';
 
@@ -41,10 +40,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
     super.initState();
 
     isOwner = widget.currentUser == widget.product.owner;
-
-    BlocProvider.of<LikeBloc>(context).add(
-      FetchLikeDocumentEvent(prodId: widget.product.id),
-    );
   }
 
   @override

@@ -10,7 +10,7 @@ class FetchLikeDocUsecase extends Usecase<LikeModel, String> {
 
   FetchLikeDocUsecase({required this.repository});
   @override
-  Future<Either<Failure, LikeModel>> call(String params) async{
+  Future<Either<Failure, LikeModel>> call(String params) async {
     return await repository.fetchLikeDocument(params);
   }
 }

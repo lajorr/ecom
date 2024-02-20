@@ -35,6 +35,7 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
     context.read<LikeBloc>().add(FetchLikeDocumentEvent(prodId: widget.prodId));
     likeLoaded = false;
   }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -49,8 +50,9 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
           isFav = !isFav;
         });
 
-        BlocProvider.of<LikeBloc>(context)
-            .add(LikeButtonPressedEvent(prodId: widget.prodId));
+        context.read<LikeBloc>().add(
+              LikeButtonPressedEvent(prodId: widget.prodId),
+            );
       },
       child: BlocConsumer<LikeBloc, LikeState>(
         listener: (context, state) {

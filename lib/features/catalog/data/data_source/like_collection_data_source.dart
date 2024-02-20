@@ -18,6 +18,6 @@ class LikeCollectionDataSourceImpl implements LikeCollectionDataSource {
 
   @override
   Future<bool?> likeUnlikeProd(String prodId) async {
-    return fireCollections.updateFavStatus(prodId);
+    return await fireCollections.updateFavStatus(prodId);
   }
 }

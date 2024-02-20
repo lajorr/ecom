@@ -80,7 +80,11 @@ void init() {
     ),
   );
   sl.registerFactory(
-      () => LikeBloc(fetchLikeDocUsecase: sl(), likeUnlikeProdUsecase: sl()));
+    () => LikeBloc(
+      fetchLikeDocUsecase: sl(),
+      likeUnlikeProdUsecase: sl(),
+    ),
+  );
 
   sl.registerFactory(
     () => ValidationBloc(

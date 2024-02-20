@@ -99,11 +99,11 @@ class FireCollections {
   }
 
   Future<LikeModel> createDocument(String prodId) async {
-    final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserId = currentUser.uid!;
+    final currentUserId = fireAuth.getCurrentUserId();
 
     final prodRef = productCollection.doc(prodId);
     final userRef = userCollection.doc(currentUserId);
+
     // Data to be stored in the document
     Map<String, dynamic> data = {
       'prod_id': prodId,
@@ -115,10 +115,9 @@ class FireCollections {
 
     try {
       // Add the data to Firestore
-      final newLikeDoc = await likesCollection.add(data);
-      final docSnapshot = await newLikeDoc.get();
-      final docData = docSnapshot.data()!;
-      return LikeModel.fromMap(docData);
+      await likesCollection.add(data);
+
+      return LikeModel.fromMap(data);
     } catch (e) {
       throw DocumentException();
     }
@@ -186,8 +185,7 @@ class FireCollections {
   Future<void> storeCartProducts(CartModel cart) async {
     List<Map<String, dynamic>> prodRefList = [];
 
-    final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserId = currentUser.uid!;
+    final currentUserId = fireAuth.getCurrentUserId();
     final userRef = userCollection.doc(currentUserId);
 
     prodRefList = generateProdRefList(cart.products);
@@ -218,7 +216,7 @@ class FireCollections {
     CartModel currentCart;
 
     final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserId = currentUser.uid!;
+    final currentUserId = fireAuth.getCurrentUserId();
     final userRef = userCollection.doc(currentUserId);
 
     try {
@@ -251,7 +249,7 @@ class FireCollections {
 
         currentCart = CartModel(
           // cId: docData['cid'],
-          user: await fireAuth.getCurrentUserModel(), // userId
+          user: currentUser,
           products: cartProdList,
           amount: docData['amount'],
           cartStatus: (docData['status'] as String).toCartStatus(),

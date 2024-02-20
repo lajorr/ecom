@@ -16,14 +16,14 @@ class LikeBloc extends Bloc<LikeEvent, LikeState> {
     required this.likeUnlikeProdUsecase,
   }) : super(LikeLoading()) {
     on<LikeButtonPressedEvent>(_onLikeButtonPressed);
-    on<FetchLikeDocumentEvent>(_onFetchLikeDocements);
+    on<FetchLikeDocumentEvent>(_onFetchLikeDocuments);
   }
 
   
   final FetchLikeDocUsecase fetchLikeDocUsecase;
   final LikeUnlikeProdUsecase likeUnlikeProdUsecase;
 
-  FutureOr<void> _onFetchLikeDocements(
+  FutureOr<void> _onFetchLikeDocuments(
       FetchLikeDocumentEvent event, Emitter<LikeState> emit) async {
     emit(LikeLoading());
     final likeOrFail = await fetchLikeDocUsecase.call(event.prodId);
