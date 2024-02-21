@@ -23,6 +23,7 @@ import 'package:ecom/features/payment/domain/usecase/add_card_details_usecase.da
 import 'package:ecom/features/payment/domain/usecase/fetch_credit_card_details_usecase.dart';
 import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:ecom/features/profile/domain/usecase/upload_profile_picture_usecase.dart';
+import 'package:ecom/shared/theme%20cubit/cubit/theme_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/firebaseFunctions/firebase_auth.dart';
@@ -146,6 +147,7 @@ void init() {
   sl.registerFactory(() => ShowSendButtonCubit());
   sl.registerFactory(() => NavIndexCubit());
   sl.registerFactory(() => CreditCardSetCubit());
+  sl.registerFactory(() => ThemeCubit());
 
   //usecase
 

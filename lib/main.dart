@@ -5,6 +5,7 @@ import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_b
 import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:ecom/features/map/presentation/bloc/map_bloc.dart';
 import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
+import 'package:ecom/shared/theme%20cubit/cubit/theme_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,13 +65,31 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<AuthBloc>(),
         ),
+        BlocProvider(
+          create: (context) => sl<ThemeCubit>(),
+        )
       ],
-      child: MaterialApp(
-        title: 'Q-cart',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeManager.getThemeData(),
-        onGenerateRoute: routeManager.onGenerateRoute,
-      ),
+      child: Builder(builder: (context) {
+        return BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            if (state is ThemeModeDark) {
+              return MaterialApp(
+                title: 'Q-cart',
+                debugShowCheckedModeBanner: false,
+                theme: ThemeManager.getDarkThemeData(),
+                onGenerateRoute: routeManager.onGenerateRoute,
+              );
+            } else {
+              return MaterialApp(
+                title: 'Q-cart',
+                debugShowCheckedModeBanner: false,
+                theme: ThemeManager.getLightThemeData(),
+                onGenerateRoute: routeManager.onGenerateRoute,
+              );
+            }
+          },
+        );
+      }),
     );
   }
 }

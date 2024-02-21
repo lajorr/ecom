@@ -1,6 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ecom/features/profile/presentation/screens/edit_profile_screen.dart';
+import 'package:ecom/shared/theme%20cubit/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,10 +46,7 @@ class MyDrawer extends StatelessWidget {
                       );
                     },
                   ),
-                  const ListTile(
-                    leading: Icon(Icons.toggle_off),
-                    title: Text('Light'),
-                  ),
+                  const ThemeChangeWidget(),
                   const ListTile(
                     leading: Icon(Icons.language),
                     title: Text('Language'),
@@ -74,6 +71,49 @@ class MyDrawer extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ThemeChangeWidget extends StatefulWidget {
+  const ThemeChangeWidget({
+    super.key,
+  });
+
+  @override
+  State<ThemeChangeWidget> createState() => _ThemeChangeWidgetState();
+}
+
+class _ThemeChangeWidgetState extends State<ThemeChangeWidget> {
+  @override
+  Widget build(BuildContext context) {
+    bool isDark = false;
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        if (state is ThemeModeDark) {
+          isDark = state.isDark;
+        } else if (state is ThemeModeLight) {
+          isDark = state.isDark;
+        }
+        return ListTile(
+          leading: const Icon(Icons.light_mode),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Dark Mode'),
+              Switch(
+                value: isDark,
+                onChanged: (value) {
+                  setState(() {
+                    isDark = !isDark;
+                  });
+                  context.read<ThemeCubit>().toggleTheme(value);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
