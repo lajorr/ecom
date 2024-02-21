@@ -19,7 +19,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.signupUsecase,
     required this.checkUserUsercase,
     required this.signOutUsecase,
-    // required this.setUserDataUsecase,
   }) : super(AuthInitial()) {
     on<LoginEvent>(_onLogin);
     on<SignUpEvent>(_onSignUp);
@@ -64,7 +63,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoading());
     final userOrFail = await checkUserUsercase.call(NoParams());
 
-    userOrFail.fold((failure) => emit(UserUnavailable()), (user) {
+    userOrFail.fold((failure) {
+      emit(UserUnavailable());
+    }, (user) {
       emit(
         UserAvailable(user: user),
       );

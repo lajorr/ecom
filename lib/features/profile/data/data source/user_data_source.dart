@@ -40,7 +40,7 @@ class UserDataSourceImpl implements UserDataSource {
   }) async {
     final currentUser = await fireAuth.getCurrentUserModel();
 
-    final user = currentUser.copyWith(
+    final user = currentUser!.copyWith(
       name: name,
       phNumber: phNumber,
     );
@@ -55,7 +55,7 @@ class UserDataSourceImpl implements UserDataSource {
         await fireStorage.uploadImageToStorage('profile', image);
 
     await fireCollections.setUserData(
-      user: currentUser,
+      user: currentUser!,
       imageUrl: downloadUrl,
     );
     final updatedUser = currentUser.copyWith(imageUrl: downloadUrl);

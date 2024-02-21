@@ -63,8 +63,9 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
         total += (cartItem.product.price * cartItem.quantity);
       }
       _amount = total;
+      final user = await fireAuth.getCurrentUserModel();
       cartModel = CartModel(
-          user: await fireAuth.getCurrentUserModel(),
+          user: user!,
           products: _productsList,
           amount: double.parse((_amount).toStringAsFixed(2)));
     } else {
@@ -75,10 +76,10 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
       }
 
       _amount = total;
-
+      final user = await fireAuth.getCurrentUserModel();
       cartModel = CartModel(
         cId: DateTime.now().toString(),
-        user: await fireAuth.getCurrentUserModel(),
+        user: user!,
         products: _productsList,
         amount: double.parse(_amount.toStringAsFixed(2)),
       );
@@ -90,9 +91,10 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
 
   @override
   Future<CartModel> fetchCartProducts() async {
+    final user = await fireAuth.getCurrentUserModel();
     if (_productsList.isNotEmpty) {
       final cart = CartModel(
-        user: await fireAuth.getCurrentUserModel(),
+        user: user!,
         products: _productsList,
         amount: _amount,
       );
@@ -122,9 +124,9 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
         total += (cartItem.product.price * cartItem.quantity);
       }
       _amount = total;
-
+        final user = await fireAuth.getCurrentUserModel();
       final cartModel = CartModel(
-        user: await fireAuth.getCurrentUserModel(),
+        user: user!,
         products: _productsList,
         amount: double.parse(
           _amount.toStringAsFixed(2),
@@ -158,8 +160,9 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   @override
   Future<OrderModel> fetchAllOrders() async {
     if (_carts.isNotEmpty) {
+      final user = await fireAuth.getCurrentUserModel();
       final orderM = OrderModel(
-        user: await fireAuth.getCurrentUserModel(),
+        user: user!,
         cartList: _carts,
       );
 

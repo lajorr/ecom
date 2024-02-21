@@ -17,8 +17,8 @@ class SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final outlinedBorder = OutlineInputBorder(
-      borderSide: const BorderSide(
-        color: Color.fromARGB(255, 215, 215, 215),
+      borderSide: BorderSide(
+        color: Theme.of(context).primaryColor,
       ),
       borderRadius: BorderRadius.circular(15),
     );

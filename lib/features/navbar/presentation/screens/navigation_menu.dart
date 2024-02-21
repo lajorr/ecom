@@ -1,5 +1,5 @@
-import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
 import 'package:ecom/common/widgets/my_drawer.dart';
+import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,8 +69,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
                     NavItem(
                       iconUri: navIcons[i],
                       bgColor: i == selectedIndex
-                          ? Colors.black
-                          : const Color.fromARGB(255, 65, 60, 61),
+                          ? Theme.of(context).colorScheme.onSecondary
+                          : Theme.of(context).colorScheme.secondary,
                       onTap: () {
                         context.read<NavIndexCubit>().onChangeNavIndex(i);
                       },

@@ -248,8 +248,7 @@ class FireCollections {
         }
 
         currentCart = CartModel(
-          // cId: docData['cid'],
-          user: currentUser,
+          user: currentUser!,
           products: cartProdList,
           amount: docData['amount'],
           cartStatus: (docData['status'] as String).toCartStatus(),
@@ -258,7 +257,7 @@ class FireCollections {
         );
       } else {
         currentCart = await createEmptyCart(
-          currentUser: currentUser,
+          currentUser: currentUser!,
           userId: currentUserId,
           userRef: userRef,
         );
@@ -296,7 +295,7 @@ class FireCollections {
 
   Future<void> clearAllCartItems() async {
     final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserId = currentUser.uid!;
+    final currentUserId = currentUser!.uid!;
     final userRef = userCollection.doc(currentUserId);
 
     final data = {
@@ -319,7 +318,7 @@ class FireCollections {
     List<CartModel> cartList = [];
 
     final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserId = currentUser.uid!;
+    final currentUserId = currentUser!.uid!;
     final userRef = userCollection.doc(currentUserId);
 
     try {
@@ -361,8 +360,9 @@ class FireCollections {
             deliveryLng!,
           );
           final deliveryAddress = deliveryLocation.first.subLocality;
+          final user = await fireAuth.getCurrentUserModel();
           final cartM = CartModel(
-            user: await fireAuth.getCurrentUserModel(), // userId
+            user: user!, // userId
             products: cartProdList,
             amount: c['amount'] as double,
             cartStatus: (c['status'] as String).toCartStatus(),
@@ -406,7 +406,7 @@ class FireCollections {
 
   Future<void> cartToOrderCollection(List<CartModel> cartList) async {
     final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserId = currentUser.uid!;
+    final currentUserId = currentUser!.uid!;
     final userRef = userCollection.doc(currentUserId);
     List<Map<String, dynamic>> prodRefList = [];
 
@@ -441,7 +441,7 @@ class FireCollections {
     // removing the data by updating the curreng cartModel json with new one..
     final List<Map<String, dynamic>> prodRefList = [];
     final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserId = currentUser.uid!;
+    final currentUserId = currentUser!.uid!;
     final userRef = userCollection.doc(currentUserId);
     for (var product in cart.products) {
       final docRef = productCollection.doc(product.product.id);
@@ -470,7 +470,7 @@ class FireCollections {
 
   Future<void> storeCardInfo(CreditCardModel creditModel) async {
     final user = await fireAuth.getCurrentUserModel();
-    final userRef = userCollection.doc(user.uid);
+    final userRef = userCollection.doc(user!.uid);
 
     final creditJson = creditModel.toMap();
 
@@ -492,7 +492,7 @@ class FireCollections {
 
   Future<CreditCardModel> fetchCreditCardInfo() async {
     final user = await fireAuth.getCurrentUserModel();
-    final userRef = userCollection.doc(user.uid);
+    final userRef = userCollection.doc(user!.uid);
 
     try {
       final snapshot =
@@ -569,7 +569,7 @@ class FireCollections {
   Future<List<DocumentSnapshot<Object?>>> getUserChatRooms() async {
     List<DocumentSnapshot<Object?>> userDocSnapList = [];
     final currentUser = await fireAuth.getCurrentUserModel();
-    final currentUserRef = userCollection.doc(currentUser.uid);
+    final currentUserRef = userCollection.doc(currentUser!.uid);
     final snapshot = await chatRoomsCollection
         .where('members', arrayContains: currentUserRef)
         .get();

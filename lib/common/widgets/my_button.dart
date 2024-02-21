@@ -33,7 +33,7 @@ class MyButton extends StatelessWidget {
               : Border.all(
                   style: BorderStyle.none,
                 ),
-          color: Colors.white,
+          color: Theme.of(context).primaryColor,
           boxShadow: [
             if (dropShadow)
               const BoxShadow(
@@ -43,8 +43,11 @@ class MyButton extends StatelessWidget {
               ),
           ],
         ),
-        child: Image.asset(
-          ImageConstants.getImageUri(iconUri),
+        child: const Center(
+          child: Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Colors.white,
+          ),
         ),
       ),
     );

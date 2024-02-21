@@ -33,179 +33,177 @@ class _LoginCardState extends State<LoginCard> {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
-    return Builder(builder: (context) {
-      return BlocConsumer<ValidationBloc, ValidationState>(
-        listener: (context, validationState) {
-          if (validationState is ValidationSuccess) {
-            if (!onSignUp) {
-              BlocProvider.of<AuthBloc>(context).add(
-                LoginEvent(
-                  email: email,
-                  password: password,
-                ),
-              );
-            } else {
-              BlocProvider.of<AuthBloc>(context).add(
-                SignUpEvent(
-                  email: email,
-                  password: password,
-                ),
-              );
-            }
-          } else if (validationState is ValidationFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Theme.of(context).colorScheme.error,
-                content: Text(validationState.message),
+    return BlocConsumer<ValidationBloc, ValidationState>(
+      listener: (context, validationState) {
+        if (validationState is ValidationSuccess) {
+          if (!onSignUp) {
+            BlocProvider.of<AuthBloc>(context).add(
+              LoginEvent(
+                email: email,
+                password: password,
+              ),
+            );
+          } else {
+            BlocProvider.of<AuthBloc>(context).add(
+              SignUpEvent(
+                email: email,
+                password: password,
               ),
             );
           }
+        } else if (validationState is ValidationFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Theme.of(context).colorScheme.error,
+              content: Text(validationState.message),
+            ),
+          );
+        }
+      },
+      builder: (context, validationState) =>
+          BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                content: Text(state.message),
+              ),
+            );
+          } else if (state is UserAvailable) {
+            Navigator.of(context)
+                .pushReplacementNamed(NavigationMenu.routeName);
+          }
         },
-        builder: (context, validationState) =>
-            BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthFailed) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  content: Text(state.message),
-                ),
-              );
-            } else if (state is UserAvailable) {
-              Navigator.of(context)
-                  .pushReplacementNamed(NavigationMenu.routeName);
-            }
-          },
-          builder: (context, state) {
-            return LoadingWidet(
-              media: media,
-              isLoading: state is AuthLoading,
-              child: Container(
-                width: double.infinity,
-                height: media.height * 0.5,
-                padding: const EdgeInsets.all(22),
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Center(
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        Text(
+        builder: (context, state) {
+          return LoadingWidet(
+            media: media,
+            isLoading: state is AuthLoading,
+            child: Container(
+              width: double.infinity,
+              height: media.height * 0.5,
+              padding: const EdgeInsets.all(22),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 25,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.onSecondaryContainer,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      Text(
+                        onSignUp
+                            ? StringConstants.signupText
+                            : StringConstants.loginText,
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      MyTextField(
+                        label: StringConstants.emailLabel,
+                        hintText: "abc@gmail.com",
+                        errorMsg: (validationState is ValidationFailure)
+                            ? validationState.message
+                            : null,
+                        prefixIcon: const Icon(
+                          Icons.mail_outline_rounded,
+                        ),
+                        inputType: TextInputType.emailAddress,
+                        onFieldSave: (value) {
+                          email = value!;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      MyTextField(
+                        errorMsg: (validationState is ValidationFailure)
+                            ? validationState.message
+                            : null,
+                        label: StringConstants.passwordLabel,
+                        hintText: "xxxxxxxx",
+                        prefixIcon: const Icon(
+                          Icons.vpn_key,
+                        ),
+                        inputType: TextInputType.visiblePassword,
+                        obscure: true,
+                        onFieldSave: (value) {
+                          password = value!;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+    
+                      // forgot? login btn
+                      Row(
+                        mainAxisAlignment: onSignUp
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (!onSignUp)
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                StringConstants.forgotPasswordText,
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(120, 30),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              backgroundColor: Theme.of(context).primaryColor,
+                            ),
+                            onPressed: onFormSave,
+                            child: Text(
+                              onSignUp
+                                  ? StringConstants.signupText
+                                  : StringConstants.loginText,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+    
+                      SizedBox(
+                        height: media.height * 0.01,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            onSignUp = !onSignUp;
+                          });
+                        },
+                        child: Text(
                           onSignUp
-                              ? StringConstants.signupText
-                              : StringConstants.loginText,
+                              ? StringConstants.haveAnAccountText
+                              : StringConstants.noAccountText,
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
+                            decoration: TextDecoration.underline,
                           ),
                         ),
-                        MyTextField(
-                          label: StringConstants.emailLabel,
-                          hintText: "abc@gmail.com",
-                          errorMsg: (validationState is ValidationFailure)
-                              ? validationState.message
-                              : null,
-                          prefixIcon: const Icon(
-                            Icons.mail_outline_rounded,
-                          ),
-                          inputType: TextInputType.emailAddress,
-                          onFieldSave: (value) {
-                            email = value!;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        MyTextField(
-                          errorMsg: (validationState is ValidationFailure)
-                              ? validationState.message
-                              : null,
-                          label: StringConstants.passwordLabel,
-                          hintText: "xxxxxxxx",
-                          prefixIcon: const Icon(
-                            Icons.vpn_key,
-                          ),
-                          inputType: TextInputType.visiblePassword,
-                          obscure: true,
-                          onFieldSave: (value) {
-                            password = value!;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-
-                        // forgot? login btn
-                        Row(
-                          mainAxisAlignment: onSignUp
-                              ? MainAxisAlignment.center
-                              : MainAxisAlignment.spaceBetween,
-                          children: [
-                            if (!onSignUp)
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  StringConstants.forgotPasswordText,
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(120, 30),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                backgroundColor: const Color(0xff292526),
-                              ),
-                              onPressed: onFormSave,
-                              child: Text(
-                                onSignUp
-                                    ? StringConstants.signupText
-                                    : StringConstants.loginText,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(
-                          height: media.height * 0.01,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              onSignUp = !onSignUp;
-                            });
-                          },
-                          child: Text(
-                            onSignUp
-                                ? StringConstants.haveAnAccountText
-                                : StringConstants.noAccountText,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              decoration: TextDecoration.underline,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            );
-          },
-        ),
-      );
-    });
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 

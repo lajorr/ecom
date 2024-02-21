@@ -29,11 +29,15 @@ class LogOutDialog extends StatelessWidget {
             BlocProvider.of<AuthBloc>(ctx).add(SignOutEvent());
           },
           style: OutlinedButton.styleFrom(
-            side: BorderSide(color: Theme.of(context).primaryColor),
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
           ),
           child: Text(
             'Yoss',
-            style: TextStyle(color: Theme.of(context).primaryColor),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
           ),
         ),
         ElevatedButton(
@@ -42,11 +46,9 @@ class LogOutDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(ctx).pop();
           },
-          child: const Text(
+          child: Text(
             'No',
-            style: TextStyle(
-              color: Colors.white,
-            ),
+            style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
       ],

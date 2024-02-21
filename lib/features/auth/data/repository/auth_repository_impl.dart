@@ -55,7 +55,11 @@ class AuthRepositoryImpl implements AuthRepository {
         return Right(user);
       }
     } on NoUserException {
-      return const Left(NoUserFailure(message: "No Such User"));
+      return const Left(
+        NoUserFailure(message: "No Such User"),
+      );
+    } catch (e) {
+      throw UnimplementedError();
     }
   }
 

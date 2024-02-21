@@ -79,61 +79,55 @@ class _ShippingCardState extends State<ShippingCard> {
                 ),
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  color: const Color(0xffF6F6F6),
+                  color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        hasCreditInfo
-                            ? Row(
-                                children: [
-                                  // hasCreditInfo ?
-                                  Image.asset(
-                                    ImageConstants.getImageUri(
-                                        ImageConstants.visaIcon),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(userCredit.cardNum!),
-                                ],
-                              )
-                            : Row(
-                                children: [
-                                  // hasCreditInfo ?
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            const AddCartInfoDialog(),
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          Theme.of(context).primaryColor,
-                                    ),
-                                    child: const Icon(
-                                      Icons.add,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  const Text("Add Credit Card Info"),
-                                ],
+                    hasCreditInfo
+                        ? Row(
+                            children: [
+                              Image.asset(
+                                ImageConstants.getImageUri(
+                                    ImageConstants.visaIcon),
                               ),
-                      ],
-                    ),
-                    if (hasCreditInfo)
-                      const Icon(
-                        Icons.keyboard_arrow_down_sharp,
-                        size: 32,
-                      )
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                userCredit.cardNum!,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        const AddCartInfoDialog(),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Text("Add Credit Card Info"),
+                            ],
+                          ),
                   ],
                 ),
               );

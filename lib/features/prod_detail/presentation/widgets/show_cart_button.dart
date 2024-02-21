@@ -20,7 +20,7 @@ class ShowCartButton extends StatelessWidget {
           left: 10,
         ),
         decoration: BoxDecoration(
-          color: const Color(0xff292526),
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Image.asset(

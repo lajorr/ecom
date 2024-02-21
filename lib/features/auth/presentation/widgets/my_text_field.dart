@@ -49,6 +49,11 @@ class _MyTextFieldState extends State<MyTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final outlinedBorder = OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Theme.of(context).colorScheme.secondary,
+      ),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -94,7 +99,10 @@ class _MyTextFieldState extends State<MyTextField> {
                     },
                   )
                 : null,
-            border: const OutlineInputBorder(),
+            // border:
+            enabledBorder: outlinedBorder,
+            focusedBorder: outlinedBorder,
+            border: outlinedBorder,
             hintText: widget.hintText,
           ),
         )

@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         Future.delayed(
-          const Duration(seconds: 5),
+          const Duration(seconds: 3),
           () {
             if (state is UserAvailable) {
               BlocProvider.of<ProfileBloc>(context).add(FetchUserDataEvent());
@@ -42,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   content: Text(state.message),
                 ),
               );
+            } else {
             }
           },
         );

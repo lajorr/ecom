@@ -12,8 +12,12 @@ class FireAuth {
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  Future<UserModel> getCurrentUserModel() async {
+  Future<UserModel?> getCurrentUserModel() async {
     UserModel user;
+    
+    if (currentUser == null) {
+      return null;
+    }
 
     final userDocSnapshot = await userCollection.doc(currentUser!.uid).get();
     if (userDocSnapshot.exists) {
