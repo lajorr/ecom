@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/color_utils.dart';
+
 class ThemeManager {
   static ThemeData getLightThemeData() {
     return ThemeData(
       brightness: Brightness.light,
       useMaterial3: true,
-      primaryColor: const Color(0xff292526),
-      hintColor: const Color(0xff878787),
-      colorScheme: const ColorScheme.light(
-        // secondaryContainer: Colors.white,
-        secondary: Color(0xff464646),
-        onSecondary: Color(0xff111111),
-        onSecondaryContainer: Colors.white,
+      primaryColor: ColorUtils.kPrimaryColor,
+      hintColor: ColorUtils.kHintColor,
+      colorScheme: ColorScheme.light(
+        secondary: ColorUtils.kLightSecondary,
+        onSecondary: ColorUtils.kDarkBackground,
+        onSecondaryContainer: ColorUtils.kLightSecondaryContainer,
       ),
-      scaffoldBackgroundColor: Colors.grey[100],
+      scaffoldBackgroundColor: ColorUtils.kLightBackground,
       textTheme: const TextTheme(
-          bodyMedium: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-          bodySmall: TextStyle(
-            fontSize: 16,
-          ),
-          labelLarge: TextStyle(color: Colors.white)),
+        bodyMedium: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 16,
+        ),
+        labelLarge: TextStyle(color: Colors.white),
+      ),
     );
   }
 
@@ -30,14 +32,13 @@ class ThemeManager {
     return ThemeData(
       brightness: Brightness.dark,
       useMaterial3: true,
-      primaryColor: const Color(0xff232323),
-      hintColor: const Color(0xff878787),
-      scaffoldBackgroundColor: const Color(0xff111111),
-      colorScheme: const ColorScheme.dark(
-        secondary: Color(0xff575757),
-        // tertiary: Color(0xff696969)
-        onSecondary: Color(0xff111111),
-        onSecondaryContainer: Color(0xff232323),
+      primaryColor: ColorUtils.kPrimaryColor,
+      hintColor: ColorUtils.kHintColor,
+      scaffoldBackgroundColor: ColorUtils.kDarkBackground,
+      colorScheme: ColorScheme.dark(
+        secondary: ColorUtils.kDarkSecondary,
+        onSecondary: ColorUtils.kDarkBackground,
+        onSecondaryContainer: ColorUtils.kPrimaryColor,
       ),
       textTheme: const TextTheme(
         bodyMedium: TextStyle(
