@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/common/widgets/like_button.dart';
 import 'package:ecom/common/widgets/my_button.dart';
 import 'package:ecom/common/widgets/rounded_button.dart';
@@ -309,7 +310,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     ),
                                   );
                                 },
-                                text: StringConstants.addToCartText,
+                                text: StringConstants.addToCartText.tr(),
                                 iconUri: ImageConstants.shopCart,
                               );
                             }),

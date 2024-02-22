@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +39,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final media = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Edit'),
+          title: const Text(StringConstants.editTitleText).tr(),
         ),
         body: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
@@ -75,7 +77,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         MyTextField(
                           initValue: user.name,
-                          label: 'Username',
+                          label: StringConstants.usernameText.tr(),
                           prefixIcon: const Icon(Icons.person),
                           onFieldSave: (value) {
                             setState(() {
@@ -84,7 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           },
                           validator: (str) {
                             if (str == null || str.isEmpty) {
-                              return "Please enter a username";
+                              return StringConstants.enterUsernameText.tr();
                             }
                             return null;
                           },
@@ -94,7 +96,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         MyTextField(
                           initValue: user.phNumber.toString(),
-                          label: 'Phone',
+                          label: StringConstants.phoneText.tr(),
                           prefixIcon: const Icon(Icons.phone),
                           onFieldSave: (value) {
                             setState(() {
@@ -104,7 +106,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           inputType: TextInputType.number,
                           validator: (str) {
                             if (str == null || str.isEmpty) {
-                              return "Please enter a phoneNumber";
+                              return StringConstants.enterPhoneText.tr();
                             }
                             return null;
                           },
@@ -119,11 +121,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           onPressed: onConfirmEdit,
                           color: Theme.of(context).primaryColor,
                           child: const Text(
-                            'Update',
+                            StringConstants.updateBtnText,
                             style: TextStyle(
                               color: Colors.white,
                             ),
-                          ),
+                          ).tr(),
                         ),
                       ],
                     ),

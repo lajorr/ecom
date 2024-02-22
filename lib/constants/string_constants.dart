@@ -12,21 +12,56 @@ class StringConstants {
   static const emailErrorMsg1 = "Enter an email";
   static const emailErrorMsg2 = "Enter a valid email";
 
-  static const emailHintText = "abc@asd.com";
-  static const passwordHintText = "xxxxxx";
+  // catalog
+  static const welcomeUserText = "welcome_user";
+  static const allItemsText = "all_items";
+  static const dressText = "dress";
+  static const techText = "tech";
+  static const watchText = "watch";
+  static const searchHintText = "search";
 
-  static const welcomeUserText = "Hello, Welcome";
-  static const username = "Albert Stevano";
-  static const searchHintText = "Search Clothes";
+  // profile screen
+  static const orderHistoryText = "order_history";
+  static const logoutConfirmText = "log_out_confirm";
 
-  static const allItemsText = "All Items";
-  static const dressText = "Dress";
-  static const techText = "Tech";
-  static const watchText = "Watch";
+  //drawer
+  static const editProfileText = "edit_profile";
+  static const chatText = "chat";
+  static const languageText = "langauge";
+  static const logoutText = "logout";
+  static const darkModeText = "dark_mode";
 
-  static const addToCartText = "Add To Cart";
-  static const chooseSizeText = "Choose Size";
-  static const colorText = "Color";
+  //edit profile screen
+  static const editTitleText = "edit";
+  static const usernameText = "username";
+  static const enterUsernameText = "enter_username";
+  static const phoneText = "phone";
+  static const enterPhoneText = "enter_phone";
+  static const updateBtnText = "update";
+
+  //image picker dialog
+  static const galleryText = "gallery";
+  static const cameraText = "camera";
+  static const cancelText = "cancel";
+  static const okText = "ok";
+  static const selectImageText = "select_image";
+
+  //detail screen
+  static const addToCartText = "add_cart";
+  static const chooseSizeText = "choose_size";
+  static const colorText = "color";
+
+  // checkout screen
+  static const checkoutText = "checkout";
+  static const payText = "pay";
+  static const noProductText = "no_product";
+  static const shippingInfoText = "shipping_info";
+  static const totalText = "total";
+  static const shippingFeeText = "shipping_fee";
+  static const subTotalText = "sub_total";
+  static const confirmPayText = "confirm_pay";
+  static const pickLocationText = "pick_loc";
+
 
   static const prodDetailText =
       "Its simple and elegant shape makes it perfect for those of you who like you who want minimalist clothes";
@@ -36,7 +71,6 @@ class StringConstants {
   static const noFavText = "No Fav";
 
   static const profileText = "Profile";
-  static const logOutText = "Log Out";
 
   static const signoutSuccessText = "Sign out Successfull";
 
@@ -48,8 +82,6 @@ class StringConstants {
   static const productDeliveryText = "Your Items will be delivered shortly";
   static const dataFetchErrorText = 'Something went wrong while fetching data';
   static const emptyProductListText = "Add Products to your Cart ...";
-  static const shippingFeeText = "Shipping Fee";
-  static const subTotalText = "Sub Total";
-  static const paymentSuccessfulText = "Payment Successful";
 
+  static const paymentSuccessfulText = "Payment Successful";
 }

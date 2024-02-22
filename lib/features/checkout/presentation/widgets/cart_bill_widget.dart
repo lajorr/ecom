@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../constants/string_constants.dart';
@@ -23,15 +24,14 @@ class CartBillWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return SingleChildScrollView(
-      
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Total(${productList.length} Items)",
-              ),
+              const Text(
+                StringConstants.totalText,
+              ).tr(args: ["${productList.length}"]),
               Text('\$${cart.amount}'),
             ],
           ),
@@ -39,7 +39,7 @@ class CartBillWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(StringConstants.shippingFeeText),
+              const Text(StringConstants.shippingFeeText).tr(),
               Text('\$$shippingFee'),
             ],
           ),
@@ -48,7 +48,7 @@ class CartBillWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(StringConstants.subTotalText),
+              const Text(StringConstants.subTotalText).tr(),
               Text('\$${totalAmt.toStringAsFixed(2)}'),
             ],
           ),

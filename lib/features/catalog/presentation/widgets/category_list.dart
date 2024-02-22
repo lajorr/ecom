@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +69,7 @@ class _CategoryListState extends State<CategoryList> {
             },
             child: CategoryTile(
               iconUri: cat['icon'],
-              title: cat['title'],
+              title: (cat['title'] as String).tr(),
               isActive: selectedIndex == index,
             ),
           );

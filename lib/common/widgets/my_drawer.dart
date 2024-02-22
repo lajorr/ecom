@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ecom/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:ecom/shared/theme%20cubit/cubit/theme_cubit.dart';
@@ -30,7 +32,9 @@ class MyDrawer extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: const Icon(Icons.edit),
-                    title: const Text('Edit Profile'),
+                    title: const Text(
+                      StringConstants.editProfileText,
+                    ).tr(),
                     onTap: () {
                       Navigator.of(context).pop();
                       Navigator.of(context)
@@ -39,7 +43,9 @@ class MyDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.chat),
-                    title: const Text('Chats'),
+                    title: const Text(
+                      StringConstants.chatText,
+                    ).tr(),
                     onTap: () {
                       Navigator.of(context).pushNamed(
                         AllChatsScreen.routeName,
@@ -47,15 +53,17 @@ class MyDrawer extends StatelessWidget {
                     },
                   ),
                   const ThemeChangeWidget(),
-                  const ListTile(
-                    leading: Icon(Icons.language),
-                    title: Text('Language'),
+                  ListTile(
+                    leading: const Icon(Icons.language),
+                    title: const Text(
+                      StringConstants.languageText,
+                    ).tr(),
                   ),
                 ],
               ),
               ListTile(
                 leading: const Icon(Icons.logout),
-                title: const Text("Logout"),
+                title: const Text(StringConstants.logoutText).tr(),
                 onTap: () {
                   Navigator.of(context).pop();
                   showDialog(
@@ -100,7 +108,7 @@ class _ThemeChangeWidgetState extends State<ThemeChangeWidget> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Dark Mode'),
+              const Text(StringConstants.darkModeText).tr(),
               Switch(
                 value: isDark,
                 onChanged: (value) {

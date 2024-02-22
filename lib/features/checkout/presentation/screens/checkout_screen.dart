@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -79,7 +80,7 @@ class CheckoutScreen extends StatelessWidget {
             return Scaffold(
               extendBody: true,
               appBar: AppBar(
-                title: const Text('Checkout'),
+                title: const Text(StringConstants.checkoutText).tr(),
                 backgroundColor: Colors.transparent,
                 actions: [
                   BlocBuilder<CreditCardSetCubit, CreditCardSetState>(
@@ -93,7 +94,7 @@ class CheckoutScreen extends StatelessWidget {
                                   PaymentDialog(ctx: ctx, cartModel: cart),
                             );
                           },
-                          child: const Text("Pay"),
+                          child: const Text(StringConstants.payText).tr(),
                         );
                       } else {
                         return Container();
@@ -121,11 +122,11 @@ class CheckoutScreen extends StatelessWidget {
                               height: media.height * 0.03,
                             ),
                             const Text(
-                              '... products where?',
+                              StringConstants.noProductText,
                               style: TextStyle(
                                 fontSize: 20,
                               ),
-                            ),
+                            ).tr(),
                           ],
                         ),
                       )

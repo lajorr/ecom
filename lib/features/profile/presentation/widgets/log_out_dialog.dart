@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +21,7 @@ class LogOutDialog extends StatelessWidget {
     return AlertDialog(
       content: SizedBox(
         width: media.width * 0.6,
-        child: const Text('Are you sure you wanna log out??'),
+        child: const Text(StringConstants.logoutConfirmText).tr(),
       ),
       actions: [
         OutlinedButton(
@@ -34,11 +36,11 @@ class LogOutDialog extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Yoss',
+            StringConstants.okText,
             style: TextStyle(
               color: Theme.of(context).colorScheme.secondary,
             ),
-          ),
+          ).tr(),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -47,9 +49,9 @@ class LogOutDialog extends StatelessWidget {
             Navigator.of(ctx).pop();
           },
           child: Text(
-            'No',
+            StringConstants.cancelText,
             style: Theme.of(context).textTheme.labelLarge,
-          ),
+          ).tr(),
         ),
       ],
     );

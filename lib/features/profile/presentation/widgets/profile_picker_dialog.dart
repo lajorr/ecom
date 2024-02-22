@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -20,10 +22,7 @@ class _ProfilePickerDialogState extends State<ProfilePickerDialog> {
   Uint8List? _image;
 
   Future<void> pickImage(ImageSource source) async {
-    XFile? imageFile = await picker.pickImage(
-      source: source,
-      imageQuality: 15
-    );
+    XFile? imageFile = await picker.pickImage(source: source, imageQuality: 15);
     if (imageFile != null) {
       _image = await imageFile.readAsBytes();
       setState(() {});
@@ -55,27 +54,26 @@ class _ProfilePickerDialogState extends State<ProfilePickerDialog> {
           ),
           TextButton(
             onPressed: () => pickImage(ImageSource.gallery),
-            child: const Text('Gallery'),
+            child: const Text(StringConstants.galleryText).tr(),
           ),
           TextButton(
             onPressed: () => pickImage(ImageSource.camera),
-            child: const Text('Camera'),
+            child: const Text(StringConstants.cameraText).tr(),
           ),
         ],
       ),
       actions: [
         MaterialButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: Theme.of(context).primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: BorderSide(
+                color: Theme.of(context).primaryColor,
+              ),
             ),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Cancel'),
-        ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text(StringConstants.cancelText).tr()),
         MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
@@ -89,20 +87,20 @@ class _ProfilePickerDialogState extends State<ProfilePickerDialog> {
               widget.onPressedOk(_image!);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Select an image...'),
-                  duration: Duration(milliseconds: 1000),
+                SnackBar(
+                  content: const Text(StringConstants.selectImageText).tr(),
+                  duration: const Duration(milliseconds: 1000),
                   backgroundColor: Colors.red,
                 ),
               );
             }
           },
           child: const Text(
-            'OK',
+            StringConstants.okText,
             style: TextStyle(
               color: Colors.white,
             ),
-          ),
+          ).tr(),
         ),
       ],
     );

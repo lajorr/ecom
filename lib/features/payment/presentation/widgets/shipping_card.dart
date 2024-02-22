@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/common/widgets/my_shimmer.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:ecom/features/payment/presentation/widgets/add_cart_info_dialog.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +34,11 @@ class _ShippingCardState extends State<ShippingCard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Shipping Information',
+          StringConstants.shippingInfoText,
           style: TextStyle(
             fontSize: 16,
           ),
-        ),
+        ).tr(),
         BlocConsumer<PaymentBloc, PaymentState>(
           listener: (context, state) {
             if (state is PaymentInfoAddSuccess) {

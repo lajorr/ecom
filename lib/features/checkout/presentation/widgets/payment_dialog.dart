@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
@@ -29,7 +31,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Confirm Payment"),
+      title: const Text(StringConstants.confirmPayText).tr(),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -39,7 +41,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
               Navigator.of(context).pushNamed(ShowMapScreen.routeName,
                   arguments: {'onConfirmPos': onConfirmPos});
             },
-            child: const Text("Pick Location"),
+            child: const Text(StringConstants.pickLocationText).tr(),
           ),
         ],
       ),
@@ -70,7 +72,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
               );
             }
           },
-          child: const Text('Confirm'),
+          child: const Text(StringConstants.okText).tr(),
         ),
       ],
     );
