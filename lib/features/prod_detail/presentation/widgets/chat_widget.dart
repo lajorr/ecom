@@ -6,11 +6,11 @@ class ChatWidget extends StatelessWidget {
   const ChatWidget({
     Key? key,
     required this.otherUser,
-    required this.currentUser,
+    required this.currentUserId,
   }) : super(key: key);
 
   final UserModel? otherUser;
-  final UserModel currentUser;
+  final String currentUserId;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -21,7 +21,7 @@ class ChatWidget extends StatelessWidget {
                 ChatScreen.routeName,
                 arguments: {
                   "other_user": otherUser!,
-                  "current_user": currentUser,
+                  "current_user_id": currentUserId,
                 },
               );
             },

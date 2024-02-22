@@ -265,7 +265,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           if (!isOwner)
                             ChatWidget(
                               otherUser: owner,
-                              currentUser: widget.currentUser,
+                              currentUserId: widget.currentUser.uid!,
                             ),
                         ],
                       ),

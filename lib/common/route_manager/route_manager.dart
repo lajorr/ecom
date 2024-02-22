@@ -89,7 +89,7 @@ class RouteManager {
               otherUser: (settings.arguments
                   as Map<String, dynamic>)['other_user'] as UserModel,
               currentUserId: (settings.arguments
-                  as Map<String, dynamic>)['current_user'] as String,
+                  as Map<String, dynamic>)['current_user_id'] as String,
             ),
           ),
         );

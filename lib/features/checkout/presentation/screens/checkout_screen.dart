@@ -61,7 +61,6 @@ class CheckoutScreen extends StatelessWidget {
         builder: (ctx, state) {
           if (state is CheckoutLoading) {
             return Scaffold(
-
               body: CheckoutShimmer(media: media),
             );
           } else if (state is CheckoutFetchFailed) {
