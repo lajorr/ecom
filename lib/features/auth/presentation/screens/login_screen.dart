@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,12 +25,15 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    StringConstants.welcomeMsg,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 42,
-                    ),
+                  SizedBox(
+                    width: media.width * 0.6,
+                    child: const Text(
+                      StringConstants.welcomeMsg,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 42,
+                      ),
+                    ).tr(),
                   ),
                   SizedBox(
                     height: media.height * 0.1,

@@ -284,3 +284,5 @@ void init() {
   sl.registerLazySingleton<MapLocation>(() => MapLocation());
   sl.registerLazySingleton<FireStorage>(() => FireStorage());
 }
+
+

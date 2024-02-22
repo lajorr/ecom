@@ -1,0 +1,12 @@
+{
+  "hello": "こんにちは",
+  "welcome": "Qカートへようこそ",
+  "login": "ログイン",
+  "sign_up": "サインアップ",
+  "already_user": "ここでログイン",
+  "not_user": "ここからサインアップしてください",
+  "forgot_password": "パスワードをお忘れた",
+
+  "email": "Eメール",
+  "password" : "パスワード"
+}

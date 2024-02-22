@@ -1,0 +1,12 @@
+{
+  "hello": "hello",
+  "welcome": "Welcome to Q-cart",
+  "login": "Login",
+  "sign_up": "Sign Up",
+  "already_user": "Already have an account? login now!!",
+  "not_user": "No Account? Sign Up!!",
+  "forgot_password": "Forgot Password",
+
+  "email" : "Email",
+  "password" : "Password"
+}

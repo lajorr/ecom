@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ecom/features/navbar/presentation/screens/navigation_menu.dart';
@@ -60,8 +61,7 @@ class _LoginCardState extends State<LoginCard> {
           );
         }
       },
-      builder: (context, validationState) =>
-          BlocConsumer<AuthBloc, AuthState>(
+      builder: (context, validationState) => BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -90,7 +90,8 @@ class _LoginCardState extends State<LoginCard> {
                 color: Theme.of(context).colorScheme.onSecondaryContainer,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Center(
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
                 child: Form(
                   key: formKey,
                   child: Column(
@@ -102,7 +103,7 @@ class _LoginCardState extends State<LoginCard> {
                         style: const TextStyle(
                           fontSize: 18,
                         ),
-                      ),
+                      ).tr(),
                       MyTextField(
                         label: StringConstants.emailLabel,
                         hintText: "abc@gmail.com",
@@ -138,7 +139,7 @@ class _LoginCardState extends State<LoginCard> {
                       const SizedBox(
                         height: 20,
                       ),
-    
+
                       // forgot? login btn
                       Row(
                         mainAxisAlignment: onSignUp
@@ -153,7 +154,7 @@ class _LoginCardState extends State<LoginCard> {
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
                                 ),
-                              ),
+                              ).tr(),
                             ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -171,11 +172,11 @@ class _LoginCardState extends State<LoginCard> {
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
-                            ),
+                            ).tr(),
                           ),
                         ],
                       ),
-    
+
                       SizedBox(
                         height: media.height * 0.01,
                       ),
@@ -193,7 +194,7 @@ class _LoginCardState extends State<LoginCard> {
                             fontSize: 16,
                             decoration: TextDecoration.underline,
                           ),
-                        ),
+                        ).tr(),
                       ),
                     ],
                   ),

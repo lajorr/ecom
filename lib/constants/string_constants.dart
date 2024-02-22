@@ -1,14 +1,14 @@
 class StringConstants {
-  static const welcomeMsg = "Welcome \n to Q-cart";
-  static const loginText = "Login";
-  static const signupText = "Sign Up";
-  static const haveAnAccountText = "Already have an account? login now!!";
-  static const noAccountText = "No Account? Sign Up!!";
-  static const forgotPasswordText = "Forgot Password";
+  static const welcomeMsg = "welcome";
+  static const loginText = "login";
+  static const signupText = "sign_up";
+  static const haveAnAccountText = "already_user";
+  static const noAccountText = "not_user";
+  static const forgotPasswordText = "forgot_password";
   static const googleLoginText = 'Login from google';
 
-  static const emailLabel = "Email";
-  static const passwordLabel = "Password";
+  static const emailLabel = "email";
+  static const passwordLabel = "password";
   static const emailErrorMsg1 = "Enter an email";
   static const emailErrorMsg2 = "Enter a valid email";
 

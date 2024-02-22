@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +60,7 @@ class _MyTextFieldState extends State<MyTextField> {
       mainAxisSize: MainAxisSize.min,
       children: [
         //label
-        Text(widget.label),
+        Text(widget.label).tr(),
         const SizedBox(
           height: 5,
         ),

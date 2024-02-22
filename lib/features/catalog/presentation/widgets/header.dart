@@ -1,9 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../common/widgets/profile_pic_widget.dart';
-import '../../../../constants/string_constants.dart';
 import '../../../navbar/presentation/cubit/nav_index_cubit.dart';
 import '../../../profile/presentation/bloc/profile_bloc.dart';
 
@@ -36,9 +36,9 @@ class _HeaderState extends State<Header> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    StringConstants.welcomeUserText,
+                    'hello',
                     style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  ).tr(),
                   Text(
                     state.currentUser.name ?? '...',
                     style: Theme.of(context).textTheme.bodyMedium,

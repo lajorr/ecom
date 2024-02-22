@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
@@ -21,10 +22,21 @@ import 'injection_container.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   di.init();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en', 'US'), Locale('ja', 'JPN')],
+      path:
+          'assets/translations', // <-- change the path of the translation files
+      fallbackLocale: const Locale('ja', 'JPN'),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -72,21 +84,17 @@ class MyApp extends StatelessWidget {
       child: Builder(builder: (context) {
         return BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, state) {
-            if (state is ThemeModeDark) {
-              return MaterialApp(
-                title: 'Q-cart',
-                debugShowCheckedModeBanner: false,
-                theme: ThemeManager.getDarkThemeData(),
-                onGenerateRoute: routeManager.onGenerateRoute,
-              );
-            } else {
-              return MaterialApp(
-                title: 'Q-cart',
-                debugShowCheckedModeBanner: false,
-                theme: ThemeManager.getLightThemeData(),
-                onGenerateRoute: routeManager.onGenerateRoute,
-              );
-            }
+            return MaterialApp(
+              title: 'Q-cart',
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              debugShowCheckedModeBanner: false,
+              theme: (state is ThemeModeDark)
+                  ? ThemeManager.getDarkThemeData()
+                  : ThemeManager.getLightThemeData(),
+              onGenerateRoute: routeManager.onGenerateRoute,
+            );
           },
         );
       }),
