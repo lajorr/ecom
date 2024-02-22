@@ -44,17 +44,19 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void onSend() {
-    final msg = MessageModel(
-      message: _textController.text.trim(),
-      createdAt: DateTime.now(),
-      recieverId: widget.otherUser.uid!,
-      senderId: widget.currentUserId,
-    );
-    context.read<ChatBloc>().add(SendMessageEvent(message: msg));
-    _textController.clear();
-    context
-        .read<ShowSendButtonCubit>()
-        .toggleSendVisibility(_textController.text.trim());
+    if (_textController.text.isNotEmpty) {
+      final msg = MessageModel(
+        message: _textController.text.trim(),
+        createdAt: DateTime.now(),
+        recieverId: widget.otherUser.uid!,
+        senderId: widget.currentUserId,
+      );
+      context.read<ChatBloc>().add(SendMessageEvent(message: msg));
+      _textController.clear();
+      context
+          .read<ShowSendButtonCubit>()
+          .toggleSendVisibility(_textController.text.trim());
+    }
   }
 
   @override
@@ -147,10 +149,13 @@ class _ChatScreenState extends State<ChatScreen> {
                           BlocBuilder<ShowSendButtonCubit, ShowSendButtonState>(
                         builder: (context, state) {
                           if (state is ShowSendButtonTrue) {
+                            final brightness = Theme.of(context).brightness;
                             return IconButton(
                               icon: Icon(
                                 Icons.send,
-                                color: Theme.of(context).primaryColor,
+                                color: brightness == Brightness.light
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.white,
                               ),
                               onPressed: onSend,
                             );
