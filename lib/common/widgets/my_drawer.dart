@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
@@ -58,6 +59,14 @@ class MyDrawer extends StatelessWidget {
                     title: const Text(
                       StringConstants.languageText,
                     ).tr(),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ChangeLanguageDialog(
+                          media: media,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -78,6 +87,68 @@ class MyDrawer extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ChangeLanguageDialog extends StatelessWidget {
+  const ChangeLanguageDialog({
+    Key? key,
+    required this.media,
+  }) : super(key: key);
+
+  final Size media;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            LanguageTile(media: media),
+            LanguageTile(media: media),
+            LanguageTile(media: media),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LanguageTile extends StatelessWidget {
+  const LanguageTile({
+    super.key,
+    required this.media,
+  });
+
+  final Size media;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).colorScheme.secondaryContainer,
+      ),
+      child: Row(
+        children: [
+          SizedBox(
+            height: media.height * 0.05,
+            width: media.height * 0.05,
+            child: const Center(
+              child: Icon(Icons.done),
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          const Text("English"),
+        ],
       ),
     );
   }
