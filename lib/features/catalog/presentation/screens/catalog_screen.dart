@@ -1,7 +1,6 @@
 import 'package:ecom/features/catalog/presentation/widgets/catalog_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
 import '../blocs/catalog bloc/catalog_bloc.dart';
@@ -47,15 +46,10 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 BlocBuilder<CatalogBloc, CatalogState>(
                   builder: (context, state) {
                     if (state is CatalogLoading) {
-                      return Shimmer.fromColors(
-                        baseColor: Colors.grey.shade300,
-                        highlightColor: Colors.grey.shade100,
-                        child: CatalogShimmer(
-                          media: media,
-                        ),
+                      return CatalogShimmer(
+                        media: media,
                       );
-                    }
-                     else if (state is CatalogLoaded) {
+                    } else if (state is CatalogLoaded) {
                       final productList = state.productList;
                       return Expanded(
                         child: Column(
@@ -75,8 +69,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                           ],
                         ),
                       );
-                    } 
-                    else if (state is CatalogFailure) {
+                    } else if (state is CatalogFailure) {
                       return const Text('Something went wrong');
                     } else {
                       return Container();

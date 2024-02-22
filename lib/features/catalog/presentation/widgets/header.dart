@@ -1,6 +1,6 @@
+import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../common/widgets/profile_pic_widget.dart';
 import '../../../../constants/string_constants.dart';
@@ -59,11 +59,7 @@ class _HeaderState extends State<Header> {
             ],
           );
         } else if (state is ProfileLoading) {
-          return Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.grey.shade100,
-            child: HeaderShimmer(media: media),
-          );
+          return HeaderShimmer(media: media);
         } else {
           return const Center(
             child: Text('else'),
@@ -84,42 +80,44 @@ class HeaderShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: media.height * 0.02,
-              width: media.width * 0.3,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(media.width * 0.5),
+    return MyShimmer(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: media.height * 0.02,
+                width: media.width * 0.3,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(media.width * 0.5),
+                ),
               ),
-            ),
-            SizedBox(
-              height: media.height * 0.01,
-            ),
-            Container(
-              height: media.height * 0.02,
-              width: media.width * 0.2,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(media.width * 0.5),
+              SizedBox(
+                height: media.height * 0.01,
               ),
-            ),
-          ],
-        ),
-        Container(
-          height: media.height * 0.08,
-          width: media.height * 0.08,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(media.width * 0.5),
+              Container(
+                height: media.height * 0.02,
+                width: media.width * 0.2,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(media.width * 0.5),
+                ),
+              ),
+            ],
           ),
-        )
-      ],
+          Container(
+            height: media.height * 0.08,
+            width: media.height * 0.08,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(media.width * 0.5),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

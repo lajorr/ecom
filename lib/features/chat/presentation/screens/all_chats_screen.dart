@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,12 +12,9 @@ import 'chat_screen.dart';
 class AllChatsScreen extends StatefulWidget {
   const AllChatsScreen({
     Key? key,
-    // required this.currentUser,
   }) : super(key: key);
 
   static const routeName = '/all-chats';
-
-  // final UserModel currentUser;
 
   @override
   State<AllChatsScreen> createState() => _AllChatsScreenState();
@@ -40,11 +38,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
       body: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
           if (state is ChatRoomLoading) {
-            return Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade100,
-              child: ChatRoomShimmer(media: media),
-            );
+            return ChatRoomShimmer(media: media);
           } else if (state is ChatRoomFailed) {
             return Center(
               child: Text(state.message),
@@ -145,19 +139,21 @@ class ChatRoomShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return Container(
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.all(16),
-          height: media.height * 0.1,
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-        );
-      },
+    return MyShimmer(
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(16),
+            height: media.height * 0.1,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          );
+        },
+      ),
     );
   }
 }

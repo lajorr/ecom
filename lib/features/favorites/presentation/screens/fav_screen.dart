@@ -3,7 +3,6 @@ import 'package:ecom/features/catalog/presentation/widgets/grid_view_shimmer.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../catalog/presentation/widgets/my_grid_tile.dart';
 import '../bloc/favorites_bloc.dart';
@@ -31,13 +30,9 @@ class _FavScreenState extends State<FavScreen> {
           if (state is FavoritesLoading) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.grey.shade100,
-                child: GridViewShimmer(
-                  media: media,
-                  height: media.height,
-                ),
+              child: GridViewShimmer(
+                media: media,
+                height: media.height,
               ),
             );
           } else if (state is FavoritesLoaded) {

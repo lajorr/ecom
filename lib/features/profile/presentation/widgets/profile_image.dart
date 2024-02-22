@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
+import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:ecom/common/widgets/profile_pic_widget.dart';
 import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:ecom/features/profile/presentation/widgets/profile_picker_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProfileImage extends StatefulWidget {
   const ProfileImage({
@@ -72,9 +72,7 @@ class _ProfileImageState extends State<ProfileImage> {
           );
         } else if (state is ProfileLoading) {
           return Center(
-            child: Shimmer.fromColors(
-              baseColor: Colors.grey.shade300,
-              highlightColor: Colors.grey.shade100,
+            child: MyShimmer(
               child: Container(
                 height: media.height * 0.12,
                 width: media.height * 0.12,

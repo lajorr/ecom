@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../constants/img_uri.dart';
 import '../../../../constants/string_constants.dart';
@@ -63,11 +62,7 @@ class CheckoutScreen extends StatelessWidget {
           if (state is CheckoutLoading) {
             return Scaffold(
 
-              body: Shimmer.fromColors(
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.grey.shade100,
-                child: CheckoutShimmer(media: media),
-              ),
+              body: CheckoutShimmer(media: media),
             );
           } else if (state is CheckoutFetchFailed) {
             return const Scaffold(

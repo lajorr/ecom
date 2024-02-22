@@ -63,7 +63,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
         toolbarHeight: 70,
         title: Row(
           children: [

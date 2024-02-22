@@ -6,8 +6,15 @@ class ColorUtils {
 
   static Color kDarkBackground = const Color(0xff111111);
   static Color kDarkSecondary = const Color(0xff575757);
-  static Color kLightBackground = Colors.grey.shade100;
 
+  static Color kLightBackground = Colors.grey.shade100;
   static Color kLightSecondary = const Color(0xff464646);
   static Color kLightSecondaryContainer = Colors.white;
+
+  // shimmer
+  static Color kShimmerBaseColorLight = Colors.grey.shade300;
+  static Color kShimmerHighlightColorLight = Colors.grey.shade100;
+
+  static Color kShimmerBaseColorDark = Colors.grey.shade800;
+  static Color kShimmerHighlightColorDark = Colors.grey.shade700;
 }
