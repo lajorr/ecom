@@ -45,5 +45,7 @@
   "sub_total": "Sub Total",
   "confirm_pay": "Confirm Payment",
   "pick_loc": "Pick Location",
-  "log_out_confirm": "Are you sure you wanna log out?"
+  "log_out_confirm": "Are you sure you wanna log out?",
+  "history" : "History",
+  "delivery_loc" : "Delivery location: {}"
 }

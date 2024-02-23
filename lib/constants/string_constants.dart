@@ -62,10 +62,10 @@ class StringConstants {
   static const confirmPayText = "confirm_pay";
   static const pickLocationText = "pick_loc";
 
+  //order history
+  static const historyTitleText = "history";
+  static const deliveryLocText = "delivery_loc";
 
-  static const prodDetailText =
-      "Its simple and elegant shape makes it perfect for those of you who like you who want minimalist clothes";
-  static const readMoreText = "Read More. . .";
 
   static const favoritesText = "Favorites";
   static const noFavText = "No Fav";

@@ -45,5 +45,7 @@
   "sub_total": "小計",
   "confirm_pay": "確認する",
   "pick_loc": "場所を選択",
-  "log_out_confirm": "ログアウトしてもよろしいですか?"
+  "log_out_confirm": "ログアウトしてもよろしいですか?",
+  "history": "歴史",
+  "delivery_loc": "配達場所: {}"
 }

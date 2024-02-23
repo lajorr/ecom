@@ -1,4 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/presentation/widgets/cart_bill_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class CartHistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("History"),
+        title: const Text(StringConstants.historyTitleText).tr(),
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
@@ -40,7 +41,8 @@ class CartHistoryScreen extends StatelessWidget {
                     shippingFee: 0.0,
                     totalAmt: cart.amount,
                   ),
-                  Text("Delivery location: ${cart.address}"),
+                  const Text(StringConstants.deliveryLocText)
+                      .tr(args: ['${cart.address}']),
                 ],
               ),
             )

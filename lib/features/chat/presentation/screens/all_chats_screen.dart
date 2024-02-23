@@ -3,10 +3,10 @@ import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../constants/img_uri.dart';
 import '../blocs/chat bloc/chat_bloc.dart';
+import '../widgets/chat_room_shimmer.dart';
 import 'chat_screen.dart';
 
 class AllChatsScreen extends StatefulWidget {
@@ -54,7 +54,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                     Navigator.of(context)
                         .pushReplacementNamed(ChatScreen.routeName, arguments: {
                       'other_user': user,
-                      'current_user': FireAuth().getCurrentUserId(),
+                      'current_user_id': FireAuth().getCurrentUserId(),
                     });
                   },
                   child: Container(
@@ -77,7 +77,6 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                         height: media.height * 0.06,
                         width: media.height * 0.06,
                         decoration: BoxDecoration(
-                          color: Colors.red,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: ClipRRect(
@@ -87,9 +86,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                                     imageUrl: user.imageUrl!,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Center(
-                                      child: Shimmer.fromColors(
-                                        baseColor: Colors.red,
-                                        highlightColor: Colors.yellow,
+                                      child: MyShimmer(
                                         child: Container(
                                           height: 100,
                                           decoration: const BoxDecoration(
@@ -123,35 +120,6 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
           } else {
             return const SizedBox();
           }
-        },
-      ),
-    );
-  }
-}
-
-class ChatRoomShimmer extends StatelessWidget {
-  const ChatRoomShimmer({
-    super.key,
-    required this.media,
-  });
-
-  final Size media;
-
-  @override
-  Widget build(BuildContext context) {
-    return MyShimmer(
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.all(16),
-            height: media.height * 0.1,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-          );
         },
       ),
     );
