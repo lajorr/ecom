@@ -3,6 +3,7 @@ import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_
 import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
 import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
+import 'package:ecom/features/language/presentation/cubit/language_cubit.dart';
 import 'package:ecom/features/map/presentation/bloc/map_bloc.dart';
 import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:ecom/shared/theme%20cubit/cubit/theme_cubit.dart';
@@ -79,22 +80,29 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<ThemeCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<LanguageCubit>(),
         )
       ],
       child: Builder(builder: (context) {
         return BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, state) {
-            return MaterialApp(
-              title: 'Q-cart',
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              debugShowCheckedModeBanner: false,
-              theme: (state is ThemeModeDark)
-                  ? ThemeManager.getDarkThemeData()
-                  : ThemeManager.getLightThemeData(),
-              onGenerateRoute: routeManager.onGenerateRoute,
-            );
+            if (state is ThemeStatus) {
+              return MaterialApp(
+                title: 'Q-cart',
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
+                debugShowCheckedModeBanner: false,
+                theme: state.isDark
+                    ? ThemeManager.getDarkThemeData()
+                    : ThemeManager.getLightThemeData(),
+                onGenerateRoute: routeManager.onGenerateRoute,
+              );
+            } else {
+              return Container();
+            }
           },
         );
       }),

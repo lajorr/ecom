@@ -4,16 +4,16 @@ import 'package:equatable/equatable.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(const ThemeModeDark(isDark: true));
+  ThemeCubit() : super(const ThemeStatus(isDark: true));
 
   Future<void> toggleTheme(bool setDark) async {
     if (setDark) {
       emit(
-        const ThemeModeDark(isDark: true),
+        const ThemeStatus(isDark: true),
       );
     } else {
       emit(
-        const ThemeModeLight(isDark: false),
+        const ThemeStatus(isDark: false),
       );
     }
   }

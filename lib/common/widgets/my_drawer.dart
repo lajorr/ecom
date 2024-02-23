@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/chat/presentation/screens/all_chats_screen.dart';
+import '../../features/language/presentation/widgets/language_dialog.dart';
 import '../../features/profile/presentation/widgets/log_out_dialog.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -92,68 +93,6 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
-class ChangeLanguageDialog extends StatelessWidget {
-  const ChangeLanguageDialog({
-    Key? key,
-    required this.media,
-  }) : super(key: key);
-
-  final Size media;
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LanguageTile(media: media),
-            LanguageTile(media: media),
-            LanguageTile(media: media),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LanguageTile extends StatelessWidget {
-  const LanguageTile({
-    super.key,
-    required this.media,
-  });
-
-  final Size media;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).colorScheme.secondaryContainer,
-      ),
-      child: Row(
-        children: [
-          SizedBox(
-            height: media.height * 0.05,
-            width: media.height * 0.05,
-            child: const Center(
-              child: Icon(Icons.done),
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          const Text("English"),
-        ],
-      ),
-    );
-  }
-}
-
 class ThemeChangeWidget extends StatefulWidget {
   const ThemeChangeWidget({
     super.key,
@@ -169,11 +108,10 @@ class _ThemeChangeWidgetState extends State<ThemeChangeWidget> {
     bool isDark = false;
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        if (state is ThemeModeDark) {
-          isDark = state.isDark;
-        } else if (state is ThemeModeLight) {
+        if (state is ThemeStatus) {
           isDark = state.isDark;
         }
+
         return ListTile(
           leading: const Icon(Icons.light_mode),
           title: Row(
