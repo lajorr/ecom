@@ -23,7 +23,6 @@ class ProdCard extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 80,
           margin: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
             children: [
@@ -93,6 +92,7 @@ class ProdCard extends StatelessWidget {
             ],
           ),
         ),
+        const Divider(),
       ],
     );
   }

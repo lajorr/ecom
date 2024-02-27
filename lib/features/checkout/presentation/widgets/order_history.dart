@@ -1,8 +1,9 @@
-import '../../../../common/widgets/my_shimmer.dart';
-import '../blocs/orders%20bloc/orders_bloc.dart';
-import 'cart_history_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../blocs/orders%20bloc/orders_bloc.dart';
+import 'cart_history_tile.dart';
+import 'shimmer/order_shimmer.dart';
 
 class OrderHistory extends StatefulWidget {
   const OrderHistory({super.key});
@@ -32,8 +33,8 @@ class _OrderHistoryState extends State<OrderHistory> {
           final cartList = state.order.cartList.reversed.toList();
 
           return SizedBox(
-            height: media.height * 0.2,
-            width: double.infinity,
+            height: media.height * 0.25,
+            // width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -67,45 +68,6 @@ class _OrderHistoryState extends State<OrderHistory> {
           );
         }
       },
-    );
-  }
-}
-
-class OrderShimmer extends StatelessWidget {
-  const OrderShimmer({
-    super.key,
-    required this.media,
-  });
-
-  final Size media;
-
-  @override
-  Widget build(BuildContext context) {
-    return MyShimmer(
-      child: Container(
-        height: media.height * 0.2,
-        margin: EdgeInsets.only(top: media.height * 0.01),
-        child: ListView.builder(
-          itemCount: 2,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Container(
-              width: media.width * 0.5,
-              margin: const EdgeInsets.only(right: 10),
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Container(
-                height: 20,
-                width: 50,
-                color: Colors.red,
-              ),
-            );
-          },
-        ),
-      ),
     );
   }
 }

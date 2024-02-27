@@ -10,8 +10,8 @@ import '../blocs/cubit/credit_card_set_cubit.dart';
 import '../blocs/orders bloc/orders_bloc.dart';
 import '../widgets/cart_bill_widget.dart';
 import '../widgets/cart_products_widget.dart';
-import '../widgets/checkout_shimmer.dart';
 import '../widgets/payment_dialog.dart';
+import '../widgets/shimmer/checkout_shimmer.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({
@@ -103,49 +103,55 @@ class CheckoutScreen extends StatelessWidget {
                   )
                 ],
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    // prod list
-                    if (productList.isEmpty)
-                      SizedBox(
-                        height: media.height * 0.25,
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              ImageConstants.getImageUri(
-                                  ImageConstants.emptyCartIcon),
-                              height: media.height * 0.1,
-                            ),
-                            SizedBox(
-                              height: media.height * 0.03,
-                            ),
-                            const Text(
-                              StringConstants.noProductText,
-                              style: TextStyle(
-                                fontSize: 20,
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      // prod list
+                      if (productList.isEmpty)
+                        SizedBox(
+                          height: media.height * 0.25,
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                ImageConstants.getImageUri(
+                                    ImageConstants.emptyCartIcon),
+                                height: media.height * 0.1,
                               ),
-                            ).tr(),
-                          ],
+                              SizedBox(
+                                height: media.height * 0.03,
+                              ),
+                              const Text(
+                                StringConstants.noProductText,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ).tr(),
+                            ],
+                          ),
+                        )
+                      else
+                        CartProductsWidget(
+                          cart: cart,
                         ),
-                      )
-                    else
-                      CartProductsWidget(
-                        cart: cart,
+                
+                      SizedBox(
+                        height: media.height * 0.02,
                       ),
-
-                    //shipping info
-                    const ShippingCard(),
-
-                    // total amount
-                    CartBillWidget(
-                      productList: productList,
-                      cart: cart,
-                      shippingFee: shippingFee,
-                      totalAmt: totalAmt,
-                    ),
-                  ],
+                
+                      //shipping info
+                      const ShippingCard(),
+                
+                      // total amount
+                      CartBillWidget(
+                        productList: productList,
+                        cart: cart,
+                        shippingFee: shippingFee,
+                        totalAmt: totalAmt,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

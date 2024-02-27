@@ -16,6 +16,11 @@ class ThemeManager {
       ),
       scaffoldBackgroundColor: ColorUtils.kLightBackground,
       textTheme: const TextTheme(
+        displaySmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: Colors.white,
+        ),
         bodyMedium: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -41,6 +46,11 @@ class ThemeManager {
         onSecondaryContainer: ColorUtils.kPrimaryColor,
       ),
       textTheme: const TextTheme(
+        displaySmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: Colors.white,
+        ),
         bodyMedium: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,

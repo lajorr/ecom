@@ -95,7 +95,7 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
       final cart = CartModel(
         user: user!,
         products: _productsList,
-        amount: _amount,
+        amount: double.parse(_amount.toStringAsFixed(2)),
       );
       return cart;
     } else {
@@ -108,7 +108,7 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
     final cartModel = await fireCollections.fetchCartItems();
     _productsList = cartModel.products;
 
-    _amount = cartModel.amount;
+    _amount = double.parse(cartModel.amount.toStringAsFixed(2));
     return cartModel;
   }
 
@@ -123,7 +123,7 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
         total += (cartItem.product.price * cartItem.quantity);
       }
       _amount = total;
-        final user = await fireAuth.getCurrentUserModel();
+      final user = await fireAuth.getCurrentUserModel();
       final cartModel = CartModel(
         user: user!,
         products: _productsList,

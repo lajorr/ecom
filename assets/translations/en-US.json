@@ -16,7 +16,7 @@
   "tech": "Tech",
   "watch": "Watch",
 
-  "order_history": "Order History",
+  "order_history": "Your Carts",
   "edit_profile": "Edit Profile",
   "chat": "Chats",
   "langauge": "Language",
@@ -40,7 +40,7 @@
   "pay": "Pay",
   "no_product": "... products where?",
   "shipping_info": "Shipping Information",
-  "total": "Total({} Items)",
+  "total_prod": "Total({} Items)",
   "shipping_fee": "Shipping Fee",
   "sub_total": "Sub Total",
   "confirm_pay": "Confirm Payment",
@@ -50,5 +50,7 @@
   "delivery_loc": "Delivery location: {}",
   "english": "English",
   "japanese": "Japanese",
-  "all_chats": "All Chats"
+  "all_chats": "All Chats",
+  "items": "Items",
+  "total": "Total:"
 }

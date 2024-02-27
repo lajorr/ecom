@@ -1,4 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
 import 'package:ecom/features/checkout/presentation/screens/cart_history_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,87 +19,60 @@ class CartHistoryTile extends StatelessWidget {
 
     final products = cart.products;
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(
-          CartHistoryScreen.routeName,
-          arguments: cart,
-        );
-      },
-      child: Container(
-        width: media.width * 0.5,
-        margin: const EdgeInsets.only(right: 10),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Items",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            CartHistoryScreen.routeName,
+            arguments: cart,
+          );
+        },
+        child: Container(
+          width: media.width * 0.4,
+          margin: const EdgeInsets.only(right: 10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: GridTile(
+              footer: Container(
+                height: 70,
+                padding: const EdgeInsets.all(10),
+                color: const Color.fromARGB(155, 0, 0, 0),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        StringConstants.itemsText,
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ).tr(),
+                      Text(
+                        'X${products.length}',
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                    ],
                   ),
-                ),
-                Text(
-                  "Quantity",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                  SizedBox(
+                    height: media.height * 0.01,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: media.height * 0.005,
-            ),
-            Expanded(
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  final prod = products[index];
-                  if (index < 2) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: media.width * 0.25,
-                          child: Text(
-                            prod.product.prodTitle,
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'X${prod.quantity}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                  return null;
-                },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        StringConstants.total,
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ).tr(),
+                      Text(
+                        '\$${cart.amount}',
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                    ],
+                  ),
+                ]),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: products[0].product.prodImage[0].imageUrl,
+                fit: BoxFit.cover,
               ),
             ),
-            if (products.length > 2)
-              const Text(
-                "..more",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }

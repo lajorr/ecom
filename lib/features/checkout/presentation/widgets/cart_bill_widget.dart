@@ -30,7 +30,7 @@ class CartBillWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                StringConstants.totalText,
+                StringConstants.totalProdText,
               ).tr(args: ["${productList.length}"]),
               Text('\$${cart.amount}'),
             ],

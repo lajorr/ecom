@@ -58,7 +58,7 @@ class StringConstants {
   static const payText = "pay";
   static const noProductText = "no_product";
   static const shippingInfoText = "shipping_info";
-  static const totalText = "total";
+  static const totalProdText = "total_prod";
   static const shippingFeeText = "shipping_fee";
   static const subTotalText = "sub_total";
   static const confirmPayText = "confirm_pay";
@@ -67,6 +67,10 @@ class StringConstants {
   //order history
   static const historyTitleText = "history";
   static const deliveryLocText = "delivery_loc";
+  static const itemsText = "items";
+  static const total = "total";
+
+
 
   // all chats
   static const allChatsText = "all_chats";

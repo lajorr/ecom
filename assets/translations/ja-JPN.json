@@ -16,7 +16,7 @@
   "tech": "技術",
   "watch": "時計",
 
-  "order_history": "注文履歴",
+  "order_history": "あなたのカート",
   "edit_profile": "プロファイル編集",
   "chat": "チャット",
   "langauge": "言語",
@@ -40,7 +40,7 @@
   "pay": "支払う",
   "no_product": "...製品はどこ ?",
   "shipping_info": "出荷情報",
-  "total": "合計({} 製品)",
+  "total_prod": "合計({} 製品)",
   "shipping_fee": "送料",
   "sub_total": "小計",
   "confirm_pay": "確認する",
@@ -50,5 +50,7 @@
   "delivery_loc": "配達場所: {}",
   "english": "英語",
   "japanese": "日本語",
-  "all_chats": "チャット"
+  "all_chats": "チャット",
+  "items": "製品",
+  "total": "合計"
 }
