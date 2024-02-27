@@ -38,9 +38,6 @@ class RouteManager {
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
             providers: [
-              // BlocProvider(
-              //   create: (context) => sl<AuthBloc>(),
-              // ),
               BlocProvider(
                 create: (context) => sl<ValidationBloc>(),
               ),

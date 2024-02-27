@@ -90,6 +90,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     borderRadius: BorderRadius.circular(25),
                                     child: CachedNetworkImage(
                                       imageUrl: image.imageUrl,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 );

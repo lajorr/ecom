@@ -24,6 +24,7 @@ class ProdCard extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10),
+          color: Colors.transparent,
           child: Row(
             children: [
               // image
