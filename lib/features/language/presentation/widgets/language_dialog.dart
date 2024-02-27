@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/features/language/presentation/cubit/language_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +13,15 @@ class ChangeLanguageDialog extends StatelessWidget {
 
   final Size media;
 
-  final List<String> languages = [
-    "english",
-    "japanese",
+  final List<Map<String, dynamic>> languages = [
+    {
+      "lang": "english",
+      "locale": const Locale('en', 'US'),
+    },
+    {
+      "lang": "japanese",
+      "locale": const Locale('ja', 'JPN'),
+    },
   ];
 
   @override
@@ -33,9 +40,12 @@ class ChangeLanguageDialog extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: languages.length,
                     itemBuilder: (context, index) {
-                      final lang = languages[index];
+                      final lang = languages[index]['lang'] as String;
+                      final locale = languages[index]['locale'] as Locale;
                       return GestureDetector(
                         onTap: () {
+                          print("tapped");
+                          context.setLocale(locale);
                           context
                               .read<LanguageCubit>()
                               .onSetCurrentLanguage(index);
