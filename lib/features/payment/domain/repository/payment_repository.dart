@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
 
+import '../../../../core/error/failures.dart';
 import '../../data/model/credit_card_model.dart';
 
 abstract class PaymentRepository {

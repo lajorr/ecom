@@ -1,5 +1,5 @@
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
+import '../../../auth/data/model/user_model.dart';
+import '../../../chat/presentation/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChatWidget extends StatelessWidget {

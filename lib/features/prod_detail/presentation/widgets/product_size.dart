@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart' as p;
+import '../../../../constants/string_constants.dart';
+import '../../../../shared/catalog/model/product_model.dart' as p;
 import 'package:flutter/material.dart';
 
 class ProductSize extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
+import '../../../../shared/catalog/model/product_model.dart';
 
 import '../../../../core/error/failures.dart';
 

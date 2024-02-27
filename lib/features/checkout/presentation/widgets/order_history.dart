@@ -1,6 +1,6 @@
-import 'package:ecom/common/widgets/my_shimmer.dart';
-import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
-import 'package:ecom/features/checkout/presentation/widgets/cart_history_tile.dart';
+import '../../../../common/widgets/my_shimmer.dart';
+import '../blocs/orders%20bloc/orders_bloc.dart';
+import 'cart_history_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

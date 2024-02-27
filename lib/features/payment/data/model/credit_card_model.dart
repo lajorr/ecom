@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/features/payment/domain/entity/credit_card_entity.dart';
+
+import '../../domain/entity/credit_card_entity.dart';
 
 class CreditCardModel extends CreditCardEntity {
   const CreditCardModel({

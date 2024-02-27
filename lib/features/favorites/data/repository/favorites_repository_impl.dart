@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/favorites/data/datasource/favorites_datasource.dart';
-import 'package:ecom/features/favorites/domain/repository/favorites_repository.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
+import '../../../../core/error/failures.dart';
+import '../datasource/favorites_datasource.dart';
+import '../../domain/repository/favorites_repository.dart';
+import '../../../../shared/catalog/model/product_model.dart';
 
 class FavoritesRepositoryImpl implements FavoritesRepository {
   final FavoritesDataSource dataSource;

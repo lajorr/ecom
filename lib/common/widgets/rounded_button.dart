@@ -1,5 +1,6 @@
-import 'package:ecom/constants/img_uri.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/img_uri.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({

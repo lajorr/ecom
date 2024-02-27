@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../auth/data/model/user_model.dart';
 import '../../data/model/message_model.dart';
 
 abstract class ChatRepository {

@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../constants/string_constants.dart';
 
 class ProfilePickerDialog extends StatefulWidget {
   const ProfilePickerDialog({

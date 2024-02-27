@@ -1,6 +1,6 @@
-import 'package:ecom/core/extensions/string_to_enum.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/shared/catalog/enitity/product_entity.dart';
+import '../../../core/extensions/string_to_enum.dart';
+import '../../../features/auth/data/model/user_model.dart';
+import '../enitity/product_entity.dart';
 
 class ProductModel extends ProductEntity {
   const ProductModel({

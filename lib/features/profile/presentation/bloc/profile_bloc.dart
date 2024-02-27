@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/profile/domain/usecase/update_user_data_usecase.dart';
-import 'package:ecom/features/profile/domain/usecase/upload_profile_picture_usecase.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/usecase/usecase.dart';
+import '../../../auth/data/model/user_model.dart';
 import '../../domain/usecase/fetch_user_data_usecase.dart';
+import '../../domain/usecase/update_user_data_usecase.dart';
+import '../../domain/usecase/upload_profile_picture_usecase.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';

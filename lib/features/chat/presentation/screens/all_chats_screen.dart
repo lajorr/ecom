@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/common/widgets/my_shimmer.dart';
-import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
+import '../../../../common/widgets/my_shimmer.dart';
+import '../../../../core/firebaseFunctions/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

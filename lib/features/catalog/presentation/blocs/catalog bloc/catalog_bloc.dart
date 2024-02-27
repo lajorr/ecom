@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../../core/usecase/usecase.dart';
+import '../../../../../shared/catalog/enitity/enum/category_enum.dart';
 import '../../../../../shared/catalog/model/product_model.dart';
 import '../../../domain/usecase/get_product_data_usecase.dart';
 

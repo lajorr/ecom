@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecom/common/widgets/my_shimmer.dart';
-import 'package:ecom/constants/img_uri.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/img_uri.dart';
+import 'my_shimmer.dart';
 
 class ProfilePicWidget extends StatelessWidget {
   const ProfilePicWidget({

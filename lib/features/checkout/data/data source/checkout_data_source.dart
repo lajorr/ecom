@@ -1,5 +1,4 @@
-import 'package:ecom/core/error/exception.dart';
-
+import '../../../../core/error/exception.dart';
 import '../../../../core/firebaseFunctions/firebase_auth.dart';
 import '../../../../core/firebaseFunctions/firebase_collections.dart';
 import '../../../../shared/catalog/model/product_model.dart';

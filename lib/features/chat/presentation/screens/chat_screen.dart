@@ -1,11 +1,11 @@
-import 'package:ecom/common/widgets/profile_pic_widget.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/chat/data/model/message_model.dart';
-import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/widgets/profile_pic_widget.dart';
+import '../../../auth/data/model/user_model.dart';
+import '../../data/model/message_model.dart';
 import '../blocs/chat bloc/chat_bloc.dart';
+import '../blocs/cubit/show_send_button_cubit.dart';
 import '../widgets/message tile/msg_tile_other.dart';
 import '../widgets/message tile/msg_tile_self.dart';
 

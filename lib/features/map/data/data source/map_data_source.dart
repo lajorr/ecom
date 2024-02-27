@@ -1,5 +1,6 @@
-import 'package:ecom/core/location-functions/map_location.dart';
 import 'package:geolocator/geolocator.dart';
+
+import '../../../../core/location-functions/map_location.dart';
 
 abstract class MapDataSource {
   Future<Position> getCurrentPosition();

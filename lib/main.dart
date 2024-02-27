@@ -1,11 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
-import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
-import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
-import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
-import 'package:ecom/features/map/presentation/bloc/map_bloc.dart';
-import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
-import 'package:ecom/shared/theme%20cubit/cubit/theme_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,12 +6,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'common/route_manager/route_manager.dart';
 import 'common/theme_manager/theme_manager.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'features/chat/presentation/blocs/chat bloc/chat_bloc.dart';
 import 'features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
+import 'features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
+import 'features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
+import 'features/favorites/presentation/bloc/favorites_bloc.dart';
+import 'features/map/presentation/bloc/map_bloc.dart';
+import 'features/payment/presentation/bloc/payment_bloc.dart';
 import 'features/profile/presentation/bloc/profile_bloc.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 import 'injection_container.dart';
+import 'theme/presentation/theme cubit/cubit/theme_cubit.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,6 +84,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: Builder(builder: (context) {
+        context.read<ThemeCubit>().getThemeStatus();
         return BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, state) {
             if (state is ThemeStatus) {

@@ -1,5 +1,5 @@
-import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
-import 'package:ecom/features/payment/data/model/credit_card_model.dart';
+import '../../../../core/firebaseFunctions/firebase_collections.dart';
+import '../model/credit_card_model.dart';
 
 abstract class PaymentDatasource {
   Future<void> storeCardInfo({required CreditCardModel creditModel});

@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/exception.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/chat/data/data%20source/chat_data_source.dart';
-import 'package:ecom/features/chat/data/model/message_model.dart';
-import 'package:ecom/features/chat/domain/repository/chat_repository.dart';
+
+import '../../../../core/error/exception.dart';
+import '../../../../core/error/failures.dart';
+import '../../../auth/data/model/user_model.dart';
+import '../../domain/repository/chat_repository.dart';
+import '../data%20source/chat_data_source.dart';
+import '../model/message_model.dart';
 
 class ChatRepositoryImpl implements ChatRepository {
   ChatRepositoryImpl({required this.dataSource});

@@ -1,7 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
+import 'firebase_auth.dart';
 
 class FireStorage {
   final FirebaseStorage _storage = FirebaseStorage.instance;

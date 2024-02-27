@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/chat/data/model/message_model.dart';
-import 'package:ecom/features/chat/domain/usecase/fetch_chat_room_data_usecase.dart';
-import 'package:ecom/features/chat/domain/usecase/fetch_messages_usecase.dart';
-import 'package:ecom/features/chat/domain/usecase/send_message_usecase.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../../../core/usecase/usecase.dart';
+import '../../../../auth/data/model/user_model.dart';
+import '../../../data/model/message_model.dart';
+import '../../../domain/usecase/fetch_chat_room_data_usecase.dart';
+import '../../../domain/usecase/fetch_messages_usecase.dart';
+import '../../../domain/usecase/send_message_usecase.dart';
 
 part 'chat_event.dart';
 part 'chat_state.dart';

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/features/chat/domain/entity/message_enity.dart';
+
+import '../../domain/entity/message_enity.dart';
 
 class MessageModel extends MessageEntity {
   const MessageModel({

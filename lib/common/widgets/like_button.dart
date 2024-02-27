@@ -1,7 +1,8 @@
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../constants/img_uri.dart';
+import '../../features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
 
 class LikeButton extends StatefulWidget {
   const LikeButton({

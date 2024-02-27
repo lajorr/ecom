@@ -7,3 +7,5 @@ class DocumentException implements Exception {}
 class EmptyCartException implements Exception {}
 
 class LocationException implements Exception {}
+
+class SharedPreferenceException implements Exception {}

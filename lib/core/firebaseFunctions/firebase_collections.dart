@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/features/chat/data/model/message_model.dart';
-import 'package:ecom/features/payment/data/model/credit_card_model.dart';
+import '../../features/chat/data/model/message_model.dart';
+import '../../features/payment/data/model/credit_card_model.dart';
 import 'package:geocoding/geocoding.dart';
 
 import '../../features/auth/data/model/user_model.dart';

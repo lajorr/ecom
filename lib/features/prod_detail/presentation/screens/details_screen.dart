@@ -1,19 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/common/widgets/like_button.dart';
-import 'package:ecom/common/widgets/my_button.dart';
-import 'package:ecom/common/widgets/rounded_button.dart';
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
-import 'package:ecom/features/prod_detail/presentation/widgets/chat_widget.dart';
-import 'package:ecom/features/prod_detail/presentation/widgets/product_size.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/widgets/like_button.dart';
+import '../../../../common/widgets/my_button.dart';
+import '../../../../common/widgets/rounded_button.dart';
+import '../../../../constants/img_uri.dart';
+import '../../../../constants/string_constants.dart';
+import '../../../../shared/catalog/model/product_model.dart';
+import '../../../auth/data/model/user_model.dart';
 import '../../../checkout/domain/model/cart_product_model.dart';
+import '../../../checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
+import '../widgets/chat_widget.dart';
+import '../widgets/product_size.dart';
 import '../widgets/show_cart_button.dart';
 
 class DetailsScreen extends StatefulWidget {

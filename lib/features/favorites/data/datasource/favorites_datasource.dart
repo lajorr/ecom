@@ -1,5 +1,5 @@
-import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
+import '../../../../core/firebaseFunctions/firebase_collections.dart';
+import '../../../../shared/catalog/model/product_model.dart';
 
 abstract class FavoritesDataSource {
   Future<List<ProductModel>> fetchFavProducts();

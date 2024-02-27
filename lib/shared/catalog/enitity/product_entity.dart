@@ -1,7 +1,7 @@
-import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../features/auth/data/model/user_model.dart';
+import 'enum/category_enum.dart';
 
 class ProductEntity extends Equatable {
   final String id;

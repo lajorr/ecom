@@ -1,8 +1,8 @@
-import 'package:ecom/features/auth/presentation/widgets/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../auth/presentation/widgets/my_text_field.dart';
 import '../../data/model/credit_card_model.dart';
 import '../bloc/payment_bloc.dart';
 

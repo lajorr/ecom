@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/payment/data/data%20source/payment_datasource.dart';
-import 'package:ecom/features/payment/data/model/credit_card_model.dart';
-import 'package:ecom/features/payment/domain/repository/payment_repository.dart';
+import '../../../../core/error/failures.dart';
+import '../data%20source/payment_datasource.dart';
+import '../model/credit_card_model.dart';
+import '../../domain/repository/payment_repository.dart';
 
 class PaymentRepositoryImpl implements PaymentRepository {
   final PaymentDatasource dataSource;

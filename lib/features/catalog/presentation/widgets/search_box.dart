@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../constants/img_uri.dart';
 import '../../../../constants/string_constants.dart';
+import '../blocs/catalog%20bloc/catalog_bloc.dart';
 
 class SearchBox extends StatelessWidget {
   const SearchBox({

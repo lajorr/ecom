@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:ecom/features/navbar/presentation/screens/navigation_menu.dart';
-import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../constants/string_constants.dart';
+import '../../../../shared/validation/bloc/validation_bloc.dart';
+import '../../../navbar/presentation/screens/navigation_menu.dart';
+import '../bloc/auth_bloc.dart';
 import '../widgets/my_text_field.dart';
 
 class LoginCard extends StatefulWidget {

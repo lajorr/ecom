@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
+import '../../../../constants/img_uri.dart';
+import '../../../../shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';

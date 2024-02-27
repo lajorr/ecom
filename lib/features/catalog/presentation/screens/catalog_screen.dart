@@ -1,9 +1,9 @@
-import 'package:ecom/features/catalog/presentation/widgets/catalog_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
 import '../blocs/catalog bloc/catalog_bloc.dart';
+import '../widgets/catalog_shimmer.dart';
 import '../widgets/category_list.dart';
 import '../widgets/header.dart';
 import '../widgets/my_grid_view.dart';

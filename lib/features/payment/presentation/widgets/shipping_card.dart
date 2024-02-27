@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/common/widgets/my_shimmer.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
-import 'package:ecom/features/payment/presentation/widgets/add_cart_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/widgets/my_shimmer.dart';
 import '../../../../constants/img_uri.dart';
+import '../../../../constants/string_constants.dart';
+import '../../../checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
 import '../bloc/payment_bloc.dart';
+import 'add_cart_info_dialog.dart';
 
 class ShippingCard extends StatefulWidget {
   const ShippingCard({

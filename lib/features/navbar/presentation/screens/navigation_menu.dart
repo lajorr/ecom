@@ -1,13 +1,13 @@
-import 'package:ecom/common/widgets/my_drawer.dart';
-import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/widgets/my_drawer.dart';
 import '../../../../constants/img_uri.dart';
 import '../../../catalog/presentation/screens/catalog_screen.dart';
 import '../../../checkout/presentation/screens/checkout_screen.dart';
 import '../../../favorites/presentation/screens/fav_screen.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
+import '../cubit/nav_index_cubit.dart';
 import '../widgets/nav_item.dart';
 
 class NavigationMenu extends StatefulWidget {

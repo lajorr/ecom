@@ -1,33 +1,13 @@
-import 'package:ecom/core/firebaseFunctions/firebase_storage.dart';
-import 'package:ecom/core/location-functions/map_location.dart';
-import 'package:ecom/features/chat/data/data%20source/chat_data_source.dart';
-import 'package:ecom/features/chat/domain/repository/chat_repository.dart';
-import 'package:ecom/features/chat/domain/usecase/fetch_chat_room_data_usecase.dart';
-import 'package:ecom/features/chat/domain/usecase/send_message_usecase.dart';
-import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
-import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
-import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
-import 'package:ecom/features/favorites/data/datasource/favorites_datasource.dart';
-import 'package:ecom/features/favorites/data/repository/favorites_repository_impl.dart';
-import 'package:ecom/features/favorites/domain/repository/favorites_repository.dart';
-import 'package:ecom/features/favorites/domain/usecase/fetch_fav_products_usecase.dart';
-import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
-import 'package:ecom/features/map/data/data%20source/map_data_source.dart';
-import 'package:ecom/features/map/domain/repositity/map_repository.dart';
-import 'package:ecom/features/map/domain/usecase/get_current_user_position_usecase.dart';
-import 'package:ecom/features/map/presentation/bloc/map_bloc.dart';
-import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
-import 'package:ecom/features/payment/data/data%20source/payment_datasource.dart';
-import 'package:ecom/features/payment/domain/repository/payment_repository.dart';
-import 'package:ecom/features/payment/domain/usecase/add_card_details_usecase.dart';
-import 'package:ecom/features/payment/domain/usecase/fetch_credit_card_details_usecase.dart';
-import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
-import 'package:ecom/features/profile/domain/usecase/upload_profile_picture_usecase.dart';
-import 'package:ecom/shared/theme%20cubit/cubit/theme_cubit.dart';
+import 'theme/data/data%20source/shared_pref_datasource.dart';
+import 'theme/domain/repository/theme_repository.dart';
+import 'theme/domain/usecase/fetch_theme_status_usecase.dart';
+import 'theme/domain/usecase/store_theme_status_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/firebaseFunctions/firebase_auth.dart';
 import 'core/firebaseFunctions/firebase_collections.dart';
+import 'core/firebaseFunctions/firebase_storage.dart';
+import 'core/location-functions/map_location.dart';
 import 'core/utils/text_validator.dart';
 import 'features/auth/data/dataSource/auth_data_source.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
@@ -46,9 +26,14 @@ import 'features/catalog/domain/usecase/get_product_data_usecase.dart';
 import 'features/catalog/domain/usecase/like_unlike_prod_usecase.dart';
 import 'features/catalog/presentation/blocs/catalog bloc/catalog_bloc.dart';
 import 'features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
+import 'features/chat/data/data%20source/chat_data_source.dart';
 import 'features/chat/data/repository/chat_repository_impl.dart';
+import 'features/chat/domain/repository/chat_repository.dart';
+import 'features/chat/domain/usecase/fetch_chat_room_data_usecase.dart';
 import 'features/chat/domain/usecase/fetch_messages_usecase.dart';
+import 'features/chat/domain/usecase/send_message_usecase.dart';
 import 'features/chat/presentation/blocs/chat bloc/chat_bloc.dart';
+import 'features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
 import 'features/checkout/data/data%20source/checkout_data_source.dart';
 import 'features/checkout/data/repository/checkout_repository_impl.dart';
 import 'features/checkout/domain/repository/checkout_repository.dart';
@@ -58,15 +43,35 @@ import 'features/checkout/domain/usecases/fetch_order_usecase.dart';
 import 'features/checkout/domain/usecases/place_order_usecase.dart';
 import 'features/checkout/domain/usecases/remove_cart_item_usecase.dart';
 import 'features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
+import 'features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
+import 'features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
+import 'features/favorites/data/datasource/favorites_datasource.dart';
+import 'features/favorites/data/repository/favorites_repository_impl.dart';
+import 'features/favorites/domain/repository/favorites_repository.dart';
+import 'features/favorites/domain/usecase/fetch_fav_products_usecase.dart';
+import 'features/favorites/presentation/bloc/favorites_bloc.dart';
+import 'features/map/data/data%20source/map_data_source.dart';
 import 'features/map/data/repository/map_repository_impl.dart';
+import 'features/map/domain/repositity/map_repository.dart';
+import 'features/map/domain/usecase/get_current_user_position_usecase.dart';
+import 'features/map/presentation/bloc/map_bloc.dart';
+import 'features/navbar/presentation/cubit/nav_index_cubit.dart';
+import 'features/payment/data/data%20source/payment_datasource.dart';
 import 'features/payment/data/repository/payment_repository_impl.dart';
+import 'features/payment/domain/repository/payment_repository.dart';
+import 'features/payment/domain/usecase/add_card_details_usecase.dart';
+import 'features/payment/domain/usecase/fetch_credit_card_details_usecase.dart';
+import 'features/payment/presentation/bloc/payment_bloc.dart';
 import 'features/profile/data/data%20source/user_data_source.dart';
 import 'features/profile/data/repository/profile_repository_impl.dart';
 import 'features/profile/domain/repository/profile_repository.dart';
 import 'features/profile/domain/usecase/fetch_user_data_usecase.dart';
 import 'features/profile/domain/usecase/update_user_data_usecase.dart';
+import 'features/profile/domain/usecase/upload_profile_picture_usecase.dart';
 import 'features/profile/presentation/bloc/profile_bloc.dart';
 import 'shared/validation/bloc/validation_bloc.dart';
+import 'theme/data/repository/theme_repository_impl.dart';
+import 'theme/presentation/theme cubit/cubit/theme_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -147,9 +152,17 @@ void init() {
   sl.registerFactory(() => ShowSendButtonCubit());
   sl.registerFactory(() => NavIndexCubit());
   sl.registerFactory(() => CreditCardSetCubit());
-  sl.registerFactory(() => ThemeCubit());
+  sl.registerFactory(
+    () => ThemeCubit(
+      fetchThemeStatusUsecase: sl(),
+      storeThemeStatusUsecase: sl(),
+    ),
+  );
 
   //usecase
+
+  sl.registerLazySingleton(() => FetchThemeStatusUsecase(repository: sl()));
+  sl.registerLazySingleton(() => StoreThemeStatusUsecase(repository: sl()));
 
   sl.registerLazySingleton(() => AddToCartUsecase(repository: sl()));
   sl.registerLazySingleton(() => FetchCartProductsUsecase(repository: sl()));
@@ -226,9 +239,18 @@ void init() {
       dataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<ThemeRepository>(
+    () => ThemeRepositoryImpl(
+      spDataSource: sl(),
+    ),
+  );
 
   // datasource
   //yesle chai euta matra intance banaidinxa thru out the app
+
+  sl.registerLazySingleton<SharedPrefDataSource>(
+    () => SharedPrefDataSourceImpl(),
+  );
   sl.registerLazySingleton<AuthDataSource>(
     () => AuthDataSourceImpl(
       fireAuth: sl(),

@@ -49,3 +49,7 @@ class EmptyCartFailure extends Failure {
 class LocationFailure extends Failure {
   const LocationFailure({required super.message});
 }
+
+class SharedPrefFailure extends Failure {
+  const SharedPrefFailure({required super.message});
+}

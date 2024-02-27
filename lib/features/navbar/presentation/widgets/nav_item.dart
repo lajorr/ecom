@@ -1,5 +1,5 @@
 
-import 'package:ecom/constants/img_uri.dart';
+import '../../../../constants/img_uri.dart';
 import 'package:flutter/material.dart';
 
 class NavItem extends StatelessWidget {
