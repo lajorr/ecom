@@ -53,7 +53,26 @@ class MyDrawer extends StatelessWidget {
                       );
                     },
                   ),
-                  const ThemeChangeWidget(),
+                  ListTile(
+                    leading: const Icon(Icons.light_mode),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(StringConstants.darkModeText).tr(),
+                        BlocBuilder<ThemeCubit, ThemeState>(
+                          builder: (context, state) {
+                            final statee = state as ThemeStatus;
+                            return Switch(
+                              value: statee.isDark,
+                              onChanged: (value) {
+                                context.read<ThemeCubit>().toggleTheme(value);
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                   ListTile(
                     leading: const Icon(Icons.language),
                     title: const Text(
@@ -92,44 +111,33 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
-class ThemeChangeWidget extends StatefulWidget {
-  const ThemeChangeWidget({
-    super.key,
-  });
+// class ThemeChangeWidget extends StatelessWidget {
+//   ThemeChangeWidget({
+//     super.key,
+//   });
+//   var z = false;
 
-  @override
-  State<ThemeChangeWidget> createState() => _ThemeChangeWidgetState();
-}
-
-class _ThemeChangeWidgetState extends State<ThemeChangeWidget> {
-  @override
-  Widget build(BuildContext context) {
-    bool isDark = false;
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) {
-        if (state is ThemeStatus) {
-          isDark = state.isDark;
-        }
-
-        return ListTile(
-          leading: const Icon(Icons.light_mode),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(StringConstants.darkModeText).tr(),
-              Switch(
-                value: isDark,
-                onChanged: (value) {
-                  setState(() {
-                    isDark = !isDark;
-                  });
-                  context.read<ThemeCubit>().toggleTheme(value);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListTile(
+//       leading: const Icon(Icons.light_mode),
+//       title: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           const Text(StringConstants.darkModeText).tr(),
+//           BlocBuilder<ThemeCubit, ThemeState>(
+//             builder: (context, state) {
+//               final statee = state as ThemeStatus;
+//               return Switch(
+//                 value: statee.isDark,
+//                 onChanged: (value) {
+//                   context.read<ThemeCubit>().toggleTheme(value);
+//                 },
+//               );
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

@@ -30,6 +30,8 @@ class StringConstants {
   static const languageText = "langauge";
   static const logoutText = "logout";
   static const darkModeText = "dark_mode";
+  static const engText = 'english';
+  static const jpnText = 'japanese';
 
   //edit profile screen
   static const editTitleText = "edit";
@@ -65,6 +67,10 @@ class StringConstants {
   //order history
   static const historyTitleText = "history";
   static const deliveryLocText = "delivery_loc";
+
+  // all chats
+  static const allChatsText = "all_chats";
+
 
 
   static const favoritesText = "Favorites";

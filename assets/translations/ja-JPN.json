@@ -47,5 +47,8 @@
   "pick_loc": "場所を選択",
   "log_out_confirm": "ログアウトしてもよろしいですか?",
   "history": "歴史",
-  "delivery_loc": "配達場所: {}"
+  "delivery_loc": "配達場所: {}",
+  "english": "英語",
+  "japanese": "日本語",
+  "all_chats": "チャット"
 }

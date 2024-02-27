@@ -12,7 +12,6 @@ import 'package:ecom/features/favorites/data/repository/favorites_repository_imp
 import 'package:ecom/features/favorites/domain/repository/favorites_repository.dart';
 import 'package:ecom/features/favorites/domain/usecase/fetch_fav_products_usecase.dart';
 import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
-import 'package:ecom/features/language/presentation/cubit/language_cubit.dart';
 import 'package:ecom/features/map/data/data%20source/map_data_source.dart';
 import 'package:ecom/features/map/domain/repositity/map_repository.dart';
 import 'package:ecom/features/map/domain/usecase/get_current_user_position_usecase.dart';
@@ -149,7 +148,6 @@ void init() {
   sl.registerFactory(() => NavIndexCubit());
   sl.registerFactory(() => CreditCardSetCubit());
   sl.registerFactory(() => ThemeCubit());
-  sl.registerFactory(() => LanguageCubit());
 
   //usecase
 

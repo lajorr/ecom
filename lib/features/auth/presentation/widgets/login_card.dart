@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/constants/string_constants.dart';
 import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';

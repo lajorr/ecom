@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
     final media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Chats'),
+        title: const Text('all_chats').tr(),
         backgroundColor: Colors.transparent,
       ),
       body: BlocBuilder<ChatBloc, ChatState>(
