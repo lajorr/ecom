@@ -11,5 +11,8 @@ class ValidateInputEvent extends ValidationEvent {
   final String email;
   final String password;
 
-  const ValidateInputEvent({required this.email, required this.password});
+  const ValidateInputEvent({
+    required this.email,
+    required this.password,
+  });
 }
