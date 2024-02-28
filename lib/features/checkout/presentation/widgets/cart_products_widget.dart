@@ -8,7 +8,7 @@ import 'prod_card.dart';
 class CartProductsWidget extends StatelessWidget {
   const CartProductsWidget({
     Key? key,
-    required this.cart,
+  required this.cart,
   }) : super(key: key);
 
   final CartModel cart;
@@ -16,29 +16,34 @@ class CartProductsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productList = cart.products;
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: productList.length,
-      itemBuilder: (context, index) {
-        final product = productList[index];
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.4,
+      ),
+      child: ListView.builder(
+        shrinkWrap: true,
+        // physics: const NeverScrollableScrollPhysics(),
+        itemCount: productList.length,
+        itemBuilder: (context, index) {
+          final product = productList[index];
 
-        return GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed(
-              DetailsScreen.routeName,
-              arguments: {
-                "product": product.product,
-                "currentUser": cart.user,
-              },
-            );
-          },
-          child: ProdCard(
-            cartProduct: product,
-            isOrderPlaced: cart.cartStatus == CartStatus.orderPlaced,
-          ),
-        );
-      },
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                DetailsScreen.routeName,
+                arguments: {
+                  "product": product.product,
+                  "currentUser": cart.user,
+                },
+              );
+            },
+            child: ProdCard(
+              cartProduct: product,
+              isOrderPlaced: cart.cartStatus == CartStatus.orderPlaced,
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -103,55 +103,53 @@ class CheckoutScreen extends StatelessWidget {
                   )
                 ],
               ),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      // prod list
-                      if (productList.isEmpty)
-                        SizedBox(
-                          height: media.height * 0.25,
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                ImageConstants.getImageUri(
-                                    ImageConstants.emptyCartIcon),
-                                height: media.height * 0.1,
-                              ),
-                              SizedBox(
-                                height: media.height * 0.03,
-                              ),
-                              const Text(
-                                StringConstants.noProductText,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ).tr(),
-                            ],
-                          ),
-                        )
-                      else
-                        CartProductsWidget(
-                          cart: cart,
-                        ),
-                
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    // prod list
+                    if (productList.isEmpty)
                       SizedBox(
-                        height: media.height * 0.02,
-                      ),
-                
-                      //shipping info
-                      const ShippingCard(),
-                
-                      // total amount
-                      CartBillWidget(
-                        productList: productList,
+                        height: media.height * 0.25,
+                        child: Column(
+                          children: [
+                            Image.asset(
+                              ImageConstants.getImageUri(
+                                  ImageConstants.emptyCartIcon),
+                              height: media.height * 0.1,
+                            ),
+                            SizedBox(
+                              height: media.height * 0.03,
+                            ),
+                            const Text(
+                              StringConstants.noProductText,
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ).tr(),
+                          ],
+                        ),
+                      )
+                    else
+                      CartProductsWidget(
                         cart: cart,
-                        shippingFee: shippingFee,
-                        totalAmt: totalAmt,
                       ),
-                    ],
-                  ),
+
+                    SizedBox(
+                      height: media.height * 0.02,
+                    ),
+
+                    //shipping info
+                    const ShippingCard(),
+
+                    // total amount
+                    CartBillWidget(
+                      productList: productList,
+                      cart: cart,
+                      shippingFee: shippingFee,
+                      totalAmt: totalAmt,
+                    ),
+                  ],
                 ),
               ),
             );
