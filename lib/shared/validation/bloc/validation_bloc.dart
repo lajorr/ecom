@@ -1,10 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:ecom/core/utils/text_validator.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 part 'validation_event.dart';
 part 'validation_state.dart';
@@ -20,15 +18,13 @@ class ValidationBloc extends Bloc<ValidationEvent, ValidationState> {
 
   FutureOr<void> _onValidateEvent(
       ValidateInputEvent event, Emitter<ValidationState> emit) {
-    debugPrint("validate input event");
     emit(ValidationInitial());
 
     final eitherValid = textValidator.inputChecker(event.email, event.password);
     eitherValid.fold((failure) {
       emit(
-        const ValidationFailure(message: 'Validation failed'),
+        ValidationFailure(message: failure.message),
       );
-      // emit(InvalidCreds(message: 'asd'))
     }, (isValid) {
       emit(
         ValidationSuccess(),
