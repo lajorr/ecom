@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 import 'package:ecom/features/chat/data/model/message_model.dart';
@@ -39,7 +38,6 @@ class ChatDataSourceImpl implements ChatDataSource {
 
         for (var msgDoc in msgDocs) {
           final msgJson = msgDoc.data();
-          
 
           final msg = MessageModel.fromJson(
             json: msgJson,
@@ -59,16 +57,19 @@ class ChatDataSourceImpl implements ChatDataSource {
   @override
   Future<List<UserModel>> getChatRoomData() async {
     List<UserModel> chatUserList = [];
+    try {
+      final userDocSnapList = await fireCollections.getUserChatRooms();
 
-    final userDocSnapList = await fireCollections.getUserChatRooms();
+      for (var otherUser in userDocSnapList) {
+        final otherUserData = otherUser.data() as Map<String, dynamic>;
 
-    for (var otherUser in userDocSnapList) {
-      final otherUserData = otherUser.data() as Map<String, dynamic>;
+        final otherUM = UserModel.fromMap(otherUserData);
+        chatUserList.add(otherUM);
+      }
 
-      final otherUM = UserModel.fromMap(otherUserData);
-      chatUserList.add(otherUM);
+      return chatUserList;
+    } catch (e) {
+      throw ServerException();
     }
-
-    return chatUserList;
   }
 }

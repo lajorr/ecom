@@ -5,9 +5,10 @@ import '../../../../common/widgets/profile_pic_widget.dart';
 import '../../../auth/data/model/user_model.dart';
 import '../../data/model/message_model.dart';
 import '../blocs/chat bloc/chat_bloc.dart';
-import '../blocs/cubit/show_send_button_cubit.dart';
+import '../widgets/file_type_widget.dart';
 import '../widgets/message tile/msg_tile_other.dart';
 import '../widgets/message tile/msg_tile_self.dart';
+import '../widgets/my_text_box.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -26,8 +27,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _textController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -43,21 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.deactivate();
   }
 
-  void onSend() {
-    if (_textController.text.isNotEmpty) {
-      final msg = MessageModel(
-        message: _textController.text.trim(),
-        createdAt: DateTime.now(),
-        recieverId: widget.otherUser.uid!,
-        senderId: widget.currentUserId,
-      );
-      context.read<ChatBloc>().add(SendMessageEvent(message: msg));
-      _textController.clear();
-      context
-          .read<ShowSendButtonCubit>()
-          .toggleSendVisibility(_textController.text.trim());
-    }
-  }
+  bool showFileTypes = false;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +51,8 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: Row(
           children: [
             ProfilePicWidget(
@@ -101,79 +88,58 @@ class _ChatScreenState extends State<ChatScreen> {
 
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(children: [
-                Expanded(
-                  child: StreamBuilder<List<MessageModel>>(
-                      stream: msgStream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData && snapshot.data != null) {
-                          final messageM = snapshot.data!;
-                          messages = messageM.reversed.toList();
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        StreamBuilder<List<MessageModel>>(
+                            stream: msgStream,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data != null) {
+                                final messageM = snapshot.data!;
+                                messages = messageM.reversed.toList();
 
-                          return ListView.builder(
-                            reverse: true,
-                            itemCount: messages.length,
-                            itemBuilder: (context, index) {
-                              final message = messages[index];
-                              if (message.senderId == widget.currentUserId) {
-                                return MsgTileSelf(
-                                  message: message.message,
-                                  createdAt: message.createdAt,
+                                return ListView.builder(
+                                  reverse: true,
+                                  itemCount: messages.length,
+                                  itemBuilder: (context, index) {
+                                    final message = messages[index];
+                                    if (message.senderId ==
+                                        widget.currentUserId) {
+                                      return MsgTileSelf(
+                                        message: message.message,
+                                        createdAt: message.createdAt,
+                                      );
+                                    } else {
+                                      return MsgTileOther(
+                                        message: message.message,
+                                        createdAt: message.createdAt,
+                                      );
+                                    }
+                                  },
                                 );
                               } else {
-                                return MsgTileOther(
-                                  message: message.message,
-                                  createdAt: message.createdAt,
+                                return const Center(
+                                  child: CircularProgressIndicator(),
                                 );
                               }
-                            },
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      }),
-                ),
-                Container(
-                  height: 70,
-                  alignment: Alignment.bottomCenter,
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      hintText: "Write a message..",
-                      suffixIcon:
-                          BlocBuilder<ShowSendButtonCubit, ShowSendButtonState>(
-                        builder: (context, state) {
-                          if (state is ShowSendButtonTrue) {
-                            final brightness = Theme.of(context).brightness;
-                            return IconButton(
-                              icon: Icon(
-                                Icons.send,
-                                color: brightness == Brightness.light
-                                    ? Theme.of(context).primaryColor
-                                    : Colors.white,
-                              ),
-                              onPressed: onSend,
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        },
-                      ),
+                            }),
+                        if (showFileTypes) const FileTypesWidget(),
+                      ],
                     ),
-                    onChanged: (value) {
-                      context
-                          .read<ShowSendButtonCubit>()
-                          .toggleSendVisibility(value);
-                    },
-                    onEditingComplete: onSend,
                   ),
-                ),
-              ]),
+                  MyTextBox(
+                    otherUserId: widget.otherUser.uid!,
+                    currentUserId: widget.currentUserId,
+                    onFileTapped: () {
+                      setState(() {
+                        showFileTypes = !showFileTypes;
+                      });
+                    },
+                  )
+                ],
+              ),
             );
           } else {
             return Container();

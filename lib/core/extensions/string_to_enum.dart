@@ -1,3 +1,5 @@
+import 'package:ecom/features/chat/domain/entity/message_enity.dart';
+
 import '../../features/checkout/domain/entity/enums/cart_status_enum.dart';
 import '../../shared/catalog/enitity/enum/category_enum.dart';
 
@@ -25,6 +27,17 @@ extension ToEnum on String {
         return Category.all;
       default:
         return Category.all;
+    }
+  }
+
+  MessageType toMessageType() {
+    switch (this) {
+      case 'photo':
+        return MessageType.photo;
+      case 'video':
+        return MessageType.video;
+      default:
+        return MessageType.text;
     }
   }
 }

@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../features/chat/data/model/message_model.dart';
-import '../../features/payment/data/model/credit_card_model.dart';
 import 'package:geocoding/geocoding.dart';
 
 import '../../features/auth/data/model/user_model.dart';
+import '../../features/chat/data/model/message_model.dart';
 import '../../features/checkout/domain/entity/enums/cart_status_enum.dart';
 import '../../features/checkout/domain/model/cart_model.dart';
 import '../../features/checkout/domain/model/cart_product_model.dart';
 import '../../features/checkout/domain/model/order_model.dart';
+import '../../features/payment/data/model/credit_card_model.dart';
 import '../../shared/catalog/model/product_model.dart';
 import '../../shared/likes/like_model.dart';
 import '../error/exception.dart';
@@ -570,22 +570,26 @@ class FireCollections {
     List<DocumentSnapshot<Object?>> userDocSnapList = [];
     final currentUser = await fireAuth.getCurrentUserModel();
     final currentUserRef = userCollection.doc(currentUser!.uid);
-    final snapshot = await chatRoomsCollection
-        .where('members', arrayContains: currentUserRef)
-        .get();
-    final docs = snapshot.docs;
+    try {
+      final snapshot = await chatRoomsCollection
+          .where('members', arrayContains: currentUserRef)
+          .get();
+      final docs = snapshot.docs;
 
-    for (var doc in docs) {
-      final roomData = doc.data();
-      final roomMembers = roomData['members'] as List;
+      for (var doc in docs) {
+        final roomData = doc.data();
+        final roomMembers = roomData['members'] as List;
 
-      final otherUserRef = roomMembers
-          .where((memberRef) => memberRef != currentUserRef)
-          .first as DocumentReference;
+        final otherUserRef = roomMembers
+            .where((memberRef) => memberRef != currentUserRef)
+            .first as DocumentReference;
 
-      final otherUser = await otherUserRef.get();
-      userDocSnapList.add(otherUser);
+        final otherUser = await otherUserRef.get();
+        userDocSnapList.add(otherUser);
+      }
+      return userDocSnapList;
+    } catch (e) {
+      throw ServerException();
     }
-    return userDocSnapList;
   }
 }
