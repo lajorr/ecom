@@ -32,8 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
           () {
             if (state is UserAvailable) {
               BlocProvider.of<ProfileBloc>(context).add(FetchUserDataEvent());
-              Navigator.of(context)
-                  .pushReplacementNamed(NavigationMenu.routeName);
+              Navigator.of(context).pushReplacementNamed(
+                NavigationMenu.routeName,
+                arguments: {"user": state.user},
+              );
             } else if (state is UserUnavailable) {
               Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
             } else if (state is AuthFailed) {
@@ -42,8 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   content: Text(state.message),
                 ),
               );
-            } else {
-            }
+            } else {}
           },
         );
       },

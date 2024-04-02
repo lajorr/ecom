@@ -19,15 +19,9 @@ final class ProfileLoaded extends ProfileState {
   List<Object> get props => [];
   const ProfileLoaded({
     required this.currentUser,
-    // required this.imageUrl,
-    // required this.username,
-    // required this.phNumber,
-    // required this.email,
+    
   });
-  // final String email;
-  // final String? username;
-  // final int? phNumber;
-  // final String? imageUrl;
+  
   final UserModel currentUser;
 }
 

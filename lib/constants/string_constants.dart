@@ -52,6 +52,7 @@ class StringConstants {
   static const addToCartText = "add_cart";
   static const chooseSizeText = "choose_size";
   static const colorText = "color";
+  static const noOwnerText = "no_owner";
 
   // checkout screen
   static const checkoutText = "checkout";

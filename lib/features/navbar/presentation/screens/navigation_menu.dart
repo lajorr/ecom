@@ -10,32 +10,26 @@ import '../../../profile/presentation/screens/profile_screen.dart';
 import '../cubit/nav_index_cubit.dart';
 import '../widgets/nav_item.dart';
 
-class NavigationMenu extends StatefulWidget {
+class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
 
   static const routeName = '/navigation-menu';
 
   @override
-  State<NavigationMenu> createState() => _NavigationMenuState();
-}
-
-class _NavigationMenuState extends State<NavigationMenu> {
-  List<Widget> pages = [
-    const CatalogScreen(),
-    const CheckoutScreen(),
-    const FavScreen(),
-    const ProfileScreen(),
-  ];
-
-  List<String> navIcons = [
-    ImageConstants.homeIcon,
-    ImageConstants.shopBagIcon,
-    ImageConstants.heartIcon,
-    ImageConstants.profileIcon
-  ];
-
-  @override
   Widget build(BuildContext context) {
+    List<Widget> pages = [
+      const CatalogScreen(),
+      const CheckoutScreen(),
+      const FavScreen(),
+      const ProfileScreen(),
+    ];
+
+    List<String> navIcons = [
+      ImageConstants.homeIcon,
+      ImageConstants.shopBagIcon,
+      ImageConstants.heartIcon,
+      ImageConstants.profileIcon
+    ];
     return BlocConsumer<NavIndexCubit, NavIndexState>(
       listener: (context, state) {
         if (state is NavIndexChanged) {

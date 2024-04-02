@@ -52,5 +52,6 @@
   "japanese": "日本語",
   "all_chats": "チャット",
   "items": "製品",
-  "total": "合計"
+  "total": "合計",
+  "no_owner": "この製品には所有者がいません"
 }

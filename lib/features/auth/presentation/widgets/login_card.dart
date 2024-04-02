@@ -70,8 +70,10 @@ class _LoginCardState extends State<LoginCard> {
               ),
             );
           } else if (state is UserAvailable) {
-            Navigator.of(context)
-                .pushReplacementNamed(NavigationMenu.routeName);
+            Navigator.of(context).pushReplacementNamed(
+              NavigationMenu.routeName,
+              arguments: {'user': state.user},
+            );
           }
         },
         builder: (context, state) {

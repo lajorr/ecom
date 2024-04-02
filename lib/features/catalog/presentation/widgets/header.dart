@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../common/widgets/my_shimmer.dart';
-import '../../../../constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/widgets/my_shimmer.dart';
 import '../../../../common/widgets/profile_pic_widget.dart';
+import '../../../../constants/string_constants.dart';
 import '../../../navbar/presentation/cubit/nav_index_cubit.dart';
 import '../../../profile/presentation/bloc/profile_bloc.dart';
 

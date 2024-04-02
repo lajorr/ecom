@@ -52,5 +52,6 @@
   "japanese": "Japanese",
   "all_chats": "All Chats",
   "items": "Items",
-  "total": "Total:"
+  "total": "Total:",
+  "no_owner": "This product has no owner"
 }

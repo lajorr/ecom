@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
+import 'package:flutter/material.dart';
+
 import '../../../auth/data/model/user_model.dart';
 import '../../../chat/presentation/screens/chat_screen.dart';
-import 'package:flutter/material.dart';
 
 class ChatWidget extends StatelessWidget {
   const ChatWidget({
@@ -15,7 +18,20 @@ class ChatWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: otherUser == null
-          ? null
+          ? () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  duration: const Duration(seconds: 1),
+                  content: const Text(
+                    StringConstants.noOwnerText,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ).tr(),
+                ),
+              );
+            }
           : () {
               Navigator.of(context).pushNamed(
                 ChatScreen.routeName,
