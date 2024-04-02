@@ -15,12 +15,12 @@ final class ProfileLoading extends ProfileState {
 }
 
 final class ProfileLoaded extends ProfileState {
-  @override
-  List<Object> get props => [];
   const ProfileLoaded({
     required this.currentUser,
     
   });
+  @override
+  List<Object> get props => [];
   
   final UserModel currentUser;
 }

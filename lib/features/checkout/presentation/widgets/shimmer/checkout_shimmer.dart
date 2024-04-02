@@ -1,11 +1,9 @@
+import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../common/widgets/my_shimmer.dart';
 
 class CheckoutShimmer extends StatelessWidget {
   const CheckoutShimmer({
-    super.key,
-    required this.media,
+    required this.media, super.key,
   });
 
   final Size media;
@@ -15,7 +13,7 @@ class CheckoutShimmer extends StatelessWidget {
     return MyShimmer(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

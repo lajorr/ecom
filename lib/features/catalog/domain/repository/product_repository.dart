@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../../shared/catalog/model/product_model.dart';
-import '../../../../shared/likes/like_model.dart';
+import 'package:ecom/core/error/failures.dart';
+import 'package:ecom/shared/catalog/model/product_model.dart';
+import 'package:ecom/shared/likes/like_model.dart';
 
 abstract class ProductRepository {
   Future<Either<Failure, List<ProductModel>>> getProductData();

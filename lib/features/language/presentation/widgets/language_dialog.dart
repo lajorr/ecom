@@ -1,13 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/features/language/presentation/widgets/language_tile.dart';
 import 'package:flutter/material.dart';
-
-import 'language_tile.dart';
 
 class ChangeLanguageDialog extends StatefulWidget {
   const ChangeLanguageDialog({
-    Key? key,
-    required this.media,
-  }) : super(key: key);
+    required this.media, super.key,
+  });
 
   final Size media;
 
@@ -18,26 +16,26 @@ class ChangeLanguageDialog extends StatefulWidget {
 class _ChangeLanguageDialogState extends State<ChangeLanguageDialog> {
   final List<Map<String, dynamic>> languages = [
     {
-      "lang": "english",
-      "locale": const Locale('en', 'US'),
+      'lang': 'english',
+      'locale': const Locale('en', 'US'),
     },
     {
-      "lang": "japanese",
-      "locale": const Locale('ja', 'JPN'),
+      'lang': 'japanese',
+      'locale': const Locale('ja', 'JPN'),
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     int selectedIndex;
-    if (context.locale == const Locale("ja", "JPN")) {
+    if (context.locale == const Locale('ja', 'JPN')) {
       selectedIndex = 1;
     } else {
       selectedIndex = 0;
     }
     return AlertDialog(
       content: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         child: SizedBox(
           height: widget.media.height * 0.22,
           width: widget.media.height * 0.2,

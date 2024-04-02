@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../../core/usecase/usecase.dart';
-import '../../../auth/data/model/user_model.dart';
-import '../repository/profile_repository.dart';
+import 'package:ecom/core/error/failures.dart';
+import 'package:ecom/core/usecase/usecase.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
+import 'package:ecom/features/profile/domain/repository/profile_repository.dart';
 
 class UpdateUserDataUsecase extends Usecase<UserModel, UserParams> {
   UpdateUserDataUsecase({required this.repository});

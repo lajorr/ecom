@@ -1,20 +1,19 @@
 import 'package:dartz/dartz.dart';
+import 'package:ecom/core/error/exception.dart';
+import 'package:ecom/core/error/failures.dart';
+import 'package:ecom/features/auth/data/dataSource/auth_data_source.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
+import 'package:ecom/features/auth/domain/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../core/error/exception.dart';
-import '../../../../core/error/failures.dart';
-import '../../domain/repository/auth_repository.dart';
-import '../dataSource/auth_data_source.dart';
-import '../model/user_model.dart';
-
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthDataSource dataSource;
 
   AuthRepositoryImpl({required this.dataSource});
+  final AuthDataSource dataSource;
 
   @override
   Future<Either<Failure, UserModel>> loginWithEmail(
-      String email, String password) async {
+      String email, String password,) async {
     try {
       final user = await dataSource.signInWithEmailAndPassword(email, password);
       final userM = UserModel.fromFirebaseUser(user);
@@ -23,14 +22,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Left(FirebaseFailure());
     } on ServerException {
       return const Left(
-        ServerFailure(message: "Cannot connect to the server"),
+        ServerFailure(message: 'Cannot connect to the server'),
       );
     }
   }
 
   @override
   Future<Either<Failure, UserModel?>> signUpWithEmail(
-      String email, String password) async {
+      String email, String password,) async {
     try {
       final user = await dataSource.signUpWithEmailAndPassword(email, password);
       final userM = UserModel.fromFirebaseUser(user);
@@ -39,7 +38,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Left(FirebaseFailure());
     } on ServerException {
       return const Left(
-        ServerFailure(message: "Cannot connect to the server"),
+        ServerFailure(message: 'Cannot connect to the server'),
       );
     }
   }
@@ -56,7 +55,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
     } on NoUserException {
       return const Left(
-        NoUserFailure(message: "No Such User"),
+        NoUserFailure(message: 'No Such User'),
       );
     } catch (e) {
       throw UnimplementedError();
@@ -72,7 +71,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Left(FirebaseFailure());
     } on ServerException {
       return const Left(
-        ServerFailure(message: "Cannot connect to the server"),
+        ServerFailure(message: 'Cannot connect to the server'),
       );
     }
   }

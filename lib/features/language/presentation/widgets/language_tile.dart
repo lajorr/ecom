@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 
 class LanguageTile extends StatelessWidget {
   const LanguageTile({
-    Key? key,
-    required this.media,
-    required this.language,
-    required this.isSelected,
-  }) : super(key: key);
+    required this.media, required this.language, required this.isSelected, super.key,
+  });
 
   final Size media;
   final String language;

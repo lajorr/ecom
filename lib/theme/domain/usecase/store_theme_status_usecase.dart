@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import '../../../core/error/failures.dart';
-import '../../../core/usecase/usecase.dart';
-import '../repository/theme_repository.dart';
+import 'package:ecom/core/error/failures.dart';
+import 'package:ecom/core/usecase/usecase.dart';
+import 'package:ecom/theme/domain/repository/theme_repository.dart';
 
 class StoreThemeStatusUsecase extends Usecase<void, bool> {
   StoreThemeStatusUsecase({required this.repository});

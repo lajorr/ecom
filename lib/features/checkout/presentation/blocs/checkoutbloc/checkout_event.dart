@@ -17,9 +17,9 @@ class AddToCartEvent extends CheckoutEvent {
 class FetchCartProductsEvent extends CheckoutEvent {}
 
 class RemoveProdFromCartEvent extends CheckoutEvent {
-  final ProductModel prod;
 
   const RemoveProdFromCartEvent({required this.prod});
+  final ProductModel prod;
 }
 
 class ClearLocalDataEvent extends CheckoutEvent {}

@@ -1,18 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
+import 'package:ecom/features/catalog/presentation/widgets/category_tile.dart';
+import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../constants/img_uri.dart';
-import '../../../../constants/string_constants.dart';
-import '../../../../shared/catalog/enitity/enum/category_enum.dart';
-import '../blocs/catalog%20bloc/catalog_bloc.dart';
-import 'category_tile.dart';
-
 class CategoryList extends StatefulWidget {
   const CategoryList({
-    Key? key,
-    required this.media,
-  }) : super(key: key);
+    required this.media, super.key,
+  });
 
   final Size media;
 

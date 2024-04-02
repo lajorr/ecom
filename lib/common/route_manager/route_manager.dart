@@ -1,27 +1,26 @@
+import 'package:ecom/features/auth/data/model/user_model.dart';
+import 'package:ecom/features/auth/presentation/screens/login_screen.dart';
+import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
+import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
+import 'package:ecom/features/chat/presentation/screens/all_chats_screen.dart';
+import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
+import 'package:ecom/features/checkout/domain/model/cart_model.dart';
+import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
+import 'package:ecom/features/checkout/presentation/screens/cart_history_screen.dart';
+import 'package:ecom/features/checkout/presentation/screens/checkout_screen.dart';
+import 'package:ecom/features/map/presentation/screens/show_map_screen.dart';
+import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
+import 'package:ecom/features/navbar/presentation/screens/navigation_menu.dart';
+import 'package:ecom/features/prod_detail/presentation/screens/details_screen.dart';
+import 'package:ecom/features/profile/presentation/screens/edit_profile_screen.dart';
+import 'package:ecom/features/splash/presentation/splash_screen.dart';
+import 'package:ecom/injection_container.dart';
+import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/auth/data/model/user_model.dart';
-import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/catalog/presentation/blocs/like bloc/like_bloc.dart';
-import '../../features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
-import '../../features/chat/presentation/screens/all_chats_screen.dart';
-import '../../features/chat/presentation/screens/chat_screen.dart';
-import '../../features/checkout/domain/model/cart_model.dart';
-import '../../features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
-import '../../features/checkout/presentation/screens/cart_history_screen.dart';
-import '../../features/checkout/presentation/screens/checkout_screen.dart';
-import '../../features/map/presentation/screens/show_map_screen.dart';
-import '../../features/navbar/presentation/cubit/nav_index_cubit.dart';
-import '../../features/navbar/presentation/screens/navigation_menu.dart';
-import '../../features/prod_detail/presentation/screens/details_screen.dart';
-import '../../features/profile/presentation/screens/edit_profile_screen.dart';
-import '../../features/splash/presentation/splash_screen.dart';
-import '../../injection_container.dart';
-import '../../shared/validation/bloc/validation_bloc.dart';
-
 class RouteManager {
-  Route? onGenerateRoute(RouteSettings settings) {
+  Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
@@ -50,9 +49,9 @@ class RouteManager {
           builder: (context) => BlocProvider(
             create: (context) => sl<LikeBloc>(),
             child: DetailsScreen(
-              product: (settings.arguments as Map<String, dynamic>)['product'],
+              product: (settings.arguments! as Map<String, dynamic>)['product'],
               currentUser:
-                  (settings.arguments as Map<String, dynamic>)['currentUser'],
+                  (settings.arguments! as Map<String, dynamic>)['currentUser'],
             ),
           ),
         );
@@ -68,14 +67,14 @@ class RouteManager {
       case CartHistoryScreen.routeName:
         return MaterialPageRoute(
           builder: (context) =>
-              CartHistoryScreen(cart: settings.arguments as CartModel),
+              CartHistoryScreen(cart: settings.arguments! as CartModel),
         );
 
       case ShowMapScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => ShowMapScreen(
             onConfirmPosition:
-                (settings.arguments as Map<String, dynamic>)['onConfirmPos'],
+                (settings.arguments! as Map<String, dynamic>)['onConfirmPos'],
           ),
         );
       case ChatScreen.routeName:
@@ -83,9 +82,9 @@ class RouteManager {
           builder: (context) => BlocProvider(
             create: (context) => sl<ShowSendButtonCubit>(),
             child: ChatScreen(
-              otherUser: (settings.arguments
+              otherUser: (settings.arguments!
                   as Map<String, dynamic>)['other_user'] as UserModel,
-              currentUserId: (settings.arguments
+              currentUserId: (settings.arguments!
                   as Map<String, dynamic>)['current_user_id'] as String,
             ),
           ),

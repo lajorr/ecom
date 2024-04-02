@@ -1,13 +1,12 @@
+import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
+import 'package:ecom/features/catalog/presentation/widgets/catalog_shimmer.dart';
+import 'package:ecom/features/catalog/presentation/widgets/category_list.dart';
+import 'package:ecom/features/catalog/presentation/widgets/header.dart';
+import 'package:ecom/features/catalog/presentation/widgets/my_grid_view.dart';
+import 'package:ecom/features/catalog/presentation/widgets/search_box.dart';
+import 'package:ecom/features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
-import '../blocs/catalog bloc/catalog_bloc.dart';
-import '../widgets/catalog_shimmer.dart';
-import '../widgets/category_list.dart';
-import '../widgets/header.dart';
-import '../widgets/my_grid_view.dart';
-import '../widgets/search_box.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key});
@@ -33,7 +32,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
       body: SafeArea(
         child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 14.0,
+              horizontal: 14,
             ),
             child: Column(
               children: [
@@ -77,7 +76,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   },
                 ),
               ],
-            )),
+            ),),
       ),
     );
   }

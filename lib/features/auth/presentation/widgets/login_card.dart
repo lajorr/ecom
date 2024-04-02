@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:ecom/features/auth/presentation/widgets/my_text_field.dart';
+import 'package:ecom/features/navbar/presentation/screens/navigation_menu.dart';
+import 'package:ecom/shared/validation/bloc/validation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../constants/string_constants.dart';
-import '../../../../shared/validation/bloc/validation_bloc.dart';
-import '../../../navbar/presentation/screens/navigation_menu.dart';
-import '../bloc/auth_bloc.dart';
-import '../widgets/my_text_field.dart';
 
 class LoginCard extends StatefulWidget {
   const LoginCard({super.key});
@@ -107,7 +106,7 @@ class _LoginCardState extends State<LoginCard> {
                       ).tr(),
                       MyTextField(
                         label: StringConstants.emailLabel,
-                        hintText: "abc@gmail.com",
+                        hintText: 'abc@gmail.com',
                         errorMsg: (validationState is ValidationFailure)
                             ? validationState.message
                             : null,
@@ -127,7 +126,7 @@ class _LoginCardState extends State<LoginCard> {
                             ? validationState.message
                             : null,
                         label: StringConstants.passwordLabel,
-                        hintText: "xxxxxxxx",
+                        hintText: 'xxxxxxxx',
                         prefixIcon: const Icon(
                           Icons.vpn_key,
                         ),
@@ -211,11 +210,8 @@ class _LoginCardState extends State<LoginCard> {
 
 class LoadingWidet extends StatelessWidget {
   const LoadingWidet({
-    Key? key,
-    required this.child,
-    required this.isLoading,
-    required this.media,
-  }) : super(key: key);
+    required this.child, required this.isLoading, required this.media, super.key,
+  });
 
   final Widget child;
   final bool isLoading;

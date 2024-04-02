@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class EditProfileShimmer extends StatelessWidget {
   const EditProfileShimmer({
-    super.key,
-    required this.media,
+    required this.media, super.key,
   });
 
   final Size media;

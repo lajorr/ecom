@@ -1,10 +1,9 @@
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/error/failures.dart';
-import '../../../../shared/catalog/model/product_model.dart';
-import '../model/cart_model.dart';
-import '../model/cart_product_model.dart';
-import '../model/order_model.dart';
+import 'package:ecom/core/error/failures.dart';
+import 'package:ecom/features/checkout/domain/model/cart_model.dart';
+import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
+import 'package:ecom/features/checkout/domain/model/order_model.dart';
+import 'package:ecom/shared/catalog/model/product_model.dart';
 
 abstract class CheckoutRepository {
   Future<Either<Failure, CartModel>> addToCart(CartProductModel product);

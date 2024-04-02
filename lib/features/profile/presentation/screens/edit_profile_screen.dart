@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/features/auth/presentation/widgets/my_text_field.dart';
+import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:ecom/features/profile/presentation/widgets/profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-
-import '../../../../constants/string_constants.dart';
-import '../../../auth/presentation/widgets/my_text_field.dart';
-import '../bloc/profile_bloc.dart';
-import '../widgets/profile_image.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -39,7 +38,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final media = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: const Text(StringConstants.editTitleText).tr(),
+          title:   const Text(StringConstants.editTitleText).tr(),
         ),
         body: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
@@ -55,14 +54,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             if (state is ProfileLoading) {
               return Center(
                 child: LottieBuilder.network(
-                    'https://lottie.host/9ae8ec07-82fc-4db9-af4c-1ae669cb294e/y4012cjn1O.json'),
+                    'https://lottie.host/9ae8ec07-82fc-4db9-af4c-1ae669cb294e/y4012cjn1O.json',),
               );
             } else if (state is ProfileLoaded) {
               final user = state.currentUser;
 
               return SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16),
                   child: Form(
                     key: formKey,
                     child: Column(
@@ -136,6 +135,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               return Container();
             }
           },
-        ));
+        ),);
   }
 }
