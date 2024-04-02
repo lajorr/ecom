@@ -1,4 +1,4 @@
-import 'package:ecom/core/error/exception.dart';
+import '../../../core/error/exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class SharedPrefDataSource {
@@ -11,12 +11,12 @@ class SharedPrefDataSourceImpl implements SharedPrefDataSource {
 
   @override
   Future<bool> getThemeStatus() async {
-    final prefs = await _prefs;
+    final SharedPreferences prefs = await _prefs;
 
     try {
-      final themeStatus = prefs.getBool('theme_status');
+      final themeStatus = prefs.getBool("theme_status");
       if (themeStatus == null) {
-        await storeData(false);
+        storeData(false);
         return false;
       } else {
         return themeStatus;
@@ -28,9 +28,9 @@ class SharedPrefDataSourceImpl implements SharedPrefDataSource {
 
   @override
   Future<void> storeData(bool isDark) async {
-    final prefs = await _prefs;
+    final SharedPreferences prefs = await _prefs;
     try {
-      await prefs.setBool('theme_status', isDark);
+      await prefs.setBool("theme_status", isDark);
     } catch (e) {
       throw SharedPreferenceException();
     }

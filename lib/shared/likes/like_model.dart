@@ -1,4 +1,4 @@
-import 'package:ecom/shared/likes/like_entity.dart';
+import 'like_entity.dart';
 
 class LikeModel extends Like {
   LikeModel(
@@ -6,7 +6,7 @@ class LikeModel extends Like {
       required super.prodRef,
       required super.userId,
       required super.userRef,
-      required super.isLiked,});
+      required super.isLiked});
 
   factory LikeModel.fromMap(Map<String, dynamic> map) {
     return LikeModel(

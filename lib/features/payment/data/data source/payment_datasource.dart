@@ -1,5 +1,5 @@
-import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
-import 'package:ecom/features/payment/data/model/credit_card_model.dart';
+import '../../../../core/firebaseFunctions/firebase_collections.dart';
+import '../model/credit_card_model.dart';
 
 abstract class PaymentDatasource {
   Future<void> storeCardInfo({required CreditCardModel creditModel});
@@ -18,16 +18,16 @@ class PaymentDatasourceImpl implements PaymentDatasource {
   Future<CreditCardModel> fetchCardInfo() async {
     final creditM = await fireCollections.fetchCreditCardInfo();
 
-    var creditModelToReturn = creditM;
+    CreditCardModel creditModelToReturn = creditM;
 
     if (creditM.cardHolderName != null) {
-      var formattedNum = '';
-      final cardNum = creditM.cardNum!;
+      String formattedNum = '';
+      String cardNum = creditM.cardNum!;
 
       // to add space
       for (var i = 0; i < cardNum.length; i++) {
         if (i > 0 && i % 4 == 0) {
-          formattedNum += ' ';
+          formattedNum += " ";
         }
         // to hide the string
         if (i < 12) {

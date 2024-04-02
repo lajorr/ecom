@@ -8,8 +8,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ShowMapScreen extends StatefulWidget {
   const ShowMapScreen({
-    required this.onConfirmPosition, super.key,
-  });
+    Key? key,
+    required this.onConfirmPosition,
+  }) : super(key: key);
 
   @override
   State<ShowMapScreen> createState() => _ShowMapScreenState();
@@ -63,7 +64,7 @@ class _ShowMapScreenState extends State<ShowMapScreen> {
             zoom: 14.4746,
           );
 
-          final centerCam = CameraPosition(
+          CameraPosition centerCam = CameraPosition(
             bearing: 192.8334901395799,
             target: currentUserLatlng,
             tilt: 59.440717697143555,
@@ -73,7 +74,7 @@ class _ShowMapScreenState extends State<ShowMapScreen> {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () async {
-                final controller = await _controller.future;
+                final GoogleMapController controller = await _controller.future;
                 await controller.animateCamera(
                   CameraUpdate.newCameraPosition(centerCam),
                 );
@@ -88,8 +89,11 @@ class _ShowMapScreenState extends State<ShowMapScreen> {
               child: Stack(
                 children: [
                   GoogleMap(
+                    mapType: MapType.normal,
                     initialCameraPosition: camPos,
-                    onMapCreated: _controller.complete,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
                     markers: markers,
                     onTap: (tappedPoint) {
                       setState(

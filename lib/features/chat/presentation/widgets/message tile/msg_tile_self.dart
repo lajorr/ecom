@@ -4,8 +4,10 @@ import 'package:intl/intl.dart';
 
 class MsgTileSelf extends StatelessWidget {
   const MsgTileSelf({
-    required this.message, required this.createdAt, super.key,
-  });
+    Key? key,
+    required this.message,
+    required this.createdAt,
+  }) : super(key: key);
 
   final String message;
   final DateTime createdAt;
@@ -32,7 +34,7 @@ class MsgTileSelf extends StatelessWidget {
             ),
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
               child: Text(
                 message,
                 style: const TextStyle(color: Colors.white),
@@ -44,7 +46,7 @@ class MsgTileSelf extends StatelessWidget {
             style: const TextStyle(
               fontSize: 11,
             ),
-          ),
+          )
         ],
       ),
     );

@@ -1,10 +1,12 @@
-import 'package:ecom/common/widgets/my_shimmer.dart';
-import 'package:ecom/features/catalog/presentation/widgets/grid_view_shimmer.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../common/widgets/my_shimmer.dart';
+import 'grid_view_shimmer.dart';
 
 class CatalogShimmer extends StatelessWidget {
   const CatalogShimmer({
-    required this.media, super.key,
+    super.key,
+    required this.media,
   });
 
   final Size media;

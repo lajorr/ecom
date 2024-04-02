@@ -1,9 +1,11 @@
-import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../common/widgets/my_shimmer.dart';
 
 class OrderShimmer extends StatelessWidget {
   const OrderShimmer({
-    required this.media, super.key,
+    super.key,
+    required this.media,
   });
 
   final Size media;

@@ -1,5 +1,5 @@
-import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
-import 'package:ecom/shared/likes/like_model.dart';
+import '../../../../core/firebaseFunctions/firebase_collections.dart';
+import '../../../../shared/likes/like_model.dart';
 
 abstract class LikeCollectionDataSource {
   Future<LikeModel> fetchLikeDocument(String prodId);
@@ -7,9 +7,9 @@ abstract class LikeCollectionDataSource {
 }
 
 class LikeCollectionDataSourceImpl implements LikeCollectionDataSource {
+  final FireCollections fireCollections;
 
   LikeCollectionDataSourceImpl({required this.fireCollections});
-  final FireCollections fireCollections;
 
   @override
   Future<LikeModel> fetchLikeDocument(String prodId) async {

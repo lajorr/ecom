@@ -1,12 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
-import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
 import 'package:equatable/equatable.dart';
+
+import '../model/cart_product_model.dart';
 
 class CartEntity extends Equatable {
   const CartEntity({
-    required this.user, required this.products, required this.amount, required this.cartStatus, this.cId,
+    this.cId,
+    required this.user,
+    required this.products,
+    required this.amount,
+    required this.cartStatus,
     this.lat,
     this.lng,
     this.address,

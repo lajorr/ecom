@@ -1,12 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/checkout/domain/model/cart_model.dart';
-import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../constants/string_constants.dart';
+import '../../domain/model/cart_model.dart';
+import '../../domain/model/cart_product_model.dart';
 
 class CartBillWidget extends StatelessWidget {
   const CartBillWidget({
-    required this.productList, required this.cart, required this.shippingFee, required this.totalAmt, super.key,
+    super.key,
+    required this.productList,
+    required this.cart,
+    required this.shippingFee,
+    required this.totalAmt,
   });
 
   final List<CartProductModel> productList;
@@ -26,7 +31,7 @@ class CartBillWidget extends StatelessWidget {
             children: [
               const Text(
                 StringConstants.totalProdText,
-              ).tr(args: ['${productList.length}']),
+              ).tr(args: ["${productList.length}"]),
               Text('\$${cart.amount}'),
             ],
           ),

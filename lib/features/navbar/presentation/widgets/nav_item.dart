@@ -1,11 +1,14 @@
 
-import 'package:ecom/constants/img_uri.dart';
+import '../../../../constants/img_uri.dart';
 import 'package:flutter/material.dart';
 
 class NavItem extends StatelessWidget {
   const NavItem({
-    required this.iconUri, required this.bgColor, required this.onTap, super.key,
-  });
+    Key? key,
+    required this.iconUri,
+    required this.bgColor,
+    required this.onTap,
+  }) : super(key: key);
 
   final String iconUri;
   final Color bgColor;

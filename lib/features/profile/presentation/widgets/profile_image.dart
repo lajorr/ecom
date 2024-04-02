@@ -1,17 +1,19 @@
 import 'dart:typed_data';
 
-import 'package:ecom/common/widgets/my_shimmer.dart';
-import 'package:ecom/common/widgets/profile_pic_widget.dart';
-import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:ecom/features/profile/presentation/widgets/profile_picker_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../common/widgets/my_shimmer.dart';
+import '../../../../common/widgets/profile_pic_widget.dart';
+import '../bloc/profile_bloc.dart';
+import 'profile_picker_dialog.dart';
+
 class ProfileImage extends StatefulWidget {
   const ProfileImage({
-    required this.imageUrl, super.key,
-  });
+    Key? key,
+    required this.imageUrl,
+  }) : super(key: key);
 
   final String? imageUrl;
 
@@ -53,7 +55,7 @@ class _ProfileImageState extends State<ProfileImage> {
                   backgroundColor: Theme.of(context).primaryColor,
                   child: IconButton(
                     onPressed: () async {
-                      await showDialog(
+                      showDialog(
                         context: context,
                         builder: (context) =>
                             ProfilePickerDialog(onPressedOk: onConfirmImage),
@@ -66,7 +68,7 @@ class _ProfileImageState extends State<ProfileImage> {
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           );
         } else if (state is ProfileLoading) {

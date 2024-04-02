@@ -1,5 +1,5 @@
-import 'package:ecom/features/checkout/domain/entity/enums/cart_status_enum.dart';
-import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
+import '../../features/checkout/domain/entity/enums/cart_status_enum.dart';
+import '../../shared/catalog/enitity/enum/category_enum.dart';
 
 extension ToEnum on String {
   CartStatus toCartStatus() {

@@ -1,5 +1,6 @@
-import 'package:ecom/constants/color_utils.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/color_utils.dart';
 
 class ThemeManager {
   static ThemeData getLightThemeData() {

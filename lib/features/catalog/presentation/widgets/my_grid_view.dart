@@ -1,13 +1,15 @@
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/features/catalog/presentation/widgets/my_grid_tile.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../../../constants/img_uri.dart';
+import '../../../../shared/catalog/model/product_model.dart';
+import 'my_grid_tile.dart';
+
 class MyGridView extends StatefulWidget {
   const MyGridView({
-    required this.productList, super.key,
-  });
+    Key? key,
+    required this.productList,
+  }) : super(key: key);
 
   final List<ProductModel> productList;
 
@@ -26,7 +28,7 @@ class _MyGridViewState extends State<MyGridView> {
     final media = MediaQuery.of(context).size;
     final productList = widget.productList;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: (productList.isEmpty)
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,

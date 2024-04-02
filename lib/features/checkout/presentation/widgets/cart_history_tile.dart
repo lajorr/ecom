@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 
 class CartHistoryTile extends StatelessWidget {
   const CartHistoryTile({
-    required this.cart, super.key,
-  });
+    Key? key,
+    required this.cart,
+  }) : super(key: key);
 
   final CartModel cart;
 
@@ -64,7 +65,7 @@ class CartHistoryTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                ],),
+                ]),
               ),
               child: CachedNetworkImage(
                 imageUrl: products[0].product.prodImage[0].imageUrl,
@@ -72,6 +73,6 @@ class CartHistoryTile extends StatelessWidget {
               ),
             ),
           ),
-        ),);
+        ));
   }
 }

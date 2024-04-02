@@ -1,10 +1,11 @@
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/features/catalog/presentation/widgets/grid_view_shimmer.dart';
-import 'package:ecom/features/catalog/presentation/widgets/my_grid_tile.dart';
-import 'package:ecom/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
+import '../../../../constants/img_uri.dart';
+import '../../../catalog/presentation/widgets/grid_view_shimmer.dart';
+import '../../../catalog/presentation/widgets/my_grid_tile.dart';
+import '../bloc/favorites_bloc.dart';
 
 class FavScreen extends StatefulWidget {
   const FavScreen({super.key});
@@ -28,7 +29,7 @@ class _FavScreenState extends State<FavScreen> {
         builder: (context, state) {
           if (state is FavoritesLoading) {
             return Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16.0),
               child: GridViewShimmer(
                 media: media,
                 height: media.height,
@@ -46,7 +47,7 @@ class _FavScreenState extends State<FavScreen> {
             }
 
             return Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16.0),
               child: RefreshIndicator(
                 onRefresh: () async {
                   context.read<FavoritesBloc>().add(FetchFavProductsEvent());

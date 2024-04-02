@@ -15,9 +15,9 @@ final class ValidationSuccess extends ValidationState {
 }
 
 final class ValidationFailure extends ValidationState {
+  final String message;
 
   const ValidationFailure({required this.message});
-  final String message;
   @override
   List<Object> get props => [];
 }

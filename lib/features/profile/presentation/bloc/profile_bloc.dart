@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/profile/domain/usecase/fetch_user_data_usecase.dart';
-import 'package:ecom/features/profile/domain/usecase/update_user_data_usecase.dart';
-import 'package:ecom/features/profile/domain/usecase/upload_profile_picture_usecase.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../../core/usecase/usecase.dart';
+import '../../../auth/data/model/user_model.dart';
+import '../../domain/usecase/fetch_user_data_usecase.dart';
+import '../../domain/usecase/update_user_data_usecase.dart';
+import '../../domain/usecase/upload_profile_picture_usecase.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -28,12 +29,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UploadProfilePictureUsecase uploadProfilePictureUsecase;
 
   FutureOr<void> _onUpdateUserData(
-      UpdateUserDataEvent event, Emitter<ProfileState> emit,) async {
+      UpdateUserDataEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
     final userOrFail = await updateUserDataUsecase.call(
       UserParams(
         username: event.username!,
-        phNumber: int.parse(event.phNumber ?? '000'),
+        phNumber: int.parse(event.phNumber ?? "000"),
       ),
     );
 
@@ -49,7 +50,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   FutureOr<void> _onFetchUserData(
-      FetchUserDataEvent event, Emitter<ProfileState> emit,) async {
+      FetchUserDataEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
     final userOrFail = await fetchUserDataUsecase.call(NoParams());
 
@@ -64,7 +65,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   FutureOr<void> _onUploadProfilePicture(
-      UploadProfilePictureEvent event, Emitter<ProfileState> emit,) async {
+      UploadProfilePictureEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
 
     final uploadOrFail = await uploadProfilePictureUsecase.call(event.image);
@@ -76,7 +77,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             // username: user.name,
             // phNumber: user.phNumber,
             // email: user.email!,
-            currentUser: user,),
+            currentUser: user),
       );
     });
   }

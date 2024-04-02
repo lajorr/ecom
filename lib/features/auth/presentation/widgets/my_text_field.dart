@@ -6,14 +6,17 @@ import 'package:flutter/material.dart';
 
 class MyTextField extends StatefulWidget {
   const MyTextField({
-    required this.label, required this.prefixIcon, required this.onFieldSave, super.key,
+    Key? key,
+    required this.label,
     this.errorMsg,
+    required this.prefixIcon,
     this.inputType = TextInputType.text,
     this.obscure = false,
     this.hintText,
+    required this.onFieldSave,
     this.validator,
     this.initValue,
-  });
+  }) : super(key: key);
 
   final String label;
   final String? errorMsg;
@@ -103,7 +106,7 @@ class _MyTextFieldState extends State<MyTextField> {
             border: outlinedBorder,
             hintText: widget.hintText,
           ),
-        ),
+        )
       ],
     );
   }

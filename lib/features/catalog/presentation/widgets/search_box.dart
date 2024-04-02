@@ -1,14 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/catalog/presentation/blocs/catalog%20bloc/catalog_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../constants/img_uri.dart';
+import '../../../../constants/string_constants.dart';
+import '../blocs/catalog%20bloc/catalog_bloc.dart';
+
 class SearchBox extends StatelessWidget {
   const SearchBox({
-    required this.media, super.key,
-  });
+    Key? key,
+    required this.media,
+  }) : super(key: key);
 
   final Size media;
 
@@ -23,7 +25,7 @@ class SearchBox extends StatelessWidget {
 
     return Container(
       height: media.height * 0.1,
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Row(
         children: [
           Expanded(

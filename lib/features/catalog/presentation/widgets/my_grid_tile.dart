@@ -1,16 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecom/constants/img_uri.dart';
-import 'package:ecom/features/prod_detail/presentation/screens/details_screen.dart';
-import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../constants/img_uri.dart';
+import '../../../../shared/catalog/model/product_model.dart';
+import '../../../prod_detail/presentation/screens/details_screen.dart';
+import '../../../profile/presentation/bloc/profile_bloc.dart';
+
 class MyGridTile extends StatelessWidget {
   const MyGridTile({
-    required this.product, super.key,
-  });
+    Key? key,
+    required this.product,
+  }) : super(key: key);
 
   final ProductModel product;
 
@@ -27,7 +29,7 @@ class MyGridTile extends StatelessWidget {
                   .pushNamed(DetailsScreen.routeName, arguments: {
                 'product': product,
                 'currentUser': currentUser,
-              },);
+              });
             },
             child: Column(
               children: [
@@ -77,12 +79,12 @@ class MyGridTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         //price
-                        Text('\$${product.price}'),
+                        Text("\$${product.price.toString()}"),
                         Row(
                           children: [
                             Image.asset(
                               ImageConstants.getImageUri(
-                                  ImageConstants.starIcon,),
+                                  ImageConstants.starIcon),
                             ),
                             const SizedBox(
                               width: 10,
@@ -92,7 +94,7 @@ class MyGridTile extends StatelessWidget {
                               width: 15,
                             ),
                           ],
-                        ),
+                        )
                       ],
                     ),
                   ],

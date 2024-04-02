@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:typed_data';
 
-import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
 import 'package:ecom/core/firebaseFunctions/firebase_storage.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
+
+import '../../../../core/firebaseFunctions/firebase_auth.dart';
+import '../../../auth/data/model/user_model.dart';
 
 abstract class UserDataSource {
   Future<UserModel?> getCurrentUser();
@@ -43,7 +44,7 @@ class UserDataSourceImpl implements UserDataSource {
       name: name,
       phNumber: phNumber,
     );
-    await fireCollections.setUserData(user: user);
+    fireCollections.setUserData(user: user);
     return user;
   }
 

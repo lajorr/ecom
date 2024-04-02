@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/auth/domain/repository/auth_repository.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../../data/model/user_model.dart';
+import '../repository/auth_repository.dart';
 
 class LoginWithEmailUsecase implements Usecase<UserModel, Params> {
   LoginWithEmailUsecase({required this.repository});
@@ -16,10 +17,10 @@ class LoginWithEmailUsecase implements Usecase<UserModel, Params> {
 }
 
 class Params extends Equatable {
-
-  const Params({required this.email, required this.password});
   final String email;
   final String password;
+
+  const Params({required this.email, required this.password});
 
   @override
   List<Object?> get props => [

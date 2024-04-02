@@ -2,14 +2,15 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/core/usecase/usecase.dart';
 import 'package:ecom/features/checkout/domain/model/cart_model.dart';
-import 'package:ecom/features/checkout/domain/model/order_model.dart';
 import 'package:ecom/features/checkout/domain/usecases/fetch_order_usecase.dart';
 import 'package:ecom/features/checkout/domain/usecases/place_order_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geocoding/geocoding.dart';
+
+import '../../../../../constants/string_constants.dart';
+import '../../../../../core/usecase/usecase.dart';
+import '../../../domain/model/order_model.dart';
 
 part 'orders_event.dart';
 part 'orders_state.dart';
@@ -27,7 +28,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   final PlaceOrderUsecase placeOrderUsecase;
 
   FutureOr<void> _onFetchOrderHistory(
-      FetchOrderHistoryEvent event, Emitter<OrdersState> emit,) async {
+      FetchOrderHistoryEvent event, Emitter<OrdersState> emit) async {
     emit(CheckoutOrderLoading());
     final fetchOrFail = await fetchOrderUsecase.call(NoParams());
     fetchOrFail.fold(
@@ -43,7 +44,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
   }
 
   FutureOr<void> _onPayForCartEvent(
-      OrderCartItemsEvent event, Emitter<OrdersState> emit,) async {
+      OrderCartItemsEvent event, Emitter<OrdersState> emit) async {
     emit(CheckoutOrderLoading());
 
     final cM = event.cartModel;
@@ -64,7 +65,7 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
     }, (_) {
       emit(
         const OrderPaymentSuccess(
-            message: StringConstants.paymentSuccessfulText,),
+            message: StringConstants.paymentSuccessfulText),
       );
     });
   }

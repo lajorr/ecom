@@ -1,11 +1,13 @@
-import 'package:ecom/constants/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../constants/color_utils.dart';
+
 class MyShimmer extends StatelessWidget {
   const MyShimmer({
-    required this.child, super.key,
-  });
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   final Widget child;
 

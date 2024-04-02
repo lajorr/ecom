@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 
 class CategoryTile extends StatelessWidget {
   const CategoryTile({
-    required this.iconUri, required this.title, super.key,
+    Key? key,
+    required this.iconUri,
+    required this.title,
     this.isActive = false,
-  });
+  }) : super(key: key);
 
   final String iconUri;
   final String title;
@@ -34,11 +36,12 @@ class CategoryTile extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                   blurRadius: 2,
                   spreadRadius: 1,
-                ),
+                )
               ]
             : null,
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // icon
           Image.asset(

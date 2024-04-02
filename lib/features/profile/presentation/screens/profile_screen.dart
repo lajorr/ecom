@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/common/widgets/profile_pic_widget.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:ecom/features/auth/presentation/screens/login_screen.dart';
-import 'package:ecom/features/checkout/presentation/widgets/order_history.dart';
-import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
+import '../../../../common/widgets/profile_pic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../constants/string_constants.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../auth/presentation/screens/login_screen.dart';
+import '../../../checkout/presentation/widgets/order_history.dart';
+import '../bloc/profile_bloc.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -59,26 +60,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             body: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     Center(
                         child: ProfilePicWidget(
                       imageUrl: currentUser.imageUrl,
                       size: 0.12,
-                    ),),
+                    )),
                     const SizedBox(
                       height: 50,
                     ),
-                    Text(username ?? '___'),
+                    Text(username ?? "___"),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(email ?? ''),
+                    Text(email ?? ""),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(phNumber ?? '___'),
+                    Text(phNumber ?? "___"),
                     const SizedBox(
                       height: 25,
                     ),
@@ -109,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         } else {
           return Container();
         }
-      },),
+      }),
     );
   }
 }

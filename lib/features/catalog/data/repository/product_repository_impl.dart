@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/exception.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/catalog/data/data_source/like_collection_data_source.dart';
-import 'package:ecom/features/catalog/data/data_source/product_data_source.dart';
-import 'package:ecom/features/catalog/domain/repository/product_repository.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
-import 'package:ecom/shared/likes/like_model.dart';
+
+import '../../../../core/error/exception.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../shared/catalog/model/product_model.dart';
+import '../../../../shared/likes/like_model.dart';
+import '../../domain/repository/product_repository.dart';
+import '../data_source/like_collection_data_source.dart';
+import '../data_source/product_data_source.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   ProductRepositoryImpl({
@@ -20,7 +21,7 @@ class ProductRepositoryImpl implements ProductRepository {
       final productList = await productDataSource.getAllProductList();
       return Right(productList);
     } on ServerException {
-      return const Left(ServerFailure(message: 'Unable to fetch Data'));
+      return const Left(ServerFailure(message: "Unable to fetch Data"));
     }
   }
 
@@ -31,7 +32,7 @@ class ProductRepositoryImpl implements ProductRepository {
 
       return Right(likeDoc);
     } on DocumentException {
-      return const Left(DocumentFailure(message: 'Like Doc Not Fetched'));
+      return const Left(DocumentFailure(message: "Like Doc Not Fetched"));
     }
   }
 
@@ -39,7 +40,7 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure, bool>> likeUnlikeProd(String prodId) async {
     final likeStatus = await likesDataSource.likeUnlikeProd(prodId);
     if (likeStatus == null) {
-      return const Left(DocumentFailure(message: 'No Like Status'));
+      return const Left(DocumentFailure(message: "No Like Status"));
     } else {
       return Right(likeStatus);
     }

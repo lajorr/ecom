@@ -2,10 +2,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/core/usecase/usecase.dart';
 import 'package:ecom/features/favorites/domain/usecase/fetch_fav_products_usecase.dart';
 import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../../core/usecase/usecase.dart';
 
 part 'favorites_event.dart';
 part 'favorites_state.dart';
@@ -20,7 +21,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final FetchFavProductsUsecase fetchFavProductsUsecase;
 
   FutureOr<void> _onFetchFavPRoducts(
-      FetchFavProductsEvent event, Emitter<FavoritesState> emit,) async {
+      FetchFavProductsEvent event, Emitter<FavoritesState> emit) async {
     emit(FavoritesLoading());
     final fetchOrFail = await fetchFavProductsUsecase.call(NoParams());
 

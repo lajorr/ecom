@@ -1,8 +1,9 @@
-import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
-import 'package:ecom/features/checkout/presentation/widgets/cart_history_tile.dart';
-import 'package:ecom/features/checkout/presentation/widgets/shimmer/order_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../blocs/orders%20bloc/orders_bloc.dart';
+import 'cart_history_tile.dart';
+import 'shimmer/order_shimmer.dart';
 
 class OrderHistory extends StatefulWidget {
   const OrderHistory({super.key});
@@ -27,7 +28,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     return BlocBuilder<OrdersBloc, OrdersState>(
       builder: (context, state) {
         if (state is OrderFetchFailed) {
-          return Text(state.message ?? 'fail');
+          return Text(state.message ?? "fail");
         } else if (state is OrderFetchSuccess) {
           final cartList = state.order.cartList.reversed.toList();
 
@@ -54,8 +55,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                   ),
                 if (cartList.isEmpty)
                   const Center(
-                    child: Text('No History Yet'),
-                  ),
+                    child: Text("No History Yet"),
+                  )
               ],
             ),
           );
@@ -63,7 +64,7 @@ class _OrderHistoryState extends State<OrderHistory> {
           return OrderShimmer(media: media);
         } else {
           return const Center(
-            child: Text('ELSEE'),
+            child: Text("ELSEE"),
           );
         }
       },

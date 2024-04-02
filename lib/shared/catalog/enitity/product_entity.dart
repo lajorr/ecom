@@ -1,13 +1,9 @@
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
 import 'package:equatable/equatable.dart';
 
-class ProductEntity extends Equatable {
+import '../../../features/auth/data/model/user_model.dart';
+import 'enum/category_enum.dart';
 
-  const ProductEntity({
-    required this.id, required this.prodTitle, required this.prodDescription, required this.category, required this.prodImage, required this.rating, required this.price, required this.viewsNo, this.owner,
-    this.listSizeColor,
-  });
+class ProductEntity extends Equatable {
   final String id;
   final String prodTitle;
   final String prodDescription;
@@ -18,6 +14,19 @@ class ProductEntity extends Equatable {
   final double price;
   final String viewsNo;
   final UserModel? owner;
+
+  const ProductEntity({
+    this.owner,
+    required this.id,
+    required this.prodTitle,
+    required this.prodDescription,
+    required this.category,
+    this.listSizeColor,
+    required this.prodImage,
+    required this.rating,
+    required this.price,
+    required this.viewsNo,
+  });
 
   @override
   List<Object?> get props => [
@@ -35,6 +44,8 @@ class ProductEntity extends Equatable {
 }
 
 class ProdImage {
+  String imageUrl;
+  Color color;
 
   ProdImage({
     required this.imageUrl,
@@ -42,19 +53,19 @@ class ProdImage {
   });
 
   factory ProdImage.fromJson(Map<String, dynamic> json) => ProdImage(
-        imageUrl: json['image_url'],
-        color: Color.fromJson(json['color']),
+        imageUrl: json["image_url"],
+        color: Color.fromJson(json["color"]),
       );
-  String imageUrl;
-  Color color;
 
   Map<String, dynamic> toJson() => {
-        'image_url': imageUrl,
-        'color': color.toJson(),
+        "image_url": imageUrl,
+        "color": color.toJson(),
       };
 }
 
 class Color {
+  String colorName;
+  String colorCode;
 
   Color({
     required this.colorName,
@@ -62,19 +73,19 @@ class Color {
   });
 
   factory Color.fromJson(Map<String, dynamic> json) => Color(
-        colorName: json['color_name'],
-        colorCode: json['color_code'],
+        colorName: json["color_name"],
+        colorCode: json["color_code"],
       );
-  String colorName;
-  String colorCode;
 
   Map<String, dynamic> toJson() => {
-        'color_name': colorName,
-        'color_code': colorCode,
+        "color_name": colorName,
+        "color_code": colorCode,
       };
 }
 
 class SizeColor {
+  Color color;
+  String size;
 
   SizeColor({
     required this.color,
@@ -82,14 +93,12 @@ class SizeColor {
   });
 
   factory SizeColor.fromJson(Map<String, dynamic> json) => SizeColor(
-        color: Color.fromJson(json['color']),
-        size: json['size'],
+        color: Color.fromJson(json["color"]),
+        size: json["size"],
       );
-  Color color;
-  String size;
 
   Map<String, dynamic> toJson() => {
-        'color': color.toJson(),
-        'size': size,
+        "color": color.toJson(),
+        "size": size,
       };
 }

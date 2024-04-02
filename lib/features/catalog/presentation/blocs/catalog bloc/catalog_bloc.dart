@@ -1,16 +1,18 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:ecom/core/usecase/usecase.dart';
-import 'package:ecom/features/catalog/domain/usecase/get_product_data_usecase.dart';
-import 'package:ecom/shared/catalog/enitity/enum/category_enum.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../../../core/usecase/usecase.dart';
+import '../../../../../shared/catalog/enitity/enum/category_enum.dart';
+import '../../../../../shared/catalog/model/product_model.dart';
+import '../../../domain/usecase/get_product_data_usecase.dart';
 
 part 'catalog_event.dart';
 part 'catalog_state.dart';
 
 class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
+  List<ProductModel> _allProductsList = [];
 
   CatalogBloc({
     required this.getProductDataUsecase,
@@ -19,12 +21,11 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     on<FilterProductsEvent>(_onFilterProducts);
     on<SearchProductsEvent>(_onSearchProducts);
   }
-  List<ProductModel> _allProductsList = [];
 
   final GetProductDataUsecase getProductDataUsecase;
 
   FutureOr<void> _onFetchProductDataEvent(
-      FetchProductDataEvent event, Emitter<CatalogState> emit,) async {
+      FetchProductDataEvent event, Emitter<CatalogState> emit) async {
     emit(CatalogLoading());
     final dataOrFail = await getProductDataUsecase.call(NoParams());
 
@@ -38,10 +39,10 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
   }
 
   FutureOr<void> _onFilterProducts(
-      FilterProductsEvent event, Emitter<CatalogState> emit,) {
+      FilterProductsEvent event, Emitter<CatalogState> emit) {
     emit(CatalogLoading());
     final cat = event.category;
-    var filteredList = <ProductModel>[];
+    List<ProductModel> filteredList = [];
     if (cat == Category.all) {
       filteredList = _allProductsList;
     } else {
@@ -53,9 +54,9 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
   }
 
   FutureOr<void> _onSearchProducts(
-      SearchProductsEvent event, Emitter<CatalogState> emit,) {
+      SearchProductsEvent event, Emitter<CatalogState> emit) {
     emit(CatalogLoading());
-    var filteredList = <ProductModel>[];
+    List<ProductModel> filteredList = [];
 
     final query = event.query.toLowerCase();
 

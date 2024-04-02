@@ -1,12 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ecom/common/widgets/my_button.dart';
 import 'package:flutter/material.dart';
+
+import 'my_button.dart';
 
 class CustomAppbar extends StatelessWidget {
   const CustomAppbar({
-    required this.title, required this.actions, super.key,
+    Key? key,
+    required this.title,
     this.backButton = true,
-  });
+    required this.actions,
+  }) : super(key: key);
 
   final String title;
   final bool backButton;
@@ -22,6 +25,7 @@ class CustomAppbar extends StatelessWidget {
           if (backButton)
             const Flexible(
               flex: 2,
+              fit: FlexFit.loose,
               child: MyButton(
                 size: 40,
                 dropShadow: false,

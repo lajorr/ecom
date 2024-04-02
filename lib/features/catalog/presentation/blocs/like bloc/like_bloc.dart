@@ -24,7 +24,7 @@ class LikeBloc extends Bloc<LikeEvent, LikeState> {
   final LikeUnlikeProdUsecase likeUnlikeProdUsecase;
 
   FutureOr<void> _onFetchLikeDocuments(
-      FetchLikeDocumentEvent event, Emitter<LikeState> emit,) async {
+      FetchLikeDocumentEvent event, Emitter<LikeState> emit) async {
     emit(LikeLoading());
     final likeOrFail = await fetchLikeDocUsecase.call(event.prodId);
 
@@ -34,7 +34,7 @@ class LikeBloc extends Bloc<LikeEvent, LikeState> {
   }
 
   FutureOr<void> _onLikeButtonPressed(
-      LikeButtonPressedEvent event, Emitter<LikeState> emit,) async {
+      LikeButtonPressedEvent event, Emitter<LikeState> emit) async {
     final likeOrFail = await likeUnlikeProdUsecase.call(event.prodId);
 
     likeOrFail.fold((failure) => emit(LikeFailed()), (isLiked) {

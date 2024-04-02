@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/exception.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/chat/data/data%20source/chat_data_source.dart';
-import 'package:ecom/features/chat/data/model/message_model.dart';
-import 'package:ecom/features/chat/domain/repository/chat_repository.dart';
+
+import '../../../../core/error/exception.dart';
+import '../../../../core/error/failures.dart';
+import '../../../auth/data/model/user_model.dart';
+import '../../domain/repository/chat_repository.dart';
+import '../data%20source/chat_data_source.dart';
+import '../model/message_model.dart';
 
 class ChatRepositoryImpl implements ChatRepository {
   ChatRepositoryImpl({required this.dataSource});
@@ -21,13 +22,13 @@ class ChatRepositoryImpl implements ChatRepository {
 
   @override
   Future<Either<Failure, Stream<List<MessageModel>>>> fetchMessages(
-      String otherUserId,) async {
+      String otherUserId) async {
     try {
       final messages = dataSource.getMessages(otherUserId);
       return Right(messages);
     } on ServerException {
       return const Left(
-        ServerFailure(message: 'Unable to fetch messages'),
+        ServerFailure(message: "Unable to fetch messages"),
       );
     } catch (e) {
       return const Left(

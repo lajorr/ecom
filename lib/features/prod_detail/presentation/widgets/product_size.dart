@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/shared/catalog/model/product_model.dart' as p;
+import '../../../../constants/string_constants.dart';
+import '../../../../shared/catalog/model/product_model.dart' as p;
 import 'package:flutter/material.dart';
 
 class ProductSize extends StatelessWidget {
   const ProductSize({
-    required this.product, super.key,
-  });
+    Key? key,
+    required this.product,
+  }) : super(key: key);
 
   final p.ProductModel product;
 
@@ -38,7 +39,7 @@ class ProductSize extends StatelessWidget {
                     final size = colorList![index].size;
                     return Padding(
                       padding: const EdgeInsets.only(
-                        right: 8,
+                        right: 8.0,
                       ),
                       child: Container(
                         // height: 40,
@@ -57,7 +58,7 @@ class ProductSize extends StatelessWidget {
                     );
                   },
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -81,7 +82,7 @@ class ProductSize extends StatelessWidget {
                     final color = colorList![index].color.colorCode;
                     return Padding(
                       padding: const EdgeInsets.only(
-                        right: 8,
+                        right: 8.0,
                       ),
                       child: Container(
                         // height: 30,
@@ -97,7 +98,7 @@ class ProductSize extends StatelessWidget {
                     );
                   },
                 ),
-              ),
+              )
             ],
           ),
         ),

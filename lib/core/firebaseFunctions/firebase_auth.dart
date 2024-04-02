@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecom/core/error/exception.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../features/auth/data/model/user_model.dart';
+import '../error/exception.dart';
 
 class FireAuth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -37,7 +38,7 @@ class FireAuth {
   }
 
   Future<User?> signInWithEmailAndPassword(
-      {required String email, required String password,}) async {
+      {required String email, required String password}) async {
     try {
       final userCreds = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -45,8 +46,8 @@ class FireAuth {
       );
       return userCreds.user;
     } catch (e) {
-      e;
-      throw ServerException();
+      (e);
+      throw (ServerException());
     }
   }
 
@@ -56,7 +57,7 @@ class FireAuth {
   // }
 
   Future<User?> signUpWithEmail(
-      {required String email, required String password,}) async {
+      {required String email, required String password}) async {
     try {
       final userCred = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -64,7 +65,7 @@ class FireAuth {
       );
       return userCred.user;
     } catch (e) {
-      throw ServerException();
+      throw (ServerException());
     }
   }
 
@@ -72,7 +73,7 @@ class FireAuth {
     try {
       await _firebaseAuth.signOut();
     } catch (e) {
-      throw ServerException();
+      throw (ServerException());
     }
   }
 }

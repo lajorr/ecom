@@ -17,7 +17,7 @@ class ValidationBloc extends Bloc<ValidationEvent, ValidationState> {
   final TextValidator textValidator;
 
   FutureOr<void> _onValidateEvent(
-      ValidateInputEvent event, Emitter<ValidationState> emit,) {
+      ValidateInputEvent event, Emitter<ValidationState> emit) {
     emit(ValidationInitial());
 
     final eitherValid = textValidator.inputChecker(event.email, event.password);

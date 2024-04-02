@@ -1,17 +1,20 @@
-import 'package:ecom/common/widgets/profile_pic_widget.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/chat/data/model/message_model.dart';
-import 'package:ecom/features/chat/presentation/blocs/chat%20bloc/chat_bloc.dart';
-import 'package:ecom/features/chat/presentation/blocs/cubit/show_send_button_cubit.dart';
-import 'package:ecom/features/chat/presentation/widgets/message%20tile/msg_tile_other.dart';
-import 'package:ecom/features/chat/presentation/widgets/message%20tile/msg_tile_self.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/widgets/profile_pic_widget.dart';
+import '../../../auth/data/model/user_model.dart';
+import '../../data/model/message_model.dart';
+import '../blocs/chat bloc/chat_bloc.dart';
+import '../blocs/cubit/show_send_button_cubit.dart';
+import '../widgets/message tile/msg_tile_other.dart';
+import '../widgets/message tile/msg_tile_self.dart';
+
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
-    required this.otherUser, required this.currentUserId, super.key,
-  });
+    Key? key,
+    required this.otherUser,
+    required this.currentUserId,
+  }) : super(key: key);
 
   static const routeName = '/chat-screen';
 
@@ -58,7 +61,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var messages = <MessageModel>[];
+    List<MessageModel> messages = [];
 
     return Scaffold(
       appBar: AppBar(
@@ -97,7 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
             final msgStream = state.messageStream;
 
             return Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8.0),
               child: Column(children: [
                 Expanded(
                   child: StreamBuilder<List<MessageModel>>(
@@ -130,7 +133,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             child: CircularProgressIndicator(),
                           );
                         }
-                      },),
+                      }),
                 ),
                 Container(
                   height: 70,
@@ -141,7 +144,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      hintText: 'Write a message..',
+                      hintText: "Write a message..",
                       suffixIcon:
                           BlocBuilder<ShowSendButtonCubit, ShowSendButtonState>(
                         builder: (context, state) {
@@ -170,7 +173,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     onEditingComplete: onSend,
                   ),
                 ),
-              ],),
+              ]),
             );
           } else {
             return Container();

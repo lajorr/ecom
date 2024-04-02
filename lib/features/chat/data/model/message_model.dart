@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:ecom/features/chat/domain/entity/message_enity.dart';
+import '../../domain/entity/message_enity.dart';
 
 class MessageModel extends MessageEntity {
   const MessageModel({
@@ -9,6 +9,15 @@ class MessageModel extends MessageEntity {
     required super.senderId,
     required super.recieverId,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'sender_id': senderId,
+      'reciever_id': recieverId,
+      'created_at': createdAt,
+      'message': message,
+    };
+  }
 
   factory MessageModel.fromJson({
     required Map<String, dynamic> json,
@@ -20,14 +29,5 @@ class MessageModel extends MessageEntity {
       recieverId: json['reciever_id'],
       senderId: json['sender_id'],
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'sender_id': senderId,
-      'reciever_id': recieverId,
-      'created_at': createdAt,
-      'message': message,
-    };
   }
 }

@@ -1,6 +1,6 @@
 class ImageConstants {
   static const profilePic =
-      'waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer.png';
+      "waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer.png";
 
   static const searchIcon = 'Iconly.png';
   static const filterIcon = 'Filter.png';
@@ -37,6 +37,6 @@ class ImageConstants {
   static const emptyFolder = 'empty/empty_folder.png';
 
   static String getImageUri(String path) {
-    return 'assets/images/$path';
+    return "assets/images/$path";
   }
 }

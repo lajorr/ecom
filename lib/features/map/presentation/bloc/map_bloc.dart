@@ -22,7 +22,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   double lat = 0;
 
   FutureOr<void> _onGetCurrentPosition(
-      GetCurrentPositionEvent event, Emitter<MapState> emit,) async {
+      GetCurrentPositionEvent event, Emitter<MapState> emit) async {
     emit(MapLoading());
 
     final posOrFail = await getCurrentUserPositionUsecase.call(NoParams());

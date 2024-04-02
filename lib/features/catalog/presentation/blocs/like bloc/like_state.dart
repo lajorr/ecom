@@ -14,9 +14,9 @@ final class LikeLoading extends LikeState {
 }
 
 final class LikeSuccess extends LikeState {
+  final bool isLiked;
 
   const LikeSuccess({required this.isLiked});
-  final bool isLiked;
 
   @override
   List<Object> get props => [];
@@ -28,9 +28,9 @@ final class LikeFailed extends LikeState {
 }
 
 final class LikeStatusChange extends LikeState {
+  final bool isLiked;
 
   const LikeStatusChange({required this.isLiked});
-  final bool isLiked;
   @override
   List<Object> get props => [];
 }

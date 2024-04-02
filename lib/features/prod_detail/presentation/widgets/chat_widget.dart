@@ -1,13 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/auth/data/model/user_model.dart';
-import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../../auth/data/model/user_model.dart';
+import '../../../chat/presentation/screens/chat_screen.dart';
 
 class ChatWidget extends StatelessWidget {
   const ChatWidget({
-    required this.otherUser, required this.currentUserId, super.key,
-  });
+    Key? key,
+    required this.otherUser,
+    required this.currentUserId,
+  }) : super(key: key);
 
   final UserModel? otherUser;
   final String currentUserId;
@@ -33,8 +36,8 @@ class ChatWidget extends StatelessWidget {
               Navigator.of(context).pushNamed(
                 ChatScreen.routeName,
                 arguments: {
-                  'other_user': otherUser!,
-                  'current_user_id': currentUserId,
+                  "other_user": otherUser!,
+                  "current_user_id": currentUserId,
                 },
               );
             },

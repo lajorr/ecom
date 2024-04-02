@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:ecom/core/error/exception.dart';
-import 'package:ecom/core/error/failures.dart';
-import 'package:ecom/theme/data/data%20source/shared_pref_datasource.dart';
+import '../../../core/error/exception.dart';
+import '../../../core/error/failures.dart';
+import '../data%20source/shared_pref_datasource.dart';
 
-import 'package:ecom/theme/domain/repository/theme_repository.dart';
+import '../../domain/repository/theme_repository.dart';
 
 class ThemeRepositoryImpl implements ThemeRepository {
+  final SharedPrefDataSource spDataSource;
 
   ThemeRepositoryImpl({required this.spDataSource});
-  final SharedPrefDataSource spDataSource;
   @override
   Future<Either<Failure, bool>> fetchThemeStatus() async {
     try {
@@ -16,7 +16,7 @@ class ThemeRepositoryImpl implements ThemeRepository {
       return Right(status);
     } on SharedPreferenceException {
       return const Left(
-        SharedPrefFailure(message: 'failed to fetch'),
+        SharedPrefFailure(message: "failed to fetch"),
       );
     }
   }
