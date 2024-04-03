@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class ChangeLanguageDialog extends StatefulWidget {
   const ChangeLanguageDialog({
-    required this.media, super.key,
-  });
 
-  final Size media;
+      Key? key,
+  }) : super(key: key);
+
+
+
 
   @override
   State<ChangeLanguageDialog> createState() => _ChangeLanguageDialogState();
@@ -26,7 +28,7 @@ class _ChangeLanguageDialogState extends State<ChangeLanguageDialog> {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     int selectedIndex;
     if (context.locale == const Locale('ja', 'JPN')) {
       selectedIndex = 1;
@@ -37,21 +39,22 @@ class _ChangeLanguageDialogState extends State<ChangeLanguageDialog> {
       content: Padding(
         padding: const EdgeInsets.all(10),
         child: SizedBox(
-          height: widget.media.height * 0.22,
-          width: widget.media.height * 0.2,
+          height: MediaQuery.of(context).size.height * 0.22,
+          width: MediaQuery.of(context).size.height * 0.2,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             itemCount: languages.length,
-            itemBuilder: (context, index) {
+            itemBuilder: (ctx, index) {
               final lang = (languages[index]['lang'] as String).tr();
               final locale = languages[index]['locale'] as Locale;
 
               return GestureDetector(
-                onTap: () {
-                  context.setLocale(locale);
+                onTap: () async {
+                  await context.setLocale(locale);
+
                 },
                 child: LanguageTile(
-                  media: widget.media,
+                  media:  MediaQuery.of(context).size,
                   language: lang,
                   isSelected: selectedIndex == index,
                 ),

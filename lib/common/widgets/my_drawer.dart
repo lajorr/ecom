@@ -1,13 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ecom/constants/string_constants.dart';
-import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:ecom/features/chat/presentation/screens/all_chats_screen.dart';
+
 import 'package:ecom/features/language/presentation/widgets/language_dialog.dart';
-import 'package:ecom/features/profile/presentation/screens/edit_profile_screen.dart';
-import 'package:ecom/features/profile/presentation/widgets/log_out_dialog.dart';
-import 'package:ecom/theme/presentation/theme%20cubit/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../constants/string_constants.dart';
+import '../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../features/chat/presentation/screens/all_chats_screen.dart';
+import '../../features/profile/presentation/screens/edit_profile_screen.dart';
+import '../../features/profile/presentation/widgets/log_out_dialog.dart';
+import '../../theme/presentation/theme cubit/cubit/theme_cubit.dart';
+
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
@@ -79,10 +82,10 @@ class MyDrawer extends StatelessWidget {
                     onTap: () {
                       showDialog(
                         context: context,
-                        builder: (context) => ChangeLanguageDialog(
-                          media: media,
+                        builder: (context) => const ChangeLanguageDialog(
                         ),
                       );
+                    
                     },
                   ),
                 ],

@@ -25,6 +25,7 @@ class _ProfileImageState extends State<ProfileImage> {
   String? imageUrl;
 
   void onConfirmImage(Uint8List imageBytes) {
+    
     context
         .read<ProfileBloc>()
         .add(UploadProfilePictureEvent(image: imageBytes));
