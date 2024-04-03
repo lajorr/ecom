@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +22,12 @@ class _OrderHistoryState extends State<OrderHistory> {
     context.read<OrdersBloc>().add(
           FetchOrderHistoryEvent(),
         );
+  }
+  @override
+  void didChangeDependencies() {
+        final getLocal = context.locale;
+    context.setLocale(getLocal);
+    super.didChangeDependencies();
   }
 
   @override
@@ -54,8 +62,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                     ),
                   ),
                 if (cartList.isEmpty)
-                  const Center(
-                    child: Text("No History Yet"),
+                  Center(
+                    child: const Text(StringConstants.noHistory).tr(),
                   )
               ],
             ),

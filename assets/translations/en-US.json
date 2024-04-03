@@ -53,5 +53,6 @@
   "all_chats": "All Chats",
   "items": "Items",
   "total": "Total:",
-  "no_owner": "This product has no owner"
+  "no_owner": "This product has no owner",
+  "no_history": "No order history yet"
 }

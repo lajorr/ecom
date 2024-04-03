@@ -30,7 +30,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
     return Scaffold(
+
       body: SafeArea(
+        
         child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 14.0,
