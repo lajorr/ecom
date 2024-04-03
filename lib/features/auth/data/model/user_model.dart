@@ -1,6 +1,5 @@
+import 'package:ecom/features/auth/domain/entity/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../../domain/entity/user_entity.dart';
 
 class UserModel extends UserEntity {
   const UserModel({
@@ -11,23 +10,40 @@ class UserModel extends UserEntity {
     super.imageUrl,
   });
 
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+        uid: map['uid'] as String?,
+        email: map['email'] as String?,
+        name: map['name'] as String?,
+        phNumber: map['ph_number'] as int?,
+        imageUrl: map['image_url'] as String?,);
+  }
+
+  factory UserModel.fromFirebaseUser(User? user) {
+    if (user != null) {
+      return UserModel(
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        phNumber: int.parse(user.phoneNumber ?? '0'),
+        imageUrl: user.photoURL,
+      );
+    } else {
+      return const UserModel(
+        uid: null,
+        email: null,
+      );
+    }
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
       'name': name,
       'email': email,
       'ph_number': phNumber,
-      'image_url': imageUrl
+      'image_url': imageUrl,
     };
-  }
-
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-        uid: map['uid'],
-        email: map['email'],
-        name: map['name'],
-        phNumber: map['ph_number'],
-        imageUrl: map['image_url']);
   }
 
   UserModel copyWith({
@@ -44,25 +60,5 @@ class UserModel extends UserEntity {
       phNumber: phNumber ?? this.phNumber,
       imageUrl: imageUrl ?? this.imageUrl,
     );
-  }
-
-  factory UserModel.fromFirebaseUser(User? user) {
-    if (user != null) {
-      return UserModel(
-        uid: user.uid,
-        name: user.displayName,
-        email: user.email,
-        phNumber: int.parse(user.phoneNumber ?? '0'),
-        imageUrl: user.photoURL,
-      );
-    } else {
-      return const UserModel(
-        uid: null,
-        name: null,
-        email: null,
-        phNumber: null,
-        imageUrl: null,
-      );
-    }
   }
 }

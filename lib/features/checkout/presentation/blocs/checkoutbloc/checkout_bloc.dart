@@ -1,15 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:ecom/core/usecase/usecase.dart';
+import 'package:ecom/features/checkout/domain/model/cart_model.dart';
+import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
+import 'package:ecom/features/checkout/domain/usecases/add_to_cart_usecase.dart';
+import 'package:ecom/features/checkout/domain/usecases/fetch_cart_products_usecase.dart';
+import 'package:ecom/features/checkout/domain/usecases/remove_cart_item_usecase.dart';
+import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../../../../core/usecase/usecase.dart';
-import '../../../../../shared/catalog/model/product_model.dart';
-import '../../../domain/model/cart_model.dart';
-import '../../../domain/model/cart_product_model.dart';
-import '../../../domain/usecases/add_to_cart_usecase.dart';
-import '../../../domain/usecases/fetch_cart_products_usecase.dart';
-import '../../../domain/usecases/remove_cart_item_usecase.dart';
 
 part 'checkout_event.dart';
 part 'checkout_state.dart';
@@ -34,7 +33,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   final RemoveCartItemUsecase removeCartItemUsecase;
 
   FutureOr<void> _onAddToCart(
-      AddToCartEvent event, Emitter<CheckoutState> emit) async {
+      AddToCartEvent event, Emitter<CheckoutState> emit,) async {
     emit(CheckoutLoading());
     final addOrFail = await addToCartUsecase.call(event.cartProduct);
 
@@ -51,7 +50,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   }
 
   FutureOr<void> _onFetchCartProducts(
-      FetchCartProductsEvent event, Emitter<CheckoutState> emit) async {
+      FetchCartProductsEvent event, Emitter<CheckoutState> emit,) async {
     emit(CheckoutLoading());
     final fetchOrFail = await fetchCartProductsUsecase.call(NoParams());
 
@@ -70,7 +69,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   }
 
   FutureOr<void> _onRemoveProdFromCart(
-      RemoveProdFromCartEvent event, Emitter<CheckoutState> emit) async {
+      RemoveProdFromCartEvent event, Emitter<CheckoutState> emit,) async {
     emit(CheckoutLoading());
     final removeOrFail = await removeCartItemUsecase.call(event.prod);
 
@@ -78,12 +77,12 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         (cartModel) {
       emit(CheckoutRemoveItemSuccess(
         cartModel: cartModel,
-      ));
+      ),);
     });
   }
 
   FutureOr<void> _onClearLocalData(
-      ClearLocalDataEvent event, Emitter<CheckoutState> emit) {
+      ClearLocalDataEvent event, Emitter<CheckoutState> emit,) {
 
         
       }

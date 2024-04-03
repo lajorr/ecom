@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -66,26 +67,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
             imageUrl = currentUser.imageUrl;
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     Center(
                         child: ProfilePicWidget(
                       imageUrl: currentUser.imageUrl,
                       size: 0.12,
-                    )),
+                    ),),
                     const SizedBox(
                       height: 50,
                     ),
-                    Text(username ?? "___"),
+                    Text(username ?? '___'),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(email ?? ""),
+                    Text(email ?? ''),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(phNumber ?? "___"),
+                    Text(phNumber ?? '___'),
                     const SizedBox(
                       height: 25,
                     ),
@@ -106,6 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
+
             );
           } else if (state is ProfileLoading) {
             return const Scaffold(
@@ -118,6 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
         }),
       ),
+
     );
   }
 }

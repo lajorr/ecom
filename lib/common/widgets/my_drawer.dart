@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+
 import 'package:ecom/features/language/presentation/widgets/language_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,11 +11,11 @@ import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/widgets/log_out_dialog.dart';
 import '../../theme/presentation/theme cubit/cubit/theme_cubit.dart';
 
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
-    Key? key,
-    required this.ctx,
-  }) : super(key: key);
+    required this.ctx, super.key,
+  });
 
   final BuildContext ctx;
 
@@ -102,7 +103,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                   );
                 },
-              )
+              ),
             ],
           ),
         ),

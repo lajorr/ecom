@@ -1,11 +1,10 @@
+import 'package:ecom/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:ecom/features/auth/presentation/screens/login_screen.dart';
+import 'package:ecom/features/navbar/presentation/screens/navigation_menu.dart';
+import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-
-import '../../auth/presentation/bloc/auth_bloc.dart';
-import '../../auth/presentation/screens/login_screen.dart';
-import '../../navbar/presentation/screens/navigation_menu.dart';
-import '../../profile/presentation/bloc/profile_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
               BlocProvider.of<ProfileBloc>(context).add(FetchUserDataEvent());
               Navigator.of(context).pushReplacementNamed(
                 NavigationMenu.routeName,
-                arguments: {"user": state.user},
+                arguments: {'user': state.user},
               );
             } else if (state is UserUnavailable) {
               Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);

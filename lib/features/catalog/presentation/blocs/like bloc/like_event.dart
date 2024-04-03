@@ -8,15 +8,15 @@ sealed class LikeEvent extends Equatable {
 }
 
 class LikeButtonPressedEvent extends LikeEvent {
-  final String prodId;
 
   const LikeButtonPressedEvent({required this.prodId});
+  final String prodId;
 }
 
 // class CreateLikeDocumentEvent extends LikeEvent {}
 
 class FetchLikeDocumentEvent extends LikeEvent {
-  final String prodId;
 
   const FetchLikeDocumentEvent({required this.prodId});
+  final String prodId;
 }

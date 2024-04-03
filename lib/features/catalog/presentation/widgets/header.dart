@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/common/widgets/my_shimmer.dart';
+import 'package:ecom/common/widgets/profile_pic_widget.dart';
+import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
+import 'package:ecom/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../common/widgets/my_shimmer.dart';
-import '../../../../common/widgets/profile_pic_widget.dart';
-import '../../../../constants/string_constants.dart';
-import '../../../navbar/presentation/cubit/nav_index_cubit.dart';
-import '../../../profile/presentation/bloc/profile_bloc.dart';
 
 class Header extends StatefulWidget {
   const Header({super.key});
@@ -73,8 +72,7 @@ class _HeaderState extends State<Header> {
 
 class HeaderShimmer extends StatelessWidget {
   const HeaderShimmer({
-    super.key,
-    required this.media,
+    required this.media, super.key,
   });
 
   final Size media;
@@ -116,7 +114,7 @@ class HeaderShimmer extends StatelessWidget {
               color: Colors.grey,
               borderRadius: BorderRadius.circular(media.width * 0.5),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -1,16 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/string_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../constants/string_constants.dart';
-
 class ProfilePickerDialog extends StatefulWidget {
   const ProfilePickerDialog({
-    Key? key,
-    required this.onPressedOk,
-  }) : super(key: key);
+    required this.onPressedOk, super.key,
+  });
 
   final Function(Uint8List) onPressedOk;
 
@@ -23,7 +21,7 @@ class _ProfilePickerDialogState extends State<ProfilePickerDialog> {
   Uint8List? _image;
 
   Future<void> pickImage(ImageSource source) async {
-    XFile? imageFile = await picker.pickImage(source: source, imageQuality: 15);
+    final imageFile = await picker.pickImage(source: source, imageQuality: 15);
     if (imageFile != null) {
       _image = await imageFile.readAsBytes();
       setState(() {});
@@ -74,7 +72,7 @@ class _ProfilePickerDialogState extends State<ProfilePickerDialog> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text(StringConstants.cancelText).tr()),
+            child: const Text(StringConstants.cancelText).tr(),),
         MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),

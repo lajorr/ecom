@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:ecom/core/usecase/usecase.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
+import 'package:ecom/features/auth/domain/usecases/check_user_usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/login_with_email_usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/sign_out_usecase.dart';
+import 'package:ecom/features/auth/domain/usecases/signup_with_email_usecase.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../../../core/usecase/usecase.dart';
-import '../../data/model/user_model.dart';
-import '../../domain/usecases/check_user_usecase.dart';
-import '../../domain/usecases/login_with_email_usecase.dart';
-import '../../domain/usecases/sign_out_usecase.dart';
-import '../../domain/usecases/signup_with_email_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -59,7 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   FutureOr<void> _onCheckUserExists(
-      CheckUserExistsEvent event, Emitter<AuthState> emit) async {
+      CheckUserExistsEvent event, Emitter<AuthState> emit,) async {
     emit(AuthLoading());
     final userOrFail = await checkUserUsercase.call(NoParams());
 

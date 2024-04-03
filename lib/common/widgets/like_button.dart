@@ -1,14 +1,12 @@
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../constants/img_uri.dart';
-import '../../features/catalog/presentation/blocs/like%20bloc/like_bloc.dart';
-
 class LikeButton extends StatefulWidget {
   const LikeButton({
-    Key? key,
-    required this.prodId,
-  }) : super(key: key);
+    required this.prodId, super.key,
+  });
 
   final String prodId;
 
@@ -30,8 +28,8 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
       duration: const Duration(seconds: 3),
     )..forward();
     _animation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
+      begin: 0,
+      end: 1,
     ).animate(_controller);
     context.read<LikeBloc>().add(FetchLikeDocumentEvent(prodId: widget.prodId));
     likeLoaded = false;

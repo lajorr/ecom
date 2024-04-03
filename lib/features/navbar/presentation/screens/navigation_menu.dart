@@ -1,14 +1,13 @@
+import 'package:ecom/common/widgets/my_drawer.dart';
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/features/catalog/presentation/screens/catalog_screen.dart';
+import 'package:ecom/features/checkout/presentation/screens/checkout_screen.dart';
+import 'package:ecom/features/favorites/presentation/screens/fav_screen.dart';
+import 'package:ecom/features/navbar/presentation/cubit/nav_index_cubit.dart';
+import 'package:ecom/features/navbar/presentation/widgets/nav_item.dart';
+import 'package:ecom/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../common/widgets/my_drawer.dart';
-import '../../../../constants/img_uri.dart';
-import '../../../catalog/presentation/screens/catalog_screen.dart';
-import '../../../checkout/presentation/screens/checkout_screen.dart';
-import '../../../favorites/presentation/screens/fav_screen.dart';
-import '../../../profile/presentation/screens/profile_screen.dart';
-import '../cubit/nav_index_cubit.dart';
-import '../widgets/nav_item.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -17,18 +16,18 @@ class NavigationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> pages = [
+    final pages = <Widget>[
       const CatalogScreen(),
       const CheckoutScreen(),
       const FavScreen(),
       const ProfileScreen(),
     ];
 
-    List<String> navIcons = [
+    final navIcons = <String>[
       ImageConstants.homeIcon,
       ImageConstants.shopBagIcon,
       ImageConstants.heartIcon,
-      ImageConstants.profileIcon
+      ImageConstants.profileIcon,
     ];
     return BlocConsumer<NavIndexCubit, NavIndexState>(
       listener: (context, state) {
@@ -69,7 +68,7 @@ class NavigationMenu extends StatelessWidget {
                         context.read<NavIndexCubit>().onChangeNavIndex(i);
                       },
                     ),
-                  ]
+                  ],
                 ],
               ),
             ),

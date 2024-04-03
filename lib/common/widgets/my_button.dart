@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
   const MyButton({
-    Key? key,
-    required this.size,
-    required this.dropShadow,
+    required this.size, required this.dropShadow, super.key,
     this.iconUri = ImageConstants.backArrow,
-  }) : super(key: key);
+  });
 
   final double size;
   final bool dropShadow;

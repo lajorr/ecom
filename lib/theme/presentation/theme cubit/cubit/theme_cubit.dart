@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import '../../../../core/usecase/usecase.dart';
-import '../../../domain/usecase/fetch_theme_status_usecase.dart';
-import '../../../domain/usecase/store_theme_status_usecase.dart';
+import 'package:ecom/core/usecase/usecase.dart';
+import 'package:ecom/theme/domain/usecase/fetch_theme_status_usecase.dart';
+import 'package:ecom/theme/domain/usecase/store_theme_status_usecase.dart';
 import 'package:equatable/equatable.dart';
 
 part 'theme_state.dart';

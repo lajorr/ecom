@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {
-  final String message;
 
   const Failure({required this.message});
+  final String message;
   @override
   List<Object?> get props => [message];
 }
 
 class FirebaseFailure extends Failure {
-  const FirebaseFailure({super.message = "Firebase Failure"});
+  const FirebaseFailure({super.message = 'Firebase Failure'});
 }
 
 class InvalidInputFailure extends Failure {
@@ -39,7 +39,7 @@ class DocumentFailure extends Failure {
 }
 
 class CartFailure extends Failure {
-  const CartFailure({super.message = "Something went wrong with the cart"});
+  const CartFailure({super.message = 'Something went wrong with the cart'});
 }
 
 class EmptyCartFailure extends Failure {

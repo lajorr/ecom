@@ -1,10 +1,9 @@
+import 'package:ecom/features/auth/presentation/widgets/my_text_field.dart';
+import 'package:ecom/features/payment/data/model/credit_card_model.dart';
+import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-
-import '../../../auth/presentation/widgets/my_text_field.dart';
-import '../../data/model/credit_card_model.dart';
-import '../bloc/payment_bloc.dart';
 
 class AddCartInfoDialog extends StatefulWidget {
   const AddCartInfoDialog({super.key});
@@ -62,7 +61,7 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
                 },
                 validator: (value) {
                   if (value != null && value.isEmpty) {
-                    return "Enter a name";
+                    return 'Enter a name';
                   }
                   return null;
                 },
@@ -77,10 +76,10 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
                 inputType: TextInputType.number,
                 validator: (value) {
                   if (value != null && value.isEmpty) {
-                    return "Enter your card Number";
+                    return 'Enter your card Number';
                   }
                   if (value!.length != 16) {
-                    return "Enter Valid Card Number";
+                    return 'Enter Valid Card Number';
                   }
                   return null;
                 },
@@ -98,10 +97,10 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
                       inputType: TextInputType.number,
                       validator: (value) {
                         if (value != null && value.isEmpty) {
-                          return "Enter cvv";
+                          return 'Enter cvv';
                         }
                         if (value!.length != 3) {
-                          return "Enter Valid CVV";
+                          return 'Enter Valid CVV';
                         }
                         return null;
                       },
@@ -152,7 +151,7 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ],
@@ -185,7 +184,7 @@ class _AddCartInfoDialogState extends State<AddCartInfoDialog> {
             backgroundColor: Theme.of(context).primaryColor,
           ),
           child: const Text(
-            "Confirm",
+            'Confirm',
             style: TextStyle(
               color: Colors.white,
             ),

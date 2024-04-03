@@ -1,16 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ecom/features/checkout/domain/entity/cart_product_entity.dart';
+import 'package:ecom/features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entity/cart_product_entity.dart';
-import '../blocs/checkoutbloc/checkout_bloc.dart';
-
 class ProdCard extends StatelessWidget {
   const ProdCard({
-    Key? key,
-    required this.cartProduct,
-    required this.isOrderPlaced,
-  }) : super(key: key);
+    required this.cartProduct, required this.isOrderPlaced, super.key,
+  });
 
   final CartProduct cartProduct;
   final bool isOrderPlaced;
@@ -48,7 +45,6 @@ class ProdCard extends StatelessWidget {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           product.prodTitle,
@@ -56,16 +52,16 @@ class ProdCard extends StatelessWidget {
                         Text(
                           product.category.name,
                           style: const TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.w400),
+                              color: Colors.grey, fontWeight: FontWeight.w400,),
                         ),
                       ],
                     ),
                     Text(
-                      '\$${product.price.toString()}',
+                      '\$${product.price}',
                       style: const TextStyle(
                         fontSize: 18,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

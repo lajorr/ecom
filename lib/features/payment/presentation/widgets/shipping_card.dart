@@ -1,18 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/common/widgets/my_shimmer.dart';
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
+import 'package:ecom/features/payment/presentation/bloc/payment_bloc.dart';
+import 'package:ecom/features/payment/presentation/widgets/add_cart_info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/widgets/my_shimmer.dart';
-import '../../../../constants/img_uri.dart';
-import '../../../../constants/string_constants.dart';
-import '../../../checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
-import '../bloc/payment_bloc.dart';
-import 'add_cart_info_dialog.dart';
-
 class ShippingCard extends StatefulWidget {
   const ShippingCard({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ShippingCard> createState() => _ShippingCardState();
@@ -84,12 +83,11 @@ class _ShippingCardState extends State<ShippingCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    hasCreditInfo
-                        ? Row(
+                    if (hasCreditInfo) Row(
                             children: [
                               Image.asset(
                                 ImageConstants.getImageUri(
-                                    ImageConstants.visaIcon),
+                                    ImageConstants.visaIcon,),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -101,8 +99,7 @@ class _ShippingCardState extends State<ShippingCard> {
                                 ),
                               ),
                             ],
-                          )
-                        : Row(
+                          ) else Row(
                             children: [
                               ElevatedButton(
                                 onPressed: () {
@@ -124,7 +121,7 @@ class _ShippingCardState extends State<ShippingCard> {
                               const SizedBox(
                                 width: 10,
                               ),
-                              const Text("Add Credit Card Info"),
+                              const Text('Add Credit Card Info'),
                             ],
                           ),
                   ],
@@ -132,11 +129,11 @@ class _ShippingCardState extends State<ShippingCard> {
               );
             } else {
               return const Center(
-                child: Text("ELSE"),
+                child: Text('ELSE'),
               );
             }
           },
-        )
+        ),
       ],
     );
   }

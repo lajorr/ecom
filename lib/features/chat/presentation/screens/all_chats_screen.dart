@@ -1,19 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../common/widgets/my_shimmer.dart';
-import '../../../../core/firebaseFunctions/firebase_auth.dart';
+import 'package:ecom/common/widgets/my_shimmer.dart';
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
+import 'package:ecom/features/chat/presentation/blocs/chat%20bloc/chat_bloc.dart';
+import 'package:ecom/features/chat/presentation/screens/chat_screen.dart';
+import 'package:ecom/features/chat/presentation/widgets/chat_room_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../constants/img_uri.dart';
-import '../blocs/chat bloc/chat_bloc.dart';
-import '../widgets/chat_room_shimmer.dart';
-import 'chat_screen.dart';
-
 class AllChatsScreen extends StatefulWidget {
   const AllChatsScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   static const routeName = '/all-chats';
 
@@ -56,7 +55,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                         .pushReplacementNamed(ChatScreen.routeName, arguments: {
                       'other_user': user,
                       'current_user_id': FireAuth().getCurrentUserId(),
-                    });
+                    },);
                   },
                   child: Container(
                     margin: const EdgeInsets.all(10),
@@ -99,10 +98,10 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                                   )
                                 : Image.asset(
                                     ImageConstants.getImageUri(
-                                        ImageConstants.profilePic),
+                                        ImageConstants.profilePic,),
                                     fit: BoxFit.cover,
                                     alignment: Alignment.topCenter,
-                                  )),
+                                  ),),
                       ),
                       const SizedBox(
                         width: 20,
@@ -113,7 +112,7 @@ class _AllChatsScreenState extends State<AllChatsScreen> {
                           color: Colors.white,
                         ),
                       ),
-                    ]),
+                    ],),
                   ),
                 );
               },

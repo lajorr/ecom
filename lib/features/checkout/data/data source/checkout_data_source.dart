@@ -1,10 +1,10 @@
-import '../../../../core/error/exception.dart';
-import '../../../../core/firebaseFunctions/firebase_auth.dart';
-import '../../../../core/firebaseFunctions/firebase_collections.dart';
-import '../../../../shared/catalog/model/product_model.dart';
-import '../../domain/model/cart_model.dart';
-import '../../domain/model/cart_product_model.dart';
-import '../../domain/model/order_model.dart';
+import 'package:ecom/core/error/exception.dart';
+import 'package:ecom/core/firebaseFunctions/firebase_auth.dart';
+import 'package:ecom/core/firebaseFunctions/firebase_collections.dart';
+import 'package:ecom/features/checkout/domain/model/cart_model.dart';
+import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
+import 'package:ecom/features/checkout/domain/model/order_model.dart';
+import 'package:ecom/shared/catalog/model/product_model.dart';
 
 abstract class CheckoutDataSource {
   Future<CartModel> addProductToCart(CartProductModel product);
@@ -39,9 +39,9 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   @override
   Future<CartModel> addProductToCart(CartProductModel cartProduct) async {
     final CartModel cartModel;
-    double total = 0;
-    bool exists = false;
-    for (var prod in _productsList) {
+    var total = 0.0;
+    var exists = false;
+    for (final prod in _productsList) {
       if (prod.product.id == cartProduct.product.id) {
         exists = true;
         break;
@@ -58,20 +58,20 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
         quantity: existingValue.quantity + cartProduct.quantity,
       );
       //* retotalling
-      for (var cartItem in _productsList) {
-        total += (cartItem.product.price * cartItem.quantity);
+      for (final cartItem in _productsList) {
+        total += (cartItem.product.price * cartItem.quantity).toInt();
       }
       _amount = total;
       final user = await fireAuth.getCurrentUserModel();
       cartModel = CartModel(
           user: user!,
           products: _productsList,
-          amount: double.parse((_amount).toStringAsFixed(2)));
+          amount: double.parse(_amount.toStringAsFixed(2)),);
     } else {
       _productsList.add(cartProduct);
 
-      for (var cartItem in _productsList) {
-        total += (cartItem.product.price * cartItem.quantity);
+      for (final cartItem in _productsList) {
+        total += cartItem.product.price * cartItem.quantity;
       }
 
       _amount = total;
@@ -115,12 +115,12 @@ class CheckoutDataSourceImpl implements CheckoutDataSource {
   @override
   Future<CartModel> removeCartItem(ProductModel prod) async {
     try {
-      double total = 0;
+      var total = 0.0;
 
       _productsList.removeWhere((cartItem) => cartItem.product.id == prod.id);
 
-      for (var cartItem in _productsList) {
-        total += (cartItem.product.price * cartItem.quantity);
+      for (final cartItem in _productsList) {
+        total += cartItem.product.price * cartItem.quantity;
       }
       _amount = total;
       final user = await fireAuth.getCurrentUserModel();

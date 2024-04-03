@@ -1,22 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
+import 'package:ecom/features/checkout/presentation/blocs/cubit/credit_card_set_cubit.dart';
+import 'package:ecom/features/checkout/presentation/blocs/orders%20bloc/orders_bloc.dart';
+import 'package:ecom/features/checkout/presentation/widgets/cart_bill_widget.dart';
+import 'package:ecom/features/checkout/presentation/widgets/cart_products_widget.dart';
+import 'package:ecom/features/checkout/presentation/widgets/payment_dialog.dart';
+import 'package:ecom/features/checkout/presentation/widgets/shimmer/checkout_shimmer.dart';
+import 'package:ecom/features/payment/presentation/widgets/shipping_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../constants/img_uri.dart';
-import '../../../../constants/string_constants.dart';
-import '../../../payment/presentation/widgets/shipping_card.dart';
-import '../blocs/checkoutbloc/checkout_bloc.dart';
-import '../blocs/cubit/credit_card_set_cubit.dart';
-import '../blocs/orders bloc/orders_bloc.dart';
-import '../widgets/cart_bill_widget.dart';
-import '../widgets/cart_products_widget.dart';
-import '../widgets/payment_dialog.dart';
-import '../widgets/shimmer/checkout_shimmer.dart';
-
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   static const routeName = '/checkout';
 
@@ -100,11 +99,11 @@ class CheckoutScreen extends StatelessWidget {
                         return Container();
                       }
                     },
-                  )
+                  ),
                 ],
               ),
               body: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
                     // prod list
@@ -115,7 +114,7 @@ class CheckoutScreen extends StatelessWidget {
                           children: [
                             Image.asset(
                               ImageConstants.getImageUri(
-                                  ImageConstants.emptyCartIcon),
+                                  ImageConstants.emptyCartIcon,),
                               height: media.height * 0.1,
                             ),
                             SizedBox(

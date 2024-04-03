@@ -1,14 +1,11 @@
+import 'package:ecom/common/widgets/my_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../../../common/widgets/my_shimmer.dart';
-
 class GridViewShimmer extends StatelessWidget {
   const GridViewShimmer({
-    Key? key,
-    required this.media,
-    required this.height,
-  }) : super(key: key);
+    required this.media, required this.height, super.key,
+  });
 
   final Size media;
   final double height;
@@ -79,7 +76,7 @@ class GridViewShimmer extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             );
           },

@@ -1,27 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:ecom/common/widgets/like_button.dart';
+import 'package:ecom/common/widgets/my_button.dart';
+import 'package:ecom/common/widgets/rounded_button.dart';
+import 'package:ecom/constants/img_uri.dart';
+import 'package:ecom/constants/string_constants.dart';
+import 'package:ecom/features/auth/data/model/user_model.dart';
+import 'package:ecom/features/checkout/domain/model/cart_product_model.dart';
+import 'package:ecom/features/checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
+import 'package:ecom/features/prod_detail/presentation/widgets/chat_widget.dart';
+import 'package:ecom/features/prod_detail/presentation/widgets/product_size.dart';
+import 'package:ecom/features/prod_detail/presentation/widgets/show_cart_button.dart';
+import 'package:ecom/shared/catalog/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/widgets/like_button.dart';
-import '../../../../common/widgets/my_button.dart';
-import '../../../../common/widgets/rounded_button.dart';
-import '../../../../constants/img_uri.dart';
-import '../../../../constants/string_constants.dart';
-import '../../../../shared/catalog/model/product_model.dart';
-import '../../../auth/data/model/user_model.dart';
-import '../../../checkout/domain/model/cart_product_model.dart';
-import '../../../checkout/presentation/blocs/checkoutbloc/checkout_bloc.dart';
-import '../widgets/chat_widget.dart';
-import '../widgets/product_size.dart';
-import '../widgets/show_cart_button.dart';
-
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({
-    Key? key,
-    required this.product,
-    required this.currentUser,
-  }) : super(key: key);
+    required this.product, required this.currentUser, super.key,
+  });
 
   final ProductModel product;
   final UserModel currentUser;
@@ -47,7 +44,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context).size;
 
-    String userText = ' ...';
+    var userText = ' ...';
     final owner = widget.product.owner;
 
     if (owner != null) {
@@ -65,7 +62,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
           height: media.height,
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -99,7 +96,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           ),
                           // appbar
                           Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: const EdgeInsets.all(12),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -164,7 +161,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0),
+                                      horizontal: 10,),
                                   child: Text(
                                     quantity.toString(),
                                     style: Theme.of(context)
@@ -193,7 +190,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                         ],
                       ),
 
@@ -210,7 +207,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 style: const TextStyle(
                                     fontStyle: FontStyle.italic,
                                     color: Colors.grey,
-                                    fontWeight: FontWeight.w300),
+                                    fontWeight: FontWeight.w300,),
                               ),
                               // rating
                               Row(
@@ -226,7 +223,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       itemBuilder: (context, index) {
                                         return Image.asset(
                                           ImageConstants.getImageUri(
-                                              ImageConstants.starIcon),
+                                              ImageConstants.starIcon,),
                                         );
                                       },
                                     ),
@@ -240,7 +237,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       ),
                                       children: <TextSpan>[
                                         TextSpan(
-                                          text: "(${widget.product.viewsNo})",
+                                          text: '(${widget.product.viewsNo})',
                                           style: const TextStyle(
                                             color: Colors.blue,
                                           ),
@@ -314,7 +311,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 text: StringConstants.addToCartText.tr(),
                                 iconUri: ImageConstants.shopCart,
                               );
-                            }),
+                            },),
                           ),
                           const ShowCartButton(),
                         ],

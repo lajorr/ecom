@@ -1,14 +1,11 @@
+import 'package:ecom/constants/img_uri.dart';
 import 'package:flutter/material.dart';
-
-import '../../constants/img_uri.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({
-    Key? key,
-    required this.text,
+    required this.text, required this.onTap, super.key,
     this.iconUri,
-    required this.onTap,
-  }) : super(key: key);
+  });
 
   final String text;
   final String? iconUri;
@@ -42,7 +39,7 @@ class RoundedButton extends StatelessWidget {
               style: const TextStyle(
                 color: Colors.white,
               ),
-            )
+            ),
           ],
         ),
       ),
