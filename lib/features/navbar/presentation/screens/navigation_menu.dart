@@ -30,54 +30,58 @@ class NavigationMenu extends StatelessWidget {
       ImageConstants.heartIcon,
       ImageConstants.profileIcon
     ];
-    return BlocConsumer<NavIndexCubit, NavIndexState>(
-      listener: (context, state) {
-        if (state is NavIndexChanged) {
-          context.read<NavIndexCubit>().onSetCurrentIndex(state.index);
-        }
-      },
-      builder: (context, state) {
-        if (state is NavIndexCurrent) {
-          final selectedIndex = state.index;
-          return Scaffold(
-            drawerEnableOpenDragGesture: false,
-            drawer: MyDrawer(
-              ctx: context,
-            ),
-            body: pages[selectedIndex],
-            bottomNavigationBar: Container(
-              height: 70,
-              margin: const EdgeInsets.only(
-                bottom: 15,
-                left: 20,
-                right: 20,
+    return PopScope(
+      canPop: false,
+      child: BlocConsumer<NavIndexCubit, NavIndexState>(
+        listener: (context, state) {
+          if (state is NavIndexChanged) {
+            context.read<NavIndexCubit>().onSetCurrentIndex(state.index);
+          }
+        },
+        builder: (context, state) {
+          if (state is NavIndexCurrent) {
+            final selectedIndex = state.index;
+            return Scaffold(
+              drawerEnableOpenDragGesture: false,
+              
+              drawer: MyDrawer(
+                ctx: context,
               ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(35),
+              body: pages[selectedIndex],
+              bottomNavigationBar: Container(
+                height: 70,
+                margin: const EdgeInsets.only(
+                  bottom: 15,
+                  left: 20,
+                  right: 20,
+                ),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(35),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    for (int i = 0; i < navIcons.length; i++) ...[
+                      NavItem(
+                        iconUri: navIcons[i],
+                        bgColor: i == selectedIndex
+                            ? Theme.of(context).colorScheme.onSecondary
+                            : Theme.of(context).colorScheme.secondary,
+                        onTap: () {
+                          context.read<NavIndexCubit>().onChangeNavIndex(i);
+                        },
+                      ),
+                    ]
+                  ],
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  for (int i = 0; i < navIcons.length; i++) ...[
-                    NavItem(
-                      iconUri: navIcons[i],
-                      bgColor: i == selectedIndex
-                          ? Theme.of(context).colorScheme.onSecondary
-                          : Theme.of(context).colorScheme.secondary,
-                      onTap: () {
-                        context.read<NavIndexCubit>().onChangeNavIndex(i);
-                      },
-                    ),
-                  ]
-                ],
-              ),
-            ),
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
     );
   }
 }

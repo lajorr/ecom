@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:ecom/constants/img_uri.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +18,7 @@ class CategoryTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(
-        right: 10,
+        left: 10,
         top: 5,
         bottom: 5,
       ),

@@ -35,7 +35,7 @@ Future main() async {
         Locale('ja', 'JPN'),
       ],
       path: 'assets/translations',
-      fallbackLocale: const Locale('ja', 'JPN'),
+      fallbackLocale: const Locale('en', 'US'),
       child: const MyApp(),
     ),
   );

@@ -21,7 +21,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final formKey = GlobalKey<FormState>();
   String? name;
   String? phNumber;
-
   void onConfirmEdit() {
     formKey.currentState!.save();
     if (formKey.currentState!.validate()) {
@@ -40,6 +39,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(StringConstants.editTitleText).tr(),
+          actions: [
+            IconButton(
+              onPressed: () {
+                onConfirmEdit();
+              },
+              icon: const Icon(Icons.done),
+            ),
+          ],
         ),
         body: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
@@ -113,19 +120,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         SizedBox(
                           height: media.height * 0.08,
-                        ),
-                        MaterialButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          onPressed: onConfirmEdit,
-                          color: Theme.of(context).primaryColor,
-                          child: const Text(
-                            StringConstants.updateBtnText,
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ).tr(),
                         ),
                       ],
                     ),
