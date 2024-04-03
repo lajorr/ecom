@@ -21,8 +21,11 @@ class StringConstants {
   static const searchHintText = "search";
 
   // profile screen
+
   static const orderHistoryText = "order_history";
   static const logoutConfirmText = "log_out_confirm";
+  static const noHistory = "no_history";
+
 
   //drawer
   static const editProfileText = "edit_profile";
